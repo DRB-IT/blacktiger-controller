@@ -12,23 +12,21 @@ angular.module('blacktiger', []
             }
         }
     }
-}).factory('$room', function($q, $blacktiger, $timeout, $http, $rootScope) {
+}).factory('$room', function($blacktiger, $timeout, $http, $rootScope) {
     var roomIds = null;
     var current = null;
     return {
         getRoomIds: function() {
-            var deferred = $q.defer();
             if (roomIds === null) {
-                $http({method: 'GET', url: $blacktiger.getServiceUrl() + "rooms"}).success(function(data) {
-                    roomIds = data;
-                    deferred.resolve(data);
+                return $http({method: 'GET', url: $blacktiger.getServiceUrl() + "rooms"}).then(function(response) {
+                    roomIds = response.data;
+                    return roomIds;
                 });
             } else {
-                $timeout(function() {
-                    deferred.resolve(roomIds);
+                return $timeout(function() {
+                    return roomIds;
                 }, 0);
             }
-            return deferred.promise;
         },
         setCurrent: function(roomId) {
             current = roomId;
@@ -38,7 +36,7 @@ angular.module('blacktiger', []
             return current;
         }
     }
-}).factory('$participant', function($http, $q, $room, $blacktiger) {
+}).factory('$participant', function($http, $room, $blacktiger) {
     return {
         findOne: function(userid) {
             return $http.get($blacktiger.getServiceUrl() + "rooms/" + $room.getCurrent() + "/" + userid).then(function(request) {
@@ -46,55 +44,42 @@ angular.module('blacktiger', []
             });
         },
         findAll: function() {
-            return $q.defer().promise;
-            /*return $http.get($blacktiger.getServiceUrl() + "rooms/" + $room.getCurrent()).then(function(request) {
+            return $http.get($blacktiger.getServiceUrl() + "rooms/" + $room.getCurrent()).then(function(request) {
                 return request.data;
-            });*/
+            });
         },
         kickParticipant: function(userid) {
-            var deferred = $q.defer();
-            $http({method: 'POST', url: $blacktiger.getServiceUrl() + "rooms/" + $room.getCurrent() + "/" + userid + "/kick"}).success(function() {
-                deferred.resolve();
+            return $http({method: 'POST', url: $blacktiger.getServiceUrl() + "rooms/" + $room.getCurrent() + "/" + userid + "/kick"}).then(function(response) {
+                return;
             });
-            return deferred.promise;
         },
         muteParticipant: function(userid) {
-            var deferred = $q.defer();
-            $http({method: 'POST', url: $blacktiger.getServiceUrl() + "rooms/" + $room.getCurrent() + "/" + userid + "/mute"}).success(function() {
-                deferred.resolve();
+            return $http({method: 'POST', url: $blacktiger.getServiceUrl() + "rooms/" + $room.getCurrent() + "/" + userid + "/mute"}).then(function() {
+                return;
             });
-            return deferred.promise;
         },
         unmuteParticipant: function(userid) {
-            var deferred = $q.defer();
-            $http({method: 'POST', url: $blacktiger.getServiceUrl() + "rooms/" + $room.getCurrent() + "/" + userid + "/unmute"}).success(function() {
-                deferred.resolve();
+            return $http({method: 'POST', url: $blacktiger.getServiceUrl() + "rooms/" + $room.getCurrent() + "/" + userid + "/unmute"}).then(function() {
+                return ;
             });
-            return deferred.promise;
         },
         waitForChanges: function() {
-            var deferred = $q.defer();
-            $http.get($blacktiger.getServiceUrl() + "rooms/" + $room.getCurrent() + "/changes?" + new Date().getTime()).success(function() {
-                deferred.resolve();
+            return $http.get($blacktiger.getServiceUrl() + "rooms/" + $room.getCurrent() + "/changes?" + new Date().getTime()).then(function() {
+                return;
             });
-            return deferred.promise;
         }
     }
-}).factory('$phonebook', function($http, $q, $room, $blacktiger) {
+}).factory('$phonebook', function($http, $room, $blacktiger) {
     return {
         updateEntry: function(phoneNumber, name) {
-            var deferred = $q.defer();
-            $http.post($blacktiger.getServiceUrl() + 'phonebook/' + phoneNumber, name).success(function() {
-                deferred.resolve();
+            return $http.post($blacktiger.getServiceUrl() + 'phonebook/' + phoneNumber, name).then(function(response) {
+                return;
             });
-            return deferred.promise;
         },
         removeEntry: function() {
-            var deferred = $q.defer();
-            $http.delete($blacktiger.getServiceUrl() + 'phonebook/' + phoneNumber).success(function() {
-                deferred.resolve();
+            return $http.delete($blacktiger.getServiceUrl() + 'phonebook/' + phoneNumber).then(function() {
+                return;
             });
-            return deferred.promise;
         }
     }
 }).factory('$report', function($http, $q, $room, $blacktiger) {
