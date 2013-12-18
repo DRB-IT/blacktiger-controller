@@ -10,6 +10,6 @@ The easiest way to run this is to use pythons builtin Http server. Simply go to 
 // Python 2.x
 python -m SimpleHTTPServer
 
-// 3.x
+// Python 3.x
 python -m http.server
 ```
