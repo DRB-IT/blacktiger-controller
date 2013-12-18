@@ -185,27 +185,18 @@ blacktiger.factory('reportService', function($q, $timeout) {
                 firstCallTimestamp: date3
             }
         ],
-        findByPeriodAndMinimumDuration: function(hourStart, hourEnd, minDuration) {
-            var deferred = $q.defer();
+        findByNumber: function(number) {
             var report = this.report;
-            var now = new Date();
-            var start = new Date(now.getTime());
-            var end = new Date(now.getTime());
-            start.setHours(hourStart);
-            end.setHours(hourEnd);
             
-            $timeout(function() {
+            return $timeout(function() {
                 var result = new Array();
                 for (var i = 0; i < report.length; i++) {
                     var entry = report[i];
-                    if (entry.firstCallTimestamp.getTime() > start.getTime() && entry.firstCallTimestamp.getTime() < end.getTime() &&
-                            entry.totalDuration >= minDuration) {
-                        result.push(entry);
-                    }
+                    result.push(entry);
                 }
-                deferred.resolve(result);
+                return result;
            }, 50);
-            return deferred.promise;
-        },
+            
+        }
     }
 });

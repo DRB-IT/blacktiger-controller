@@ -196,12 +196,17 @@ function RoomCtrl($scope, $room) {
     });
 }
 
-function ListCtrl($scope, $q, $participant, $phonebook, $room) {
+function ListCtrl($scope, $q, $participant, $phonebook, $room, $report) {
     $scope.participants = [];
     $scope.currentRoom = $room.getCurrent();
+    $scope.history = null;
     $scope.translationData = {
         phoneNumber:$scope.currentRoom
     };
+    
+    $report.findByNumber().then(function(data) {
+        $scope.history = data;
+    });
 
     $scope.refresh = function() {
         var deferred = $q.defer();
@@ -349,7 +354,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
                 "userId": "2",
                 "muted": false,
                 "host": true,
-                "phoneNumber": "IP-0999",
+                "phoneNumber": "DK-0999",
                 "dateJoined": 1382383401553,
                 "name": "Test-rigssal"
             },
@@ -371,11 +376,36 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             }
 
         ];
+    report = [
+            {
+                phoneNumber: "PC-+4551923192",
+                name: "Michael Krog",
+                numberOfCalls: 2,
+                totalDuration: 123,
+                firstCallTimestamp: 1387400754
+            },
+            {
+                phoneNumber: "+4551923171",
+                name: "Hannah Krog",
+                numberOfCalls: 4,
+                totalDuration: 2343,
+                firstCallTimestamp: 1387400754
+            },
+            {
+                phoneNumber: "+4512341234",
+                name: "Kasper Dyrvig",
+                numberOfCalls: 1,
+                totalDuration: 2333,
+                firstCallTimestamp: 1387400754
+            }
+        ];
   
   $httpBackend.whenGET('rooms').respond(["09991"]);
   $httpBackend.whenGET('rooms/09991').respond(participants);
   $httpBackend.whenPOST(/^rooms\/09991\/.?/).respond();
   $httpBackend.whenGET(/^rooms\/09991\/changes.?/).respond();
+    
+  $httpBackend.whenGET(/^reports\/.?/).respond(report);
  
   $httpBackend.whenGET(/^assets\/.?/).passThrough();
   $httpBackend.whenGET(/^http:\/\/telesal.s3.amazonaws.com\/.?/).passThrough();

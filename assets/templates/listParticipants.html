@@ -37,15 +37,28 @@
     <a href="/status-no-history.html" onclick="window.confirm('Er du sikker på at du vil slette historiken?')" class="btn btn-link btn-sm pull-right">Slet historik <span class="glyphicon glyphicon-trash"></span></a>
 </h3>
 <table class="table table-striped table-hover table-condensed participantsTable">
+    <thead>
+        <tr>
+            <th>Nummer</th>
+            <th>Navn</th>
+            <th>Start <small class="glyphicon glyphicon-chevron-up"></small></th>
+            <th>Antal</th>
+            <th>Varighed</th>
+            <th></th>
+        </tr>
+    </thead>
     <tbody>
     <tr ng-show="completedCalls.length==0">
         <td>{{'PARTICIPANTS.INFO.NO_PARTICIPANTS' | translate}}</td>
     </tr>
-    <tr ng-repeat="participant in completedCalls | filter:{host:false}">
-        <td class="participantNumber" data-type="participant-number" data-id="{{participant.userId}}" data-number="{{participant.phoneNumber}}"><iconifiednumber number="{{participant.phoneNumber}}"></iconifiednumber></td>
-        <td class="participantName">{{participant.name}} </td>
+    <tr ng-repeat="entry in history">
+        <td class="participantNumber"><iconifiednumber number="{{entry.phoneNumber}}"></iconifiednumber></td>
+        <td class="participantName">{{entry.name}}</td>
+        <td class="participantHistory">{{entry.firstCallTimestamp | date:'HH:mm'}}</td>
+        <td class="participantHistory">{{entry.numberOfCalls}}</td>
+        <td class="participantHistory">{{entry.totalDuration*1000 | date:'HH:mm' }}</td>
         <td class="participantOptions">
-            <button ng-click="changeName(participant.userId)" title="{{'PARTICIPANTS.EDIT' | translate}}"><span class="glyphicon glyphicon-pencil"></span></button>
+            <button ng-click="changeName(entry.phoneNumber)" title="{{'PARTICIPANTS.EDIT' | translate}}"><span class="glyphicon glyphicon-pencil"></span></button>
         </td>
     </tr>
     </tbody>
