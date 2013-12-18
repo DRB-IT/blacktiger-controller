@@ -1,5 +1,5 @@
 angular.module('blacktiger', []
-        ).provider('$blacktiger', function() {
+).provider('$blacktiger', function() {
     var serviceUrl = "";
     this.setServiceUrl = function(url) {
         serviceUrl = url;
@@ -85,12 +85,10 @@ angular.module('blacktiger', []
 }).factory('$report', function($http, $q, $room, $blacktiger) {
     return {
         report: [],
-        findByPeriodAndMinimumDuration: function(hourStart, hourEnd, minDuration) {
-            return $http.get($blacktiger.getServiceUrl() + "reports/" + $room.getCurrent() + '?hourStart=' + hourStart + '&hourEnd=' + hourEnd + '&duration=' + minDuration).
-                    then(function(request) {
+        findByNumber: function(number) {
+            return $http.get($blacktiger.getServiceUrl() + "reports/" + $room.getCurrent() + '?number=' + number).then(function(request) {
                 return request.data;
-            }
-            );
+            });
         },
     }
 }).factory('$dbStorage', function($q, $timeout) {
