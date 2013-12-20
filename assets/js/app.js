@@ -294,7 +294,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
                 }, 100);
 
             },
-            templateUrl: 'assets/templates/musicplayer.html'
+            templateUrl: 'assets/templates/bt-musicplayer.html'
         };
     });
 
