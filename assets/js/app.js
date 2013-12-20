@@ -4,12 +4,8 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
     .config(function ($locationProvider, $routeProvider, $translateProvider) {
         $routeProvider.
         when('/', {
-            controller: ListCtrl,
-            templateUrl: 'assets/templates/listParticipants.html'
-        }).
-        when('/reports', {
-            controller: ReportCtrl,
-            templateUrl: 'assets/templates/reports.html'
+            controller: RoomCtrl,
+            templateUrl: 'assets/templates/room.html'
         }).
         otherwise({
             redirectTo: '/'
@@ -32,7 +28,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
             var data = input.split("-");
             return data[data.length - 1];
         };
-    }).directive('iconifiednumber', function () {
+    }).directive('btIconifiednumber', function () {
         return {
             restrict: 'E',
             scope: {
@@ -49,24 +45,159 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
             },
             template: '<span class="glyphicon glyphicon-{{iconclass}}"></span> {{cleannumber}}'
         };
+    }).directive('btChangenamebutton', function () {
+        return {
+            restrict: 'E',
+            scope: {
+                phone: '@',
+                name: '@'
+            },
+            controller: function ($scope, PhoneBookSvc) {
+                $scope.changeName = function (phoneNumber, currentName) {
+                    if(phoneNumber !== undefined && phoneNumber !== null) {
+                        var newName = window.prompt("Type in new name", currentName);
+                        if (newName !== null) {
+                            PhoneBookSvc.updateEntry(phoneNumber, newName);
+                        }
+                    }
+                };
+            },
+            template: '<button ng-click="changeName(phone, name)" title="{{\'PARTICIPANTS.EDIT\' | translate}}"><span class="glyphicon glyphicon-pencil"></span></button>'
+
+        };
+    }).directive('btParticipants', function () {
+        return {
+            restrict: 'E',
+            scope: {
+            },
+            controller: function ($scope, ParticipantSvc, RoomSvc) {
+                $scope.participants = [];
+                $scope.currentRoom = RoomSvc.getCurrent();
+                $scope.translationData = {
+                    phoneNumber: $scope.currentRoom
+                };
+
+                $scope.refresh = function () {
+                    return ParticipantSvc.findAll().then(function(data) {
+                        $scope.participants = data;
+                    });
+                };
+
+                $scope.waitForChanges = function () {
+                    /*ParticipantSvc.waitForChanges().then(function(data, status, headers, config) {
+                        $scope.refresh().then(function(){
+                            $scope.waitForChanges();
+                        });
+                    }, function(data, status, headers, config) {
+                        window.setTimeout(function() {
+                            $scope.$apply(function() {
+                                $scope.waitForChanges();
+                            });
+                        }, 10000);
+                    });*/
+                };
+
+                $scope.kickParticipant = function (userId) {
+                    ParticipantSvc.kickParticipant(userId).then(function (data) {
+                        var index = $scope.getIndexForUserId(userId);
+                        if (index >= 0) {
+                            $scope.participants.splice(index, 1);
+                        }
+                    });
+                };
+
+                $scope.muteParticipant = function (userId, muted) {
+                    var participant = $scope.findOne(userId);
+                    if (participant !== null) {
+                        participant.muted = muted;
+                        ParticipantSvc.muteParticipant(userId, muted).then(function (data) {
+                            var index = $scope.getIndexForUserId(userId);
+                            if (index >= 0) {
+                                $scope.participants[index].muted = muted;
+                            }
+                        });
+                    }
+                };
+
+                $scope.findOne = function (userId) {
+                    for (var i = 0; i < $scope.participants.length; i++) {
+                        if ($scope.participants[i].userId === userId) {
+                            return $scope.participants[i];
+                        }
+                    }
+                    return null;
+                };
+
+                $scope.getIndexForUserId = function (userId) {
+                    var index = -1;
+                    for (var i = 0; i < $scope.participants.length; i++) {
+                        if ($scope.participants[i].userId === userId) {
+                            index = i;
+                            break;
+                        }
+                    }
+
+                    return index;
+                };
+
+                $scope.$on("roomChanged", function (event, args) {
+                    $scope.refresh();
+                    $scope.waitForChanges();
+                    $scope.currentRoom = RoomSvc.getCurrent();
+                });
+
+                $scope.$on('PhoneBookSvc.update', function(event, phone, name) {
+                    angular.forEach($scope.participants, function(p) {
+                        if (p.phoneNumber === phone) {
+                            p.name = name;
+                        }
+                    });
+                });
+
+                $scope.refresh();
+                $scope.waitForChanges();
+            },
+            templateUrl: 'assets/templates/roomParticipants.html'
+        };
+    }).directive('btHistory', function () {
+        return {
+            restrict: 'E',
+            scope: {
+            },
+            controller: function ($scope, ReportSvc) {
+                $scope.history = null;
+                ReportSvc.findByNumber().then(function (data) {
+                    $scope.history = data;
+                });
+
+                $scope.$on('PhoneBookSvc.update', function(event, phone, name) {
+                    angular.forEach($scope.history, function(e) {
+                        if (e.phoneNumber === phone) {
+                            e.name = name;
+                        }
+                    });
+                });
+            },
+            templateUrl: 'assets/templates/roomHistory.html'
+        };
     }).directive('musicplayer', function () {
         return {
             restrict: 'E',
             scope: {
 
             },
-            controller: function ($rootScope, $q, $scope, $remoteSongs, $storage, $audioplayer) {
+            controller: function ($rootScope, $q, $scope, RemoteSongSvc, StorageSvc, AudioPlayerSvc) {
                 $scope.currentSong = 0;
                 $scope.progress = 0;
-                $scope.state = $audioplayer.getState();
-                $scope.maxNumber = $remoteSongs.getNumberOfSongs();
+                $scope.state = AudioPlayerSvc.getState();
+                $scope.maxNumber = RemoteSongSvc.getNumberOfSongs();
                 $scope.downloadState = "Idle";
                 $scope.hasSongsLocally = false;
                 $scope.random = false;
 
                 $scope.downloadFile = function (deferred, number, until) {
-                    $remoteSongs.readBlob(number).then(function (blob) {
-                        $storage.writeBlob("song_" + number + ".mp3", blob).then(function () {
+                    RemoteSongSvc.readBlob(number).then(function (blob) {
+                        StorageSvc.writeBlob("song_" + number + ".mp3", blob).then(function () {
                             if (number < until) {
                                 number++;
                                 $scope.progress = (number / until) * 100;
@@ -80,11 +211,11 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
                 };
 
                 $scope.startDownload = function () {
-                    $storage.init().then(function () {
+                    StorageSvc.init().then(function () {
                         var deferred = $q.defer(),
                             promise = deferred.promise;
                         $scope.downloadState = "Downloading";
-                        $scope.downloadFile(deferred, 1, $remoteSongs.getNumberOfSongs());
+                        $scope.downloadFile(deferred, 1, RemoteSongSvc.getNumberOfSongs());
                         promise.then(function () {
                             $scope.downloadState = "Idle";
                             $scope.hasSongsLocally = true;
@@ -98,7 +229,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
 
                 $scope.getSongNumbers = function () {
                     var numbers = [];
-                    for (var i = 1; i <= $remoteSongs.getNumberOfSongs(); i++) {
+                    for (var i = 1; i <= RemoteSongSvc.getNumberOfSongs(); i++) {
                         numbers[numbers.length] = i;
                     }
                     return numbers;
@@ -110,11 +241,11 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
                 };
 
                 $scope.play = function () {
-                    $audioplayer.play();
+                    AudioPlayerSvc.play();
                 };
 
                 $scope.stop = function () {
-                    $audioplayer.stop();
+                    AudioPlayerSvc.stop();
                 };
 
                 $scope.toggleRandom = function () {
@@ -124,15 +255,15 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
                 $scope.$watch('currentSong', function () {
                     if ($scope.hasSongsLocally) {
                         $scope.stop();
-                        $storage.readBlob("song_" + $scope.currentSong + ".mp3").then(function (blob) {
-                            $audioplayer.setUrl(URL.createObjectURL(blob));
+                        StorageSvc.readBlob("song_" + $scope.currentSong + ".mp3").then(function (blob) {
+                            AudioPlayerSvc.setUrl(URL.createObjectURL(blob));
                         });
                     }
                 });
 
                 $scope.updateProgress = function () {
-                    $scope.state = $audioplayer.getState();
-                    $scope.progress = $audioplayer.getProgressPercent();
+                    $scope.state = AudioPlayerSvc.getState();
+                    $scope.progress = AudioPlayerSvc.getProgressPercent();
                     if ($scope.state === 'playing') {
                         window.setTimeout(function () {
                             $scope.$apply(function () {
@@ -145,18 +276,18 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
                 };
 
                 $scope.isSupported = function () {
-                    return $audioplayer.isSupported();
+                    return AudioPlayerSvc.isSupported();
                 };
 
                 $rootScope.$on('audioplayer.playing', $scope.updateProgress);
                 $rootScope.$on('audioplayer.stopped', $scope.updateProgress);
 
-                $storage.init().then(function () {
+                StorageSvc.init().then(function () {
                     var nameArray = [];
-                    for (var i = 1; i <= $remoteSongs.getNumberOfSongs(); i++) {
+                    for (var i = 1; i <= RemoteSongSvc.getNumberOfSongs(); i++) {
                         nameArray[i - 1] = "song_" + i + ".mp3";
                     }
-                    $storage.hasBlobs(nameArray).then(function () {
+                    StorageSvc.hasBlobs(nameArray).then(function () {
                         $scope.hasSongsLocally = true;
                         $scope.currentSong = 1;
                     });
@@ -190,13 +321,13 @@ function MenuCtrl($scope, $location) {
     ];
 }
 
-function RoomCtrl($scope, $room) {
+function RoomDisplayCtrl($scope, RoomSvc) {
     $scope.rooms = null;
     $scope.currentRoom = null;
 
     $scope.$watch('currentRoom', function () {
-        if ($room.getCurrent() != $scope.currentRoom) {
-            $room.setCurrent($scope.currentRoom);
+        if (RoomSvc.getCurrent() != $scope.currentRoom) {
+            RoomSvc.setCurrent($scope.currentRoom);
         }
     });
 
@@ -207,112 +338,16 @@ function RoomCtrl($scope, $room) {
     });
 
     $scope.$on("roomChanged", function (event, args) {
-        $scope.currentRoom = $room.getCurrent();
+        $scope.currentRoom = RoomSvc.getCurrent();
     });
 
-    $room.getRoomIds().then(function (data) {
+    RoomSvc.getRoomIds().then(function (data) {
         $scope.rooms = data;
     });
 }
 
-function ListCtrl($scope, $q, $participant, $phonebook, $room, $report) {
-    $scope.participants = [];
-    $scope.currentRoom = $room.getCurrent();
-    $scope.history = null;
-    $scope.translationData = {
-        phoneNumber: $scope.currentRoom
-    };
+function RoomCtrl($scope) {
 
-    $report.findByNumber().then(function (data) {
-        $scope.history = data;
-    });
-
-    $scope.refresh = function () {
-        var deferred = $q.defer();
-        var promise = $participant.findAll();
-        promise.then(function (data) {
-            $scope.participants = data;
-            deferred.resolve();
-        });
-        return deferred.promise;
-    };
-
-    $scope.waitForChanges = function () {
-        /*$participant.waitForChanges().then(function(data, status, headers, config) {
-            $scope.refresh().then(function(){
-                $scope.waitForChanges();
-            });
-        }, function(data, status, headers, config) {
-            window.setTimeout(function() {
-                $scope.$apply(function() {
-                    $scope.waitForChanges();
-                });
-            }, 10000);
-        });*/
-    };
-
-    $scope.kickParticipant = function (userId) {
-        $participant.kickParticipant(userId).then(function (data) {
-            var index = $scope.getIndexForUserId(userId);
-            if (index >= 0) {
-                $scope.participants.splice(index, 1);
-            }
-        });
-    };
-
-    $scope.muteParticipant = function (userId, muted) {
-        var participant = $scope.findOne(userId);
-        if (participant !== null) {
-            participant.muted = muted;
-            $participant.muteParticipant(userId, muted).then(function (data) {
-                var index = $scope.getIndexForUserId(userId);
-                if (index >= 0) {
-                    $scope.participants[index].muted = muted;
-                }
-            });
-        }
-    };
-
-    $scope.changeName = function (userId) {
-        var participant = $scope.findOne(userId);
-        if (participant !== null) {
-            var newName = window.prompt("Type in new name", participant.name);
-            if (newName !== null) {
-                participant.name = newName;
-                $phonebook.updateEntry(participant.phoneNumber, newName);
-            }
-        }
-    };
-
-    $scope.findOne = function (userId) {
-        for (var i = 0; i < $scope.participants.length; i++) {
-            if ($scope.participants[i].userId === userId) {
-                return $scope.participants[i];
-            }
-        }
-        return null;
-    };
-
-    $scope.getIndexForUserId = function (userId) {
-        var index = -1;
-        for (var i = 0; i < $scope.participants.length; i++) {
-            if ($scope.participants[i].userId === userId) {
-                index = i;
-                break;
-            }
-        }
-
-        return index;
-    };
-
-    $scope.$on("roomChanged", function (event, args) {
-        $scope.refresh();
-        $scope.waitForChanges();
-        $scope.currentRoom = $room.getCurrent();
-    });
-
-    $scope.refresh();
-    $scope.waitForChanges();
 }
 
 angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
@@ -383,7 +418,10 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
 
         $httpBackend.whenGET(/^reports\/.?/).respond(report);
 
+        $httpBackend.whenPOST(/^phonebook\/.?/).respond();
+
         $httpBackend.whenGET(/^assets\/.?/).passThrough();
+
         $httpBackend.whenGET(/^http:\/\/telesal.s3.amazonaws.com\/.?/).passThrough();
     });
 
