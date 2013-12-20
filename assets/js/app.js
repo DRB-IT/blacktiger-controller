@@ -157,7 +157,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
                 $scope.refresh();
                 $scope.waitForChanges();
             },
-            templateUrl: 'assets/templates/roomParticipants.html'
+            templateUrl: 'assets/templates/bt-participants.html'
         };
     }).directive('btHistory', function () {
         return {
@@ -178,7 +178,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
                     });
                 });
             },
-            templateUrl: 'assets/templates/roomHistory.html'
+            templateUrl: 'assets/templates/bt-history.html'
         };
     }).directive('musicplayer', function () {
         return {
