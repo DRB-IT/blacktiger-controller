@@ -1,4 +1,4 @@
-angular.module('blacktiger', [])
+angular.module('blacktiger', ['ngCookies'])
     .provider('blacktiger', function () {
         var serviceUrl = "";
         this.setServiceUrl = function (url) {

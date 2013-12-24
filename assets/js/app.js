@@ -164,7 +164,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
             restrict: 'E',
             scope: {
             },
-            controller: function ($scope, ReportSvc) {
+            controller: function ($scope, $cookieStore, ReportSvc) {
                 $scope.history = null;
                 ReportSvc.findByNumber().then(function (data) {
                     $scope.history = data;
