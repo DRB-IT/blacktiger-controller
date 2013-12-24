@@ -429,12 +429,14 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
 /** BOOTSTRAP **/
 var mocked = false;
 
-function isLocal() {
+function isTest() {
     var loc = window.location.toString();
-    return loc.indexOf('http://localhost') === 0 || loc.indexOf('file://') === 0;
+    return loc.indexOf('http://localhost') === 0 || 
+        loc.indexOf('file://') === 0 || 
+        loc.indexOf('http://drb-it.github.io') === 0;
 }
 
-if (isLocal() && window.location.search !== '?prod') {
+if (isTest() && window.location.search !== '?prod') {
     var mocked = true;
     document.write("<" + "script type='text/javascript' src='assets/js/angular/angular-mocks.js'><" + "/script>");
 
