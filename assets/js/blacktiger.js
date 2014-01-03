@@ -1,5 +1,6 @@
 angular.module('blacktiger', ['ngCookies'])
     .provider('blacktiger', function () {
+        'use strict';
         var serviceUrl = "";
         this.setServiceUrl = function (url) {
             serviceUrl = url;
@@ -13,8 +14,8 @@ angular.module('blacktiger', ['ngCookies'])
             };
         };
     }).factory('RoomSvc', function (blacktiger, $timeout, $http, $rootScope) {
-        var roomIds = null;
-        var current = null;
+        'use strict';
+        var roomIds = null, current = null;
         return {
             getRoomIds: function () {
                 if (roomIds === null) {
@@ -41,7 +42,8 @@ angular.module('blacktiger', ['ngCookies'])
                 return current;
             }
         };
-    }).factory('ParticipantSvc', function ($http, RoomSvc, blacktiger) {
+    }).factory('ParticipantSvc', function ($http, RoomSvc, blacktiger, $rootScope) {
+        'use strict';
         return {
             findOne: function (userid) {
                 return $http.get(blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent() + "/" + userid).then(function (request) {
@@ -50,6 +52,7 @@ angular.module('blacktiger', ['ngCookies'])
             },
             findAll: function () {
                 return $http.get(blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent()).then(function (request) {
+                    $rootScope.$broadcast('ParticipantSvc.join', '+4551923192');
                     return request.data;
                 });
             },
@@ -58,6 +61,7 @@ angular.module('blacktiger', ['ngCookies'])
                     method: 'POST',
                     url: blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent() + "/" + userid + "/kick"
                 }).then(function (response) {
+                    $rootScope.$broadcast('ParticipantSvc.leave', '+4551923192');
                     return;
                 });
             },
@@ -84,6 +88,7 @@ angular.module('blacktiger', ['ngCookies'])
             }
         };
     }).factory('PhoneBookSvc', function ($http, RoomSvc, blacktiger, $rootScope) {
+        'use strict';
         return {
             updateEntry: function (phoneNumber, name) {
                 return $http.post(blacktiger.getServiceUrl() + 'phonebook/' + phoneNumber, name).then(function (response) {
@@ -99,23 +104,23 @@ angular.module('blacktiger', ['ngCookies'])
             }
         };
     }).factory('ReportSvc', function ($http, $q, RoomSvc, blacktiger) {
+        'use strict';
         return {
             report: [],
-            findByNumber: function (number) {
-                return $http.get(blacktiger.getServiceUrl() + "reports/" + RoomSvc.getCurrent() + '?number=' + number).then(function (request) {
+            findByNumbers: function (numbers) {
+                return $http.get(blacktiger.getServiceUrl() + "reports/" + RoomSvc.getCurrent() + '?numbers=' + numbers.join()).then(function (request) {
                     return request.data;
                 });
-            },
+            }
         };
     }).factory('DbStorageSvc', function ($q, $timeout) {
+        'use strict';
         var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.OIndexedDB || window.msIndexedDB,
             IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.OIDBTransaction || window.msIDBTransaction,
             dbVersion = 1,
             database = null,
             dbName = "files",
             storeName = "songs";
-
-
 
         var onUpgrade = function (ev) {
             var database = ev.target.result;
@@ -127,10 +132,10 @@ angular.module('blacktiger', ['ngCookies'])
 
         return {
             init: function () {
-                var deferred = $q.defer();
+                var deferred = $q.defer(), onOpen, handleError, request;
 
                 if (database === null) {
-                    var onOpen = function (event) {
+                    onOpen = function (event) {
                         database = event.target.result;
                         console.log("Success creating/accessing IndexedDB database");
 
@@ -141,11 +146,11 @@ angular.module('blacktiger', ['ngCookies'])
                         deferred.resolve();
                     };
 
-                    var handleError = function () {
+                    handleError = function () {
                         deferred.reject();
                     };
 
-                    var request = indexedDB.open(dbName, dbVersion);
+                    request = indexedDB.open(dbName, dbVersion);
                     request.onsuccess = onOpen;
                     request.onerror = handleError;
                     request.onupgradeneeded = onUpgrade;
@@ -160,19 +165,19 @@ angular.module('blacktiger', ['ngCookies'])
                 return indexedDB !== null && navigator.userAgent.indexOf('Chrome') < 0;
             },
             hasBlobs: function (names) {
-                var deferred = $q.defer();
-                var transaction = database.transaction([storeName], "readonly");
-                var store = transaction.objectStore(storeName);
+                var deferred = $q.defer(),
+                    transaction = database.transaction([storeName], "readonly"),
+                    store = transaction.objectStore(storeName);
+
                 store.openCursor().onsuccess = function (event) {
-                    var cursor = event.target.result;
+                    var cursor = event.target.result, index;
                     if (cursor) {
                         console.log(cursor.key);
-                        var index = names.indexOf(cursor.key);
+                        index = names.indexOf(cursor.key);
                         if (index >= 0) {
                             names.splice(index, 1);
                         }
-                        cursor.
-                        continue ();
+                        cursor.continue();
                     } else {
                         if (names.length === 0) {
                             deferred.resolve();
@@ -184,9 +189,10 @@ angular.module('blacktiger', ['ngCookies'])
                 return deferred.promise;
             },
             readBlob: function (name) {
-                var deferred = $q.defer();
-                var transaction = database.transaction([storeName], "readonly");
-                var request = transaction.objectStore(storeName).get(name);
+                var deferred = $q.defer(),
+                    transaction = database.transaction([storeName], "readonly"),
+                    request = transaction.objectStore(storeName).get(name);
+
                 request.onsuccess = function (event) {
                     console.log("Got file:" + name);
                     var blob = event.target.result;
@@ -199,10 +205,10 @@ angular.module('blacktiger', ['ngCookies'])
                 return deferred.promise;
             },
             writeBlob: function (name, blob) {
-                var deferred = $q.defer();
+                var deferred = $q.defer(),
+                    transaction = database.transaction([storeName], "readwrite"),
+                    request = transaction.objectStore(storeName).put(blob, name);
 
-                var transaction = database.transaction([storeName], "readwrite");
-                var request = transaction.objectStore(storeName).put(blob, name);
                 request.onsuccess = function () {
                     console.log("File persisted:" + name);
                     deferred.resolve();
@@ -216,10 +222,9 @@ angular.module('blacktiger', ['ngCookies'])
             }
         };
     }).factory('FileStorageSvc', function ($q, $timeout) {
+        'use strict';
         window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
         var fileSystem = null;
-
-
 
         var onFailFs = function (code) {
             var msg = '';
@@ -286,11 +291,12 @@ angular.module('blacktiger', ['ngCookies'])
                 return window.requestFileSystem !== undefined;
             },
             hasBlobs: function (names) {
-                var deferred = $q.defer();
-                var dirReader = fileSystem.root.createReader();
+                var deferred = $q.defer(),
+                    dirReader = fileSystem.root.createReader(),
+                    i, index;
                 dirReader.readEntries(function (results) {
-                    for (var i = 0; i < results.length; i++) {
-                        var index = names.indexOf(results[i].name);
+                    for (i = 0; i < results.length; i++) {
+                        index = names.indexOf(results[i].name);
                         if (index >= 0) {
                             names.splice(index, 1);
                         }

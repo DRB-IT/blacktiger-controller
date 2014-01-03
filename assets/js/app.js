@@ -4,7 +4,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
     .config(function ($locationProvider, $routeProvider, $translateProvider) {
         $routeProvider.
         when('/', {
-            controller: RoomCtrl,
+            controller: angular.noop,
             templateUrl: 'assets/templates/room.html'
         }).
         otherwise({
@@ -164,10 +164,46 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
             restrict: 'E',
             scope: {
             },
-            controller: function ($scope, $cookieStore, ReportSvc) {
+            controller: function ($scope, $cookieStore, ReportSvc, ParticipantSvc) {
                 $scope.history = null;
-                ReportSvc.findByNumber().then(function (data) {
-                    $scope.history = data;
+                $cookieStore.put("participanthistory", []);
+
+                $scope.update = function() {
+                    var history = $cookieStore.get("participanthistory"),
+                        participants = ParticipantSvc.findAll(),
+                        cleansedHistory = [];
+
+                    angular.forEach(history, function(number) {
+                        var stillParticipating = false;
+                        angular.forEach(participants, function(participant) {
+                            if (participant.phoneNumber === number) {
+                                stillParticipating = true;
+                                return false;
+                            }
+                        });
+
+                        if (!stillParticipating) {
+                            cleansedHistory.push(number);
+                        }
+                    });
+
+                    ReportSvc.findByNumbers(cleansedHistory).then(function (data) {
+                        $scope.history = data;
+                    });
+
+
+                };
+
+                $scope.$on('ParticipantSvc.join', function(event, phone, name) {
+                    var history = $cookieStore.get("participanthistory");
+                    if (history.indexOf(phone)<0) {
+                        history.push(phone);
+                        $cookieStore.put("participanthistory", history);
+                    }
+                });
+
+                $scope.$on('ParticipantSvc.leave', function(event, phone, name) {
+                    $scope.update();
                 });
 
                 $scope.$on('PhoneBookSvc.update', function(event, phone, name) {
@@ -346,10 +382,6 @@ function RoomDisplayCtrl($scope, RoomSvc) {
     });
 }
 
-function RoomCtrl($scope) {
-
-}
-
 angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
     .run(function ($httpBackend) {
         participants = [
@@ -387,36 +419,27 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             }
 
         ];
-        report = [
-            {
-                phoneNumber: "PC-+4551923192",
-                name: "Michael Krog",
-                numberOfCalls: 2,
-                totalDuration: 123,
-                firstCallTimestamp: 1387400754
-            },
-            {
-                phoneNumber: "+4551923171",
-                name: "Hannah Krog",
-                numberOfCalls: 4,
-                totalDuration: 2343,
-                firstCallTimestamp: 1387400754
-            },
-            {
-                phoneNumber: "+4512341234",
-                name: "Kasper Dyrvig",
-                numberOfCalls: 1,
-                totalDuration: 2333,
-                firstCallTimestamp: 1387400754
-            }
-        ];
 
         $httpBackend.whenGET('rooms').respond(["09991"]);
         $httpBackend.whenGET('rooms/09991').respond(participants);
         $httpBackend.whenPOST(/^rooms\/09991\/.?/).respond();
         $httpBackend.whenGET(/^rooms\/09991\/changes.?/).respond();
 
-        $httpBackend.whenGET(/^reports\/.?/).respond(report);
+        $httpBackend.whenGET(/^reports\/.?/).respond(function(method, url) {
+            var data = [];
+            var numberString = url.substr(url.indexOf('?numbers=') + 9);
+            var numbers = numberString === '' ? [] : numberString.split(',');
+            angular.forEach(numbers, function(number) {
+                data.push({
+                    phoneNumber: number,
+                    name: "Michael Krog",
+                    numberOfCalls: 2,
+                    totalDuration: 123,
+                    firstCallTimestamp: 1387400754
+                });
+            });
+            return [200, data];
+        });
 
         $httpBackend.whenPOST(/^phonebook\/.?/).respond();
 
