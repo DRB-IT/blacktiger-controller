@@ -83,20 +83,6 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
                     });
                 };
 
-                $scope.waitForChanges = function () {
-                    /*ParticipantSvc.waitForChanges().then(function(data, status, headers, config) {
-                        $scope.refresh().then(function(){
-                            $scope.waitForChanges();
-                        });
-                    }, function(data, status, headers, config) {
-                        window.setTimeout(function() {
-                            $scope.$apply(function() {
-                                $scope.waitForChanges();
-                            });
-                        }, 10000);
-                    });*/
-                };
-
                 $scope.kickParticipant = function (userId) {
                     ParticipantSvc.kickParticipant(userId).then(function (data) {
                         var index = $scope.getIndexForUserId(userId);
@@ -142,7 +128,6 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
 
                 $scope.$on("roomChanged", function (event, args) {
                     $scope.refresh();
-                    $scope.waitForChanges();
                     $scope.currentRoom = RoomSvc.getCurrent();
                 });
 
@@ -155,7 +140,6 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
                 });
 
                 $scope.refresh();
-                $scope.waitForChanges();
             },
             templateUrl: 'assets/templates/bt-participants.html'
         };
@@ -456,7 +440,8 @@ function isTest() {
     var loc = window.location.toString();
     return loc.indexOf('http://localhost') === 0 || 
         loc.indexOf('file://') === 0 || 
-        loc.indexOf('http://drb-it.github.io') === 0;
+        loc.indexOf('http://drb-it.github.io') === 0 || 
+        loc.indexOf('http://127.0.0.1') === 0;
 }
 
 if (isTest() && window.location.search !== '?prod') {

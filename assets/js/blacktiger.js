@@ -52,7 +52,6 @@ angular.module('blacktiger', ['ngCookies'])
             },
             findAll: function () {
                 return $http.get(blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent()).then(function (request) {
-                    $rootScope.$broadcast('ParticipantSvc.join', '+4551923192');
                     return request.data;
                 });
             },
@@ -61,7 +60,6 @@ angular.module('blacktiger', ['ngCookies'])
                     method: 'POST',
                     url: blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent() + "/" + userid + "/kick"
                 }).then(function (response) {
-                    $rootScope.$broadcast('ParticipantSvc.leave', '+4551923192');
                     return;
                 });
             },
@@ -81,10 +79,11 @@ angular.module('blacktiger', ['ngCookies'])
                     return;
                 });
             },
-            waitForChanges: function () {
-                return $http.get(blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent() + "/changes?" + new Date().getTime()).then(function () {
-                    return;
-                });
+            onJoin: function(participant) {
+                $rootScope.$broadcast('ParticipantSvc.join', participant);
+            },
+            onLeave: function(participant) {
+                $rootScope.$broadcast('ParticipantSvc.leave', participant);
             }
         };
     }).factory('PhoneBookSvc', function ($http, RoomSvc, blacktiger, $rootScope) {
