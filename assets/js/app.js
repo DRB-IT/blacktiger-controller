@@ -71,66 +71,25 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
             scope: {
             },
             controller: function ($scope, ParticipantSvc, RoomSvc) {
-                $scope.participants = [];
+                $scope.participants = ParticipantSvc.getParticipants();
                 $scope.currentRoom = RoomSvc.getCurrent();
                 $scope.translationData = {
                     phoneNumber: $scope.currentRoom
                 };
 
-                $scope.refresh = function () {
-                    return ParticipantSvc.findAll().then(function(data) {
-                        $scope.participants = data;
-                    });
-                };
-
                 $scope.kickParticipant = function (userId) {
-                    ParticipantSvc.kickParticipant(userId).then(function (data) {
-                        var index = $scope.getIndexForUserId(userId);
-                        if (index >= 0) {
-                            $scope.participants.splice(index, 1);
-                        }
-                    });
+                    ParticipantSvc.kickParticipant(userId);
                 };
 
                 $scope.muteParticipant = function (userId, muted) {
-                    var participant = $scope.findOne(userId);
-                    if (participant !== null) {
-                        participant.muted = muted;
-                        ParticipantSvc.muteParticipant(userId, muted).then(function (data) {
-                            var index = $scope.getIndexForUserId(userId);
-                            if (index >= 0) {
-                                $scope.participants[index].muted = muted;
-                            }
-                        });
+                    if(muted) {
+                        ParticipantSvc.muteParticipant(userId);
+                    } else {
+                        ParticipantSvc.unmuteParticipant(userId);
                     }
                 };
 
-                $scope.findOne = function (userId) {
-                    for (var i = 0; i < $scope.participants.length; i++) {
-                        if ($scope.participants[i].userId === userId) {
-                            return $scope.participants[i];
-                        }
-                    }
-                    return null;
-                };
-
-                $scope.getIndexForUserId = function (userId) {
-                    var index = -1;
-                    for (var i = 0; i < $scope.participants.length; i++) {
-                        if ($scope.participants[i].userId === userId) {
-                            index = i;
-                            break;
-                        }
-                    }
-
-                    return index;
-                };
-
-                $scope.$on("roomChanged", function (event, args) {
-                    $scope.refresh();
-                    $scope.currentRoom = RoomSvc.getCurrent();
-                });
-
+                
                 $scope.$on('PhoneBookSvc.update', function(event, phone, name) {
                     angular.forEach($scope.participants, function(p) {
                         if (p.phoneNumber === phone) {
@@ -139,7 +98,6 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
                     });
                 });
 
-                $scope.refresh();
             },
             templateUrl: 'assets/templates/bt-participants.html'
         };
@@ -366,8 +324,60 @@ function RoomDisplayCtrl($scope, RoomSvc) {
     });
 }
 
+
 angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
-    .run(function ($httpBackend) {
+    .factory('mockinfo', function() {
+        var events = [];
+        
+        this.getEvents = function() {
+            return events;
+        }
+        
+        this.setEvents = function(newEvents) {
+            events = newEvents;
+        }
+        
+        var self = this;
+        
+        return {
+            getEvents : self.getEvents,
+            setEvents: self.setEvents
+        }
+    })
+    /*.config(function($provide, mockinfoProvider) {
+        $provide.decorator('$httpBackend', function($delegate) {
+            var proxy = function(method, url, data, callback, headers) {
+                var callbackWhenFlagged = function(scope, callback, arguments) {
+                    setTimeout(function() {
+                        if(mockinfoProvider.getEvents().length > 0) {
+                            callback.apply(scope, arguments);
+                        } else {
+                            callbackWhenFlagged(scope, callback, arguments);
+                        }
+                    }, 15000);
+                }
+                
+                var interceptor = function() {
+                    var _this = this,
+                        _arguments = arguments;
+                    
+                    if(url.indexOf('/changes?')>0) {
+                        callbackWhenFlagged(_this, callback, arguments);
+                    } else {
+                        callback.apply(_this, _arguments);
+                    }
+                    
+                    
+                };
+                return $delegate.call(this, method, url, data, interceptor, headers);
+            };
+            for(var key in $delegate) {
+                proxy[key] = $delegate[key];
+            }
+            return proxy;
+        });
+    })*/
+    .run(function ($httpBackend, mockinfo, $q) {
         participants = [
             {
                 "userId": "1",
@@ -406,9 +416,51 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
 
         $httpBackend.whenGET('rooms').respond(["09991"]);
         $httpBackend.whenGET('rooms/09991').respond(participants);
-        $httpBackend.whenPOST(/^rooms\/09991\/.?/).respond();
-        $httpBackend.whenGET(/^rooms\/09991\/changes.?/).respond();
-
+        $httpBackend.whenGET(/^rooms\/09991\/changes.?/).respond(function(method, url) {
+            var data = {timestamp:0,events:mockinfo.getEvents()};
+            mockinfo.setEvents([]);
+            return [200, data];
+        });
+        
+        $httpBackend.whenPOST(/^rooms\/09991\/.?\/kick/).respond(function(method, url) {
+            var branch = url.split('/');
+            var userId = branch[branch.length-2];
+            angular.forEach(participants, function(p, index) {
+                if(p.userId === userId) {
+                    participants.splice(index, 1);
+                    mockinfo.getEvents().push({type:'Leave', participant:p});
+                    return false;
+                }
+            });
+            return [200];
+        });
+        
+        $httpBackend.whenPOST(/^rooms\/09991\/.?\/mute/).respond(function(method, url) {
+            var branch = url.split('/');
+            var userId = branch[branch.length-2];
+            angular.forEach(participants, function(p, index) {
+                if(p.userId === userId) {
+                    participants[index].muted = true;
+                    mockinfo.getEvents().push({type:'Change', participant:p});
+                    return false;
+                }
+            });
+            return [200];
+        });
+        
+        $httpBackend.whenPOST(/^rooms\/09991\/.?\/unmute/).respond(function(method, url) {
+            var branch = url.split('/');
+            var userId = branch[branch.length-2];
+            angular.forEach(participants, function(p, index) {
+                if(p.userId === userId) {
+                    participants[index].muted = false;
+                    mockinfo.getEvents().push({type:'Change', participant:p});
+                    return false;
+                }
+            });
+            return [200];
+        });
+        
         $httpBackend.whenGET(/^reports\/.?/).respond(function(method, url) {
             var data = [];
             var numberString = url.substr(url.indexOf('?numbers=') + 9);
