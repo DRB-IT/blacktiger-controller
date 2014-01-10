@@ -485,7 +485,13 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             return [200, data];
         });
 
-        $httpBackend.whenPOST(/^phonebook\/.?/).respond();
+        $httpBackend.whenPOST(/^phonebook\/.?/).respond(function(method, url, data) {
+            var branch = url.split('/');
+            var phoneNumber = branch[branch.length-1];
+            var person = getPersonByPhoneNumber(phoneNumber);
+            person.name = data;
+            return [200];
+        });
 
         $httpBackend.whenGET(/^assets\/.?/).passThrough();
 
