@@ -112,7 +112,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
 
                 $scope.update = function() {
                     var history = $cookieStore.get("participanthistory"),
-                        participants = ParticipantSvc.findAll(),
+                        participants = ParticipantSvc.getParticipants(),
                         cleansedHistory = [];
 
                     angular.forEach(history, function(number) {
@@ -136,15 +136,16 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
 
                 };
 
-                $scope.$on('ParticipantSvc.join', function(event, phone, name) {
+                $scope.$on('ParticipantSvc.join', function(event, participant) {
                     var history = $cookieStore.get("participanthistory");
-                    if (history.indexOf(phone)<0) {
-                        history.push(phone);
+                    if (history.indexOf(participant.phoneNumber)<0) {
+                        history.push(participant.phoneNumber);
                         $cookieStore.put("participanthistory", history);
                     }
+                    $scope.update();
                 });
 
-                $scope.$on('ParticipantSvc.leave', function(event, phone, name) {
+                $scope.$on('ParticipantSvc.leave', function(event, participant) {
                     $scope.update();
                 });
 
@@ -344,76 +345,82 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             setEvents: self.setEvents
         }
     })
-    /*.config(function($provide, mockinfoProvider) {
-        $provide.decorator('$httpBackend', function($delegate) {
-            var proxy = function(method, url, data, callback, headers) {
-                var callbackWhenFlagged = function(scope, callback, arguments) {
-                    setTimeout(function() {
-                        if(mockinfoProvider.getEvents().length > 0) {
-                            callback.apply(scope, arguments);
-                        } else {
-                            callbackWhenFlagged(scope, callback, arguments);
-                        }
-                    }, 15000);
-                }
-                
-                var interceptor = function() {
-                    var _this = this,
-                        _arguments = arguments;
-                    
-                    if(url.indexOf('/changes?')>0) {
-                        callbackWhenFlagged(_this, callback, arguments);
-                    } else {
-                        callback.apply(_this, _arguments);
-                    }
-                    
-                    
-                };
-                return $delegate.call(this, method, url, data, interceptor, headers);
-            };
-            for(var key in $delegate) {
-                proxy[key] = $delegate[key];
-            }
-            return proxy;
-        });
-    })*/
     .run(function ($httpBackend, mockinfo, $q) {
-        participants = [
-            {
-                "userId": "1",
-                "muted": true,
-                "host": false,
-                "phoneNumber": "PC-+4551923192",
-                "dateJoined": 1382383383744,
-                "name": "Michael Krog"
-            },
-            {
-                "userId": "2",
-                "muted": false,
-                "host": true,
-                "phoneNumber": "DK-0999",
-                "dateJoined": 1382383401553,
-                "name": "Test-rigssal"
-            },
-            {
-                "userId": "3",
-                "muted": true,
-                "host": false,
-                "phoneNumber": "+4551923171",
-                "dateJoined": 1382383401553,
-                "name": "Hannah Krog"
-            },
-            {
-                "userId": "4",
-                "muted": true,
-                "host": false,
-                "phoneNumber": "+4512341234",
-                "dateJoined": 1382383401553,
-                "name": "Kasper Dyrvig"
+        var persons = [
+            {name: 'Michael Krog', phoneNumber: '+4512345670'},
+            {name: 'Hannah Krog', phoneNumber: '+4512345671'},
+            {name: 'Kasper Dyrvig', phoneNumber: 'PC-+4512345672'},
+            {name: 'Peter Almer Frederiksen', phoneNumber: 'PC-+4512345673'},
+            {name: 'Thomas Fredriksen', phoneNumber: '+4512345674'},
+            {name: 'Dan Cosmus', phoneNumber: '+4512345675'},
+            {name: 'Carit Stypinsky', phoneNumber: '+4512345676'},
+            {name: 'Bjarne Jensen', phoneNumber: '+4512345677'},
+            {name: 'Børge Lund', phoneNumber: 'PC-+4512345678'},
+            {name: 'Åse Nielsen', phoneNumber: '+4512345679'}
+            
+        ], participants = [], nextUserId = 0, i, date = new Date();
+        
+        var getPersonByPhoneNumber = function(phoneNumber) {
+            var person = null;
+            angular.forEach(persons, function(p) {
+                if(p.phoneNumber === phoneNumber) {
+                    person = p;
+                }
+            });
+            return person;
+        };
+        
+        var addParticipant = function(addEvent) {
+            var hasHost = false, participant;
+            angular.forEach(participants, function(p) {
+                if (p.host === true) {
+                   hasHost = true; 
+                }
+            });
+            
+            
+            if(!hasHost) {
+                participant = {
+                    userId: String(nextUserId++),
+                    muted: false,
+                    host: true,
+                    phoneNumber: 'DK-0999',
+                    dateJoined: date.getTime(),
+                    name: 'Rigssal'
+                };
+
+            } else {
+                var r = Math.floor((Math.random()*10));
+                var person = persons[r];
+                participant = {
+                    userId: String(nextUserId++),
+                    muted: true,
+                    host: false,
+                    phoneNumber: person.phoneNumber,
+                    dateJoined: date.getTime(),
+                    name: person.name
+                };
             }
-
-        ];
-
+           
+            participants.push(participant);
+            if(addEvent) {
+                mockinfo.getEvents().push({type:'Join', participant:participant});
+            }
+            
+        };
+        
+        var maintainParticipantList = function() {
+            setTimeout(function() {
+                if(participants.length < 15) {
+                    addParticipant(true);
+                }
+                maintainParticipantList();
+            }, 5000);
+        };
+        
+        addParticipant();
+        maintainParticipantList();
+        
         $httpBackend.whenGET('rooms').respond(["09991"]);
         $httpBackend.whenGET('rooms/09991').respond(participants);
         $httpBackend.whenGET(/^rooms\/09991\/changes.?/).respond(function(method, url) {
@@ -422,7 +429,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             return [200, data];
         });
         
-        $httpBackend.whenPOST(/^rooms\/09991\/.?\/kick/).respond(function(method, url) {
+        $httpBackend.whenPOST(/^rooms\/09991\/.+\/kick/).respond(function(method, url) {
             var branch = url.split('/');
             var userId = branch[branch.length-2];
             angular.forEach(participants, function(p, index) {
@@ -435,7 +442,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             return [200];
         });
         
-        $httpBackend.whenPOST(/^rooms\/09991\/.?\/mute/).respond(function(method, url) {
+        $httpBackend.whenPOST(/^rooms\/09991\/.+\/mute/).respond(function(method, url) {
             var branch = url.split('/');
             var userId = branch[branch.length-2];
             angular.forEach(participants, function(p, index) {
@@ -448,7 +455,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             return [200];
         });
         
-        $httpBackend.whenPOST(/^rooms\/09991\/.?\/unmute/).respond(function(method, url) {
+        $httpBackend.whenPOST(/^rooms\/09991\/.+\/unmute/).respond(function(method, url) {
             var branch = url.split('/');
             var userId = branch[branch.length-2];
             angular.forEach(participants, function(p, index) {
@@ -461,14 +468,15 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             return [200];
         });
         
-        $httpBackend.whenGET(/^reports\/.?/).respond(function(method, url) {
+        $httpBackend.whenGET(/^reports\/.+/).respond(function(method, url) {
             var data = [];
             var numberString = url.substr(url.indexOf('?numbers=') + 9);
             var numbers = numberString === '' ? [] : numberString.split(',');
             angular.forEach(numbers, function(number) {
+                var person = getPersonByPhoneNumber(number);
                 data.push({
                     phoneNumber: number,
-                    name: "Michael Krog",
+                    name: person.name,
                     numberOfCalls: 2,
                     totalDuration: 123,
                     firstCallTimestamp: 1387400754

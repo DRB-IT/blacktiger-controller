@@ -69,21 +69,25 @@ angular.module('blacktiger', ['ngCookies', 'angular-websocket'])
             }
             var room = RoomSvc.getCurrent();
             $http.get(blacktiger.getServiceUrl() + "rooms/" + room + "/changes?since=" + timestamp).success(function(data) {
-                var timestamp = data.timestamp, index;
+                var timestamp = data.timestamp, index, participant;
                 angular.forEach(data.events, function(e) {
                     switch(e.type) {
                         case 'Join':
                             participants.push(e.participant);
+                            onJoin(e.participant);
                             break;
                         case 'Leave':
                             index = indexByUserId(e.participant.userId);
+                            participant = participants[index];
                             if(index >= 0) {
                                 participants.splice(index, 1);
                             }
+                            onLeave(participant);
                             break;
                         case 'Change':
                             index = indexByUserId(e.participant.userId);
                             participants[index] = e.participant;
+                            onChange(e.participant);
                             break;
                     }
                 });
@@ -93,17 +97,17 @@ angular.module('blacktiger', ['ngCookies', 'angular-websocket'])
             });
         }
         
-        /*var onJoin = function(participant) {
+        var onJoin = function(participant) {
             $rootScope.$broadcast('ParticipantSvc.join', participant);
-        }
+        };
             
         var onChange = function(participant) {
             $rootScope.$broadcast('ParticipantSvc.change', participant);
-        }
+        };
             
         var onLeave = function(participant) {
             $rootScope.$broadcast('ParticipantSvc.leave', participant);
-        }*/
+        };
         
         findAll().then(function(data) {
             angular.forEach(data, function(p) {
