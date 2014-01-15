@@ -20,7 +20,7 @@
     </tr>
     <tr ng-repeat="participant in participants | filter:{host:false}">
         <td class="participantNumber" data-type="participant-number" data-id="{{participant.userId}}" data-number="{{participant.phoneNumber}}"><bt-iconifiednumber number="{{participant.phoneNumber}}"></bt-iconifiednumber></td>
-        <td class="participantName">{{participant.name}} <span ng-hide="participant.muted" class="label label-warning">{{'PARTICIPANTS.INFO.UNMUTED' | translate}}</span></td>
+        <td class="participantName">{{participant.name}} <span ng-hide="participant.muted" class="label label-warning">{{'PARTICIPANTS.INFO.UNMUTED' | translate}}</span><span ng-show="participant.commentRequested" class="label label-primary shake">Ønsker at svare</span></td>
         <td class="participantOptions">
             <bt-changenamebutton phone="{{participant.phoneNumber}}" name="{{participant.name}}"></bt-changenamebutton>
             <button ng-click="muteParticipant(participant.userId, false)" ng-show="participant.muted" title="{{'PARTICIPANTS.UNMUTE' | translate}}"><span class="glyphicon glyphicon-comment"></span></button>

@@ -34,6 +34,7 @@ angular.module('blacktiger', ['ngCookies', 'angular-websocket'])
             },
             setCurrent: function (roomId) {
                 current = roomId;
+                console.log('Current room set to ' + roomId + '. Broadcasting it.');
                 $rootScope.$broadcast("roomChanged", {
                     roomId: roomId
                 });
@@ -47,10 +48,16 @@ angular.module('blacktiger', ['ngCookies', 'angular-websocket'])
         var participants = [];
     
         var findAll = function() {
-            return $http.get(blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent()).then(function (request) {
+            var room = RoomSvc.getCurrent();
+            if(room === null) {
+                return $timeout(function() {
+                    return [];
+                }, 0);
+            }
+            return $http.get(blacktiger.getServiceUrl() + "rooms/" + room).then(function (request) {
                 return request.data;
             });
-        }
+        };
         
         var indexByUserId = function(userId) {
             var index = -1;
@@ -61,13 +68,20 @@ angular.module('blacktiger', ['ngCookies', 'angular-websocket'])
                 }
             });
             return index;
-        }
+        };
         
         var waitForChanges = function(timestamp) {
             if(timestamp === undefined) {
                 timestamp = 0;
             }
+
+            console.log('Called waitForChanges with timestamp: ' + timestamp);
+
             var room = RoomSvc.getCurrent();
+            if(room===null) {
+                console.log('No room number available yet. Trying again.');
+                $timeout(waitForChanges, 100);
+            }
             $http.get(blacktiger.getServiceUrl() + "rooms/" + room + "/changes?since=" + timestamp).success(function(data) {
                 var timestamp = data.timestamp, index, participant;
                 angular.forEach(data.events, function(e) {
@@ -95,7 +109,7 @@ angular.module('blacktiger', ['ngCookies', 'angular-websocket'])
                     waitForChanges(timestamp);
                 }, 150);
             });
-        }
+        };
         
         var onJoin = function(participant) {
             $rootScope.$broadcast('ParticipantSvc.join', participant);
@@ -109,15 +123,24 @@ angular.module('blacktiger', ['ngCookies', 'angular-websocket'])
             $rootScope.$broadcast('ParticipantSvc.leave', participant);
         };
         
-        findAll().then(function(data) {
-            angular.forEach(data, function(p) {
-                participants.push(p);
-                //onJoin(p);
+        var onRoomChange = function() {
+            participants.splice();
+            findAll().then(function(data) {
+                console.log('Found ' + data.length + ' particpiantes.');
+                angular.forEach(data, function(p) {
+                    participants.push(p);
+                    //onJoin(p);
+                });
+                waitForChanges();
             });
-            waitForChanges();
+        };
+
+        $rootScope.$on('roomChanged', function() {
+            console.log('Detected room change. Reloading all participants.');
+            onRoomChange();
         });
     
-        
+        onRoomChange();
         
         return {
             getParticipants: function () {

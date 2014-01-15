@@ -45,6 +45,33 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
             },
             template: '<span class="glyphicon glyphicon-{{iconclass}}"></span> {{cleannumber}}'
         };
+    }).directive('btCommentAlert', function () {
+        return {
+            restrict: 'E',
+            controller: function ($scope, $element, $attrs, ParticipantSvc) {
+
+                $scope.forcedHidden = false;
+
+                $scope.isCommentRequested = function() {
+                    var commentRequested = false;
+                    angular.forEach(ParticipantSvc.getParticipants(), function(p) {
+                        if(p.commentRequested) {
+                            commentRequested = true;
+                            return false;
+                        }
+                    });
+                    return commentRequested;
+
+                };
+
+                $scope.$watch('isCommentRequested()', function(value) {
+                    if(value === true) {
+                        $scope.forcedHidden = false;
+                    }
+                });
+            },
+            templateUrl: 'assets/templates/bt-commentalert.html'
+        };
     }).directive('btChangenamebutton', function () {
         return {
             restrict: 'E',
@@ -332,18 +359,18 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
         
         this.getEvents = function() {
             return events;
-        }
+        };
         
         this.setEvents = function(newEvents) {
             events = newEvents;
-        }
+        };
         
         var self = this;
         
         return {
             getEvents : self.getEvents,
             setEvents: self.setEvents
-        }
+        };
     })
     .run(function ($httpBackend, mockinfo, $q) {
         var persons = [
@@ -409,10 +436,30 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             
         };
         
+        var handleCommentRequested = function(participant, value) {
+            if(participant.host !== true) {
+                participant.commentRequested = value;
+                mockinfo.getEvents().push({type:'Change', participant:participant});
+            }
+        };
+
+        var maintainCount = 0;
+
         var maintainParticipantList = function() {
             setTimeout(function() {
+                maintainCount ++;
                 if(participants.length < 15) {
                     addParticipant(true);
+                }
+
+                if(maintainCount % 10 === 2) {
+                    var index = Math.floor(Math.random()*participants.length-1) + 1;
+                    console.log(index);
+                    var participant = participants[index];
+                    handleCommentRequested(participant, true);
+                    setTimeout(function() {
+                        handleCommentRequested(participant, false);
+                    }, 15000);
                 }
                 maintainParticipantList();
             }, 5000);
