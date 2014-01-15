@@ -7,6 +7,10 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
             controller: angular.noop,
             templateUrl: 'assets/templates/room.html'
         }).
+        when('/settings', {
+            controller: angular.noop,
+            templateUrl: 'assets/templates/settings.html'
+        }).
         otherwise({
             redirectTo: '/'
         });
@@ -453,7 +457,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
                 }
 
                 if(maintainCount % 10 === 2) {
-                    var index = Math.floor(Math.random()*participants.length-1) + 1;
+                    var index = Math.floor((Math.random()*(participants.length-1)) + 1);
                     console.log(index);
                     var participant = participants[index];
                     handleCommentRequested(participant, true);

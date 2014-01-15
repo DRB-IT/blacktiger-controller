@@ -75,13 +75,12 @@ angular.module('blacktiger', ['ngCookies', 'angular-websocket'])
                 timestamp = 0;
             }
 
-            console.log('Called waitForChanges with timestamp: ' + timestamp);
-
             var room = RoomSvc.getCurrent();
             if(room===null) {
-                console.log('No room number available yet. Trying again.');
                 $timeout(waitForChanges, 100);
             }
+            console.log('Called waitForChanges with timestamp: ' + timestamp);
+
             $http.get(blacktiger.getServiceUrl() + "rooms/" + room + "/changes?since=" + timestamp).success(function(data) {
                 var timestamp = data.timestamp, index, participant;
                 angular.forEach(data.events, function(e) {
