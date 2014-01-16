@@ -19,4 +19,4 @@ Or... simply go to http://drb-it.github.io/blacktiger-web to see the current edi
 
 Tests
 --------------------
-
+![Build status](https://api.travis-ci.org/DRB-IT/blacktiger-web.png)
