@@ -1,7 +1,12 @@
-'devDependencies': {
-  'karma': '~0.10'
-},
+{
+  "name": "blacktiger",
+  "description": "A gui for blacktiger.",
+  "author": "Michael Krog",
+  "devDependencies": {
+      "karma": "~0.10"
+    },
 
-'scripts': {
-   'test': './node_modules/.bin/karma start --single-run --browsers Firefox'
+    "scripts": {
+       "test": "./node_modules/.bin/karma start --single-run --browsers Firefox"
+    }
 }
