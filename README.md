@@ -15,3 +15,8 @@ python -m http.server
 ```
 
 Or... simply go to http://drb-it.github.io/blacktiger-web to see the current edition.
+
+
+Tests
+--------------------
+
