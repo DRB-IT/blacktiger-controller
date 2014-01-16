@@ -15,6 +15,9 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'src/main/webapp/assets/js/**/angular.js',
+      'src/main/webapp/assets/js/**/angular-cookies.js',
+      'src/main/webapp/assets/js/**/angular-mocks.js',
+      'src/main/webapp/assets/js/blacktiger-ui.js',
       'src/test/javascript/**/*.js'
     ],
 
