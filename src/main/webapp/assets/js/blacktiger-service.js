@@ -79,7 +79,7 @@ angular.module('blacktiger-service', ['ngCookies'])
             if(room===null) {
                 $timeout(waitForChanges, 100);
             }
-            console.log('Called waitForChanges with timestamp: ' + timestamp);
+            //console.log('Called waitForChanges with timestamp: ' + timestamp);
 
             $http.get(blacktiger.getServiceUrl() + "rooms/" + room + "/changes?since=" + timestamp).success(function(data) {
                 var timestamp = data.timestamp, index, participant;

@@ -4,11 +4,11 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
     .config(function ($locationProvider, $routeProvider, $translateProvider) {
         $routeProvider.
         when('/', {
-            controller: angular.noop,
+            controller: RoomCtrl,
             templateUrl: 'assets/templates/room.html'
         }).
         when('/settings', {
-            controller: angular.noop,
+            controller: SettingsCtrl,
             templateUrl: 'assets/templates/settings.html'
         }).
         otherwise({
@@ -58,120 +58,6 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
                 });
             },
             templateUrl: 'assets/templates/bt-commentalert.html'
-        };
-    }).directive('btChangenamebutton', function () {
-        return {
-            restrict: 'E',
-            scope: {
-                phone: '@',
-                name: '@'
-            },
-            controller: function ($scope, PhoneBookSvc) {
-                $scope.changeName = function (phoneNumber, currentName) {
-                    if(phoneNumber !== undefined && phoneNumber !== null) {
-                        var newName = window.prompt("Type in new name", currentName);
-                        if (newName !== null) {
-                            PhoneBookSvc.updateEntry(phoneNumber, newName);
-                        }
-                    }
-                };
-            },
-            template: '<button ng-click="changeName(phone, name)" title="{{\'PARTICIPANTS.EDIT\' | translate}}"><span class="glyphicon glyphicon-pencil"></span></button>'
-
-        };
-    }).directive('btParticipants', function () {
-        return {
-            restrict: 'E',
-            scope: {
-            },
-            controller: function ($scope, ParticipantSvc, RoomSvc) {
-                $scope.participants = ParticipantSvc.getParticipants();
-                $scope.currentRoom = RoomSvc.getCurrent();
-                $scope.translationData = {
-                    phoneNumber: $scope.currentRoom
-                };
-
-                $scope.kickParticipant = function (userId) {
-                    ParticipantSvc.kickParticipant(userId);
-                };
-
-                $scope.muteParticipant = function (userId, muted) {
-                    if(muted) {
-                        ParticipantSvc.muteParticipant(userId);
-                    } else {
-                        ParticipantSvc.unmuteParticipant(userId);
-                    }
-                };
-
-
-                $scope.$on('PhoneBookSvc.update', function(event, phone, name) {
-                    angular.forEach($scope.participants, function(p) {
-                        if (p.phoneNumber === phone) {
-                            p.name = name;
-                        }
-                    });
-                });
-
-            },
-            templateUrl: 'assets/templates/bt-participants.html'
-        };
-    }).directive('btHistory', function () {
-        return {
-            restrict: 'E',
-            scope: {
-            },
-            controller: function ($scope, $cookieStore, ReportSvc, ParticipantSvc) {
-                $scope.history = null;
-                $cookieStore.put("participanthistory", []);
-
-                $scope.update = function() {
-                    var history = $cookieStore.get("participanthistory"),
-                        participants = ParticipantSvc.getParticipants(),
-                        cleansedHistory = [];
-
-                    angular.forEach(history, function(number) {
-                        var stillParticipating = false;
-                        angular.forEach(participants, function(participant) {
-                            if (participant.phoneNumber === number) {
-                                stillParticipating = true;
-                                return false;
-                            }
-                        });
-
-                        if (!stillParticipating) {
-                            cleansedHistory.push(number);
-                        }
-                    });
-
-                    ReportSvc.findByNumbers(cleansedHistory).then(function (data) {
-                        $scope.history = data;
-                    });
-
-
-                };
-
-                $scope.$on('ParticipantSvc.join', function(event, participant) {
-                    var history = $cookieStore.get("participanthistory");
-                    if (history.indexOf(participant.phoneNumber)<0) {
-                        history.push(participant.phoneNumber);
-                        $cookieStore.put("participanthistory", history);
-                    }
-                    $scope.update();
-                });
-
-                $scope.$on('ParticipantSvc.leave', function(event, participant) {
-                    $scope.update();
-                });
-
-                $scope.$on('PhoneBookSvc.update', function(event, phone, name) {
-                    angular.forEach($scope.history, function(e) {
-                        if (e.phoneNumber === phone) {
-                            e.name = name;
-                        }
-                    });
-                });
-            },
-            templateUrl: 'assets/templates/bt-history.html'
         };
     }).directive('musicplayer', function () {
         return {
@@ -339,6 +225,96 @@ function RoomDisplayCtrl($scope, RoomSvc) {
     });
 }
 
+function RoomCtrl($scope, $cookieStore, ParticipantSvc, RoomSvc, PhoneBookSvc, ReportSvc) {
+    $scope.participants = ParticipantSvc.getParticipants();
+    $scope.currentRoom = RoomSvc.getCurrent();
+    $scope.translationData = {
+        phoneNumber: $scope.currentRoom
+    };
+    $scope.history = [];
+    $cookieStore.put("participanthistory", []);
+
+    $scope.kickParticipant = function (userId) {
+        ParticipantSvc.kickParticipant(userId);
+    };
+
+    $scope.muteParticipant = function (userId, muted) {
+        if(muted) {
+            ParticipantSvc.muteParticipant(userId);
+        } else {
+            ParticipantSvc.unmuteParticipant(userId);
+        }
+    };
+
+    $scope.changeName = function(phoneNumber, currentName) {
+        if(phoneNumber !== undefined && phoneNumber !== null) {
+            var newName = window.prompt("Type in new name", currentName);
+            if (newName !== null) {
+                PhoneBookSvc.updateEntry(phoneNumber, newName);
+            }
+        }
+    }
+
+    $scope.$on('PhoneBookSvc.update', function(event, phone, name) {
+        // Make sure names in participantlist are update.
+        angular.forEach($scope.participants, function(p) {
+            if (p.phoneNumber === phone) {
+                p.name = name;
+            }
+        });
+
+        // Make sure names in historylist are update.
+        angular.forEach($scope.history, function(e) {
+            if (e.phoneNumber === phone) {
+                e.name = name;
+            }
+        });
+    });
+
+    $scope.updateHistory = function() {
+        var history = $cookieStore.get("participanthistory"),
+            participants = ParticipantSvc.getParticipants(),
+            cleansedHistory = [];
+
+        angular.forEach(history, function(number) {
+            var stillParticipating = false;
+            angular.forEach(participants, function(participant) {
+                if (participant.phoneNumber === number) {
+                    stillParticipating = true;
+                    return false;
+                }
+            });
+
+            if (!stillParticipating) {
+                cleansedHistory.push(number);
+            }
+        });
+
+        ReportSvc.findByNumbers(cleansedHistory).then(function (data) {
+            $scope.history = data;
+        });
+
+
+    };
+
+    $scope.$on('ParticipantSvc.join', function(event, participant) {
+        var history = $cookieStore.get("participanthistory");
+        if (history.indexOf(participant.phoneNumber)<0) {
+            history.push(participant.phoneNumber);
+            $cookieStore.put("participanthistory", history);
+        }
+        $scope.updateHistory();
+    });
+
+    $scope.$on('ParticipantSvc.leave', function(event, participant) {
+        $scope.updateHistory();
+    });
+
+}
+
+var SettingsCtrl = function($scope) {
+    $scope.selectedView='settings';
+}
 
 angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
     .factory('mockinfo', function() {

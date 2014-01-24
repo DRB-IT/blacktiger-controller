@@ -19,10 +19,16 @@
         <td>{{'PARTICIPANTS.INFO.NO_PARTICIPANTS' | translate}}</td>
     </tr>
     <tr ng-repeat="participant in participants | filter:{host:false}">
-        <td class="participantNumber" data-type="participant-number" data-id="{{participant.userId}}" data-number="{{participant.phoneNumber}}"><bt-iconifiednumber number="{{participant.phoneNumber}}"></bt-iconifiednumber></td>
-        <td class="participantName">{{participant.name}} <span ng-hide="participant.muted" class="label label-warning">{{'PARTICIPANTS.INFO.UNMUTED' | translate}}</span><span ng-show="participant.commentRequested" class="label label-primary shake">Ønsker at svare</span></td>
+        <td class="participantNumber" data-type="participant-number" data-id="{{participant.userId}}" data-number="{{participant.phoneNumber}}">
+            <bt-iconifiednumber number="{{participant.phoneNumber}}"></bt-iconifiednumber>
+        </td>
+        <td class="participantName">
+            {{participant.name}}
+            <span ng-hide="participant.muted" class="label label-warning">{{'PARTICIPANTS.INFO.UNMUTED' | translate}}</span>
+            <span ng-show="participant.commentRequested" class="label label-primary shake">Ønsker at svare</span>
+        </td>
         <td class="participantOptions">
-            <bt-changenamebutton phone="{{participant.phoneNumber}}" name="{{participant.name}}"></bt-changenamebutton>
+            <button ng-click="changeName(participant.phoneNumber, participant.name)" title="{{'PARTICIPANTS.EDIT' | translate}}"><span class="glyphicon glyphicon-pencil"></span></button>
             <button ng-click="muteParticipant(participant.userId, false)" ng-show="participant.muted" title="{{'PARTICIPANTS.UNMUTE' | translate}}"><span class="glyphicon glyphicon-comment"></span></button>
             <button ng-click="muteParticipant(participant.userId, true)" ng-hide="participant.muted" class="active" title="{{'PARTICIPANTS.MUTE' | translate}}"><span class="glyphicon glyphicon-comment"></span></button>
             <button ng-click="kickParticipant(participant.userId)" title="{{'PARTICIPANTS.KICK' | translate}}"><span class="glyphicon glyphicon-remove"></span></button>
