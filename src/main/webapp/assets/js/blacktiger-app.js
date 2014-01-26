@@ -553,6 +553,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
 
         $httpBackend.whenGET(/^reports\/.+/).respond(function(method, url) {
             var data = [];
+
             var numberString = url.substr(url.indexOf('?numbers=') + 9);
             var numbers = numberString === '' ? [] : numberString.split(',');
             angular.forEach(numbers, function(number) {
@@ -560,9 +561,9 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
                 data.push({
                     phoneNumber: number,
                     name: person.name,
-                    numberOfCalls: 2,
-                    totalDuration: 123,
-                    firstCallTimestamp: 1387400754
+                    numberOfCalls: Math.floor((Math.random()*6)+1),
+                    totalDuration: Math.floor((Math.random()*30000)+1) + 50,
+                    firstCallTimestamp: 1387400000 + Math.floor((Math.random()*100000000))
                 });
             });
             return [200, data];
