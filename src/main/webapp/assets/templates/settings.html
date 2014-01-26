@@ -9,8 +9,8 @@
     </div>
     <div class="col-sm-8" ng-show="selectedView==='settings'">
         <h3>Indstillinger</h3>
-        <p>Der er logget ind som <b>DK-9000-1 Aalborg, sal 2</b>.</p>
-        <p>Den teknisk ansvarlige for denne sal er <b>Michael Stenner</b> (<a href="/settings-contact.html">se kontaktinformation</a>).</p>
+        <p>Der er logget ind som <b>{{room.displayName}}</b>.</p>
+        <p>Den teknisk ansvarlige for denne sal er <b>{{room.technicalSupervisor.name}}</b> (<a>se kontaktinformation</a>).</p>
         <br>
         <h4>Find hjælp</h4>
         <p>Klik på <span class="glyphicon glyphicon-question-sign"></span> i toppen af siden hvis du har brug for hjælp.</p>
@@ -19,37 +19,38 @@
     <div class="col-sm-8" ng-show="selectedView==='createListener'">
         <h3>Opret computer-lytter</h3>
         <p>Hvis en ønsker at lytte til møderne via en computer, skal der oprettes en computer-konto som knyttes til lytterens mobil- eller telefonnummer. Computer-lyttere vises med <span class="glyphicon glyphicon-hdd"></span> på status-siden. Computer-konti der ikke har ringet op i et år, slettes automatisk. Hvis lytteren har mistet sit kodeord til computer-kontoen, skal den oprettes igen.</p>
-        <!--
-        <div class="alert alert-success">
+
+        <div class="alert alert-success" ng-show="status==='success'">
             <b>Success!</b> Kontoen blev oprettet og der sendt en e-mail til den angivne e-mail-adresse med yderligere oplysninger.
         </div>
-        <div class="alert alert-danger">
+        <div class="alert alert-danger" ng-show="status==='error'">
             <b>Systemfejl!</b> Kontoen blev ikke oprettet. Prøv igen om lidt.
         </div>
-        <div class="alert alert-danger">
+        <div class="alert alert-danger" ng-show="status==='invalid'">
             Feltet [input name] er ikke udfyldt korrekt. Tjek oplysningerne og prøv igen.
         </div>
-        <div class="alert alert-warning">
+
+        <div class="alert alert-warning" ng-show="status==='alreadyExists'">
             <p>Der er tidligere oprettet en computer-konto med dette telefonnummer. Men du kan slette det gamle kodeord og få tilsendt et nyt kodeord for denne konto - vil du det?</p>
             <p><button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-ok"></span> Ja</button> <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span> Nej</button></p>
         </div>
--->
-        <form role="form" id="createCaller">
+
+        <form role="form" novalidate>
             <div class="form-group">
                 <label for="createName">Navn</label>
-                <input type="text" class="form-control" id="createName" placeholder="Fornavn Efternavn">
+                <input type="text" class="form-control" ng-model="user.name" placeholder="Fornavn Efternavn">
             </div>
             <div class="form-group">
                 <label for="createPhone">Telefonnummer</label>
-                <input type="text" class="form-control" id="createPhone" placeholder="+45" value="+45">
+                <input type="text" class="form-control" ng-model="user.phoneNumber" placeholder="+45" value="+45">
                 <span class="help-block">Nummeret gemmes krypteret.</span>
             </div>
             <div class="form-group">
                 <label for="createEmail">Send kontooplysninger til</label>
-                <input type="email" class="form-control" id="createe-mail" placeholder="E-mail-adresse">
+                <input type="email" class="form-control" ng-model="user.email" placeholder="E-mail-adresse">{{user.email}}
                 <span class="help-block">Nødvendige oplysninger sendes til denne e-mail-adresse. E-mail-adressen bliver ikke gemt hos TeleSal.</span>
             </div>
-            <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span></button>
+            <button type="button" class="btn btn-success" ng-click="createUser()"><span class="glyphicon glyphicon-ok"></span></button>
         </form>
     </div>
 </div>

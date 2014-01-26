@@ -41,6 +41,11 @@ angular.module('blacktiger-service', ['ngCookies'])
             },
             getCurrent: function () {
                 return current;
+            },
+            getRoom: function(room) {
+                return $http.get(blacktiger.getServiceUrl() + "rooms/" + room).then(function(response) {
+                    return response.data;
+                });
             }
         };
     }).factory('ParticipantSvc', function ($http, RoomSvc, blacktiger, $rootScope, $timeout) {
@@ -54,7 +59,7 @@ angular.module('blacktiger-service', ['ngCookies'])
                     return [];
                 }, 0);
             }
-            return $http.get(blacktiger.getServiceUrl() + "rooms/" + room).then(function (request) {
+            return $http.get(blacktiger.getServiceUrl() + "rooms/" + room + "/participants").then(function (request) {
                 return request.data;
             });
         };
@@ -81,7 +86,7 @@ angular.module('blacktiger-service', ['ngCookies'])
             }
             //console.log('Called waitForChanges with timestamp: ' + timestamp);
 
-            $http.get(blacktiger.getServiceUrl() + "rooms/" + room + "/changes?since=" + timestamp).success(function(data) {
+            $http.get(blacktiger.getServiceUrl() + "rooms/" + room + "/participants/changes?since=" + timestamp).success(function(data) {
                 var timestamp = data.timestamp, index, participant;
                 angular.forEach(data.events, function(e) {
                     switch(e.type) {
@@ -148,19 +153,19 @@ angular.module('blacktiger-service', ['ngCookies'])
             kickParticipant: function (userid) {
                 return $http({
                     method: 'POST',
-                    url: blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent() + "/" + userid + "/kick"
+                    url: blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent() + "/participants/" + userid + "/kick"
                 });
             },
             muteParticipant: function (userid) {
                 return $http({
                     method: 'POST',
-                    url: blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent() + "/" + userid + "/mute"
+                    url: blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent() + "/participants/" + userid + "/mute"
                 });
             },
             unmuteParticipant: function (userid) {
                 return $http({
                     method: 'POST',
-                    url: blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent() + "/" + userid + "/unmute"
+                    url: blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent() + "/participants/" + userid + "/unmute"
                 });
             }
         };
@@ -187,6 +192,26 @@ angular.module('blacktiger-service', ['ngCookies'])
             findByNumbers: function (numbers) {
                 return $http.get(blacktiger.getServiceUrl() + "reports/" + RoomSvc.getCurrent() + '?numbers=' + numbers.join()).then(function (request) {
                     return request.data;
+                });
+            }
+        };
+    }).factory('SipUserSvc', function ($http, RoomSvc, blacktiger, $rootScope) {
+        'use strict';
+        return {
+            create: function (user) {
+                return $http.post(blacktiger.getServiceUrl() + 'users', user).then(function () {
+                    return;
+                });
+            },
+
+            isNumberAvailable: function(number) {
+                var data = {phoneNumber: number};
+                return $http({method: 'GET', url: blacktiger.getServiceUrl() + 'users', params: data}).then(function (response) {
+                    if(angular.isArray(response.data) && response.data > 0) {
+                        return false;
+                    } else {
+                        return true;
+                    }
                 });
             }
         };
