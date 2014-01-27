@@ -26,6 +26,26 @@ angular.module('blacktiger-ui',[])
                 $element.find('thead').on('click', function() {
                     $element.find('tbody').toggleClass('hidden');
                 });
+
+                $scope.$watch('room', function() {
+                    $scope.noOfOpenMicrophones = 0;
+                    $scope.noOfCommentRequests = 0;
+                    $scope.noOfSipPhones = 0;
+                    $scope.noOfRegularPhones = 0;
+                    $scope.noOfMissingNames = 0;
+
+                    angular.forEach($scope.room.participants, function(p) {
+                        if(!p.muted) $scope.noOfOpenMicrophones++;
+                        if(p.commentRequested) $scope.noOfCommentRequests++;
+                        if(p.phoneNumber.indexOf('PC-') === 0) {
+                            $scope.noOfSipPhones++;
+                        } else {
+                            $scope.noOfRegularPhones++;
+                        }
+                        if(p.name === null || p.name === '') $scope.noOfMissingNames++;
+
+                    });
+                });
             },
             templateUrl: 'assets/templates/bt-room-status.html'
         };
@@ -39,5 +59,5 @@ angular.module('blacktiger-ui',[])
           out = hours + ':' + (minutes>9 ? '' : '0') + minutes;
       }
       return out;
-    }
+    };
   });
