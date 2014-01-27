@@ -11,6 +11,14 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
             controller: SettingsCtrl,
             templateUrl: 'assets/templates/settings.html'
         }).
+        when('/admin/realtime', {
+            controller: RealtimeCtrl,
+            templateUrl: 'assets/templates/realtime-status.html'
+        }).
+        when('/admin/history', {
+            controller: SettingsCtrl,
+            templateUrl: 'assets/templates/system-history.html'
+        }).
         otherwise({
             redirectTo: '/'
         });
@@ -196,6 +204,16 @@ function MenuCtrl($scope, $location) {
             url: "http://telesal.dk/wiki",
             name: 'NAVIGATION.HELP',
             icon: 'question-sign'
+        },
+        {
+            url: "#/admin/realtime",
+            name: 'NAVIGATION.ADMIN.REALTIME',
+            icon: 'transfer'
+        },
+        {
+            url: "#/admin/history",
+            name: 'NAVIGATION.ADMIN.HISTORY',
+            icon: 'calendar'
         }
     ];
 }
@@ -312,7 +330,7 @@ function RoomCtrl($scope, $cookieStore, ParticipantSvc, RoomSvc, PhoneBookSvc, R
 
 }
 
-var SettingsCtrl = function($scope, SipUserSvc, RoomSvc) {
+function SettingsCtrl($scope, SipUserSvc, RoomSvc) {
     $scope.selectedView='settings';
     $scope.user = {};
 
@@ -343,6 +361,146 @@ var SettingsCtrl = function($scope, SipUserSvc, RoomSvc) {
             $scope.room = null;
         }
     });
+
+}
+
+function RealtimeCtrl($scope) {
+    $scope.system = {
+        cores: 24,
+        load: {
+            disk: 25.0,
+            memory: 22.0,
+            cpu: 0.3,
+            net: 4.9
+        },
+        averageCpuLoad: {
+            oneMinute: 0.1,
+            fiveMinutes: 0.3,
+            tenMinutes: 2.0
+        }
+    }
+
+    $scope.rooms =  [
+        {
+            id: '09991',
+            displayName: 'DK-9000-1 Aalborg, sal 1',
+            technicalSupervisor: {
+                name: 'Michael Stenner',
+                phoneNumber: '+4512345678',
+                email: 'example@mail.dk'
+            },
+            participants: [
+                {
+                    userId: '1',
+                    muted: true,
+                    host: false,
+                    phoneNumber: '+4512345687',
+                    dateJoined: new Date().getTime(),
+                    name: 'John Doe',
+                    commentRequested: false
+                },
+                {
+                    userId: '2',
+                    muted: false,
+                    host: false,
+                    phoneNumber: 'PC-+4512345678',
+                    dateJoined: new Date().getTime(),
+                    name: 'Jane Doe',
+                    commentRequested: false
+                }
+            ]
+        },
+        {
+            id: '09992',
+            displayName: 'DK-9000-1 Aalborg, sal 2',
+            technicalSupervisor: {
+                name: 'Michael Stenner',
+                phoneNumber: '+4512345678',
+                email: 'example@mail.dk'
+            },
+            participants: [
+                {
+                    userId: '3',
+                    muted: true,
+                    host: false,
+                    phoneNumber: 'PC-+4512345687',
+                    dateJoined: new Date().getTime(),
+                    name: 'John Doe',
+                    commentRequested: true
+                },
+                {
+                    userId: '4',
+                    muted: false,
+                    host: false,
+                    phoneNumber: 'PC-+4512345678',
+                    dateJoined: new Date().getTime(),
+                    name: 'Jane Doe',
+                    commentRequested: false
+                },
+                {
+                    userId: '5',
+                    muted: false,
+                    host: false,
+                    phoneNumber: '+4512345678',
+                    dateJoined: new Date().getTime(),
+                    name: 'Jane Doe',
+                    commentRequested: true
+                }
+            ]
+        }
+    ]
+
+    $scope.getNoOfParticipants = function() {
+        var count = 0;
+        angular.forEach($scope.rooms, function(room) {
+            angular.forEach(room.participants, function(p) {
+                if(!p.host) {
+                    count++;
+                }
+            });
+        });
+        return count;
+    }
+
+    $scope.getSipPercentage = function() {
+        var count = 0;
+        angular.forEach($scope.rooms, function(room) {
+            angular.forEach(room.participants, function(p) {
+                if(p.phoneNumber.indexOf('PC-') === 0) {
+                    count++;
+                }
+            });
+        });
+        if(count === 0) {
+            return 0.0;
+        } else {
+            return (count / $scope.getNoOfParticipants()) * 100;
+        }
+    }
+
+    $scope.getNoOfCommentRequests = function() {
+        var count = 0;
+        angular.forEach($scope.rooms, function(room) {
+            angular.forEach(room.participants, function(p) {
+                if(p.commentRequested) {
+                    count++;
+                }
+            });
+        });
+        return count;
+    }
+
+    $scope.getNoOfOpenMicrophones = function() {
+        var count = 0;
+        angular.forEach($scope.rooms, function(room) {
+            angular.forEach(room.participants, function(p) {
+                if(!p.host && !p.muted) {
+                    count++;
+                }
+            });
+        });
+        return count;
+    }
 
 }
 

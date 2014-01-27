@@ -1,0 +1,136 @@
+<h3>Realtid oversigt <a href="/admin-realtime.html" class="btn btn-default pull-right">Opdater <span class="glyphicon glyphicon-refresh"></span></a></h3>
+<div class="row">
+    <div class="col-sm-4">
+        <table class="table table-condensed">
+            <thead>
+            <tr>
+                <th colspan="2"><span class="glyphicon glyphicon-user"></span> Linjer</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Sale</td>
+                <td class="text-right">{{rooms.length | number}}</td>
+            </tr>
+            <tr>
+                <td>Lyttere</td>
+                <td class="text-right">{{getNoOfParticipants() | number}}</td>
+            </tr>
+            <tr>
+                <td>Lyttere pr. sal</td>
+                <td class="text-right">{{getNoOfParticipants() / rooms.length | number:1}}</td>
+            </tr>
+            <tr>
+                <td>Lyttere via computer</td>
+                <td class="text-right">{{getSipPercentage()}} %</td>
+            </tr>
+            <tr>
+                <td>Lyttere via telefon</td>
+                <td class="text-right">{{100.0 - getSipPercentage()}} %</td>
+            </tr>
+            <tr>
+                <td>Ønsker at svare</td>
+                <td class="text-right">{{getNoOfCommentRequests()}}</td>
+            </tr>
+            <tr>
+                <td>Svarmikrofon åben</td>
+                <td class="text-right">{{getNoOfOpenMicrophones()}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-4">
+        <table class="table table-condensed">
+            <thead>
+            <tr>
+                <th colspan="2"><span class="glyphicon glyphicon-hdd"></span> Server</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Net</td>
+                <td class="text-right">{{system.load.net | number:1}} %</td>
+            </tr>
+            <tr>
+                <td>Disk</td>
+                <td class="text-right">{{system.load.disk | number:1}} %</td>
+            </tr>
+            <tr>
+                <td>CPU</td>
+                <td class="text-right">{{system.load.cpu | number:1}} %</td>
+            </tr>
+            <tr>
+                <td>RAM</td>
+                <td class="text-right">{{system.load.memory | number:1}} %</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-4">
+        <table class="table table-condensed">
+            <thead>
+            <tr>
+                <th colspan="2"><span class="glyphicon glyphicon-signal"></span> Load average</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td colspan="2" class="text-muted">Load average / {{system.cores}} CPU cores</td>
+            </tr>
+            <tr>
+                <td>1m</td>
+                <td class="text-right">{{system.averageCpuLoad.oneMinute | number:1}} %</td>
+            </tr>
+            <tr>
+                <td>5m</td>
+                <td class="text-right">{{system.averageCpuLoad.fiveMinutes | number:1}} %</td>
+            </tr>
+            <tr>
+                <td>15m</td>
+                <td class="text-right">{{system.averageCpuLoad.tenMinutes | number:1}} %</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<h4>Sale og lyttere <small>Klik på salens navn for at se lyttere</small></h4>
+<bt-room-status ng-repeat="room in rooms" room="room"/>
+<table class="table table-striped table-hover table-condensed participantsTable" ng-repeat="room in rooms">
+    <thead>
+    <tr>
+        <th colspan="2" class="participantHall">
+            <span class="glyphicon glyphicon-plus-sign"></span> {{room.displayName}}
+            <span class="pull-right">
+                <span class="label label-default">{{room.participants.length}}</span>
+                <span class="label label-default"><span class="glyphicon glyphicon-earphone"></span> 3<!-- ordinary callers --></span>
+                <span class="label label-default"><span class="glyphicon glyphicon-hdd"></span> 3<!-- computer callers --></span>
+                <span class="label label-warning"><span class="glyphicon glyphicon-comment"></span> 1<!-- open microphones --></span>
+                <span class="label label-primary"><span class="glyphicon glyphicon-hand-up"></span> 1<!-- commentrequests --></span>
+                <span class="label label-danger"><span class="glyphicon glyphicon-warning-sign"></span> 0<!-- missing names --></span>
+            </span>
+        </th>
+    </tr>
+    </thead>
+    <tbody class="hidden">
+    <tr ng-repeat="participant in room.participants">
+        <td class="participantNumber"><span class="glyphicon glyphicon-earphone"></span> {{participant.phoneNumber}}</td>
+        <td class="participantName">{{participant.name}}</td>
+    </tr>
+    <tr>
+        <td class="participantNumber"><span class="glyphicon glyphicon-hdd"></span> +4523456789</td>
+        <td class="participantName">Hans Jensen</td>
+    </tr>
+    <tr class="warning">
+        <td class="participantNumber"><span class="glyphicon glyphicon-hdd"></span> +4534567890</td>
+        <td class="participantName">Karl Christensen <span class="label label-warning">Svarmikrofon åben</span></td>
+    </tr>
+    <tr class="info">
+        <td class="participantNumber"><span class="glyphicon glyphicon-earphone"></span> +4545678901</td>
+        <td class="participantName">Christian Karlsen <span class="label label-primary">Ønsker at svare</span></td>
+    </tr>
+    <tr class="danger">
+        <td class="participantNumber"><span class="glyphicon glyphicon-hdd"></span> +4556789012</td>
+        <td class="participantName">(Angiv navn)</td>
+    </tr>
+    </tbody>
+</table>

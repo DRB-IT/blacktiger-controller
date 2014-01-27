@@ -1,0 +1,39 @@
+<table class="table table-striped table-hover table-condensed participantsTable">
+    <thead>
+    <tr>
+        <th colspan="2" class="participantHall">
+            <span class="glyphicon glyphicon-plus-sign"></span> {{room.displayName}}
+            <span class="pull-right">
+                <span class="label label-default">{{room.participants.length}}</span>
+                <span class="label label-default"><span class="glyphicon glyphicon-earphone"></span> 3<!-- ordinary callers --></span>
+                <span class="label label-default"><span class="glyphicon glyphicon-hdd"></span> 3<!-- computer callers --></span>
+                <span class="label label-warning"><span class="glyphicon glyphicon-comment"></span> 1<!-- open microphones --></span>
+                <span class="label label-primary"><span class="glyphicon glyphicon-hand-up"></span> 1<!-- commentrequests --></span>
+                <span class="label label-danger"><span class="glyphicon glyphicon-warning-sign"></span> 0<!-- missing names --></span>
+            </span>
+        </th>
+    </tr>
+    </thead>
+    <tbody class="hidden">
+        <tr ng-repeat="participant in room.participants">
+            <td class="participantNumber"><span class="glyphicon glyphicon-earphone"></span> {{participant.phoneNumber}}</td>
+            <td class="participantName">{{participant.name}}</td>
+        </tr>
+        <tr>
+            <td class="participantNumber"><span class="glyphicon glyphicon-hdd"></span> +4523456789</td>
+            <td class="participantName">Hans Jensen</td>
+        </tr>
+        <tr class="warning">
+            <td class="participantNumber"><span class="glyphicon glyphicon-hdd"></span> +4534567890</td>
+            <td class="participantName">Karl Christensen <span class="label label-warning">Svarmikrofon åben</span></td>
+        </tr>
+        <tr class="info">
+            <td class="participantNumber"><span class="glyphicon glyphicon-earphone"></span> +4545678901</td>
+            <td class="participantName">Christian Karlsen <span class="label label-primary">Ønsker at svare</span></td>
+        </tr>
+        <tr class="danger">
+            <td class="participantNumber"><span class="glyphicon glyphicon-hdd"></span> +4556789012</td>
+            <td class="participantName">(Angiv navn)</td>
+        </tr>
+    </tbody>
+</table>

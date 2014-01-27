@@ -16,6 +16,19 @@ angular.module('blacktiger-ui',[])
             },
             template: '<span class="glyphicon glyphicon-{{iconclass}}"></span> {{cleannumber}}'
         };
+    }).directive('btRoomStatus', function () {
+        return {
+            restrict: 'E',
+            scope: {
+                room: '='
+            },
+            controller: function ($scope, $element, $attrs) {
+                $element.find('thead').on('click', function() {
+                    $element.find('tbody').toggleClass('hidden');
+                });
+            },
+            templateUrl: 'assets/templates/bt-room-status.html'
+        };
     }).filter('timespan', function() {
     return function(input) {
       var out = "";
