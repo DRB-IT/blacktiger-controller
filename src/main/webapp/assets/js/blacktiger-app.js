@@ -1,6 +1,6 @@
 /*************************************** MODULE ********************************************/
 
-var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.translate', 'blacktiger-service', 'blacktiger-ui'])
+var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.translate', 'ui.bootstrap', 'blacktiger-service', 'blacktiger-ui'])
     .config(function ($locationProvider, $routeProvider, $translateProvider) {
         $routeProvider.
         when('/', {
@@ -243,7 +243,7 @@ function RoomDisplayCtrl($scope, RoomSvc) {
     });
 }
 
-function RoomCtrl($scope, $cookieStore, ParticipantSvc, RoomSvc, PhoneBookSvc, ReportSvc) {
+function RoomCtrl($scope, $cookieStore, $modal, ParticipantSvc, RoomSvc, PhoneBookSvc, ReportSvc) {
     $scope.participants = ParticipantSvc.getParticipants();
     $scope.currentRoom = RoomSvc.getCurrent();
     $scope.translationData = {
@@ -265,13 +265,20 @@ function RoomCtrl($scope, $cookieStore, ParticipantSvc, RoomSvc, PhoneBookSvc, R
     };
 
     $scope.changeName = function(phoneNumber, currentName) {
-        if(phoneNumber !== undefined && phoneNumber !== null) {
-            var newName = window.prompt("Type in new name", currentName);
-            if (newName !== null) {
-                PhoneBookSvc.updateEntry(phoneNumber, newName);
+        var modalInstance = $modal.open({
+          templateUrl: 'assets/templates/modal-edit-name.html',
+          controller: ModalEditNameCtrl,
+          resolve: {
+            currentName: function () {
+              return currentName;
             }
-        }
-    };
+          }
+        });
+
+        modalInstance.result.then(function (newName) {
+          PhoneBookSvc.updateEntry(phoneNumber, newName);
+        });
+    }
 
     $scope.$on('PhoneBookSvc.update', function(event, phone, name) {
         // Make sure names in participantlist are update.
@@ -328,6 +335,20 @@ function RoomCtrl($scope, $cookieStore, ParticipantSvc, RoomSvc, PhoneBookSvc, R
         $scope.updateHistory();
     });
 
+}
+
+function ModalEditNameCtrl($scope, $modalInstance, currentName) {
+    $scope.data =  {
+        name: currentName
+    }
+
+    $scope.ok = function () {
+        $modalInstance.close($scope.data.name);
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
 }
 
 function SettingsCtrl($scope, SipUserSvc, RoomSvc) {

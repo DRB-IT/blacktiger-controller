@@ -49,7 +49,20 @@ angular.module('blacktiger-ui',[])
             },
             templateUrl: 'assets/templates/bt-room-status.html'
         };
-    }).filter('timespan', function() {
+    }).directive('modalWindow', function(){
+    return {
+        restrict: 'EA',
+        link: function(scope, element, $timeout) {
+            var em = element.find('input');
+            if(em.length > 0) {
+                setTimeout(function() {
+                    em[0].focus();
+                    em[0].select();
+                }, 100);
+            }
+        }
+    }
+  }).filter('timespan', function() {
     return function(input) {
       var out = "";
       if (!isNaN(input)) {
