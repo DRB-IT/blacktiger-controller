@@ -1,10 +1,14 @@
 <div class="modal-header">
-    <h3>Please Type in New Name</h3>
+    <button type="button" class="close" ng-click="cancel()">×</button>
+    <h4 class="modal-title" id="myModalLabel">Rediger navn</h4>
 </div>
-<div class="modal-body">
-    <input type="text" ng-model="data.name" autofocus>
-</div>
-<div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()">OK</button>
-    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-</div>
+<form id="editParticipant">
+    <div class="modal-body">
+        <p class="text-muted">{{data.phoneNumber}}</p>
+        <input type="text" id="participantEditName" class="form-control" ng-model="data.name">
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-success" ng-click="ok()"><span class="glyphicon glyphicon-ok"></span></button>
+        <button type="button" class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span></button>
+    </div>
+</form>

@@ -266,9 +266,12 @@ function RoomCtrl($scope, $cookieStore, $modal, ParticipantSvc, RoomSvc, PhoneBo
 
     $scope.changeName = function(phoneNumber, currentName) {
         var modalInstance = $modal.open({
-          templateUrl: 'assets/templates/modal-edit-name.html',
-          controller: ModalEditNameCtrl,
-          resolve: {
+        templateUrl: 'assets/templates/modal-edit-name.html',
+        controller: ModalEditNameCtrl,
+        resolve: {
+            phoneNumber: function() {
+                return phoneNumber;
+            },
             currentName: function () {
               return currentName;
             }
@@ -337,9 +340,10 @@ function RoomCtrl($scope, $cookieStore, $modal, ParticipantSvc, RoomSvc, PhoneBo
 
 }
 
-function ModalEditNameCtrl($scope, $modalInstance, currentName) {
+function ModalEditNameCtrl($scope, $modalInstance, phoneNumber, currentName) {
     $scope.data =  {
-        name: currentName
+        name: currentName,
+        phoneNumber: phoneNumber
     }
 
     $scope.ok = function () {
