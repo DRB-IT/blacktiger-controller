@@ -723,9 +723,10 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
         $httpBackend.whenPOST(/^rooms\/DK-9000-2\/participants\/.+\/kick/).respond(function(method, url) {
             var branch = url.split('/');
             var userId = branch[branch.length-2];
-            angular.forEach(participants, function(p, index) {
+            var room = getRoom('DK-9000-2');
+            angular.forEach(room.participants, function(p, index) {
                 if(p.userId === userId) {
-                    participants.splice(index, 1);
+                    room.participants.splice(index, 1);
                     mockinfo.getEvents().push({type:'Leave', participant:p});
                     return false;
                 }
@@ -736,9 +737,10 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
         $httpBackend.whenPOST(/^rooms\/DK-9000-2\/participants\/.+\/mute/).respond(function(method, url) {
             var branch = url.split('/');
             var userId = branch[branch.length-2];
-            angular.forEach(participants, function(p, index) {
+            var room = getRoom('DK-9000-2');
+            angular.forEach(room.participants, function(p, index) {
                 if(p.userId === userId) {
-                    participants[index].muted = true;
+                    room.participants[index].muted = true;
                     mockinfo.getEvents().push({type:'Change', participant:p});
                     return false;
                 }
@@ -749,9 +751,10 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
         $httpBackend.whenPOST(/^rooms\/DK-9000-2\/participants\/.+\/unmute/).respond(function(method, url) {
             var branch = url.split('/');
             var userId = branch[branch.length-2];
-            angular.forEach(participants, function(p, index) {
+            var room = getRoom('DK-9000-2');
+            angular.forEach(room.participants, function(p, index) {
                 if(p.userId === userId) {
-                    participants[index].muted = false;
+                    room.participants[index].muted = false;
                     mockinfo.getEvents().push({type:'Change', participant:p});
                     return false;
                 }
