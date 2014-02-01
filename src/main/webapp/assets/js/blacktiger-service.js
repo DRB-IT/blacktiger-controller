@@ -13,6 +13,101 @@ angular.module('blacktiger-service', ['ngCookies'])
                 }
             };
         };
+    }).factory('SystemSvc', function($timeout) {
+        'use strict'
+        return {
+            getSystemInfo: function() {
+                return $timeout(function() {
+                    return {
+                        cores: 24,
+                        load: {
+                            disk: 25.0,
+                            memory: 22.0,
+                            cpu: 0.3,
+                            net: 4.9
+                        },
+                        averageCpuLoad: {
+                            oneMinute: 0.1,
+                            fiveMinutes: 0.3,
+                            tenMinutes: 2.0
+                        }
+                    };
+                }, 0);
+            },
+            getRooms: function() {
+                return $timeout(function() {
+                    return [
+                        {
+                            id: '09991',
+                            displayName: 'DK-9000-1 Aalborg, sal 1',
+                            technicalSupervisor: {
+                                name: 'Michael Stenner',
+                                phoneNumber: '+4512345678',
+                                email: 'example@mail.dk'
+                            },
+                            participants: [
+                                {
+                                    userId: '1',
+                                    muted: true,
+                                    host: false,
+                                    phoneNumber: '+4512345687',
+                                    dateJoined: new Date().getTime(),
+                                    name: 'John Doe',
+                                    commentRequested: false
+                                },
+                                {
+                                    userId: '2',
+                                    muted: false,
+                                    host: false,
+                                    phoneNumber: 'PC-+4512345678',
+                                    dateJoined: new Date().getTime(),
+                                    name: 'Jane Doe',
+                                    commentRequested: false
+                                }
+                            ]
+                        },
+                        {
+                            id: '09992',
+                            displayName: 'DK-9000-1 Aalborg, sal 2',
+                            technicalSupervisor: {
+                                name: 'Michael Stenner',
+                                phoneNumber: '+4512345678',
+                                email: 'example@mail.dk'
+                            },
+                            participants: [
+                                {
+                                    userId: '3',
+                                    muted: true,
+                                    host: false,
+                                    phoneNumber: 'PC-+4512345687',
+                                    dateJoined: new Date().getTime(),
+                                    name: 'John Doe',
+                                    commentRequested: true
+                                },
+                                {
+                                    userId: '4',
+                                    muted: false,
+                                    host: false,
+                                    phoneNumber: 'PC-+4512345678',
+                                    dateJoined: new Date().getTime(),
+                                    name: 'Jane Doe',
+                                    commentRequested: false
+                                },
+                                {
+                                    userId: '5',
+                                    muted: false,
+                                    host: false,
+                                    phoneNumber: '+4512345678',
+                                    dateJoined: new Date().getTime(),
+                                    name: 'Jane Doe',
+                                    commentRequested: true
+                                }
+                            ]
+                        }
+                    ];
+                }, 200);
+            }
+        }
     }).factory('RoomSvc', function (blacktiger, $timeout, $http, $rootScope) {
         'use strict';
         var roomIds = null, current = null;
@@ -32,12 +127,10 @@ angular.module('blacktiger-service', ['ngCookies'])
                     }, 0);
                 }
             },
-            setCurrent: function (roomId) {
-                current = roomId;
-                console.log('Current room set to ' + roomId + '. Broadcasting it.');
-                $rootScope.$broadcast("roomChanged", {
-                    roomId: roomId
-                });
+            setCurrent: function (room) {
+                current = room;
+                console.log('Current room set to ' + room.id + '. Broadcasting it.');
+                $rootScope.$broadcast("roomChanged", room);
             },
             getCurrent: function () {
                 return current;
@@ -59,7 +152,7 @@ angular.module('blacktiger-service', ['ngCookies'])
                     return [];
                 }, 0);
             }
-            return $http.get(blacktiger.getServiceUrl() + "rooms/" + room + "/participants").then(function (request) {
+            return $http.get(blacktiger.getServiceUrl() + "rooms/" + room.id + "/participants").then(function (request) {
                 return request.data;
             });
         };
@@ -86,7 +179,7 @@ angular.module('blacktiger-service', ['ngCookies'])
             }
             //console.log('Called waitForChanges with timestamp: ' + timestamp);
 
-            $http.get(blacktiger.getServiceUrl() + "rooms/" + room + "/participants/changes?since=" + timestamp).success(function(data) {
+            $http.get(blacktiger.getServiceUrl() + "rooms/" + room.id + "/participants/changes?since=" + timestamp).success(function(data) {
                 var timestamp = data.timestamp, index, participant;
                 angular.forEach(data.events, function(e) {
                     switch(e.type) {
@@ -153,19 +246,19 @@ angular.module('blacktiger-service', ['ngCookies'])
             kickParticipant: function (userid) {
                 return $http({
                     method: 'POST',
-                    url: blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent() + "/participants/" + userid + "/kick"
+                    url: blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent().id + "/participants/" + userid + "/kick"
                 });
             },
             muteParticipant: function (userid) {
                 return $http({
                     method: 'POST',
-                    url: blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent() + "/participants/" + userid + "/mute"
+                    url: blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent().id + "/participants/" + userid + "/mute"
                 });
             },
             unmuteParticipant: function (userid) {
                 return $http({
                     method: 'POST',
-                    url: blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent() + "/participants/" + userid + "/unmute"
+                    url: blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent().id + "/participants/" + userid + "/unmute"
                 });
             }
         };
@@ -177,12 +270,6 @@ angular.module('blacktiger-service', ['ngCookies'])
                     $rootScope.$broadcast('PhoneBookSvc.update', phoneNumber, name);
                     return;
                 });
-            },
-            removeEntry: function (phoneNumber) {
-                return $http.delete(blacktiger.getServiceUrl() + 'phonebook/' + phoneNumber).then(function () {
-                    $rootScope.$broadcast('PhoneBookSvc.delete', phoneNumber);
-                    return;
-                });
             }
         };
     }).factory('ReportSvc', function ($http, $q, RoomSvc, blacktiger) {
@@ -190,7 +277,7 @@ angular.module('blacktiger-service', ['ngCookies'])
         return {
             report: [],
             findByNumbers: function (numbers) {
-                return $http.get(blacktiger.getServiceUrl() + "reports/" + RoomSvc.getCurrent() + '?numbers=' + numbers.join()).then(function (request) {
+                return $http.get(blacktiger.getServiceUrl() + "reports/" + RoomSvc.getCurrent().id + '?numbers=' + numbers.join()).then(function (request) {
                     return request.data;
                 });
             }

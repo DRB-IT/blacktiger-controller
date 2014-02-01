@@ -234,8 +234,8 @@ function RoomDisplayCtrl($scope, RoomSvc) {
         }
     });
 
-    $scope.$on("roomChanged", function (event, args) {
-        $scope.currentRoom = RoomSvc.getCurrent();
+    $scope.$on("roomChanged", function (event, room) {
+        $scope.currentRoom = room;
     });
 
     RoomSvc.getRoomIds().then(function (data) {
@@ -389,91 +389,10 @@ function SettingsCtrl($scope, SipUserSvc, RoomSvc) {
 
 }
 
-function RealtimeCtrl($scope) {
-    $scope.system = {
-        cores: 24,
-        load: {
-            disk: 25.0,
-            memory: 22.0,
-            cpu: 0.3,
-            net: 4.9
-        },
-        averageCpuLoad: {
-            oneMinute: 0.1,
-            fiveMinutes: 0.3,
-            tenMinutes: 2.0
-        }
-    };
+function RealtimeCtrl($scope, SystemSvc) {
+    $scope.system = {};
 
-    $scope.rooms =  [
-        {
-            id: '09991',
-            displayName: 'DK-9000-1 Aalborg, sal 1',
-            technicalSupervisor: {
-                name: 'Michael Stenner',
-                phoneNumber: '+4512345678',
-                email: 'example@mail.dk'
-            },
-            participants: [
-                {
-                    userId: '1',
-                    muted: true,
-                    host: false,
-                    phoneNumber: '+4512345687',
-                    dateJoined: new Date().getTime(),
-                    name: 'John Doe',
-                    commentRequested: false
-                },
-                {
-                    userId: '2',
-                    muted: false,
-                    host: false,
-                    phoneNumber: 'PC-+4512345678',
-                    dateJoined: new Date().getTime(),
-                    name: 'Jane Doe',
-                    commentRequested: false
-                }
-            ]
-        },
-        {
-            id: '09992',
-            displayName: 'DK-9000-1 Aalborg, sal 2',
-            technicalSupervisor: {
-                name: 'Michael Stenner',
-                phoneNumber: '+4512345678',
-                email: 'example@mail.dk'
-            },
-            participants: [
-                {
-                    userId: '3',
-                    muted: true,
-                    host: false,
-                    phoneNumber: 'PC-+4512345687',
-                    dateJoined: new Date().getTime(),
-                    name: 'John Doe',
-                    commentRequested: true
-                },
-                {
-                    userId: '4',
-                    muted: false,
-                    host: false,
-                    phoneNumber: 'PC-+4512345678',
-                    dateJoined: new Date().getTime(),
-                    name: 'Jane Doe',
-                    commentRequested: false
-                },
-                {
-                    userId: '5',
-                    muted: false,
-                    host: false,
-                    phoneNumber: '+4512345678',
-                    dateJoined: new Date().getTime(),
-                    name: 'Jane Doe',
-                    commentRequested: true
-                }
-            ]
-        }
-    ];
+    $scope.rooms =  [];
 
     $scope.getNoOfParticipants = function() {
         var count = 0;
@@ -527,6 +446,20 @@ function RealtimeCtrl($scope) {
         return count;
     };
 
+    $scope.updateSystemInfo = function() {
+        SystemSvc.getSystemInfo().then(function(data) {
+            $scope.system = data;
+        });
+    };
+
+    $scope.loadRooms = function() {
+        SystemSvc.getRooms().then(function(rooms) {
+            $scope.rooms = rooms;
+        });
+    };
+
+    $scope.updateSystemInfo();
+    $scope.loadRooms();
 }
 
 angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
@@ -579,9 +512,9 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
     .run(function ($httpBackend, mockinfo, $q) {
         var rooms = [
             {
-                id: '09991',
-                displayName: 'DK-9000-1 Aalborg, sal 2',
-                technicalSupervisor: {
+                id: 'DK-9000-2',
+                name: 'DK-9000-1 Aalborg, sal 2',
+                contact: {
                     name: 'Michael Stenner',
                     phoneNumber: '+4512345678',
                     email: 'example@mail.dk'
@@ -591,13 +524,13 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
         var persons = [
             {name: 'Michael Krog', phoneNumber: '+4512345670'},
             {name: 'Hannah Krog', phoneNumber: '+4512345671'},
-            {name: 'Kasper Dyrvig', phoneNumber: 'PC-+4512345672'},
-            {name: 'Peter Almer Frederiksen', phoneNumber: 'PC-+4512345673'},
+            {name: 'Kasper Dyrvig', phoneNumber: '#654321'},
+            {name: 'Peter Almer Frederiksen', phoneNumber: '#123456'},
             {name: 'Thomas Fredriksen', phoneNumber: '+4512345674'},
             {name: 'Dan Cosmus', phoneNumber: '+4512345675'},
             {name: 'Carit Stypinsky', phoneNumber: '+4512345676'},
             {name: 'Bjarne Jensen', phoneNumber: '+4512345677'},
-            {name: 'Børge Lund', phoneNumber: 'PC-+4512345678'},
+            {name: 'Børge Lund', phoneNumber: '#956677'},
             {name: 'Åse Nielsen', phoneNumber: '+4512345679'}
 
         ], participants = [], nextUserId = 0, i, date = new Date();
@@ -626,7 +559,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
                     userId: String(nextUserId++),
                     muted: false,
                     host: true,
-                    phoneNumber: 'DK-0999',
+                    phoneNumber: '#45-9000-2',
                     dateJoined: date.getTime(),
                     name: 'Rigssal'
                 };
@@ -699,12 +632,12 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
         $httpBackend.whenGET('rooms').respond(function(method, url) {
             var data = [];
             angular.forEach(rooms, function(room) {
-                data.push(room.id);
+                data.push(room);
             });
             return [200, data];
         });
 
-        $httpBackend.whenGET('rooms/09991').respond(function(method, url) {
+        $httpBackend.whenGET('rooms/DK-9000-2').respond(function(method, url) {
             var data = null;
             var leafs = url.split('/');
             var id = leafs[leafs.length-1];
@@ -716,14 +649,14 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             });
             return [data === null ? 404 : 200, data];
         });
-        $httpBackend.whenGET('rooms/09991\/participants').respond(participants);
-        $httpBackend.whenGET(/^rooms\/09991\/participants\/changes.?/).respond(function(method, url) {
+        $httpBackend.whenGET('rooms/DK-9000-2\/participants').respond(participants);
+        $httpBackend.whenGET(/^rooms\/DK-9000-2\/participants\/changes.?/).respond(function(method, url) {
             var data = {timestamp:0,events:mockinfo.getEvents()};
             mockinfo.setEvents([]);
             return [200, data];
         });
 
-        $httpBackend.whenPOST(/^rooms\/09991\/participants\/.+\/kick/).respond(function(method, url) {
+        $httpBackend.whenPOST(/^rooms\/DK-9000-2\/participants\/.+\/kick/).respond(function(method, url) {
             var branch = url.split('/');
             var userId = branch[branch.length-2];
             angular.forEach(participants, function(p, index) {
@@ -736,7 +669,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             return [200];
         });
 
-        $httpBackend.whenPOST(/^rooms\/09991\/participants\/.+\/mute/).respond(function(method, url) {
+        $httpBackend.whenPOST(/^rooms\/DK-9000-2\/participants\/.+\/mute/).respond(function(method, url) {
             var branch = url.split('/');
             var userId = branch[branch.length-2];
             angular.forEach(participants, function(p, index) {
@@ -749,7 +682,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             return [200];
         });
 
-        $httpBackend.whenPOST(/^rooms\/09991\/participants\/.+\/unmute/).respond(function(method, url) {
+        $httpBackend.whenPOST(/^rooms\/DK-9000-2\/participants\/.+\/unmute/).respond(function(method, url) {
             var branch = url.split('/');
             var userId = branch[branch.length-2];
             angular.forEach(participants, function(p, index) {

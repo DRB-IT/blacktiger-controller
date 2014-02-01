@@ -6,9 +6,9 @@ angular.module('blacktiger-ui',[])
                 number: '@'
             },
             controller: function ($scope, $element, $attrs) {
-                if ($scope.number.indexOf("PC-") === 0) {
+                if ($scope.number.indexOf("#") === 0) {
                     $scope.iconclass = 'hdd';
-                    $scope.cleannumber = $scope.number.substring(3);
+                    $scope.cleannumber = $scope.number;
                 } else {
                     $scope.iconclass = 'earphone';
                     $scope.cleannumber = $scope.number;
