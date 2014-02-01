@@ -13,6 +13,38 @@ angular.module('blacktiger-service', ['ngCookies'])
                 }
             };
         };
+    }).factory('LoginSvc', function($q, $timeout, $cookieStore, $http, $rootScope) {
+        'use strict'
+        return {
+            authenticate: function(username, password, remember) {
+                var user = null;
+                if(angular.isDefined(username) && angular.isDefined(password)) {
+                    user =  {
+                        username: username,
+                        roles: ['ROLE_USER'],
+                        token: 'qwerty123'
+                    };
+                    if(remember) {
+                        $cookieStore.put('user', user);
+                    }
+
+                } else {
+                    user = $cookieStore.get('user');
+                }
+
+                if(user) {
+                    $http.defaults.headers.common['X-Auth-Token'] = user.token;
+
+                    return $timeout(function() {
+                        console.log('Logged in as ' + user.username);
+                        $rootScope.$broadcast("login", user);
+                        return user;
+                    }, 0);
+                } else {
+                    return $q.reject();
+                }
+            }
+        }
     }).factory('SystemSvc', function($timeout) {
         'use strict'
         return {
@@ -91,17 +123,18 @@ angular.module('blacktiger-service', ['ngCookies'])
         };
 
         var waitForChanges = function(timestamp) {
-            if(timestamp === undefined) {
-                timestamp = 0;
+            var data = {};
+            if(timestamp !== undefined) {
+                data.since = timestamp;
             }
 
             var room = RoomSvc.getCurrent();
             if(room===null) {
-                $timeout(waitForChanges, 100);
+                return;
             }
             //console.log('Called waitForChanges with timestamp: ' + timestamp);
 
-            $http.get(blacktiger.getServiceUrl() + "rooms/" + room.id + "/participants/events?since=" + timestamp).success(function(data) {
+            $http({method: 'GET', url: blacktiger.getServiceUrl() + "rooms/" + room.id + "/participants/events", params: data}).success(function(data) {
                 var timestamp = data.timestamp, index, participant;
                 angular.forEach(data.events, function(e) {
                     switch(e.type) {

@@ -1,11 +1,26 @@
 /*************************************** MODULE ********************************************/
 
 var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.translate', 'ui.bootstrap', 'blacktiger-service', 'blacktiger-ui'])
-    .config(function ($locationProvider, $routeProvider, $translateProvider) {
+    .config(function ($locationProvider, $routeProvider, $httpProvider, $translateProvider) {
+        $httpProvider.interceptors.push(function($location) {
+            return {
+                'responseError': function(rejection) {
+                    if(rejection.status === 401) {
+                        $location.path('/login');
+                    }
+                    return rejection;
+                }
+            };
+        });
+
         $routeProvider.
         when('/', {
             controller: RoomCtrl,
             templateUrl: 'assets/templates/room.html'
+        }).
+        when('/login', {
+            controller: LoginCtrl,
+            templateUrl: 'assets/templates/login.html'
         }).
         when('/settings', {
             controller: SettingsCtrl,
@@ -33,14 +48,12 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
         $translateProvider.preferredLanguage(langData[0]);
         $translateProvider.fallbackLanguage('en');
 
+    }).run(function($location, LoginSvc) {
+        LoginSvc.authenticate().then(angular.noop, function() {
+            $location.path('login');
+        });
     })
-    .filter('cleannumber', function () {
-        return function (input) {
-            //Retrieve and return last part.
-            var data = input.split("-");
-            return data[data.length - 1];
-        };
-    }).directive('btCommentAlert', function () {
+    .directive('btCommentAlert', function () {
         return {
             restrict: 'E',
             controller: function ($scope, $element, $attrs, ParticipantSvc) {
@@ -238,9 +251,26 @@ function RoomDisplayCtrl($scope, RoomSvc) {
         $scope.currentRoom = room;
     });
 
-    RoomSvc.getRooms().then(function (data) {
-        $scope.rooms = data;
+    $scope.$on("login", function() {
+        RoomSvc.getRooms().then(function (data) {
+            $scope.rooms = data;
+        });
     });
+
+}
+
+function LoginCtrl($scope, $location, LoginSvc) {
+    $scope.username = "";
+    $scope.password = "";
+    $scope.rememberMe = false;
+
+    $scope.login = function() {
+        LoginSvc.authenticate($scope.username, $scope.password, $scope.rememberMe).then(function(token) {
+            $location.path('');
+        }, function(reason) {
+            alert(reason);
+        });
+    }
 }
 
 function RoomCtrl($scope, $cookieStore, $modal, ParticipantSvc, RoomSvc, PhoneBookSvc, ReportSvc) {
@@ -377,14 +407,7 @@ function SettingsCtrl($scope, SipUserSvc, RoomSvc) {
     };
 
     $scope.$watch('RoomSvc.getCurrent()', function() {
-        var roomId = RoomSvc.getCurrent();
-        if(roomId !== null) {
-            RoomSvc.getRoom(roomId).then(function(room) {
-                $scope.room = room;
-            });
-        } else {
-            $scope.room = null;
-        }
+        $scope.room = RoomSvc.getCurrent();
     });
 
 }
@@ -484,29 +507,39 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
     .config(function($httpProvider, mockinfoProvider) {
 
         $httpProvider.interceptors.push(function($q, $timeout, mockinfo) {
-          return {
-           'request': function(config) {
-               if(config.url.indexOf('/events') > 0) {
-                   var count = 0;
-                   var deferred = $q.defer();
-                   var delayedRequest = function() {
-                       $timeout(function() {
-                           if(count === 60 || mockinfo.getEvents().length > 0) {
-                               deferred.resolve(config);
-                               count = 0;
-                           } else {
-                               delayedRequest();
-                           }
-                        count++;
-                       }, 1000);
-                   };
-                   delayedRequest();
-                   return deferred.promise;
-               } else {
-                   return config;
-               }
-            }
-          };
+            var token = null;
+            return {
+                'request': function(config) {
+                    var token = config.headers['X-Auth-Token'];
+                    if(config.url.indexOf('/events') > 0) {
+                        var count = 0;
+                        var deferred = $q.defer();
+                        var delayedRequest = function() {
+                            $timeout(function() {
+                                if(count === 60 || mockinfo.getEvents().length > 0) {
+                                    deferred.resolve(config);
+                                    count = 0;
+                                } else {
+                                    delayedRequest();
+                                }
+                                count++;
+                            }, 1000);
+                        };
+                    delayedRequest();
+                        return deferred.promise;
+                    } else {
+                        return config;
+                    }
+                },
+                'response': function(response) {
+                    var token = response.config.headers['X-Auth-Token'];
+                    if(!angular.isDefined(token) && response.config.url.indexOf('assets/') !== 0) {
+                        response.status = 401;
+                        return $q.reject(response);
+                    }
+                    return response;
+                }
+            };
         });
     })
     .run(function ($httpBackend, mockinfo, $q) {
@@ -677,7 +710,12 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             return [200, getRoom('DK-9000-2').participants];
         });
         $httpBackend.whenGET(/^rooms\/DK-9000-2\/participants\/events.?/).respond(function(method, url) {
-            var data = {timestamp:0,events:mockinfo.getEvents()};
+            var data;
+            if(url.indexOf("?since=") > 0) {
+                data = {timestamp:new Date().getTime(),events:mockinfo.getEvents()};
+            } else {
+                data = {timestamp:new Date().getTime(),events:[]};
+            }
             mockinfo.setEvents([]);
             return [200, data];
         });
