@@ -13,58 +13,55 @@ angular.module('blacktiger-service', ['ngCookies'])
                 }
             };
         };
-    }).factory('LoginSvc', function($q, $timeout, $cookieStore, $http, $rootScope) {
+    }).factory('LoginSvc', function($q, $cookieStore, $http, $rootScope, blacktiger) {
         'use strict'
         return {
             authenticate: function(username, password, remember) {
-                var user = null;
-                if(angular.isDefined(username) && angular.isDefined(password)) {
-                    user =  {
-                        username: username,
-                        roles: ['ROLE_USER'],
-                        token: 'qwerty123'
-                    };
-                    if(remember) {
-                        $cookieStore.put('user', user);
-                    }
 
+                var user = null;
+                var credentials;
+
+                if(angular.isDefined(username) && angular.isDefined(password)) {
+                    console.log('Authenticating [username:'+username+', password:'+password+', remember:'+remember+']');
+                    credentials = {username: username, password: password};
                 } else {
+                    console.log('Authenticating from data in cookiestore');
                     user = $cookieStore.get('user');
+                    if(user) {
+                        console.log("user: " + user);
+                        credentials = user.authtoken;
+                    }
                 }
 
-                if(user) {
-                    $http.defaults.headers.common['X-Auth-Token'] = user.token;
+                if(credentials) {
+                    return $http.post(blacktiger.getServiceUrl() + "system/authenticate", credentials).then(function(response) {
+                        user = response.data;
 
-                    return $timeout(function() {
+                        if(remember) {
+                            $cookieStore.put('user', user);
+                        }
+
+                        console.log('Authenticatated. Returning user.');
+                        $http.defaults.headers.common['X-Auth-Token'] = user.authtoken;
+
                         console.log('Logged in as ' + user.username);
                         $rootScope.$broadcast("login", user);
                         return user;
-                    }, 0);
+                    });
                 } else {
-                    return $q.reject();
+                    console.info('Unable to authenticate.');
+                    return $q.reject('No credentials specified or available for authentication.');
                 }
+
             }
         }
-    }).factory('SystemSvc', function($timeout) {
+    }).factory('SystemSvc', function($http) {
         'use strict'
         return {
             getSystemInfo: function() {
-                return $timeout(function() {
-                    return {
-                        cores: 24,
-                        load: {
-                            disk: 25.0,
-                            memory: 22.0,
-                            cpu: 0.3,
-                            net: 4.9
-                        },
-                        averageCpuLoad: {
-                            oneMinute: 0.1,
-                            fiveMinutes: 0.3,
-                            tenMinutes: 2.0
-                        }
-                    };
-                }, 0);
+                return $http.get('system/information').then(function(response) {
+                    return response.data;
+                });
             }
         }
     }).factory('RoomSvc', function (blacktiger, $http, $rootScope) {
