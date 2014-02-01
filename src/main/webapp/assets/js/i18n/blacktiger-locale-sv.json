@@ -6,7 +6,11 @@
     "NAVIGATION": {
         "PARTICIPANTS": "Lyssnare nu",
         "REPORT": "Närvarorapport",
-        "HELP": "Hjälp"
+        "HELP": "Hjälp",
+        "ADMIN": {
+            "REALTIME": "Realtid",
+            "HISTORY": "Historik"
+        }
     },
     "PARTICIPANTS": {
         "WARNINGS": {

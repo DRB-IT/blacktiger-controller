@@ -6,7 +6,11 @@
     "NAVIGATION": {
         "PARTICIPANTS": "Current Listeners",
         "REPORT": "Listener Report",
-        "HELP": "Help"
+        "HELP": "Help",
+        "ADMIN": {
+            "REALTIME": "Realtime",
+            "HISTORY": "History"
+        }
     },
     "PARTICIPANTS": {
         "WARNINGS": {

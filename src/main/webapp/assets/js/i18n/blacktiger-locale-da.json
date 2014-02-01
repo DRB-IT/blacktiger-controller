@@ -6,7 +6,11 @@
     "NAVIGATION": {
         "PARTICIPANTS": "Lyttere nu",
         "SETTINGS": "Indstillinger",
-        "HELP": "Hjælp"
+        "HELP": "Hjælp",
+        "ADMIN": {
+            "REALTIME": "Realtid",
+            "HISTORY": "Historik"
+        }
     },
     "PARTICIPANTS": {
         "WARNINGS": {

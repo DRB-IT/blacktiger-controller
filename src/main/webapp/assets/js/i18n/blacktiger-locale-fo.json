@@ -6,7 +6,11 @@
     "NAVIGATION": {
         "PARTICIPANTS": "Lyttere nu",
         "REPORT": "Lytterrapport",
-        "HELP": "Hjælp"
+        "HELP": "Hjælp",
+        "ADMIN": {
+            "REALTIME": "Realtid",
+            "HISTORY": "Historik"
+        }
     },
     "PARTICIPANTS": {
         "WARNINGS": {

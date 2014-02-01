@@ -6,7 +6,11 @@
     "NAVIGATION": {
         "PARTICIPANTS": "Hlustendur nú",
         "REPORT": "Hlustun skýrslu",
-        "HELP": "Hjálp"
+        "HELP": "Hjálp",
+        "ADMIN": {
+            "REALTIME": "Realtid",
+            "HISTORY": "Historik"
+        }
     },
     "PARTICIPANTS": {
         "WARNINGS": {

@@ -6,7 +6,11 @@
     "NAVIGATION": {
         "PARTICIPANTS": "Maannakkut tusarnaartut",
         "REPORT": "Tusarnaartunik nalunaarusiaq",
-        "HELP": "Ikiuut"
+        "HELP": "Ikiuut",
+        "ADMIN": {
+            "REALTIME": "Realtid",
+            "HISTORY": "Historik"
+        }
     },
     "PARTICIPANTS": {
         "WARNINGS": {
