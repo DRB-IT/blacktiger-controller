@@ -53,6 +53,7 @@ angular.module('blacktiger-ui',[])
     return {
         restrict: 'EA',
         link: function(scope, element, $timeout) {
+            // Makes sure that if the first input field of the modal is focused - if it has any.
             var em = element.find('input');
             if(em.length > 0) {
                 setTimeout(function() {
