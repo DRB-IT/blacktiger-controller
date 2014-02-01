@@ -33,99 +33,21 @@ angular.module('blacktiger-service', ['ngCookies'])
                         }
                     };
                 }, 0);
-            },
-            getRooms: function() {
-                return $timeout(function() {
-                    return [
-                        {
-                            id: '09991',
-                            displayName: 'DK-9000-1 Aalborg, sal 1',
-                            technicalSupervisor: {
-                                name: 'Michael Stenner',
-                                phoneNumber: '+4512345678',
-                                email: 'example@mail.dk'
-                            },
-                            participants: [
-                                {
-                                    userId: '1',
-                                    muted: true,
-                                    host: false,
-                                    phoneNumber: '+4512345687',
-                                    dateJoined: new Date().getTime(),
-                                    name: 'John Doe',
-                                    commentRequested: false
-                                },
-                                {
-                                    userId: '2',
-                                    muted: false,
-                                    host: false,
-                                    phoneNumber: 'PC-+4512345678',
-                                    dateJoined: new Date().getTime(),
-                                    name: 'Jane Doe',
-                                    commentRequested: false
-                                }
-                            ]
-                        },
-                        {
-                            id: '09992',
-                            displayName: 'DK-9000-1 Aalborg, sal 2',
-                            technicalSupervisor: {
-                                name: 'Michael Stenner',
-                                phoneNumber: '+4512345678',
-                                email: 'example@mail.dk'
-                            },
-                            participants: [
-                                {
-                                    userId: '3',
-                                    muted: true,
-                                    host: false,
-                                    phoneNumber: 'PC-+4512345687',
-                                    dateJoined: new Date().getTime(),
-                                    name: 'John Doe',
-                                    commentRequested: true
-                                },
-                                {
-                                    userId: '4',
-                                    muted: false,
-                                    host: false,
-                                    phoneNumber: 'PC-+4512345678',
-                                    dateJoined: new Date().getTime(),
-                                    name: 'Jane Doe',
-                                    commentRequested: false
-                                },
-                                {
-                                    userId: '5',
-                                    muted: false,
-                                    host: false,
-                                    phoneNumber: '+4512345678',
-                                    dateJoined: new Date().getTime(),
-                                    name: 'Jane Doe',
-                                    commentRequested: true
-                                }
-                            ]
-                        }
-                    ];
-                }, 200);
             }
         }
-    }).factory('RoomSvc', function (blacktiger, $timeout, $http, $rootScope) {
+    }).factory('RoomSvc', function (blacktiger, $http, $rootScope) {
         'use strict';
-        var roomIds = null, current = null;
+        var current = null;
         return {
             getRoomIds: function () {
-                if (roomIds === null) {
-                    return $http({
-                        method: 'GET',
-                        url: blacktiger.getServiceUrl() + "rooms"
-                    }).then(function (response) {
-                        roomIds = response.data;
-                        return roomIds;
-                    });
-                } else {
-                    return $timeout(function () {
-                        return roomIds;
-                    }, 0);
-                }
+                return $http.get(blacktiger.getServiceUrl() + "rooms").then(function(response) {
+                    return response.data;
+                });
+            },
+            getRooms: function() {
+                return $http.get(blacktiger.getServiceUrl() + "rooms?mode=full").then(function(response) {
+                    return response.data;
+                });
             },
             setCurrent: function (room) {
                 current = room;
@@ -179,7 +101,7 @@ angular.module('blacktiger-service', ['ngCookies'])
             }
             //console.log('Called waitForChanges with timestamp: ' + timestamp);
 
-            $http.get(blacktiger.getServiceUrl() + "rooms/" + room.id + "/participants/changes?since=" + timestamp).success(function(data) {
+            $http.get(blacktiger.getServiceUrl() + "rooms/" + room.id + "/participants/events?since=" + timestamp).success(function(data) {
                 var timestamp = data.timestamp, index, participant;
                 angular.forEach(data.events, function(e) {
                     switch(e.type) {

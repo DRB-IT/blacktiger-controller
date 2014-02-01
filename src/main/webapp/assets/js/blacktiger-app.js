@@ -238,7 +238,7 @@ function RoomDisplayCtrl($scope, RoomSvc) {
         $scope.currentRoom = room;
     });
 
-    RoomSvc.getRoomIds().then(function (data) {
+    RoomSvc.getRooms().then(function (data) {
         $scope.rooms = data;
     });
 }
@@ -389,7 +389,7 @@ function SettingsCtrl($scope, SipUserSvc, RoomSvc) {
 
 }
 
-function RealtimeCtrl($scope, SystemSvc) {
+function RealtimeCtrl($scope, SystemSvc, RoomSvc) {
     $scope.system = {};
 
     $scope.rooms =  [];
@@ -453,7 +453,7 @@ function RealtimeCtrl($scope, SystemSvc) {
     };
 
     $scope.loadRooms = function() {
-        SystemSvc.getRooms().then(function(rooms) {
+        RoomSvc.getRooms().then(function(rooms) {
             $scope.rooms = rooms;
         });
     };
@@ -486,7 +486,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
         $httpProvider.interceptors.push(function($q, $timeout, mockinfo) {
           return {
            'request': function(config) {
-               if(config.url.indexOf('/changes') > 0) {
+               if(config.url.indexOf('/events') > 0) {
                    var count = 0;
                    var deferred = $q.defer();
                    var delayedRequest = function() {
@@ -518,7 +518,9 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
                     name: 'Michael Stenner',
                     phoneNumber: '+4512345678',
                     email: 'example@mail.dk'
-                }
+                },
+                participants: [
+                ]
             }
         ];
         var persons = [
@@ -533,7 +535,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             {name: 'Børge Lund', phoneNumber: '#956677'},
             {name: 'Åse Nielsen', phoneNumber: '+4512345679'}
 
-        ], participants = [], nextUserId = 0, i, date = new Date();
+        ], nextUserId = 0, i, date = new Date();
 
         var getPersonByPhoneNumber = function(phoneNumber) {
             var person = null;
@@ -545,9 +547,19 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             return person;
         };
 
-        var addParticipant = function(addEvent) {
+        var getRoom = function(roomId) {
+            var val = null;
+            angular.forEach(rooms, function(room) {
+                if(roomId === room.id) {
+                    val = room;
+                }
+            });
+            return val;
+        }
+
+        var addParticipant = function(room, addEvent) {
             var hasHost = false, participant = null;
-            angular.forEach(participants, function(p) {
+            angular.forEach(room.participants, function(p) {
                 if (p.host === true) {
                    hasHost = true;
                 }
@@ -567,7 +579,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             } else {
                 angular.forEach(persons, function(currentPerson) {
                     var alreadyAdded = false;
-                    angular.forEach(participants, function(currentParticipant) {
+                    angular.forEach(room.participants, function(currentParticipant) {
                         if(currentPerson.phoneNumber === currentParticipant.phoneNumber) {
                             alreadyAdded = true;
                             return false;
@@ -589,7 +601,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             }
 
             if(participant !== null) {
-                participants.push(participant);
+                room.participants.push(participant);
                 if(addEvent) {
                     mockinfo.getEvents().push({type:'Join', participant:participant});
                 }
@@ -608,31 +620,43 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
 
         var maintainParticipantList = function() {
             setTimeout(function() {
-                maintainCount ++;
-                if(participants.length < persons.length + 1) {
-                    addParticipant(true);
-                }
 
-                if(maintainCount % 10 === 2) {
-                    var index = Math.floor((Math.random()*(participants.length-1)) + 1);
-                    console.log(index);
-                    var participant = participants[index];
-                    handleCommentRequested(participant, true);
-                    setTimeout(function() {
-                        handleCommentRequested(participant, false);
-                    }, 15000);
-                }
-                maintainParticipantList();
+                maintainCount ++;
+                angular.forEach(rooms, function(room) {
+                    if(room.participants.length < persons.length + 1) {
+                        addParticipant(room, true);
+                    }
+
+                    if(maintainCount % 10 === 2) {
+                        var index = Math.floor((Math.random()*(room.participants.length-1)) + 1);
+                        console.log(index);
+                        var participant = room.participants[index];
+                        handleCommentRequested(participant, true);
+                        setTimeout(function() {
+                            handleCommentRequested(participant, false);
+                        }, 15000);
+                    }
+                    maintainParticipantList();
+                });
             }, 5000);
         };
 
-        addParticipant();
+        angular.forEach(rooms, function(room) {
+                addParticipant(room);
+        });
+
         maintainParticipantList();
 
-        $httpBackend.whenGET('rooms').respond(function(method, url) {
+        $httpBackend.whenGET(/rooms(\?(.)+)+/).respond(function(method, url) {
             var data = [];
+            var full = url.indexOf('mode=full') > 0;
+
             angular.forEach(rooms, function(room) {
-                data.push(room);
+                if(full) {
+                    data.push(room);
+                } else {
+                    data.push(room.id);
+                }
             });
             return [200, data];
         });
@@ -649,8 +673,10 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             });
             return [data === null ? 404 : 200, data];
         });
-        $httpBackend.whenGET('rooms/DK-9000-2\/participants').respond(participants);
-        $httpBackend.whenGET(/^rooms\/DK-9000-2\/participants\/changes.?/).respond(function(method, url) {
+        $httpBackend.whenGET('rooms/DK-9000-2\/participants').respond(function(method, url) {
+            return [200, getRoom('DK-9000-2').participants];
+        });
+        $httpBackend.whenGET(/^rooms\/DK-9000-2\/participants\/events.?/).respond(function(method, url) {
             var data = {timestamp:0,events:mockinfo.getEvents()};
             mockinfo.setEvents([]);
             return [200, data];
