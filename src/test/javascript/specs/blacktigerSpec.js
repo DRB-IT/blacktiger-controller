@@ -15,11 +15,11 @@ describe('Unit testing btIconifiednumber', function() {
     
     it('Adds a computer icon for computer numbers', function() {
         // Compile a piece of HTML containing the directive
-        var element = $compile('<bt-iconifiednumber number="PC-+4512341234"></bt-iconifiednumber>')($rootScope);
+        var element = $compile('<bt-iconifiednumber number="#1234"></bt-iconifiednumber>')($rootScope);
         // fire all the watches, so the scope expression {{1 + 1}} will be evaluated
         $rootScope.$digest();
         // Check that the compiled element contains the templated content
-        expect(element.html()).toContain('<span class="glyphicon glyphicon-hdd"></span> +4512341234');
+        expect(element.html()).toContain('<span class="glyphicon glyphicon-hdd"></span> #1234');
     });
 });
 
