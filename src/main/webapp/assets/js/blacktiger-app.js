@@ -805,7 +805,7 @@ function isTest() {
 
 if (isTest() && window.location.search !== '?prod') {
     var mocked = true;
-    document.write("<" + "script type='text/javascript' src='assets/js/angular/angular-mocks.js'><" + "/script>");
+    document.write("<" + "script type='text/javascript' src='assets/js/angular-1.2.10/angular-mocks.js'><" + "/script>");
 
 }
 angular.element(document).ready(function () {
