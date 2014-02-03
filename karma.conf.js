@@ -31,8 +31,17 @@ module.exports = function(config) {
 
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-    reporters: ['progress'],
+    reporters: ['progress', 'coverage'],
 
+    preprocessors : {
+      'src/main/webapp/assets/**/blacktiger-*.js': 'coverage'
+    },
+
+    // optionally, configure the reporter
+    coverageReporter: {
+      type : 'html',
+      dir : 'target/coverage/'
+    },
 
     // web server port
     port: 9876,
