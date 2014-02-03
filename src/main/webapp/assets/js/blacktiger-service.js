@@ -96,18 +96,6 @@ angular.module('blacktiger-service', ['ngCookies'])
         'use strict';
         var participants = [];
 
-        var findAll = function() {
-            var room = RoomSvc.getCurrent();
-            if(room === null) {
-                return $timeout(function() {
-                    return [];
-                }, 0);
-            }
-            return $http.get(blacktiger.getServiceUrl() + "rooms/" + room.id + "/participants").then(function (request) {
-                return request.data;
-            });
-        };
-
         var indexByUserId = function(userId) {
             var index = -1;
             angular.forEach(participants, function(p, currentIndex) {
@@ -131,7 +119,7 @@ angular.module('blacktiger-service', ['ngCookies'])
             }
             //console.log('Called waitForChanges with timestamp: ' + timestamp);
 
-            $http({method: 'GET', url: blacktiger.getServiceUrl() + "rooms/" + room.id + "/participants/events", params: data}).success(function(data) {
+            $http({method: 'GET', url: blacktiger.getServiceUrl() + "rooms/" + room.id + "/events", params: data}).success(function(data) {
                 var timestamp = data.timestamp, index, participant;
                 angular.forEach(data.events, function(e) {
                     switch(e.type) {
@@ -172,46 +160,29 @@ angular.module('blacktiger-service', ['ngCookies'])
             $rootScope.$broadcast('ParticipantSvc.leave', participant);
         };
 
-        var onRoomChange = function() {
-            participants.splice();
-            findAll().then(function(data) {
-                console.log('Found ' + data.length + ' particpiantes.');
-                angular.forEach(data, function(p) {
-                    participants.push(p);
-                    //onJoin(p);
-                });
-                waitForChanges();
-            });
+        var onRoomChange = function(room) {
+            participants = room.participants || [];
+            waitForChanges();
         };
 
-        $rootScope.$on('roomChanged', function() {
-            console.log('Detected room change. Reloading all participants.');
-            onRoomChange();
+        $rootScope.$on('roomChanged', function(event, room) {
+            console.log('Detected room change. Reloading all participants[' + (room.participants ? room.participants.length : 0) + '].');
+            onRoomChange(room);
         });
 
-        onRoomChange();
-
+        
         return {
             getParticipants: function () {
                 return participants;
             },
             kickParticipant: function (userid) {
-                return $http({
-                    method: 'POST',
-                    url: blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent().id + "/participants/" + userid + "/kick"
-                });
+                return $http.delete(blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent().id + "/participants/" + userid);
             },
             muteParticipant: function (userid) {
-                return $http({
-                    method: 'POST',
-                    url: blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent().id + "/participants/" + userid + "/mute"
-                });
+                return $http.post(blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent().id + "/participants/" + userid + "/muted", true);
             },
             unmuteParticipant: function (userid) {
-                return $http({
-                    method: 'POST',
-                    url: blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent().id + "/participants/" + userid + "/unmute"
-                });
+                return $http.post(blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent().id + "/participants/" + userid + "/muted", false);
             }
         };
     }).factory('PhoneBookSvc', function ($http, RoomSvc, blacktiger, $rootScope) {
