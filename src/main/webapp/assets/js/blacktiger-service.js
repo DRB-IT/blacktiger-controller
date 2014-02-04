@@ -117,9 +117,11 @@ angular.module('blacktiger-service', ['ngCookies'])
             if(room===null) {
                 return;
             }
-            //console.log('Called waitForChanges with timestamp: ' + timestamp);
+            console.log('Called waitForChanges with timestamp: ' + timestamp);
 
             $http({method: 'GET', url: blacktiger.getServiceUrl() + "rooms/" + room.id + "/events", params: data}).success(function(data) {
+                console.log('Changes received from server [' + data.events.length + ']');
+
                 var timestamp = data.timestamp, index, participant;
                 angular.forEach(data.events, function(e) {
                     switch(e.type) {
@@ -176,6 +178,7 @@ angular.module('blacktiger-service', ['ngCookies'])
                 return participants;
             },
             kickParticipant: function (userid) {
+                console.log('Kicking participant[' + userid + ']');
                 return $http.delete(blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent().id + "/participants/" + userid);
             },
             muteParticipant: function (userid) {
