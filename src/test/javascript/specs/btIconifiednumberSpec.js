@@ -28,7 +28,7 @@ describe('Unit testing btIconifiednumber', function() {
         $rootScope.$digest();
 
         // Check that the compiled element contains the templated content
-        expect(element.html()).toContain('<span class="glyphicon glyphicon-earphone"></span> #1234');
+        expect(element.html()).toContain('<span class="glyphicon glyphicon-earphone"></span> +4512341234');
     });
 });
 
