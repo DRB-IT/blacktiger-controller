@@ -53,6 +53,17 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
             $location.path('login');
         });
     })
+    .filter('filterByRoles', function() {
+        return function(input, roles) {
+            var out = [];
+            angular.forEach(input, function(entry) {
+                if(!entry.requiredRole || (roles && roles.indexOf(entry.requiredRole) >= 0)) {
+                    out.push(entry);
+                }
+            });
+            return out;
+        }
+    })
     .directive('btCommentAlert', function () {
         return {
             restrict: 'E',
@@ -206,34 +217,40 @@ function MenuCtrl($scope, $location) {
         {
             url: "#/",
             name: 'NAVIGATION.PARTICIPANTS',
-            icon: 'user'
+            icon: 'user',
+            requiredRole: 'ROLE_HOST'
         },
         {
             url: "#/settings",
             name: 'NAVIGATION.SETTINGS',
-            icon: 'cog'
+            icon: 'cog',
+            requiredRole: 'ROLE_HOST'
         },
         {
             url: "http://telesal.dk/wiki",
             name: 'NAVIGATION.HELP',
-            icon: 'question-sign'
+            icon: 'question-sign',
+            requiredRole: 'ROLE_HOST'
         },
         {
             url: "#/admin/realtime",
             name: 'NAVIGATION.ADMIN.REALTIME',
-            icon: 'transfer'
+            icon: 'transfer',
+            requiredRole: 'ROLE_ADMIN'
         },
         {
             url: "#/admin/history",
             name: 'NAVIGATION.ADMIN.HISTORY',
-            icon: 'calendar'
+            icon: 'calendar',
+            requiredRole: 'ROLE_ADMIN'
         }
     ];
 }
 
-function RoomDisplayCtrl($scope, RoomSvc) {
+function RoomDisplayCtrl($scope, RoomSvc, LoginSvc) {
     $scope.rooms = null;
     $scope.currentRoom = null;
+    $scope.currentUser = null;
 
     $scope.$watch('currentRoom', function () {
         if (RoomSvc.getCurrent() != $scope.currentRoom) {
@@ -242,7 +259,8 @@ function RoomDisplayCtrl($scope, RoomSvc) {
     });
 
     $scope.$watch('rooms', function () {
-        if ($scope.rooms !== null && $scope.rooms.length > 0 && $scope.currentRoom === null) {
+        if ($scope.currentUser && $scope.currentUser.roles.indexOf('ROLE_HOST') >= 0 && 
+            $scope.rooms !== null && $scope.rooms.length > 0 && $scope.currentRoom === null) {
             $scope.currentRoom = $scope.rooms[0];
         }
     });
@@ -255,6 +273,7 @@ function RoomDisplayCtrl($scope, RoomSvc) {
         RoomSvc.getRooms().then(function (data) {
             $scope.rooms = data;
         });
+        $scope.currentUser = LoginSvc.getCurrentUser();
     });
 
 }
@@ -265,8 +284,12 @@ function LoginCtrl($scope, $location, LoginSvc) {
     $scope.rememberMe = false;
 
     $scope.login = function() {
-        LoginSvc.authenticate($scope.username, $scope.password, $scope.rememberMe).then(function(token) {
-            $location.path('');
+        LoginSvc.authenticate($scope.username, $scope.password, $scope.rememberMe).then(function(user) {
+            if(user.roles.indexOf('ROLE_HOST') >= 0) {
+                $location.path('');
+            } else if(user.roles.indexOf('ROLE_ADMIN') >= 0) {
+                $location.path('/admin/realtime');
+            }
         }, function(reason) {
             alert(reason);
         });
@@ -610,7 +633,32 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
                 };
 
             } else {
-                angular.forEach(persons, function(currentPerson) {
+                
+                for(var i = 0;i < persons.length; i++) {
+                    var index = Math.floor((Math.random()*persons.length));
+                    var currentPerson = persons[index];
+                    var alreadyAdded = false;
+                    
+                    angular.forEach(room.participants, function(currentParticipant) {
+                        if(currentPerson.phoneNumber === currentParticipant.phoneNumber) {
+                            alreadyAdded = true;
+                            return false;
+                        }
+                    });
+
+                    if(!alreadyAdded) {
+                        participant = {
+                            userId: String(nextUserId++),
+                            muted: true,
+                            host: false,
+                            phoneNumber: currentPerson.phoneNumber,
+                            dateJoined: date.getTime(),
+                            name: currentPerson.name
+                        };
+                        break;
+                    }
+                }
+                /*angular.forEach(persons, function(currentPerson) {
                     var alreadyAdded = false;
                     angular.forEach(room.participants, function(currentParticipant) {
                         if(currentPerson.phoneNumber === currentParticipant.phoneNumber) {
@@ -630,7 +678,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
                         };
                         return false;
                     }
-                });
+                });*/
             }
 
             if(participant !== null) {
@@ -652,6 +700,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
         var maintainCount = 0;
 
         var maintainParticipantList = function() {
+            
             setTimeout(function() {
 
                 maintainCount ++;
@@ -671,7 +720,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
                     }
                     maintainParticipantList();
                 });
-            }, 5000);
+            }, Math.min(45000, 3000 * (maintainCount + 1)));
         };
 
         angular.forEach(rooms, function(room) {
@@ -707,14 +756,30 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             return [data === null ? 404 : 200, data];
         });
         
+        $httpBackend.whenGET('system/information').respond({
+            cores: 24,
+            load: {
+                disk: 25.0,
+                memory: 22.0,
+                cpu: 0.3,
+                net: 4.9
+            },
+            averageCpuLoad: {
+                oneMinute: 0.1,
+                fiveMinutes: 0.3,
+                tenMinutes: 2.0
+            }
+        });
+        
         $httpBackend.whenPOST('system/authenticate').respond(function(method, url, data) {
             var user;
-            
+            data = JSON.parse(data);
             if(data.username) {
+                var roles = data.username.toLowerCase() === 'admin' ? ['ROLE_USER', 'ROLE_ADMIN'] : ['ROLE_USER','ROLE_HOST'];
                 user = {
                     username: data.username,
                     authtoken: 'token',
-                    roles: ['ROLE_USER']
+                    roles: roles
                 };
             } else {
                 user = {

@@ -15,6 +15,7 @@ angular.module('blacktiger-service', ['ngCookies'])
         };
     }).factory('LoginSvc', function($q, $cookieStore, $http, $rootScope, blacktiger) {
         'use strict'
+        var currentUser = null;
         return {
             authenticate: function(username, password, remember) {
 
@@ -45,6 +46,8 @@ angular.module('blacktiger-service', ['ngCookies'])
                         $http.defaults.headers.common['X-Auth-Token'] = user.authtoken;
 
                         console.log('Logged in as ' + user.username);
+                        currentUser = user;
+                        $rootScope.currentUser = user;
                         $rootScope.$broadcast("login", user);
                         return user;
                     });
@@ -53,6 +56,9 @@ angular.module('blacktiger-service', ['ngCookies'])
                     return $q.reject('No credentials specified or available for authentication.');
                 }
 
+            },
+            getCurrentUser: function() {
+                return currentUser;
             }
         }
     }).factory('SystemSvc', function($http) {
