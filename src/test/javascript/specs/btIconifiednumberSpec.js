@@ -21,5 +21,14 @@ describe('Unit testing btIconifiednumber', function() {
         // Check that the compiled element contains the templated content
         expect(element.html()).toContain('<span class="glyphicon glyphicon-hdd"></span> #1234');
     });
+    
+    it('Adds a phone icon for non-computer numbers', function() {
+        // Compile a piece of HTML containing the directive
+        var element = $compile('<bt-iconifiednumber number="+4512341234"></bt-iconifiednumber>')($rootScope);
+        $rootScope.$digest();
+
+        // Check that the compiled element contains the templated content
+        expect(element.html()).toContain('<span class="glyphicon glyphicon-earphone"></span> #1234');
+    });
 });
 
