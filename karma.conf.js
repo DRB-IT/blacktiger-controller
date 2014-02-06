@@ -16,6 +16,7 @@ module.exports = function(config) {
     files: [
       'src/main/webapp/assets/js/**/angular.js',
       'src/main/webapp/assets/js/**/angular-cookies.js',
+      'src/main/webapp/assets/js/**/angular-resource.js',
       'src/main/webapp/assets/js/**/angular-mocks.js',
       'src/main/webapp/assets/js/blacktiger-ui.js',
       'src/main/webapp/assets/js/blacktiger-service.js',

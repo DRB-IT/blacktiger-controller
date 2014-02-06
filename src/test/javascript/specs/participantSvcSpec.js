@@ -16,15 +16,7 @@ describe('Unit testing ParticipantSvc', function() {
     }));
 
     it('retreives participants.', function() {
-        var room = {
-                id: 'DK-9000-2',
-                name: 'DK-9000-1 Aalborg, sal 2',
-                contact: {
-                    name: 'John Doe',
-                    phoneNumber: '+4512345678',
-                    email: 'example@mail.dk'
-                },
-                participants: [
+        var participants = [
                     {
                         userId: 1,
                         muted: false,
@@ -34,24 +26,17 @@ describe('Unit testing ParticipantSvc', function() {
                         name: 'Testsal',
                         commentRequested: false
                     }
-                ]
-            };
+                ];
         
-        $rootScope.$broadcast('roomChanged', room);
-        expect(ParticipantSvc.getParticipants().length).toBe(1);
+        $httpBackend.expectGET(/rooms\/DK-9000-2\/participants/).respond(participants);
+        participants = ParticipantSvc.query('DK-9000-2');
+        $httpBackend.flush();
+        expect(participants.length).toBe(1);
         
     });
     
     it('kick participant.', function() {
-        var room = {
-                id: 'DK-9000-2',
-                name: 'DK-9000-1 Aalborg, sal 2',
-                contact: {
-                    name: 'John Doe',
-                    phoneNumber: '+4512345678',
-                    email: 'example@mail.dk'
-                },
-                participants: [
+        var participants= [
                     {
                         userId: 1,
                         muted: false,
@@ -60,58 +45,39 @@ describe('Unit testing ParticipantSvc', function() {
                         dateJoined: 1349333576093,
                         name: 'Testsal',
                         commentRequested: false
+                    },
+                    {
+                        userId: 2,
+                        muted: false,
+                        host: true,
+                        phoneNumber: 'PC-xxxxxxxx',
+                        dateJoined: 1349333576093,
+                        name: 'Testsal',
+                        commentRequested: false
                     }
-                ]
-            };
-        
-        var eventQueue = [];
-        var onEventRequest = function() {
-            var events = eventQueue;
-            eventQueue = [];
-            console.log('Events request [' + events.length + ']');
-            
-            return [200, {timestamp:new Date().getTime(),events:events}];
-        };
-        
-        $httpBackend.expectGET(/rooms\/DK-9000-2\/events.?/).respond(onEventRequest);
+                ];
         
         $httpBackend.expectDELETE('rooms/DK-9000-2/participants/1').respond(function() {
-            var participant = room.participants[0];
-            room.participants = [];
+            var participant = participants[0];
+            participants.splice(0, 1);
             console.log('Kick request received as expected ' + participant);
-            eventQueue.push({type:'Leave', participant:participant});
             return [200];
         });
         
-        RoomSvc.setCurrent(room);
-        ParticipantSvc.kickParticipant('1');
+        ParticipantSvc.kick('DK-9000-2', '1');
         $httpBackend.flush();
         
-        $httpBackend.expectGET(/rooms\/DK-9000-2\/events.?/).respond(onEventRequest);
-        $timeout.flush();
+        $httpBackend.expectGET(/rooms\/DK-9000-2\/participants/).respond(participants);
+        participants = ParticipantSvc.query('DK-9000-2');
         $httpBackend.flush();
             
-        waitsFor(function() {
-            return eventQueue.length === 0;
-        }, 'eventQueue should become empty', 200);
-        
-        runs(function() {
-            expect(ParticipantSvc.getParticipants().length).toBe(0);
-        });
+        expect(participants.length).toBe(1);
         
         
     });
     
     it('mutes participant.', function() {
-        var room = {
-                id: 'DK-9000-2',
-                name: 'DK-9000-1 Aalborg, sal 2',
-                contact: {
-                    name: 'John Doe',
-                    phoneNumber: '+4512345678',
-                    email: 'example@mail.dk'
-                },
-                participants: [
+        var participants= [
                     {
                         userId: 1,
                         muted: false,
@@ -121,56 +87,29 @@ describe('Unit testing ParticipantSvc', function() {
                         name: 'Testsal',
                         commentRequested: false
                     }
-                ]
-            };
+                ];
         
-        var eventQueue = [];
-        var onEventRequest = function() {
-            var events = eventQueue;
-            eventQueue = [];
-            console.log('Events request [' + events.length + ']');
-            
-            return [200, {timestamp:new Date().getTime(),events:events}];
-        };
-        
-        $httpBackend.expectGET(/rooms\/DK-9000-2\/events.?/).respond(onEventRequest);
         
         $httpBackend.expectPOST('rooms/DK-9000-2/participants/1/muted').respond(function(url, headers, data) {
-            var participant = room.participants[0].muted = data;
+            var participant = participants[0].muted = data;
             console.log('Mute request received as expected ' + participant);
-            eventQueue.push({type:'Change', participant:participant});
             return [200];
         });
         
-        RoomSvc.setCurrent(room);
-        ParticipantSvc.muteParticipant('1');
+        ParticipantSvc.mute('DK-9000-2', '1');
         $httpBackend.flush();
         
-        $httpBackend.expectGET(/rooms\/DK-9000-2\/events.?/).respond(onEventRequest);
-        $timeout.flush();
+        $httpBackend.expectGET(/rooms\/DK-9000-2\/participants/).respond(participants);
+        participants = ParticipantSvc.query('DK-9000-2');
         $httpBackend.flush();
             
-        waitsFor(function() {
-            return eventQueue.length === 0;
-        }, 'eventQueue should become empty', 200);
-        
-        runs(function() {
-            expect(ParticipantSvc.getParticipants()[0].muted).toBe(true);
-        });
+        expect(participants[0].muted).toBe(true);
         
         
     });
     
     it('unmutes participant.', function() {
-        var room = {
-                id: 'DK-9000-2',
-                name: 'DK-9000-1 Aalborg, sal 2',
-                contact: {
-                    name: 'John Doe',
-                    phoneNumber: '+4512345678',
-                    email: 'example@mail.dk'
-                },
-                participants: [
+        var participants= [
                     {
                         userId: 1,
                         muted: true,
@@ -180,47 +119,28 @@ describe('Unit testing ParticipantSvc', function() {
                         name: 'Testsal',
                         commentRequested: false
                     }
-                ]
-            };
+                ];
         
-        var eventQueue = [];
-        var onEventRequest = function() {
-            var events = eventQueue;
-            eventQueue = [];
-            console.log('Events request [' + events.length + ']');
-            
-            return [200, {timestamp:new Date().getTime(),events:events}];
-        };
-        
-        $httpBackend.expectGET(/rooms\/DK-9000-2\/events.?/).respond(onEventRequest);
         
         $httpBackend.expectPOST('rooms/DK-9000-2/participants/1/muted').respond(function(url, headers, data) {
-            var participant = room.participants[0].muted = data;
+            var participant = participants[0].muted = data;
             console.log('Mute request received as expected ' + participant);
-            eventQueue.push({type:'Change', participant:participant});
             return [200];
         });
         
-        RoomSvc.setCurrent(room);
-        ParticipantSvc.unmuteParticipant('1');
+        ParticipantSvc.unmute('DK-9000-2', '1');
         $httpBackend.flush();
         
-        $httpBackend.expectGET(/rooms\/DK-9000-2\/events.?/).respond(onEventRequest);
-        $timeout.flush();
+        $httpBackend.expectGET(/rooms\/DK-9000-2\/participants/).respond(participants);
+        participants = ParticipantSvc.query('DK-9000-2');
         $httpBackend.flush();
             
-        waitsFor(function() {
-            return eventQueue.length === 0;
-        }, 'eventQueue should become empty', 200);
-        
-        runs(function() {
-            expect(ParticipantSvc.getParticipants()[0].muted).toBe(false);
-        });
+        expect(participants[0].muted).toBe(false);
         
         
     });
     
-    it('accepts Join event.', function() {
+    /*it('accepts Join event.', function() {
         var room = {
                 id: 'DK-9000-2',
                 name: 'DK-9000-1 Aalborg, sal 2',
@@ -273,6 +193,6 @@ describe('Unit testing ParticipantSvc', function() {
         });
         
         
-    });
+    });*/
 });
 

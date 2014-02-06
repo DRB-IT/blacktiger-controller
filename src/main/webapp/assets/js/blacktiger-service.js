@@ -1,4 +1,4 @@
-angular.module('blacktiger-service', ['ngCookies'])
+angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
     .provider('blacktiger', function () {
         'use strict';
         var serviceUrl = "";
@@ -70,35 +70,62 @@ angular.module('blacktiger-service', ['ngCookies'])
                 });
             }
         }
-    }).factory('RoomSvc', function (blacktiger, $http, $rootScope) {
+    }).factory('RoomSvc', function (blacktiger, $resource) {
         'use strict';
+        var resource = $resource(blacktiger.getServiceUrl() + 'rooms/:id');
         var current = null;
         return {
-            getRoomIds: function () {
-                return $http.get(blacktiger.getServiceUrl() + "rooms").then(function(response) {
-                    return response.data;
-                });
+            query: function() {
+                return resource.query();
             },
-            getRooms: function() {
-                return $http.get(blacktiger.getServiceUrl() + "rooms?mode=full").then(function(response) {
-                    return response.data;
-                });
+            get: function(id) {
+                return resource.get({id:id});
+            }
+        };
+    }).factory('ParticipantSvc', function (blacktiger, $resource) {
+        'use strict';
+        var resource = $resource(blacktiger.getServiceUrl() + 'rooms/:roomid/participants/:id', {}, 
+                    {
+                        mute: {
+                            method:'POST', 
+                            url: blacktiger.getServiceUrl() + 'rooms/:roomid/participants/:id/muted'
+                        }
+                    });
+        return {
+            query: function(roomid) {
+                return resource.query({roomid:roomid});
             },
-            setCurrent: function (room) {
-                current = room;
-                console.log('Current room set to ' + room.id + '. Broadcasting it.');
-                $rootScope.$broadcast("roomChanged", room);
+            get: function(roomId, id) {
+                return resource.get({roomid: roomId, id: id});
             },
-            getCurrent: function () {
-                return current;
+            kick: function(roomId, id) {
+                return resource.remove({roomid: roomId, id: id});
             },
-            getRoom: function(room) {
-                return $http.get(blacktiger.getServiceUrl() + "rooms/" + room).then(function(response) {
+            mute: function(roomId, id) {
+                return resource.mute({roomid:roomId, id:id}, true);
+            },
+            unmute: function(roomId, id) {
+                return resource.mute({roomid:roomId, id:id}, false);
+            }
+        };
+    }).factory('EventSvc', function (blacktiger, $http) {
+        'use strict';
+        return {
+            query: function(room, since) {
+                var params = {};
+                if(room) {
+                    params.room = room;
+                }
+                
+                if(since) {
+                    params.since = since;
+                }
+                return $http({method: 'GET', url: blacktiger.getServiceUrl() + 'events', params: params}).then(function(response){
                     return response.data;
                 });
             }
         };
-    }).factory('ParticipantSvc', function ($http, RoomSvc, blacktiger, $rootScope, $timeout) {
+    })/*.factory('MeetingSvc', function ($http, blacktiger, $rootScope, $timeout) {
         'use strict';
         var participants = [];
 
@@ -119,9 +146,9 @@ angular.module('blacktiger-service', ['ngCookies'])
                 data.since = timestamp;
             }
 
-            var room = RoomSvc.getCurrent();
+            var room = $rootScope.currentRoom;
             if(room===null) {
-                return;
+                return; 
             }
             console.log('Called waitForChanges with timestamp: ' + timestamp);
 
@@ -173,7 +200,7 @@ angular.module('blacktiger-service', ['ngCookies'])
             waitForChanges();
         };
 
-        $rootScope.$on('roomChanged', function(event, room) {
+        $rootScope.$watch('currentRoom', function(event, room) {
             console.log('Detected room change. Reloading all participants[' + (room.participants ? room.participants.length : 0) + '].');
             onRoomChange(room);
         });
@@ -194,7 +221,7 @@ angular.module('blacktiger-service', ['ngCookies'])
                 return $http.post(blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent().id + "/participants/" + userid + "/muted", false);
             }
         };
-    }).factory('PhoneBookSvc', function ($http, RoomSvc, blacktiger, $rootScope) {
+    })*/.factory('PhoneBookSvc', function ($http, RoomSvc, blacktiger, $rootScope) {
         'use strict';
         return {
             updateEntry: function (phoneNumber, name) {
