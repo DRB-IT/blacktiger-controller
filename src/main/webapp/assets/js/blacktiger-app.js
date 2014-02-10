@@ -70,7 +70,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
             scope: {
                 participants: '='
             },
-            controller: function ($scope, $element, $attrs, ParticipantSvc) {
+            controller: function ($scope, $element, $attrs) {
 
                 $scope.forcedHidden = false;
 
@@ -252,13 +252,14 @@ function MenuCtrl($scope, $location) {
     ];
 }
 
-function RoomDisplayCtrl($scope, RoomSvc, LoginSvc, $rootScope) {
+function RoomDisplayCtrl($scope, RoomSvc, LoginSvc, $rootScope, MeetingSvc) {
     $scope.rooms = null;
     
     $scope.$watch('rooms', function () {
         if ($scope.currentUser && $scope.currentUser.roles.indexOf('ROLE_HOST') >= 0 && 
             $scope.rooms !== null && $scope.rooms.length > 0) {
             $rootScope.currentRoom = $scope.rooms[0];
+            MeetingSvc.setRoom($rootScope.currentRoom);
         }
     }, true);
 
@@ -287,31 +288,24 @@ function LoginCtrl($scope, $location, LoginSvc) {
     }
 }
 
-function RoomCtrl($scope, $cookieStore, $modal, ParticipantSvc, RoomSvc, PhoneBookSvc, ReportSvc) {
-    $scope.participants = [];
+function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, ReportSvc, $log) {
+    $scope.participants = MeetingSvc.getParticipantList();
+    $scope.historyCookieName = 'meetingHistory';
     $scope.translationData = {
         phoneNumber: $scope.currentRoom
     };
     $scope.history = [];
-    $cookieStore.put("participanthistory", []);
-
-    $scope.$watch('currentRoom', function() {
-        if($scope.currentRoom) {
-            $scope.participants = ParticipantSvc.query($scope.currentRoom.id);
-        } else {
-            $scope.participants = [];
-        }
-    });
+    $cookieStore.put($scope.historyCookieName, []);
     
     $scope.kickParticipant = function (userId) {
-        ParticipantSvc.kickParticipant(userId);
+        MeetingSvc.kick(userId);
     };
 
     $scope.muteParticipant = function (userId, muted) {
         if(muted) {
-            ParticipantSvc.muteParticipant(userId);
+            MeetingSvc.mute(userId);
         } else {
-            ParticipantSvc.unmuteParticipant(userId);
+            MeetingSvc.unmute(userId);
         }
     };
 
@@ -351,8 +345,8 @@ function RoomCtrl($scope, $cookieStore, $modal, ParticipantSvc, RoomSvc, PhoneBo
     });
 
     $scope.updateHistory = function() {
-        var history = $cookieStore.get("participanthistory"),
-            participants = ParticipantSvc.getParticipants(),
+        var history = $cookieStore.get($scope.historyCookieName),
+            participants = MeetingSvc.getParticipantList(),
             cleansedHistory = [];
 
         angular.forEach(history, function(number) {
@@ -369,24 +363,28 @@ function RoomCtrl($scope, $cookieStore, $modal, ParticipantSvc, RoomSvc, PhoneBo
             }
         });
 
-        ReportSvc.findByNumbers(cleansedHistory).then(function (data) {
+        ReportSvc.findByNumbers($scope.currentRoom, cleansedHistory).then(function (data) {
             $scope.history = data;
         });
-
-
     };
-
-    $scope.$on('ParticipantSvc.join', function(event, participant) {
-        var history = $cookieStore.get("participanthistory");
+    
+    $scope.$on('MeetingSvc.Join', function(event, participant) {
+        $log.debug('New participants - adding to history.');
+        var history = $cookieStore.get($scope.historyCookieName);
         if (history.indexOf(participant.phoneNumber)<0) {
             history.push(participant.phoneNumber);
-            $cookieStore.put("participanthistory", history);
+            $cookieStore.put($scope.historyCookieName, history);
         }
         $scope.updateHistory();
     });
 
-    $scope.$on('ParticipantSvc.leave', function(event, participant) {
+    $scope.$on('MeetingSvc.Leave', function(event, participant) {
+        $log.debug('MeetingSvc.leave event received - updating history.');
         $scope.updateHistory();
+    });
+    
+    angular.forEach($scope.participants, function(p) {
+        onNewParticipant(p);
     });
 
 }
@@ -532,7 +530,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             return {
                 'request': function(config) {
                     var token = config.headers['X-Auth-Token'];
-                    if(config.url.indexOf('/events') > 0) {
+                    if(config.url.indexOf('events') >= 0) {
                         var count = 0;
                         var deferred = $q.defer();
                         var delayedRequest = function() {
@@ -805,7 +803,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
         });
         $httpBackend.whenGET(/^events.?/).respond(function(method, url) {
             var data;
-            if(url.indexOf("?since=") > 0) {
+            if(url.indexOf("since=") > 0) {
                 data = {timestamp:new Date().getTime(),events:mockinfo.getEvents()};
             } else {
                 data = {timestamp:new Date().getTime(),events:[]};

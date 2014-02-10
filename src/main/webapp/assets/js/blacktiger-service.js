@@ -125,10 +125,11 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                 });
             }
         };
-    })/*.factory('MeetingSvc', function ($http, blacktiger, $rootScope, $timeout) {
+    }).factory('MeetingSvc', function ($rootScope, $timeout, ParticipantSvc, EventSvc) {
         'use strict';
-        var participants = [];
-
+        var participants = [], currentRoom = null;
+        
+    
         var indexByUserId = function(userId) {
             var index = -1;
             angular.forEach(participants, function(p, currentIndex) {
@@ -139,27 +140,25 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
             });
             return index;
         };
-
+    
         var waitForChanges = function(timestamp) {
             var data = {};
             if(timestamp !== undefined) {
                 data.since = timestamp;
             }
 
-            var room = $rootScope.currentRoom;
-            if(room===null) {
+            if(!currentRoom) {
                 return; 
             }
             console.log('Called waitForChanges with timestamp: ' + timestamp);
 
-            $http({method: 'GET', url: blacktiger.getServiceUrl() + "rooms/" + room.id + "/events", params: data}).success(function(data) {
+            EventSvc.query(currentRoom.id, timestamp).then(function(data) {
                 console.log('Changes received from server [' + data.events.length + ']');
 
                 var timestamp = data.timestamp, index, participant;
                 angular.forEach(data.events, function(e) {
                     switch(e.type) {
                         case 'Join':
-                            participants.push(e.participant);
                             onJoin(e.participant);
                             break;
                         case 'Leave':
@@ -168,12 +167,12 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                             if(index >= 0) {
                                 participants.splice(index, 1);
                             }
-                            onLeave(participant);
+                            $rootScope.$broadcast('MeetingSvc.Leave', e.participant);
                             break;
                         case 'Change':
                             index = indexByUserId(e.participant.userId);
                             participants[index] = e.participant;
-                            onChange(e.participant);
+                            $rootScope.$broadcast('MeetingSvc.Change', e.participant);
                             break;
                     }
                 });
@@ -182,46 +181,43 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                 }, 150);
             });
         };
-
-        var onJoin = function(participant) {
-            $rootScope.$broadcast('ParticipantSvc.join', participant);
+    
+        var onJoin = function(p) {
+            participants.push(p);
+            $rootScope.$broadcast('MeetingSvc.Join', p);
         };
-
-        var onChange = function(participant) {
-            $rootScope.$broadcast('ParticipantSvc.change', participant);
-        };
-
-        var onLeave = function(participant) {
-            $rootScope.$broadcast('ParticipantSvc.leave', participant);
-        };
-
-        var onRoomChange = function(room) {
-            participants = room.participants || [];
-            waitForChanges();
-        };
-
-        $rootScope.$watch('currentRoom', function(event, room) {
-            console.log('Detected room change. Reloading all participants[' + (room.participants ? room.participants.length : 0) + '].');
-            onRoomChange(room);
-        });
-
-        
+    
         return {
-            getParticipants: function () {
+            getParticipantList: function() {
                 return participants;
             },
-            kickParticipant: function (userid) {
-                console.log('Kicking participant[' + userid + ']');
-                return $http.delete(blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent().id + "/participants/" + userid);
+            setRoom: function(newRoom) {
+                if(!newRoom) {
+                    return;
+                }
+                
+                currentRoom = newRoom;
+                console.log('Room changed.');
+                participants.splice(0);
+                ParticipantSvc.query(currentRoom.id).$promise.then(function(data) {
+                    angular.forEach(data, function(p) {
+                        onJoin(p);
+                    });
+                    waitForChanges();
+                });
             },
-            muteParticipant: function (userid) {
-                return $http.post(blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent().id + "/participants/" + userid + "/muted", true);
+            kick: function(userId) {
+                ParticipantSvc.kick(currentRoom.id, userId);
             },
-            unmuteParticipant: function (userid) {
-                return $http.post(blacktiger.getServiceUrl() + "rooms/" + RoomSvc.getCurrent().id + "/participants/" + userid + "/muted", false);
+            mute: function(userId) {
+                ParticipantSvc.mute(currentRoom.id, userId);
+            },
+            unmute: function(userId) {
+                ParticipantSvc.unmute(currentRoom.id, userId);
             }
         };
-    })*/.factory('PhoneBookSvc', function ($http, RoomSvc, blacktiger, $rootScope) {
+    
+    }).factory('PhoneBookSvc', function ($http, blacktiger, $rootScope) {
         'use strict';
         return {
             updateEntry: function (phoneNumber, name) {
@@ -231,17 +227,17 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                 });
             }
         };
-    }).factory('ReportSvc', function ($http, $q, RoomSvc, blacktiger) {
+    }).factory('ReportSvc', function ($http, $q, blacktiger) {
         'use strict';
         return {
             report: [],
-            findByNumbers: function (numbers) {
-                return $http.get(blacktiger.getServiceUrl() + "reports/" + RoomSvc.getCurrent().id + '?numbers=' + numbers.join()).then(function (request) {
+            findByNumbers: function (room, numbers) {
+                return $http.get(blacktiger.getServiceUrl() + "reports/" + room + '?numbers=' + numbers.join()).then(function (request) {
                     return request.data;
                 });
             }
         };
-    }).factory('SipUserSvc', function ($http, RoomSvc, blacktiger, $rootScope) {
+    }).factory('SipUserSvc', function ($http, blacktiger, $rootScope) {
         'use strict';
         return {
             create: function (user) {
