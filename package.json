@@ -13,9 +13,14 @@
     "karma-coffee-preprocessor": "~0.1.2",
     "requirejs": "~2.1.10",
     "karma-requirejs": "~0.2.1",
-    "karma-phantomjs-launcher": "~0.1.2"
+    "karma-phantomjs-launcher": "~0.1.2",
+    "protractor": "~0.6.1"
   },
   "scripts": {
     "test": "./node_modules/.bin/karma start --single-run --browsers Firefox"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DRB-IT/blacktiger-web.git"
   }
 }
