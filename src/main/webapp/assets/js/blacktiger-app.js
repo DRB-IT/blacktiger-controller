@@ -67,11 +67,8 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
     .directive('btCommentAlert', function () {
         return {
             restrict: 'E',
-            scope: {
-                participants: '='
-            },
-            controller: function ($scope, $element, $attrs) {
-
+            controller: function ($scope, MeetingSvc) {
+                $scope.participants = MeetingSvc.getParticipantList();
                 $scope.forcedHidden = false;
 
                 $scope.isCommentRequested = function() {
@@ -382,10 +379,6 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
         $log.debug('MeetingSvc.leave event received - updating history.');
         $scope.updateHistory();
     });
-    
-    angular.forEach($scope.participants, function(p) {
-        onNewParticipant(p);
-    });
 
 }
 
@@ -404,7 +397,7 @@ function ModalEditNameCtrl($scope, $modalInstance, phoneNumber, currentName) {
     };
 }
 
-function SettingsCtrl($scope, SipUserSvc, RoomSvc) {
+function SettingsCtrl($scope, SipUserSvc) {
     $scope.selectedView='settings';
     $scope.user = {};
 
@@ -425,16 +418,12 @@ function SettingsCtrl($scope, SipUserSvc, RoomSvc) {
         });
     };
 
-    $scope.$watch('RoomSvc.getCurrent()', function() {
-        $scope.room = RoomSvc.getCurrent();
-    });
-
 }
 
 function RealtimeCtrl($scope, SystemSvc, RoomSvc) {
     $scope.system = {};
 
-    $scope.rooms =  [];
+    $scope.rooms =  RoomSvc.query();;
 
     $scope.getNoOfParticipants = function() {
         var count = 0;
@@ -494,14 +483,7 @@ function RealtimeCtrl($scope, SystemSvc, RoomSvc) {
         });
     };
 
-    $scope.loadRooms = function() {
-        RoomSvc.getRooms().then(function(rooms) {
-            $scope.rooms = rooms;
-        });
-    };
-
     $scope.updateSystemInfo();
-    $scope.loadRooms();
 }
 
 angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
