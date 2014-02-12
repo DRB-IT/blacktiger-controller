@@ -4,18 +4,21 @@
         <th colspan="2" class="participantHall">
             <span class="glyphicon glyphicon-plus-sign"></span> {{room.name}}
             <span class="pull-right">
-                <span class="label label-default">{{room.participants.length}}</span>
-                <span class="label label-default"><span class="glyphicon glyphicon-earphone"></span> {{noOfRegularPhones}}<!-- ordinary callers --></span>
-                <span class="label label-default"><span class="glyphicon glyphicon-hdd"></span> {{noOfSipPhones}}<!-- computer callers --></span>
-                <span class="label label-warning"><span class="glyphicon glyphicon-comment"></span> {{noOfOpenMicrophones}}<!-- open microphones --></span>
-                <span class="label label-primary"><span class="glyphicon glyphicon-hand-up"></span> {{noOfCommentRequests}}<!-- commentrequests --></span>
-                <span class="label label-danger"><span class="glyphicon glyphicon-warning-sign"></span> {{noOfMissingNames}}<!-- missing names --></span>
+                <span class="label label-default" title="Lyttere i møderummet">{{(room.participants|filter:{host:false}).length}}</span>
+                <span class="label label-default" title="Antal telefonopkald"><span class="glyphicon glyphicon-earphone"></span> {{noOfRegularPhones}}<!-- ordinary callers --></span>
+                <span class="label label-default" title="Antal SIP-opkald"><span class="glyphicon glyphicon-hdd"></span> {{noOfSipPhones}}<!-- computer callers --></span>
+                <span class="label label-warning" title="Antal åbne mikrofoner"><span class="glyphicon glyphicon-comment"></span> {{noOfOpenMicrophones}}<!-- open microphones --></span>
+                <span class="label label-primary" title="Antal svaranmodninger"><span class="glyphicon glyphicon-hand-up"></span> {{noOfCommentRequests}}<!-- commentrequests --></span>
+                <span class="label label-danger" title="Manglende navne"><span class="glyphicon glyphicon-warning-sign"></span> {{noOfMissingNames}}<!-- missing names --></span>
             </span>
         </th>
     </tr>
     </thead>
     <tbody class="hidden">
-        <tr ng-repeat="participant in room.participants" ng-class="{warning:!participant.muted, info:participant.commentRequested,danger:!(participant.name.length>0)}">
+        <tr ng-if="(room.participants|filter:{host:false}).length===0">
+            <td colspan="2">Ingen deltagere i rummet</td>
+        </tr>
+        <tr ng-repeat="participant in room.participants|filter:{host:false}" ng-class="{warning:!participant.muted, info:participant.commentRequested,danger:!(participant.name.length>0)}">
             <td class="participantNumber"><bt-iconifiednumber number="{{participant.phoneNumber}}"/></td>
             <td class="participantName">
                 {{participant.name}}

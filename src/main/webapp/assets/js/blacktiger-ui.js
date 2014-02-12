@@ -35,17 +35,19 @@ angular.module('blacktiger-ui',[])
                     $scope.noOfMissingNames = 0;
 
                     angular.forEach($scope.room.participants, function(p) {
-                        if(!p.muted) $scope.noOfOpenMicrophones++;
-                        if(p.commentRequested) $scope.noOfCommentRequests++;
-                        if(p.phoneNumber.indexOf('PC-') === 0) {
-                            $scope.noOfSipPhones++;
-                        } else {
-                            $scope.noOfRegularPhones++;
+                        if(!p.host) {
+                            if(!p.muted) $scope.noOfOpenMicrophones++;
+                            if(p.commentRequested) $scope.noOfCommentRequests++;
+                            if(p.phoneNumber.indexOf('#') === 0) {
+                                $scope.noOfSipPhones++;
+                            } else {
+                                $scope.noOfRegularPhones++;
+                            }
+                            if(p.name === null || p.name === '') $scope.noOfMissingNames++;
                         }
-                        if(p.name === null || p.name === '') $scope.noOfMissingNames++;
 
                     });
-                });
+                }, true);
             },
             templateUrl: 'assets/templates/bt-room-status.html'
         };

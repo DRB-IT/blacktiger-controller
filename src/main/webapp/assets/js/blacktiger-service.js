@@ -36,6 +36,9 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
 
                 if(credentials) {
                     return $http.post(blacktiger.getServiceUrl() + "system/authenticate", credentials).then(function(response) {
+                        if(response.status !== 200) {
+                            return $q.reject(response.data);
+                        }
                         user = response.data;
 
                         if(remember) {
@@ -75,8 +78,12 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
         var resource = $resource(blacktiger.getServiceUrl() + 'rooms/:id');
         var current = null;
         return {
-            query: function() {
-                return resource.query();
+            query: function(mode) {
+                var params;
+                if(mode) {
+                    params = {mode:mode};
+                }
+                return resource.query(params);
             },
             get: function(id) {
                 return resource.get({id:id});
@@ -214,6 +221,78 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
             },
             unmute: function(userId) {
                 ParticipantSvc.unmute(currentRoom.id, userId);
+            }
+        };
+    
+    }).factory('RealtimeSvc', function ($rootScope, $timeout, RoomSvc, EventSvc) {
+        'use strict';
+        var rooms = RoomSvc.query('full');
+        
+        var indexByUserId = function(participants, userId) {
+            var index = -1;
+            angular.forEach(participants, function(p, currentIndex) {
+                if(p.userId === userId) {
+                    index = currentIndex;
+                    return false;
+                }
+            });
+            return index;
+        };
+    
+        var getRoomById = function(id) {
+            var room;
+            angular.forEach(rooms, function(current) {
+                if(id === current.id) {
+                    room = current;
+                    return false;
+                }
+            });
+            return room;
+        };
+    
+        var waitForChanges = function(timestamp) {
+            var data = {};
+            if(timestamp !== undefined) {
+                data.since = timestamp;
+            }
+
+            console.log('Called waitForChanges with timestamp: ' + timestamp);
+
+            EventSvc.query(undefined, timestamp).then(function(data) {
+                console.log('Changes received from server [' + data.events.length + ']');
+
+                var timestamp = data.timestamp, index, participant;
+                angular.forEach(data.events, function(e) {
+                    var room = getRoomById(e.room);
+                    switch(e.type) {
+                        case 'Join':
+                            room.participants.push(e.participant);
+                            break;
+                        case 'Leave':
+                            index = indexByUserId(room.participants, e.participant.userId);
+                            if(index >= 0) {
+                                room.participants.splice(index, 1);
+                            }
+                            break;
+                        case 'Change':
+                            index = indexByUserId(room.participants, e.participant.userId);
+                            if(index >= 0) {
+                                room.participants[index] = e.participant;
+                            }
+                            break;
+                    }
+                });
+                $timeout(function() {
+                    waitForChanges(timestamp);
+                }, 150);
+            });
+        };
+    
+        waitForChanges();
+    
+        return {
+            getRoomList: function() {
+                return rooms;
             }
         };
     
