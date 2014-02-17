@@ -306,10 +306,31 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                 });
             }
         };
-    }).factory('ReportSvc', function ($http, $q, blacktiger) {
+    }).factory('ReportSvc', function ($http, $q, blacktiger, $timeout) {
         'use strict';
         return {
-            report: [],
+            getReport: function(dateFrom, dateTo, minDuration) {
+                return $timeout(function() {
+                    return [
+                        {
+                            phoneNumber: '+4512121212',
+                            name: 'John Doe',
+                            numberOfCalls: 2,
+                            totalDuration: 122,
+                            firstCallTimestamp: 222222222,
+                            type: 'Host'
+                        },
+                        {
+                            phoneNumber: '+4521212121',
+                            name: 'Jane Doe',
+                            numberOfCalls: 3,
+                            totalDuration: 122,
+                            firstCallTimestamp: 222222222,
+                            type: 'Phone'
+                        }
+                    ];
+                }, 10);
+            },
             findByNumbers: function (room, numbers) {
                 return $http.get(blacktiger.getServiceUrl() + "reports/" + room + '?numbers=' + numbers.join()).then(function (request) {
                     return request.data;
