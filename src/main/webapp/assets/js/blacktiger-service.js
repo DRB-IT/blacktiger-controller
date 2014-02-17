@@ -327,6 +327,14 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                             totalDuration: 122,
                             firstCallTimestamp: 222222222,
                             type: 'Phone'
+                        },
+                        {
+                            phoneNumber: '+4523456768',
+                            name: 'John Doe',
+                            numberOfCalls: 3,
+                            totalDuration: 546,
+                            firstCallTimestamp: 222222222,
+                            type: 'Computer'
                         }
                     ];
                 }, 10);

@@ -31,7 +31,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
             templateUrl: 'assets/templates/realtime-status.html'
         }).
         when('/admin/history', {
-            controller: SettingsCtrl,
+            controller: HistoryCtrl,
             templateUrl: 'assets/templates/system-history.html'
         }).
         otherwise({
@@ -490,6 +490,15 @@ function RealtimeCtrl($scope, SystemSvc, RealtimeSvc, $timeout) {
     });
 
     $scope.updateSystemInfo();
+}
+
+function HistoryCtrl($scope, ReportSvc) {
+    $scope.searchHistory = function () {
+        ReportSvc.getReport().then(function(data) {
+            $scope.historyData = data;
+            $scope.summaryHistory();
+        });
+    }
 }
 
 angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
