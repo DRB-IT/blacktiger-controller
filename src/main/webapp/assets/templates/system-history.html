@@ -22,9 +22,9 @@
     </div>
 </form>
 <br>
-<p>Sammenlagt have <strong>X sale</strong> i alt <strong>X lyttere</strong> som foretog <strong>X opkald</strong>. Det svarer til <strong>X,X lyttere pr. sal</strong>.<br>
-   De lyttede i gennemsnit X minutter. Der var X % som lyttede via telefonnettet.<br>
-    Opkald med en samlet varihed under {{duration}} minutter er ikke medregnet.</p>
+<p>Sammenlagt have <strong>{{sumHalls}} sale</strong> i alt <strong>{{sumParticipants}} lyttere</strong> som foretog <strong>{{sumCalls}} opkald</strong>. Det svarer til <strong>{{sumAverage}} lyttere pr. sal</strong>.<br>
+   De lyttede i gennemsnit {{sumDuration}} minutter. Der var {{sumPhones}} % som lyttede via telefonnettet.<br>
+    Opkald med en samlet varihed under {{minDuration}} minutter er ikke medregnet.</p>
 <table class="table table-striped table-hover table-condensed participantsTable">
     <thead>
     <tr>
@@ -39,9 +39,9 @@
     <tr ng-repeat="entry in historyData">
         <td class="participantNumber"><bt-iconifiednumber number="{{entry.phoneNumber}}"></bt-iconifiednumber></td>
         <td class="participantName">{{entry.name}}</td>
-        <td class="participantHistory">18:45</td>
-        <td class="participantHistory">1</td>
-        <td class="participantHistory">02:10</td>
+        <td class="participantHistory">{{entry.firstCallTimestamp}}</td>
+        <td class="participantHistory">{{entry.numberOfCalls}}</td>
+        <td class="participantHistory">{{entry.totalDuration}}</td>
     </tr>
     </tbody>
 </table>

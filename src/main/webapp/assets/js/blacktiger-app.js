@@ -499,6 +499,29 @@ function HistoryCtrl($scope, ReportSvc) {
             $scope.summaryHistory();
         });
     }
+    $scope.summaryHistory = function () {
+        $scope.sumHalls = 0;
+        $scope.sumParticipants = 0;
+        $scope.sumPhones = 0;
+        $scope.sumCalls = 0;
+        var countDuration = 0;
+        angular.forEach($scope.historyData, function (entry) {
+            if (entry.type == "Host") {
+                sumHalls = sumHalls++;
+            }
+            else {
+                sumParticipants = sumParticipants++;
+                sumCalls = sumCalls + entry.numberOfCalls;
+                countDuration = countDuration + entry.totalDuration;
+                if (entry.type == "Phone") {
+                    sumPhones = sumPhones++;
+                }
+            }
+        });
+        $scope.sumAverage = sumParticipants / sumHalls;
+        $scope.sumDuration = countDuration / sumParticipants;
+        $scope.minDuration = $scope.duration;
+    }
 }
 
 angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
