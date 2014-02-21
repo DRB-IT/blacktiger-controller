@@ -506,20 +506,19 @@ function HistoryCtrl($scope, ReportSvc) {
         $scope.sumCalls = 0;
         var countDuration = 0;
         angular.forEach($scope.historyData, function (entry) {
-            if (entry.type == "Host") {
-                sumHalls = sumHalls++;
-            }
-            else {
-                sumParticipants = sumParticipants++;
-                sumCalls = sumCalls + entry.numberOfCalls;
-                countDuration = countDuration + entry.totalDuration;
+            if (entry.type === "Host") {
+                $scope.sumHalls++;
+            } else {
+                $scope.sumParticipants++;
+                $scope.sumCalls += entry.numberOfCalls;
+                countDuration += entry.totalDuration;
                 if (entry.type == "Phone") {
-                    sumPhones = sumPhones++;
+                    $scope.sumPhones++;
                 }
             }
         });
-        $scope.sumAverage = sumParticipants / sumHalls;
-        $scope.sumDuration = countDuration / sumParticipants;
+        $scope.sumAverage = $scope.sumParticipants / $scope.sumHalls;
+        $scope.sumDuration = countDuration / $scope.sumParticipants;
         $scope.minDuration = $scope.duration;
     }
 }
