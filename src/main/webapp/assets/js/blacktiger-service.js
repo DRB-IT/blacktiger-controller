@@ -1,7 +1,7 @@
 angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
     .provider('blacktiger', function () {
         'use strict';
-        var serviceUrl = "";
+        var serviceUrl = "http://localhost:8080/";
         this.setServiceUrl = function (url) {
             serviceUrl = url;
         };
@@ -132,10 +132,57 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                 });
             }
         };
-    }).factory('MeetingSvc', function ($rootScope, $timeout, ParticipantSvc, EventSvc) {
+    }).factory('StompSvc', function($rootScope) {
+        var stompClient = {};
+
+        function NGStomp(url) {
+            var ws = new SockJS(url);
+            this.stompClient = Stomp.over(ws);
+        }
+
+        NGStomp.prototype.subscribe = function(queue, callback) {
+            this.stompClient.subscribe(queue, function() {
+                var args = arguments;
+                $rootScope.$apply(function() {
+                    callback(args[0]);
+                })
+            })
+        }
+
+        NGStomp.prototype.send = function(queue, headers, data) {
+            this.stompClient.send(queue, headers, data);
+        }
+
+        NGStomp.prototype.connect = function(user, password, on_connect, on_error, vhost) {
+            this.stompClient.connect(user, password,
+                function(frame) {
+                    $rootScope.$apply(function() {
+                        on_connect.apply(stompClient, frame);
+                    })
+                },
+                function(frame) {
+                    $rootScope.$apply(function() {
+                        on_error.apply(frame);
+                    })
+                }, vhost);
+        }
+
+        NGStomp.prototype.disconnect = function(callback) {
+            this.stompClient.disconnect(function() {
+                var args = arguments;
+                $rootScope.$apply(function() {
+                    callback.apply(args);
+                })
+            })
+        }
+
+        return function(url) {
+            return new NGStomp(url);
+        }
+    }).factory('MeetingSvc', function ($rootScope, $timeout, ParticipantSvc, EventSvc, blacktiger, StompSvc) {
         'use strict';
         var participants = [], currentRoom = null;
-        
+        var stompClient;
     
         var indexByUserId = function(userId) {
             var index = -1;
@@ -148,7 +195,28 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
             return index;
         };
     
-        var waitForChanges = function(timestamp) {
+        var handleEvent = function(event) {
+            var index, participant;
+            switch(event.type) {
+                case 'ConferenceJoinEvent':
+                    onJoin(event.participant);
+                    break;
+                case 'ConferenceLeaveEvent':
+                    index = indexByUserId(event.participantId);
+                    participant = participants[index];
+                    if(index >= 0) {
+                        participants.splice(index, 1);
+                    }
+                    $rootScope.$broadcast('MeetingSvc.Leave', event.participantId);
+                    break;
+                case 'ConferenceChangeEvent':
+                    index = indexByUserId(event.participant.userId);
+                    participants[index] = event.participant;
+                    $rootScope.$broadcast('MeetingSvc.Change', event.participant);
+                    break;
+            }
+        };
+        var subscribeForChangesViaLongPoll = function(timestamp) {
             var data = {};
             if(timestamp !== undefined) {
                 data.since = timestamp;
@@ -157,37 +225,33 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
             if(!currentRoom) {
                 return; 
             }
-            console.log('Called waitForChanges with timestamp: ' + timestamp);
+            console.log('Called subscribeForChangesViaLongPoll with timestamp: ' + timestamp);
 
             EventSvc.query(currentRoom.id, timestamp).then(function(data) {
                 console.log('Changes received from server [' + data.events.length + ']');
 
-                var timestamp = data.timestamp, index, participant;
+                var timestamp = data.timestamp;
                 angular.forEach(data.events, function(e) {
-                    switch(e.type) {
-                        case 'Join':
-                            onJoin(e.participant);
-                            break;
-                        case 'Leave':
-                            index = indexByUserId(e.participant.userId);
-                            participant = participants[index];
-                            if(index >= 0) {
-                                participants.splice(index, 1);
-                            }
-                            $rootScope.$broadcast('MeetingSvc.Leave', e.participant);
-                            break;
-                        case 'Change':
-                            index = indexByUserId(e.participant.userId);
-                            participants[index] = e.participant;
-                            $rootScope.$broadcast('MeetingSvc.Change', e.participant);
-                            break;
-                    }
+                    handleEvent(e);
                 });
                 $timeout(function() {
-                    waitForChanges(timestamp);
+                    subscribeForChangesViaLongPoll(timestamp);
                 }, 150);
             });
         };
+    
+        var subscribeToChanges = function() {
+            stompClient = StompSvc(blacktiger.getServiceUrl() + 'queue');
+            stompClient.connect("guest", "guest", function(){
+                //+ currentRoom
+                stompClient.subscribe("/events/*", function(message) {
+                    var e = angular.fromJson(message.body);
+                    handleEvent(e);
+                });
+            }, function(){
+                subscribeForChangesViaLongPoll();
+            }, '/');
+        }
     
         var onJoin = function(p) {
             participants.push(p);
@@ -210,7 +274,8 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                     angular.forEach(data, function(p) {
                         onJoin(p);
                     });
-                    waitForChanges();
+                    //waitForChanges();
+                    subscribeToChanges();
                 });
             },
             kick: function(userId) {

@@ -360,7 +360,7 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
             }
         });
 
-        ReportSvc.findByNumbers($scope.currentRoom, cleansedHistory).then(function (data) {
+        ReportSvc.findByNumbers($scope.currentRoom.id, cleansedHistory).then(function (data) {
             $scope.history = data;
         });
     };
@@ -571,7 +571,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
                 },
                 'response': function(response) {
                     var token = response.config.headers['X-Auth-Token'];
-                    if(!angular.isDefined(token) && response.config.url.indexOf('assets/') !== 0 && response.config.url.indexOf('system/authenticate') !== 0) {
+                    if(!angular.isDefined(token) && response.config.url.indexOf('assets/') < 0 && response.config.url.indexOf('system/authenticate') < 0) {
                         response.status = 401;
                         return $q.reject(response);
                     }
@@ -580,7 +580,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             };
         });
     })
-    .run(function ($httpBackend, mockinfo, $q) {
+    .run(function ($httpBackend, mockinfo, $q, blacktiger) {
         var rooms = [
             {
                 id: 'DK-9000-1',
@@ -696,7 +696,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             if(participant !== null) {
                 room.participants.push(participant);
                 if(addEvent) {
-                    mockinfo.getEvents().push({type:'Join', room: room.id, participant:participant});
+                    mockinfo.getEvents().push({type:'ConferenceJoinEvent', room: room.id, participant:participant});
                 }
             }
 
@@ -705,7 +705,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
         var handleCommentRequested = function(room, participant, value) {
             if(participant.host !== true) {
                 participant.commentRequested = value;
-                mockinfo.getEvents().push({type:'Change', room: room.id, participant:participant});
+                mockinfo.getEvents().push({type:'ConferenceChangeEvent', room: room.id, participant:participant});
             }
         };
 
@@ -757,8 +757,8 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             });
             return [200, data];
         };
-        $httpBackend.whenGET("rooms").respond(onRequestRooms);
-        $httpBackend.whenGET("rooms?mode=full").respond(onRequestRooms);
+        $httpBackend.whenGET(blacktiger.getServiceUrl() + "rooms").respond(onRequestRooms);
+        $httpBackend.whenGET(blacktiger.getServiceUrl() + "rooms?mode=full").respond(onRequestRooms);
 
         var onRequestRoom = function(method, url, data, headers) {
             var data = null;
@@ -772,8 +772,8 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             });
             return [data === null ? 404 : 200, data];
         };
-        $httpBackend.whenGET('rooms/DK-9000-1').respond(onRequestRoom);
-        $httpBackend.whenGET('rooms/DK-9000-2').respond(onRequestRoom);
+        $httpBackend.whenGET(blacktiger.getServiceUrl() + 'rooms/DK-9000-1').respond(onRequestRoom);
+        $httpBackend.whenGET(blacktiger.getServiceUrl() + 'rooms/DK-9000-2').respond(onRequestRoom);
         
         var onRequestParticipants = function(method, url) {
             var data;
@@ -787,8 +787,8 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             });
             return [200, data];
         };
-        $httpBackend.whenGET(/^rooms\/DK-9000-1\/participants/).respond(onRequestParticipants);
-        $httpBackend.whenGET(/^rooms\/DK-9000-2\/participants/).respond(onRequestParticipants);
+        $httpBackend.whenGET(/.?rooms\/DK-9000-1\/participants/).respond(onRequestParticipants);
+        $httpBackend.whenGET(/.?rooms\/DK-9000-2\/participants/).respond(onRequestParticipants);
         
         var onDeleteParticipant = function(method, url) {
             var branch = url.split('/');
@@ -798,33 +798,33 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             angular.forEach(room.participants, function(p, index) {
                 if(p.userId === userId) {
                     room.participants.splice(index, 1);
-                    mockinfo.getEvents().push({type:'Leave', room: roomId, participant:p});
+                    mockinfo.getEvents().push({type:'ConferenceLeaveEvent', room: roomId, participantId:p.userId});
                     return false;
                 }
             });
             return [200];
         };
-        $httpBackend.whenDELETE(/^rooms\/DK-9000-1\/participants\/.+/).respond(onDeleteParticipant);
-        $httpBackend.whenDELETE(/^rooms\/DK-9000-2\/participants\/.+/).respond(onDeleteParticipant);
+        $httpBackend.whenDELETE(/.?rooms\/DK-9000-1\/participants\/.+/).respond(onDeleteParticipant);
+        $httpBackend.whenDELETE(/.?rooms\/DK-9000-2\/participants\/.+/).respond(onDeleteParticipant);
 
         var onMutingParticipant = function(method, url, data) {
             var branch = url.split('/');
-            var roomId = branch[branch.length-3];
-            var userId = branch[branch.length-1];
+            var roomId = branch[branch.length-4];
+            var userId = branch[branch.length-2];
             var room = getRoom(roomId);
             angular.forEach(room.participants, function(p, index) {
                 if(p.userId === userId) {
                     room.participants[index].muted = data;
-                    mockinfo.getEvents().push({type:'Change', room: roomId, participant:p});
+                    mockinfo.getEvents().push({type:'ConferenceChangeEvent', room: roomId, participant:p});
                     return false;
                 }
             });
             return [200];
         };
-        $httpBackend.whenPOST(/^rooms\/DK-9000-1\/participants\/.+\/muted/).respond(onMutingParticipant);
-        $httpBackend.whenPOST(/^rooms\/DK-9000-2\/participants\/.+\/muted/).respond(onMutingParticipant);
+        $httpBackend.whenPOST(/.?rooms\/DK-9000-1\/participants\/.+\/muted/).respond(onMutingParticipant);
+        $httpBackend.whenPOST(/.?rooms\/DK-9000-2\/participants\/.+\/muted/).respond(onMutingParticipant);
 
-        $httpBackend.whenGET('system/information').respond(function() {
+        $httpBackend.whenGET(blacktiger.getServiceUrl() + 'system/information').respond(function() {
             var data = {
                 cores: 24,
                 load: {
@@ -842,7 +842,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             return [200, data];
         });
         
-        $httpBackend.whenPOST('system/authenticate').respond(function(method, url, data) {
+        $httpBackend.whenPOST(blacktiger.getServiceUrl() + 'system/authenticate').respond(function(method, url, data) {
             
             var user;
             data = JSON.parse(data);
@@ -861,7 +861,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             
             
         });
-        $httpBackend.whenGET(/^events.?/).respond(function(method, url) {
+        $httpBackend.whenGET(/.?events.?/).respond(function(method, url) {
             var data;
             if(url.indexOf("since=") > 0) {
                 data = {timestamp:new Date().getTime(),events:mockinfo.getEvents()};
@@ -873,7 +873,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
         });
 
 
-        $httpBackend.whenGET(/^reports\/.+/).respond(function(method, url) {
+        $httpBackend.whenGET(/.?reports\/.+/).respond(function(method, url) {
             var data = [];
 
             var numberString = url.substr(url.indexOf('?numbers=') + 9);
