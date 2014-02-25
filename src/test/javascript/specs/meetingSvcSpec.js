@@ -56,8 +56,8 @@ describe('Unit testing MeetingSvc', function() {
             event = e;
         });
         
-        $httpBackend.expectGET("rooms/DK-9000-2/participants").respond(participants);
-        $httpBackend.expectGET(/events/).respond(onEventRequest);
+        $httpBackend.expectGET("http://localhost:8080/rooms/DK-9000-2/participants").respond(participants);
+        $httpBackend.expectGET("http://localhost:8080/events").respond(onEventRequest);
         
         console.log("Setting room on MeetingSvc");
         MeetingSvc.setRoom(room);
@@ -66,7 +66,7 @@ describe('Unit testing MeetingSvc', function() {
         console.log("Pushing Join event");
         eventQueue.push({type:'Join', participant:participant});
         
-        $httpBackend.expectGET(/events/).respond(onEventRequest);
+        $httpBackend.expectGET("http://localhost:8080/events").respond(onEventRequest);
         $timeout.flush();
         $httpBackend.flush();
             
@@ -112,8 +112,8 @@ describe('Unit testing MeetingSvc', function() {
             event = e;
         });
         
-        $httpBackend.expectGET("rooms/DK-9000-2/participants").respond(participants);
-        $httpBackend.expectGET(/events/).respond(onEventRequest);
+        $httpBackend.expectGET("http://localhost:8080/rooms/DK-9000-2/participants").respond(participants);
+        $httpBackend.expectGET("http://localhost:8080/events").respond(onEventRequest);
         
         console.log("Setting room on MeetingSvc");
         MeetingSvc.setRoom(room);
@@ -122,7 +122,7 @@ describe('Unit testing MeetingSvc', function() {
         console.log("Pushing Leave event");
         eventQueue.push({type:'Leave', participant:participants[0]});
         
-        $httpBackend.expectGET(/events/).respond(onEventRequest);
+        $httpBackend.expectGET("http://localhost:8080/events").respond(onEventRequest);
         $timeout.flush();
         $httpBackend.flush();
             

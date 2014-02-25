@@ -12,7 +12,7 @@ describe('Unit testing RoomSvc', function() {
    
 
     it('retreives room objects', function() {
-        $httpBackend.expectGET('rooms').respond([{
+        $httpBackend.expectGET("http://localhost:8080/rooms").respond([{
                 id: 'DK-9000-2',
                 name: 'DK-9000-1 Aalborg, sal 2',
                 contact: {
@@ -37,7 +37,7 @@ describe('Unit testing RoomSvc', function() {
     });
 
     it('retreives specific room object', function() {
-        $httpBackend.expectGET('rooms/DK-9000-2').respond({
+        $httpBackend.expectGET("http://localhost:8080/rooms/DK-9000-2").respond({
                 id: 'DK-9000-2',
                 name: 'DK-9000-1 Aalborg, sal 2',
                 contact: {

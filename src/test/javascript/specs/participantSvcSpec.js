@@ -28,7 +28,7 @@ describe('Unit testing ParticipantSvc', function() {
                     }
                 ];
         
-        $httpBackend.expectGET(/rooms\/DK-9000-2\/participants/).respond(participants);
+        $httpBackend.expectGET("http://localhost:8080/rooms/DK-9000-2/participants").respond(participants);
         participants = ParticipantSvc.query('DK-9000-2');
         $httpBackend.flush();
         expect(participants.length).toBe(1);
@@ -57,7 +57,7 @@ describe('Unit testing ParticipantSvc', function() {
                     }
                 ];
         
-        $httpBackend.expectDELETE('rooms/DK-9000-2/participants/1').respond(function() {
+        $httpBackend.expectDELETE("http://localhost:8080/rooms/DK-9000-2/participants/1").respond(function() {
             var participant = participants[0];
             participants.splice(0, 1);
             console.log('Kick request received as expected ' + participant);
@@ -67,7 +67,7 @@ describe('Unit testing ParticipantSvc', function() {
         ParticipantSvc.kick('DK-9000-2', '1');
         $httpBackend.flush();
         
-        $httpBackend.expectGET(/rooms\/DK-9000-2\/participants/).respond(participants);
+        $httpBackend.expectGET("http://localhost:8080/rooms/DK-9000-2/participants").respond(participants);
         participants = ParticipantSvc.query('DK-9000-2');
         $httpBackend.flush();
             
@@ -90,7 +90,7 @@ describe('Unit testing ParticipantSvc', function() {
                 ];
         
         
-        $httpBackend.expectPOST('rooms/DK-9000-2/participants/1/muted').respond(function(url, headers, data) {
+        $httpBackend.expectPOST('http://localhost:8080/rooms/DK-9000-2/participants/1/muted').respond(function(url, headers, data) {
             var participant = participants[0].muted = data;
             console.log('Mute request received as expected ' + participant);
             return [200];
@@ -99,7 +99,7 @@ describe('Unit testing ParticipantSvc', function() {
         ParticipantSvc.mute('DK-9000-2', '1');
         $httpBackend.flush();
         
-        $httpBackend.expectGET(/rooms\/DK-9000-2\/participants/).respond(participants);
+        $httpBackend.expectGET("http://localhost:8080/rooms/DK-9000-2/participants").respond(participants);
         participants = ParticipantSvc.query('DK-9000-2');
         $httpBackend.flush();
             
@@ -122,7 +122,7 @@ describe('Unit testing ParticipantSvc', function() {
                 ];
         
         
-        $httpBackend.expectPOST('rooms/DK-9000-2/participants/1/muted').respond(function(url, headers, data) {
+        $httpBackend.expectPOST('http://localhost:8080/rooms/DK-9000-2/participants/1/muted').respond(function(url, headers, data) {
             var participant = participants[0].muted = data;
             console.log('Mute request received as expected ' + participant);
             return [200];
@@ -131,7 +131,7 @@ describe('Unit testing ParticipantSvc', function() {
         ParticipantSvc.unmute('DK-9000-2', '1');
         $httpBackend.flush();
         
-        $httpBackend.expectGET(/rooms\/DK-9000-2\/participants/).respond(participants);
+        $httpBackend.expectGET("http://localhost:8080/rooms/DK-9000-2/participants").respond(participants);
         participants = ParticipantSvc.query('DK-9000-2');
         $httpBackend.flush();
             
