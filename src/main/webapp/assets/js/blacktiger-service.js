@@ -179,10 +179,9 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
         return function(url) {
             return new NGStomp(url);
         }
-    }).factory('MeetingSvc', function ($rootScope, $timeout, ParticipantSvc, EventSvc, blacktiger, StompSvc) {
+    }).factory('MeetingSvc', function ($rootScope, $timeout, ParticipantSvc, EventSvc, blacktiger, StompSvc, $log) {
         'use strict';
-        var participants = [], currentRoom = null;
-        var stompClient;
+        var participants = [], currentRoom = null, commentCancelPromiseArray = [], stompClient;
     
         var indexByUserId = function(userId) {
             var index = -1;
@@ -195,24 +194,52 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
             return index;
         };
     
+        var updateCancelPromise = function(id, newPromise) {
+            if(commentCancelPromiseArray[id]) {
+                $timeout.cancel(commentCancelPromiseArray[id]);
+            }
+            if(newPromise) {
+                commentCancelPromiseArray[id] = newPromise;
+            }
+        };
+    
+        var setParticipantCommentRequested = function(userId, value) {
+            var index = indexByUserId(userId);
+            if(index >= 0) {
+                participants[index].commentRequested = value;
+            }
+        };
+    
         var handleEvent = function(event) {
-            var index, participant;
+            var index, participant, promise;
             switch(event.type) {
-                case 'ConferenceJoinEvent':
+                case 'Join':
                     onJoin(event.participant);
                     break;
-                case 'ConferenceLeaveEvent':
+                case 'Leave':
                     index = indexByUserId(event.participantId);
-                    participant = participants[index];
                     if(index >= 0) {
                         participants.splice(index, 1);
                     }
                     $rootScope.$broadcast('MeetingSvc.Leave', event.participantId);
                     break;
-                case 'ConferenceChangeEvent':
+                case 'Change':
                     index = indexByUserId(event.participant.userId);
                     participants[index] = event.participant;
                     $rootScope.$broadcast('MeetingSvc.Change', event.participant);
+                    break;
+                case 'CommentRequest':
+                    $log.debug('CommentRequest');
+                    setParticipantCommentRequested(event.participantId, true);
+                    promise = $timeout(function() {
+                            setParticipantCommentRequested(event.participantId, false);
+                        }, 15000);
+                    updateCancelPromise(event.participantId, promise);
+                    break;
+                case 'CommentRequestCancel':
+                    $log.debug('CommentRequestCancel');
+                    setParticipantCommentRequested(event.participantId, false);
+                    updateCancelPromise(event.participantId);
                     break;
             }
         };
@@ -225,10 +252,10 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
             if(!currentRoom) {
                 return; 
             }
-            console.log('Called subscribeForChangesViaLongPoll with timestamp: ' + timestamp);
+            $log.debug('Called subscribeForChangesViaLongPoll with timestamp: ' + timestamp);
 
             EventSvc.query(currentRoom.id, timestamp).then(function(data) {
-                console.log('Changes received from server [' + data.events.length + ']');
+                $log.debug('Changes received from server [' + data.events.length + ']');
 
                 var timestamp = data.timestamp;
                 angular.forEach(data.events, function(e) {

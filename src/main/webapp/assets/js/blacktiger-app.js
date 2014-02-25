@@ -696,16 +696,16 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             if(participant !== null) {
                 room.participants.push(participant);
                 if(addEvent) {
-                    mockinfo.getEvents().push({type:'ConferenceJoinEvent', room: room.id, participant:participant});
+                    mockinfo.getEvents().push({type:'Join', room: room.id, participant:participant});
                 }
             }
 
         };
 
-        var handleCommentRequested = function(room, participant, value) {
+        var handleCommentRequested = function(room, participant, commentRequested) {
+            var type = commentRequested ? 'CommentRequest' : 'CommentRequestCancel';
             if(participant.host !== true) {
-                participant.commentRequested = value;
-                mockinfo.getEvents().push({type:'ConferenceChangeEvent', room: room.id, participant:participant});
+                mockinfo.getEvents().push({type:type, room: room.id, participantId:participant.userId});
             }
         };
 
@@ -723,18 +723,21 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
                         addParticipant(room, true);
                     }
 
-                    if(maintainCount % 10 === 2) {
+                    if(maintainCount % 10 === 4) {
                         var index = Math.floor((Math.random()*(room.participants.length-1)) + 1);
                         console.log(index);
                         var participant = room.participants[index];
                         handleCommentRequested(room, participant, true);
-                        setTimeout(function() {
-                            handleCommentRequested(room, participant, false);
-                        }, 15000);
+                        
+                        if(maintainCount % 4 === 0) {
+                            setTimeout(function() {
+                                handleCommentRequested(room, participant, false);
+                            }, 15000);
+                        }
                     }
                     maintainParticipantList();
                 //});
-            }, Math.min(45000, 3000 * (maintainCount + 1)));
+            }, Math.min(5000, 3000 * (maintainCount + 1)));
         };
 
         angular.forEach(rooms, function(room) {
@@ -798,7 +801,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             angular.forEach(room.participants, function(p, index) {
                 if(p.userId === userId) {
                     room.participants.splice(index, 1);
-                    mockinfo.getEvents().push({type:'ConferenceLeaveEvent', room: roomId, participantId:p.userId});
+                    mockinfo.getEvents().push({type:'Leave', room: roomId, participantId:p.userId});
                     return false;
                 }
             });
@@ -815,7 +818,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             angular.forEach(room.participants, function(p, index) {
                 if(p.userId === userId) {
                     room.participants[index].muted = data;
-                    mockinfo.getEvents().push({type:'ConferenceChangeEvent', room: roomId, participant:p});
+                    mockinfo.getEvents().push({type:'Change', room: roomId, participant:p});
                     return false;
                 }
             });
