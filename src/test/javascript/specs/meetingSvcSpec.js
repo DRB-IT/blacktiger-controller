@@ -6,13 +6,18 @@ describe('Unit testing MeetingSvc', function() {
     var $timeout;
 
     beforeEach(module('blacktiger-service'));
-
-    beforeEach(inject(function(_$rootScope_, _$httpBackend_, _MeetingSvc_, _RoomSvc_, _$timeout_){
+    beforeEach(module(function($logProvider, blacktigerProvider) {
+        blacktigerProvider.setForceLongPolling(true);
+        $logProvider.debugEnabled = true;
+    }));
+    
+    beforeEach(inject(function(_$rootScope_, _$httpBackend_, _MeetingSvc_, _RoomSvc_, _$timeout_, blacktiger){
         $rootScope = _$rootScope_;
         $httpBackend = _$httpBackend_;
         MeetingSvc = _MeetingSvc_;
         RoomSvc = _RoomSvc_;
         $timeout = _$timeout_;
+        
     }));
 
     
@@ -57,7 +62,7 @@ describe('Unit testing MeetingSvc', function() {
         });
         
         $httpBackend.expectGET("http://localhost:8080/rooms/DK-9000-2/participants").respond(participants);
-        $httpBackend.expectGET("http://localhost:8080/events").respond(onEventRequest);
+        $httpBackend.expectGET(/http:\/\/localhost:8080\/events\?room=DK-9000-.?/).respond(onEventRequest);
         
         console.log("Setting room on MeetingSvc");
         MeetingSvc.setRoom(room);
@@ -66,7 +71,7 @@ describe('Unit testing MeetingSvc', function() {
         console.log("Pushing Join event");
         eventQueue.push({type:'Join', participant:participant});
         
-        $httpBackend.expectGET("http://localhost:8080/events").respond(onEventRequest);
+        $httpBackend.expectGET(/http:\/\/localhost:8080\/events\?room=DK-9000-.?/).respond(onEventRequest);
         $timeout.flush();
         $httpBackend.flush();
             
@@ -113,16 +118,16 @@ describe('Unit testing MeetingSvc', function() {
         });
         
         $httpBackend.expectGET("http://localhost:8080/rooms/DK-9000-2/participants").respond(participants);
-        $httpBackend.expectGET("http://localhost:8080/events").respond(onEventRequest);
+        $httpBackend.expectGET(/http:\/\/localhost:8080\/events\?room=DK-9000-.?/).respond(onEventRequest);
         
         console.log("Setting room on MeetingSvc");
         MeetingSvc.setRoom(room);
         $httpBackend.flush();
         
         console.log("Pushing Leave event");
-        eventQueue.push({type:'Leave', participant:participants[0]});
+        eventQueue.push({type:'Leave', participantId:participants[0].userId});
         
-        $httpBackend.expectGET("http://localhost:8080/events").respond(onEventRequest);
+        $httpBackend.expectGET(/http:\/\/localhost:8080\/events\?room=DK-9000-.?/).respond(onEventRequest);
         $timeout.flush();
         $httpBackend.flush();
             

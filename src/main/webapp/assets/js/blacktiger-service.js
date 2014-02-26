@@ -2,18 +2,27 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
     .provider('blacktiger', function () {
         'use strict';
         var serviceUrl = "http://localhost:8080/";
+        var forceLongPolling = false;
+        
         this.setServiceUrl = function (url) {
             serviceUrl = url;
         };
+        
+        this.setForceLongPolling = function(value) {
+            forceLongPolling = value;
+        }
 
         this.$get = function () {
             return {
                 getServiceUrl: function () {
                     return serviceUrl;
+                },
+                isLongPollingForced: function() {
+                    return forceLongPolling;
                 }
             };
         };
-    }).factory('LoginSvc', function($q, $cookieStore, $http, $rootScope, blacktiger) {
+    }).factory('LoginSvc', function($q, $cookieStore, $http, $rootScope, blacktiger, $log) {
         'use strict'
         var currentUser = null;
         return {
@@ -23,13 +32,13 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                 var credentials;
 
                 if(angular.isDefined(username) && angular.isDefined(password)) {
-                    console.log('Authenticating [username:'+username+', password:'+password+', remember:'+remember+']');
+                    $log.info('Authenticating [username:'+username+', password:'+password+', remember:'+remember+']');
                     credentials = {username: username, password: password};
                 } else {
-                    console.log('Authenticating from data in cookiestore');
+                    $log.info('Authenticating from data in cookiestore');
                     user = $cookieStore.get('user');
                     if(user) {
-                        console.log("user: " + user);
+                        $log.info("user: " + user);
                         credentials = user.authtoken;
                     }
                 }
@@ -45,10 +54,10 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                             $cookieStore.put('user', user);
                         }
 
-                        console.log('Authenticatated. Returning user.');
+                        $log.info('Authenticatated. Returning user.');
                         $http.defaults.headers.common['X-Auth-Token'] = user.authtoken;
 
-                        console.log('Logged in as ' + user.username);
+                        $log.info('Logged in as ' + user.username);
                         currentUser = user;
                         $rootScope.currentUser = user;
                         $rootScope.$broadcast("login", user);
@@ -217,6 +226,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                     onJoin(event.participant);
                     break;
                 case 'Leave':
+                    $log.info('Leave Event Recieved for participantId "' + angular.toJson(event) + '"');
                     index = indexByUserId(event.participantId);
                     if(index >= 0) {
                         participants.splice(index, 1);
@@ -255,7 +265,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
             $log.debug('Called subscribeForChangesViaLongPoll with timestamp: ' + timestamp);
 
             EventSvc.query(currentRoom.id, timestamp).then(function(data) {
-                $log.debug('Changes received from server [' + data.events.length + ']');
+                $log.info('Changes received from server [' + data.events.length + ']');
 
                 var timestamp = data.timestamp;
                 angular.forEach(data.events, function(e) {
@@ -295,14 +305,18 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                 }
                 
                 currentRoom = newRoom;
-                console.log('Room changed.');
+                $log.info('Room changed.');
                 participants.splice(0);
                 ParticipantSvc.query(currentRoom.id).$promise.then(function(data) {
                     angular.forEach(data, function(p) {
                         onJoin(p);
                     });
-                    //waitForChanges();
-                    subscribeToChanges();
+                    
+                    if(blacktiger.isLongPollingForced()) {
+                        subscribeForChangesViaLongPoll();
+                    } else {
+                        subscribeToChanges();
+                    }
                 });
             },
             kick: function(userId) {
@@ -348,10 +362,10 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                 data.since = timestamp;
             }
 
-            console.log('Called waitForChanges with timestamp: ' + timestamp);
+            $log.info('Called waitForChanges with timestamp: ' + timestamp);
 
             EventSvc.query(undefined, timestamp).then(function(data) {
-                console.log('Changes received from server [' + data.events.length + ']');
+                $log.info('Changes received from server [' + data.events.length + ']');
 
                 var timestamp = data.timestamp, index, participant;
                 angular.forEach(data.events, function(e) {

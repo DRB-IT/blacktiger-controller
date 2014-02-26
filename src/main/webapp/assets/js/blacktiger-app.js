@@ -580,7 +580,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
             };
         });
     })
-    .run(function ($httpBackend, mockinfo, $q, blacktiger) {
+    .run(function ($httpBackend, mockinfo, $q, blacktiger, $log) {
         var rooms = [
             {
                 id: 'DK-9000-1',
@@ -725,7 +725,7 @@ angular.module('blacktiger-app-mocked', ['blacktiger-app', 'ngMockE2E'])
 
                     if(maintainCount % 10 === 4) {
                         var index = Math.floor((Math.random()*(room.participants.length-1)) + 1);
-                        console.log(index);
+                        $log.info(index);
                         var participant = room.participants[index];
                         handleCommentRequested(room, participant, true);
                         
