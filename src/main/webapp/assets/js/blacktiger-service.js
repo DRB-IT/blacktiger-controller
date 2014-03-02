@@ -28,10 +28,9 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
         return {
             authenticate: function(username, password, remember) {
 
-                var user = null;
-                var credentials;
+                var user = null, credentials, authHeader;
 
-                if(angular.isDefined(username) && angular.isDefined(password)) {
+                /*if(angular.isDefined(username) && angular.isDefined(password)) {
                     $log.info('Authenticating [username:'+username+', password:'+password+', remember:'+remember+']');
                     credentials = {username: username, password: password};
                 } else {
@@ -41,12 +40,14 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                         $log.info("user: " + user);
                         credentials = user.authtoken;
                     }
-                }
+                }*/
 
-                if(credentials) {
-                    return $http.post(blacktiger.getServiceUrl() + "system/authenticate", credentials).then(function(response) {
+                if(username && password) {
+                    authHeader = 'Basic ' + btoa(username + ':' + password);
+                    return $http.get(blacktiger.getServiceUrl() + "system/authenticate", {headers: {'Authorization': authHeader}}).then(function(response) {
                         if(response.status !== 200) {
-                            return $q.reject(response.data);
+                            console.info('Unable to authenticate: ' + response.data);
+                            return $q.reject('Unable to authenticate. Reason: ' + response.data);
                         }
                         user = response.data;
 
@@ -55,7 +56,8 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                         }
 
                         $log.info('Authenticatated. Returning user.');
-                        $http.defaults.headers.common['X-Auth-Token'] = user.authtoken;
+                        //$http.defaults.headers.common['X-Auth-Token'] = user.authtoken;
+                        $http.defaults.headers.common['Authorization'] = authHeader;
 
                         $log.info('Logged in as ' + user.username);
                         currentUser = user;
@@ -73,11 +75,11 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                 return currentUser;
             }
         }
-    }).factory('SystemSvc', function($http) {
+    }).factory('SystemSvc', function($http, blacktiger) {
         'use strict'
         return {
             getSystemInfo: function() {
-                return $http.get('system/information').then(function(response) {
+                return $http.get(blacktiger.getServiceUrl() + 'system/information').then(function(response) {
                     return response.data;
                 });
             }
@@ -330,9 +332,9 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
             }
         };
     
-    }).factory('RealtimeSvc', function ($rootScope, $timeout, RoomSvc, EventSvc) {
+    }).factory('RealtimeSvc', function ($rootScope, $timeout, RoomSvc, StompSvc, blacktiger, $log) {
         'use strict';
-        var rooms = RoomSvc.query('full');
+        var rooms = RoomSvc.query('full'), stompClient;
         
         var indexByUserId = function(participants, userId) {
             var index = -1;
@@ -343,6 +345,15 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                 }
             });
             return index;
+        };
+    
+        var updateCancelPromise = function(id, newPromise) {
+            if(commentCancelPromiseArray[id]) {
+                $timeout.cancel(commentCancelPromiseArray[id]);
+            }
+            if(newPromise) {
+                commentCancelPromiseArray[id] = newPromise;
+            }
         };
     
         var getRoomById = function(id) {
@@ -356,45 +367,68 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
             return room;
         };
     
-        var waitForChanges = function(timestamp) {
-            var data = {};
-            if(timestamp !== undefined) {
-                data.since = timestamp;
+        var handleEvent = function(event) {
+            var index, participant, promise;
+            var room = getRoomById(event.roomNo);
+            if(!room.participants) {
+                room.participants = [];
             }
-
-            $log.info('Called waitForChanges with timestamp: ' + timestamp);
-
-            EventSvc.query(undefined, timestamp).then(function(data) {
-                $log.info('Changes received from server [' + data.events.length + ']');
-
-                var timestamp = data.timestamp, index, participant;
-                angular.forEach(data.events, function(e) {
-                    var room = getRoomById(e.room);
-                    switch(e.type) {
-                        case 'Join':
-                            room.participants.push(e.participant);
-                            break;
+            
+            if(event.type === 'Join') {
+                room.participants.push(event.participant);
+            } else {
+                var userId = event.participant ? event.participant.userId : event.participantId;
+                index = indexByUserId(room.participants, userId);
+                if(index>=0) {
+                    switch(event.type) {
                         case 'Leave':
-                            index = indexByUserId(room.participants, e.participant.userId);
-                            if(index >= 0) {
-                                room.participants.splice(index, 1);
-                            }
+                            room.participants.splice(index, 1);
                             break;
                         case 'Change':
-                            index = indexByUserId(room.participants, e.participant.userId);
-                            if(index >= 0) {
-                                room.participants[index] = e.participant;
-                            }
+                            room.participants[index] = event.participant;
+                            break;
+                        case 'CommentRequest':
+                            $log.debug('CommentRequest');
+                            room.participants[index].commentRequest = true;
+                            promise = $timeout(function() {
+                                    room.participants[index].commentRequest = false;
+                                }, 15000);
+                            updateCancelPromise(userId, promise);
+                            break;
+                        case 'CommentRequestCancel':
+                            $log.debug('CommentRequestCancel');
+                            room.participants[index].commentRequest = false;
+                            updateCancelPromise(userId);
                             break;
                     }
-                });
-                $timeout(function() {
-                    waitForChanges(timestamp);
-                }, 150);
-            });
+                }
+            }
+            
         };
     
-        waitForChanges();
+        var initializeSocket = function() {
+            stompClient = StompSvc(blacktiger.getServiceUrl() + 'socket');
+            stompClient.connect("admin", "123", function(){
+                //+ currentRoom
+                
+                stompClient.subscribe("/rooms/*", function(data) {
+                    var events = angular.fromJson(data.body);
+                    for(var i=0;i<events.length;i++) {
+                        handleEvent(events[i]);
+                    }
+                    
+                    stompClient.subscribe("/queue/events/*", function(message) {
+                        var e = angular.fromJson(message.body);
+                        handleEvent(e);
+                    });
+                });
+                
+            }, function(){
+                alert("Unable to connecto to socket");
+            }, '/');
+        };
+    
+        initializeSocket();
     
         return {
             getRoomList: function() {

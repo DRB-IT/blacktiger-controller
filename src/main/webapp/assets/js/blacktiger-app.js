@@ -914,7 +914,7 @@ var mocked = false;
 
 function isTest() {
     var loc = window.location.toString();
-    return loc.indexOf('http://localhost') === 0 ||
+    return loc.indexOf('http://2localhost') === 0 ||
         loc.indexOf('file://') === 0 ||
         loc.indexOf('http://drb-it.github.io') === 0 ||
         loc.indexOf('http://127.0.0.1') === 0;
