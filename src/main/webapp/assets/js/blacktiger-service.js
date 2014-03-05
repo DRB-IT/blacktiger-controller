@@ -420,10 +420,10 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                     return [
                         {
                             phoneNumber: '+4512121212',
-                            name: 'John Doe',
+                            name: 'Br&oslah;nderslev rigssal',
                             numberOfCalls: 2,
                             totalDuration: 122,
-                            firstCallTimestamp: 222222222,
+                            firstCallTimestamp: 1336543882588,
                             type: 'Host'
                         },
                         {
@@ -431,15 +431,15 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                             name: 'Jane Doe',
                             numberOfCalls: 3,
                             totalDuration: 122,
-                            firstCallTimestamp: 222222222,
+                            firstCallTimestamp: 1332453882588,
                             type: 'Phone'
                         },
                         {
                             phoneNumber: '+4523456768',
-                            name: 'John Doe',
+                            name: 'Johnny Doe',
                             numberOfCalls: 3,
                             totalDuration: 546,
-                            firstCallTimestamp: 222222222,
+                            firstCallTimestamp: 1332403882588,
                             type: 'Computer'
                         }
                     ];
