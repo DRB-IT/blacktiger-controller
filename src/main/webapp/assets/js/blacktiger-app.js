@@ -529,6 +529,7 @@ function HistoryCtrl($scope, ReportSvc) {
         $scope.sumAverage = $scope.sumParticipants / $scope.sumHalls;
         $scope.sumDuration = countDuration / $scope.sumParticipants;
         $scope.minDuration = $scope.duration;
+        $scope.predicate = 'firstCallTimestamp';
     }
 }
 
