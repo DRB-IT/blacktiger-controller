@@ -360,9 +360,13 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
             }
         });
 
-        ReportSvc.findByNumbers($scope.currentRoom.id, cleansedHistory).then(function (data) {
-            $scope.history = data;
-        });
+        if(cleansedHistory.length ===0) {
+            $scope.history = [];
+        } else {
+            ReportSvc.findByNumbers($scope.currentRoom.id, cleansedHistory).then(function (data) {
+                $scope.history = data;
+            });
+        }
     };
     
     $scope.$on('MeetingSvc.Join', function(event, participant) {
@@ -372,7 +376,7 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
             history.push(participant.phoneNumber);
             $cookieStore.put($scope.historyCookieName, history);
         }
-        $scope.updateHistory();
+        //$scope.updateHistory();
     });
 
     $scope.$on('MeetingSvc.Leave', function(event, participant) {

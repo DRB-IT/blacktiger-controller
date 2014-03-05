@@ -46,9 +46,14 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                     authHeader = 'Basic ' + btoa(username + ':' + password);
                     return $http.get(blacktiger.getServiceUrl() + "system/authenticate", {headers: {'Authorization': authHeader}}).then(function(response) {
                         if(response.status !== 200) {
-                            console.info('Unable to authenticate: ' + response.data);
-                            return $q.reject('Unable to authenticate. Reason: ' + response.data);
+                            var reason = response.data;
+                            if(!reason || '' === reason) {
+                                reason = 'Unable to communicate with server';
+                            }
+                            console.info('Unable to authenticate: ' + reason);
+                            return $q.reject('Unable to authenticate. Reason: ' + reason);
                         }
+                        $rootScope.credentials = {username: username, password: password};
                         user = response.data;
 
                         if(remember) {
@@ -126,7 +131,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                 return resource.mute({roomid:roomId, id:id}, false);
             }
         };
-    }).factory('EventSvc', function (blacktiger, $http) {
+    })/*.factory('EventSvc', function (blacktiger, $http) {
         'use strict';
         return {
             query: function(room, since) {
@@ -143,7 +148,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                 });
             }
         };
-    }).factory('StompSvc', function($rootScope) {
+    })*/.factory('StompSvc', function($rootScope) {
         var stompClient = {};
 
         function NGStomp(url) {
@@ -190,7 +195,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
         return function(url) {
             return new NGStomp(url);
         }
-    }).factory('MeetingSvc', function ($rootScope, $timeout, ParticipantSvc, EventSvc, blacktiger, StompSvc, $log) {
+    }).factory('MeetingSvc', function ($rootScope, $timeout, ParticipantSvc, blacktiger, StompSvc, $log) {
         'use strict';
         var participants = [], currentRoom = null, commentCancelPromiseArray = [], stompClient;
     
@@ -255,7 +260,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                     break;
             }
         };
-        var subscribeForChangesViaLongPoll = function(timestamp) {
+        /*var subscribeForChangesViaLongPoll = function(timestamp) {
             var data = {};
             if(timestamp !== undefined) {
                 data.since = timestamp;
@@ -277,13 +282,13 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                     subscribeForChangesViaLongPoll(timestamp);
                 }, 150);
             });
-        };
+        };*/
     
         var subscribeToChanges = function() {
-            stompClient = StompSvc(blacktiger.getServiceUrl() + 'queue');
-            stompClient.connect("guest", "guest", function(){
+            stompClient = StompSvc(blacktiger.getServiceUrl() + 'socket');
+            stompClient.connect($rootScope.credentials.username, $rootScope.credentials.password, function(){
                 //+ currentRoom
-                stompClient.subscribe("/events/*", function(message) {
+                stompClient.subscribe("/queue/events/H45-0000", function(message) {
                     var e = angular.fromJson(message.body);
                     handleEvent(e);
                 });
@@ -440,7 +445,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
         'use strict';
         return {
             updateEntry: function (phoneNumber, name) {
-                return $http.post(blacktiger.getServiceUrl() + 'phonebook/' + phoneNumber, name).then(function (response) {
+                return $http.put(blacktiger.getServiceUrl() + 'phonebook/' + phoneNumber, name).then(function (response) {
                     $rootScope.$broadcast('PhoneBookSvc.update', phoneNumber, name);
                     return;
                 });
@@ -480,7 +485,8 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                 }, 10);
             },
             findByNumbers: function (room, numbers) {
-                return $http.get(blacktiger.getServiceUrl() + "reports/" + room + '?numbers=' + numbers.join()).then(function (request) {
+                var params = {numbers: numbers}
+                return $http.get(blacktiger.getServiceUrl() + "reports/" + room, {params: params}).then(function (request) {
                     return request.data;
                 });
             }
@@ -489,14 +495,14 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
         'use strict';
         return {
             create: function (user) {
-                return $http.post(blacktiger.getServiceUrl() + 'users', user).then(function () {
+                return $http.post(blacktiger.getServiceUrl() + 'sipaccounts', user).then(function () {
                     return;
                 });
             },
 
             isNumberAvailable: function(number) {
                 var data = {phoneNumber: number};
-                return $http({method: 'GET', url: blacktiger.getServiceUrl() + 'users', params: data}).then(function (response) {
+                return $http({method: 'GET', url: blacktiger.getServiceUrl() + 'sipaccounts', params: data}).then(function (response) {
                     if(angular.isArray(response.data) && response.data > 0) {
                         return false;
                     } else {
