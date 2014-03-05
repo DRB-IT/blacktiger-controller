@@ -30,18 +30,6 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
 
                 var user = null, credentials, authHeader;
 
-                /*if(angular.isDefined(username) && angular.isDefined(password)) {
-                    $log.info('Authenticating [username:'+username+', password:'+password+', remember:'+remember+']');
-                    credentials = {username: username, password: password};
-                } else {
-                    $log.info('Authenticating from data in cookiestore');
-                    user = $cookieStore.get('user');
-                    if(user) {
-                        $log.info("user: " + user);
-                        credentials = user.authtoken;
-                    }
-                }*/
-
                 if(username && password) {
                     authHeader = 'Basic ' + btoa(username + ':' + password);
                     return $http.get(blacktiger.getServiceUrl() + "system/authenticate", {headers: {'Authorization': authHeader}}).then(function(response) {
@@ -260,29 +248,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                     break;
             }
         };
-        /*var subscribeForChangesViaLongPoll = function(timestamp) {
-            var data = {};
-            if(timestamp !== undefined) {
-                data.since = timestamp;
-            }
-
-            if(!currentRoom) {
-                return; 
-            }
-            $log.debug('Called subscribeForChangesViaLongPoll with timestamp: ' + timestamp);
-
-            EventSvc.query(currentRoom.id, timestamp).then(function(data) {
-                $log.info('Changes received from server [' + data.events.length + ']');
-
-                var timestamp = data.timestamp;
-                angular.forEach(data.events, function(e) {
-                    handleEvent(e);
-                });
-                $timeout(function() {
-                    subscribeForChangesViaLongPoll(timestamp);
-                }, 150);
-            });
-        };*/
+     
     
         var subscribeToChanges = function() {
             stompClient = StompSvc(blacktiger.getServiceUrl() + 'socket');
