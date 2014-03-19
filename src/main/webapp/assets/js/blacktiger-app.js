@@ -535,5 +535,5 @@ function HistoryCtrl($scope, ReportSvc) {
 
 /** BOOTSTRAP **/
 angular.element(document).ready(function () {
-    angular.bootstrap(document, ['blacktiger-app')]);
+    angular.bootstrap(document, ['blacktiger-app']);
 });

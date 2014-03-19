@@ -1,5 +1,4 @@
 <div ng-show="false" id="error-dialog" class="alert alert-danger"></div>
-<!--bt-participants></bt-participants-->
 
 <div ng-if="currentRoom === null" class="alert alert-info">
     No room displayable for current user.
@@ -20,7 +19,7 @@
     
     <h3>{{'PARTICIPANTS.PARTICIPANTS' | translate}}
         <small class="pull-right" ng-show="(participants|filter:{host:true}).length==0">{{'PARTICIPANTS.INFO.NO_HOST' | translate}}</small>
-        <small class="pull-right" ng-repeat="participant in participants | filter:{host:true}" ng-animate=" 'animate' ">{{participant.name}} &bull; <a href="#" class="text-danger" ng-click="kickParticipant(participant.userId)" title="{{'PARTICIPANTS.ABORT_TRANSMISSION' | translate}}">{{'PARTICIPANTS.ABORT_TRANSMISSION' | translate}} <span class="glyphicon glyphicon-off"></span></a></small>
+        <small class="pull-right" ng-repeat="participant in participants | filter:{host:true}" ng-animate=" 'animate' ">{{participant.name ? participant.name : 'No name'}} &bull; <a href="#" class="text-danger" ng-click="kickParticipant(participant.userId)" title="{{'PARTICIPANTS.ABORT_TRANSMISSION' | translate}}">{{'PARTICIPANTS.ABORT_TRANSMISSION' | translate}} <span class="glyphicon glyphicon-off"></span></a></small>
     </h3>
     <table class="table table-striped table-hover table-condensed participantsTable">
         <tbody>
