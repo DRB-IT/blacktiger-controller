@@ -427,6 +427,10 @@ function SettingsCtrl($scope, SipUserSvc) {
         });
     };
 
+    $scope.updateContact = function() {
+        /*Update contact*/
+    };
+
 }
 
 function RealtimeCtrl($scope, SystemSvc, RealtimeSvc, $timeout) {

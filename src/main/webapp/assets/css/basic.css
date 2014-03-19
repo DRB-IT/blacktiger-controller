@@ -25,6 +25,7 @@ body {background-color: #f3f3f3;}
 .megaalert-inner{padding: 12px 15px;}
 .megaalert-hidden { -webkit-transform: translateY(-50px); transform:translateY(-50px); opacity:0;}
 .label{font-size: 90%;}
+.list-group a { cursor: pointer; }
 
 /*TABLES*/
 .participantsTable{}
@@ -37,6 +38,9 @@ body {background-color: #f3f3f3;}
     .participantOptions button.active{color: #d9534f;}
 .table td.info, .table tr.info > td {background-color: #d9edf7;}
 .table-hover > tbody > tr > td.info:hover,.table-hover > tbody > tr > th.info:hover,.table-hover > tbody > tr.info:hover > td,.table-hover > tbody > tr.info:hover > th {background-color: #bce8f1;}
+
+span.sortable { cursor: pointer; }
+span.sorting:after { content: "↕"; margin-left: 3px; }
 
 /*MUSIC PLAYER*/
 #MusicContainer{background-color: #d0e2f2; height: 30px;}

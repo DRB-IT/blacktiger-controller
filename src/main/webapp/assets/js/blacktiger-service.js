@@ -425,7 +425,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                     return [
                         {
                             phoneNumber: '+4512121212',
-                            name: 'Br&oslah;nderslev rigssal',
+                            name: 'Bronderslev rigssal',
                             numberOfCalls: 2,
                             totalDuration: 122,
                             firstCallTimestamp: 1336543882588,

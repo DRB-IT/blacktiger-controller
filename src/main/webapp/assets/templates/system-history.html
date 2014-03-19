@@ -22,17 +22,17 @@
     </div>
 </form>
 <br>
-<p>Sammenlagt have <strong>{{sumHalls}} sale</strong> i alt <strong>{{sumParticipants}} lyttere</strong> som foretog <strong>{{sumCalls}} opkald</strong>. Det svarer til <strong>{{sumAverage}} lyttere pr. sal</strong>.<br>
+<p>Sammenlagt havde <strong>{{sumHalls}} sale</strong> i alt <strong>{{sumParticipants}} lyttere</strong> som foretog <strong>{{sumCalls}} opkald</strong>. Det svarer til <strong>{{sumAverage}} lyttere pr. sal</strong>.<br>
    De lyttede i gennemsnit {{sumDuration}} minutter. Der var {{sumPhones}} % som lyttede via telefonnettet.<br>
     Opkald med en samlet varihed under {{minDuration}} minutter er ikke medregnet.</p>
 <table class="table table-striped table-hover table-condensed participantsTable">
     <thead>
     <tr>
-        <th ng-click="predicate = 'phoneNumber'; reverse=!reverse">{{'REPORT.NUMBER' | translate}}</th>
-        <th ng-click="predicate = 'name'; reverse=!reverse">{{'REPORT.NAME' | translate}}</th>
-        <th ng-click="predicate = 'firstCallTimestamp'; reverse=!reverse">{{'REPORT.FIRST_CALL' | translate}}</th>
-        <th ng-click="predicate = 'numberOfCalls'; reverse=!reverse">{{'REPORT.CALLS' | translate}}</th>
-        <th ng-click="predicate = 'totalDuration'; reverse=!reverse">{{'REPORT.MINUTES' | translate}}</th>
+        <th><span class="sortable" ng-click="predicate = 'phoneNumber'; reverse=!reverse">{{'REPORT.NUMBER' | translate}}</span></th>
+        <th><span class="sortable" ng-click="predicate = 'name'; reverse=!reverse">{{'REPORT.NAME' | translate}}</span></th>
+        <th><span class="sortable sorting" ng-click="predicate = 'firstCallTimestamp'; reverse=!reverse">{{'REPORT.FIRST_CALL' | translate}}</span></th>
+        <th><span class="sortable" ng-click="predicate = 'numberOfCalls'; reverse=!reverse">{{'REPORT.CALLS' | translate}}</span></th>
+        <th><span class="sortable" ng-click="predicate = 'totalDuration'; reverse=!reverse">{{'REPORT.MINUTES' | translate}}</span></th>
     </tr>
     </thead>
     <tbody>

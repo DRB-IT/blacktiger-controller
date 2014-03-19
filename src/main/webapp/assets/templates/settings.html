@@ -10,7 +10,7 @@
     <div class="col-sm-8" ng-show="selectedView==='settings'">
         <h3>Indstillinger</h3>
         <p>Der er logget ind som <b>{{currentRoom.name}}</b>.</p>
-        <p>Den teknisk ansvarlige for denne sal er <b>{{currentRoom.contact.name}}</b> (<a>se kontaktinformation</a>).</p>
+        <p>Den teknisk ansvarlige for denne sal er <b>{{currentRoom.contact.name}}</b> (<a ng-click="selectedView='contactPerson'" style="cursor: pointer;">se kontaktinformation</a>).</p>
         <br>
         <h4>Find hjælp</h4>
         <p>Klik på <span class="glyphicon glyphicon-question-sign"></span> i toppen af siden hvis du har brug for hjælp.</p>
@@ -51,6 +51,42 @@
                 <span class="help-block">Nødvendige oplysninger sendes til denne e-mail-adresse. E-mail-adressen bliver ikke gemt hos TeleSal.</span>
             </div>
             <button type="button" class="btn btn-success" ng-click="createUser()"><span class="glyphicon glyphicon-ok"></span></button>
+        </form>
+    </div>
+
+    <div class="col-sm-8" ng-show="selectedView==='contactPerson'">
+        <h3>Salens teknisk ansvarlige</h3>
+        <p>Der er kun én teknisk ansvarlig for hver mødesal, uanset hvor mange menigheder der benytter den. Den teknisk ansvarlige udnævnes af rigssalsudvalget.</p>
+
+        <div class="alert alert-success" ng-show="status==='success'">
+            <b>Success!</b> Ændringerne blev gemt.
+        </div>
+        <div class="alert alert-danger" ng-show="status==='error'">
+            <b>Fejl!</b> Ændringerne blev ikke gemt. Prøv igen om lidt. 
+        </div>
+        <div class="alert alert-danger" ng-show="status==='invalid'">
+            Feltet [input name] er ikke udfyldt korrekt.
+        </div>
+
+        <div class="alert alert-warning" ng-show="status==='warning'">
+            <p>Der er kun én teknisk ansvarlig for Telesal, uanset hvor mange menigheder der benytter denne mødesal. Er dette det korrekte navn, mobiltelefonnummer og e-mail-adresse på den som rigssalsudvalget har udnævnt som teknisk ansvarlig for Telesal i denne mødesal?</p>
+            <p><button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-ok"></span> Ja</button> <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span> Nej</button></p>
+        </div>
+
+        <form role="form" novalidate>
+            <div class="form-group">
+                <label for="createName">Navn</label>
+                <input type="text" class="form-control" ng-model="currentRoom.contact.name" placeholder="Fornavn Efternavn">
+            </div>
+            <div class="form-group">
+                <label for="createPhone">Mobiltelefonnummer </label>
+                <input type="text" class="form-control" ng-model="currentRoom.contact.phoneNumber" placeholder="+45">
+            </div>
+            <div class="form-group">
+                <label for="createEmail">E-mail-adresse </label>
+                <input type="email" class="form-control" ng-model="currentRoom.contact.email" placeholder="example@mail.com">
+            </div>
+            <button type="button" class="btn btn-success" ng-click="updateContact()"><span class="glyphicon glyphicon-ok"></span></button>
         </form>
     </div>
 </div>
