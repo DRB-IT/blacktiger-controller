@@ -299,15 +299,15 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
     $scope.history = [];
     $cookieStore.put($scope.historyCookieName, []);
     
-    $scope.kickParticipant = function (userId) {
-        MeetingSvc.kick(userId);
+    $scope.kickParticipant = function (channel) {
+        MeetingSvc.kick(channel);
     };
 
-    $scope.muteParticipant = function (userId, muted) {
+    $scope.muteParticipant = function (channel, muted) {
         if(muted) {
-            MeetingSvc.mute(userId);
+            MeetingSvc.mute(channel);
         } else {
-            MeetingSvc.unmute(userId);
+            MeetingSvc.unmute(channel);
         }
     };
 

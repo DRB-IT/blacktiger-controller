@@ -93,13 +93,16 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                 return resource.get({id:id});
             }
         };
-    }).factory('ParticipantSvc', function (blacktiger, $resource) {
+    }).factory('ParticipantSvc', function (blacktiger, $resource, $log, $http) {
         'use strict';
         var resource = $resource(blacktiger.getServiceUrl() + 'rooms/:roomid/participants/:id', {}, 
                     {
                         mute: {
                             method:'POST', 
                             url: blacktiger.getServiceUrl() + 'rooms/:roomid/participants/:id/muted'
+                        },
+                        put: {
+                            method:'PUT'
                         }
                     });
         return {
@@ -112,11 +115,22 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
             kick: function(roomId, id) {
                 return resource.remove({roomid: roomId, id: id});
             },
+            save: function(roomId, participant) {
+                return resource.put({roomid: roomId, id: participant.channel}, participant);
+            },
             mute: function(roomId, id) {
-                return resource.mute({roomid:roomId, id:id}, true);
+                $log.info('Muting participant: [room='+roomId+';id='+id+']');
+                return $http.post(blacktiger.getServiceUrl() + 'rooms/'+roomId+'/participants/'+id+'/muted', true).then(function() {
+                    return;
+                });
+                //return resource.mute({roomid:roomId, id:id}, true);
             },
             unmute: function(roomId, id) {
-                return resource.mute({roomid:roomId, id:id}, false);
+                $log.info('Unmuting participant: [room='+roomId+';id='+id+']');
+                return $http.post(blacktiger.getServiceUrl() + 'rooms/'+roomId+'/participants/'+id+'/muted', false).then(function() {
+                    return;
+                });
+                //return resource.mute({roomid:roomId, id:id}, false);
             }
         };
     })/*.factory('EventSvc', function (blacktiger, $http) {
@@ -187,15 +201,27 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
         'use strict';
         var participants = [], currentRoom = null, commentCancelPromiseArray = [], stompClient;
     
-        var indexByUserId = function(userId) {
+        var indexByChannel = function(channel) {
             var index = -1;
             angular.forEach(participants, function(p, currentIndex) {
-                if(p.userId === userId) {
+                if(p.channel === channel) {
                     index = currentIndex;
                     return false;
                 }
             });
             return index;
+        };
+    
+        var handleMute = function(channel, value) {
+            var index = indexByChannel(channel);
+            if(index >= 0) {
+                var p = participants[index];
+                if(value !== p.muted) {
+                    p = angular.copy(p);
+                    p.muted = value;
+                    ParticipantSvc.save(currentRoom.id, p);
+                }
+            }
         };
     
         var updateCancelPromise = function(id, newPromise) {
@@ -208,7 +234,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
         };
     
         var setParticipantCommentRequested = function(userId, value) {
-            var index = indexByUserId(userId);
+            var index = indexByChannel(userId);
             if(index >= 0) {
                 participants[index].commentRequested = value;
             }
@@ -222,29 +248,39 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                     break;
                 case 'Leave':
                     $log.info('Leave Event Recieved for participantId "' + angular.toJson(event) + '"');
-                    index = indexByUserId(event.participantId);
+                    index = indexByChannel(event.channel);
                     if(index >= 0) {
                         participants.splice(index, 1);
                     }
-                    $rootScope.$broadcast('MeetingSvc.Leave', event.participantId);
+                    $rootScope.$broadcast('MeetingSvc.Leave', event.channel);
                     break;
                 case 'Change':
-                    index = indexByUserId(event.participant.userId);
+                    index = indexByChannel(event.participant.channel);
                     participants[index] = event.participant;
                     $rootScope.$broadcast('MeetingSvc.Change', event.participant);
                     break;
                 case 'CommentRequest':
                     $log.debug('CommentRequest');
-                    setParticipantCommentRequested(event.participantId, true);
+                    setParticipantCommentRequested(event.channel, true);
                     promise = $timeout(function() {
-                            setParticipantCommentRequested(event.participantId, false);
+                            setParticipantCommentRequested(event.channel, false);
                         }, 15000);
-                    updateCancelPromise(event.participantId, promise);
+                    updateCancelPromise(event.channel, promise);
                     break;
                 case 'CommentRequestCancel':
                     $log.debug('CommentRequestCancel');
-                    setParticipantCommentRequested(event.participantId, false);
-                    updateCancelPromise(event.participantId);
+                    setParticipantCommentRequested(event.channel, false);
+                    updateCancelPromise(event.channel);
+                    break;
+                case 'Mute':
+                    $log.debug('Mute');
+                    index = indexByChannel(event.channel);
+                    participants[index].muted = true;
+                    break;
+                case 'Unmute':
+                    $log.debug('Unmute');
+                    index = indexByChannel(event.channel);
+                    participants[index].muted = false;
                     break;
             }
         };
@@ -254,7 +290,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
             stompClient = StompSvc(blacktiger.getServiceUrl() + 'socket');
             stompClient.connect($rootScope.credentials.username, $rootScope.credentials.password, function(){
                 //+ currentRoom
-                stompClient.subscribe("/queue/events/H45-0000", function(message) {
+                stompClient.subscribe("/queue/events/" + currentRoom.id, function(message) {
                     var e = angular.fromJson(message.body);
                     handleEvent(e);
                 });
@@ -285,21 +321,19 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                         onJoin(p);
                     });
                     
-                    if(blacktiger.isLongPollingForced()) {
-                        subscribeForChangesViaLongPoll();
-                    } else {
-                        subscribeToChanges();
-                    }
+                    subscribeToChanges();
                 });
             },
             kick: function(userId) {
                 ParticipantSvc.kick(currentRoom.id, userId);
             },
             mute: function(userId) {
-                ParticipantSvc.mute(currentRoom.id, userId);
+                handleMute(userId, true);
+                //ParticipantSvc.mute(currentRoom.id, userId);
             },
             unmute: function(userId) {
-                ParticipantSvc.unmute(currentRoom.id, userId);
+                handleMute(userId, false);
+                //ParticipantSvc.unmute(currentRoom.id, userId);
             }
         };
     
@@ -307,7 +341,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
         'use strict';
         var rooms = RoomSvc.query('full'), stompClient;
         
-        var indexByUserId = function(participants, userId) {
+        var indexByChannel = function(participants, userId) {
             var index = -1;
             angular.forEach(participants, function(p, currentIndex) {
                 if(p.userId === userId) {
@@ -349,7 +383,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                 room.participants.push(event.participant);
             } else {
                 var userId = event.participant ? event.participant.userId : event.participantId;
-                index = indexByUserId(room.participants, userId);
+                index = indexByChannel(room.participants, userId);
                 if(index>=0) {
                     switch(event.type) {
                         case 'Leave':
