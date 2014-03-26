@@ -299,6 +299,17 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
     $scope.history = [];
     $cookieStore.put($scope.historyCookieName, []);
     
+    $scope.isHostInConference = function() {
+        var value = false;
+        angular.forEach($scope.participants, function(p) {
+            if(p.host === true) {
+                value = true;
+                return false;
+            }
+        });
+        return value;
+    };
+    
     $scope.kickParticipant = function (channel) {
         MeetingSvc.kick(channel);
     };

@@ -295,7 +295,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                     handleEvent(e);
                 });
             }, function(){
-                subscribeForChangesViaLongPoll();
+                alert('Lost connection');
             }, '/');
         }
     
