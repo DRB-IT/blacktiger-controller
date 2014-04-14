@@ -21,7 +21,7 @@ describe('Unit testing MeetingSvc', function() {
     }));
 
     
-    
+    /*
     it('accepts Join event.', function() {
         var room = {
                 id: 'DK-9000-2',
@@ -134,6 +134,6 @@ describe('Unit testing MeetingSvc', function() {
         expect(MeetingSvc.getParticipantList().length).toBe(0);
         expect(event).not.toBe(null);
         
-    });
+    });*/
 });
 

@@ -16,8 +16,9 @@ describe('Unit testing LoginSvc', function() {
     }));
 
     it('sends an authentication request with username and password', function() {
-        $httpBackend.expectPOST('http://localhost:8080/system/authenticate', {username: 'johndoe', password: 'doe'}).respond({
-            username: 'johndoe',
+        var username = 'john', password = 'doe';
+        $httpBackend.expectGET('http://localhost:8080/system/authenticate').respond({
+            username: 'john',
             authtoken: 'qwerty',
             roles: ['ROLE_USER']
         });
@@ -25,7 +26,7 @@ describe('Unit testing LoginSvc', function() {
         var user = null;
 
         runs(function() {
-            LoginSvc.authenticate('johndoe', 'doe').then(function(_user_) {
+            LoginSvc.authenticate(username, password).then(function(_user_) {
                 console.log('Got user after authentication.');
                 user = _user_;
             }, function(reason) {

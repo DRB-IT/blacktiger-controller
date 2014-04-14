@@ -12,7 +12,7 @@ describe('Unit testing SystemSvc', function() {
     }));
 
     it('retreives system information.', function() {
-        $httpBackend.expectGET('system/information').respond({
+        $httpBackend.expectGET('http://localhost:8080/system/information').respond({
             cores: 24,
             load: {
                 disk: 25.0,
