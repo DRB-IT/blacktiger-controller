@@ -257,16 +257,17 @@ function MenuCtrl($scope, $location) {
 function RoomDisplayCtrl($scope, RoomSvc, LoginSvc, $rootScope, MeetingSvc) {
     $scope.rooms = null;
     
-    $scope.$watch('rooms', function () {
+    $scope.updateCurrentRoom = function() {
         if ($scope.currentUser && $scope.currentUser.roles.indexOf('ROLE_HOST') >= 0 && 
             $scope.rooms !== null && $scope.rooms.length > 0) {
             $rootScope.currentRoom = $scope.rooms[0];
             MeetingSvc.setRoom($rootScope.currentRoom);
         }
-    }, true);
-
+    };
+    
     $scope.$on("login", function() {
         $scope.rooms = RoomSvc.query();
+        $scope.rooms.$promise.then($scope.updateCurrentRoom);
         $scope.currentUser = LoginSvc.getCurrentUser();
     });
 
@@ -417,9 +418,10 @@ function ModalEditNameCtrl($scope, $modalInstance, phoneNumber, currentName) {
     };
 }
 
-function SettingsCtrl($scope, SipUserSvc) {
+function SettingsCtrl($scope, SipUserSvc, RoomSvc) {
     $scope.selectedView='settings';
     $scope.user = {};
+    $scope.contact = angular.copy($scope.currentRoom.contact);
 
     $scope.reset = function() {
         $scope.user.name = '';
@@ -439,7 +441,8 @@ function SettingsCtrl($scope, SipUserSvc) {
     };
 
     $scope.updateContact = function() {
-        /*Update contact*/
+        $scope.currentRoom.contact = angular.copy($scope.contact);
+        RoomSvc.save($scope.currentRoom);
     };
 
 }

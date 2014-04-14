@@ -79,7 +79,12 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
         }
     }).factory('RoomSvc', function (blacktiger, $resource) {
         'use strict';
-        var resource = $resource(blacktiger.getServiceUrl() + 'rooms/:id');
+        var resource = $resource(blacktiger.getServiceUrl() + 'rooms/:id', {}, 
+                    {
+                        put: {
+                            method:'PUT'
+                        }
+                    });
         var current = null;
         return {
             query: function(mode) {
@@ -91,6 +96,9 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
             },
             get: function(id) {
                 return resource.get({id:id});
+            },
+            save: function(room) {
+                return resource.put({id: room.id}, room);
             }
         };
     }).factory('ParticipantSvc', function (blacktiger, $resource, $log, $http) {

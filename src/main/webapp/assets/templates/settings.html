@@ -76,15 +76,15 @@
         <form role="form" novalidate>
             <div class="form-group">
                 <label for="createName">Navn</label>
-                <input type="text" class="form-control" ng-model="currentRoom.contact.name" placeholder="Fornavn Efternavn">
+                <input type="text" class="form-control" ng-model="contact.name" placeholder="Fornavn Efternavn">
             </div>
             <div class="form-group">
                 <label for="createPhone">Mobiltelefonnummer </label>
-                <input type="text" class="form-control" ng-model="currentRoom.contact.phoneNumber" placeholder="+45">
+                <input type="text" class="form-control" ng-model="contact.phoneNumber" placeholder="+45">
             </div>
             <div class="form-group">
                 <label for="createEmail">E-mail-adresse </label>
-                <input type="email" class="form-control" ng-model="currentRoom.contact.email" placeholder="example@mail.com">
+                <input type="email" class="form-control" ng-model="contact.email" placeholder="example@mail.com">
             </div>
             <button type="button" class="btn btn-success" ng-click="updateContact()"><span class="glyphicon glyphicon-ok"></span></button>
         </form>
