@@ -124,6 +124,8 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                 return resource.remove({roomid: roomId, id: id});
             },
             save: function(roomId, participant) {
+                participant = angular.copy(participant);
+                delete participant.commentRequested;
                 return resource.put({roomid: roomId, id: participant.channel}, participant);
             },
             mute: function(roomId, id) {
@@ -258,9 +260,11 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                     $log.info('Leave Event Recieved for participantId "' + angular.toJson(event) + '"');
                     index = indexByChannel(event.channel);
                     if(index >= 0) {
+                        var p = participants[index];
                         participants.splice(index, 1);
+                        $rootScope.$broadcast('MeetingSvc.Leave', p);
                     }
-                    $rootScope.$broadcast('MeetingSvc.Leave', event.channel);
+                    
                     break;
                 case 'Change':
                     index = indexByChannel(event.participant.channel);

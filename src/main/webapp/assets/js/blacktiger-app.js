@@ -2,10 +2,10 @@
 
 var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.translate', 'ui.bootstrap', 'blacktiger-service', 'blacktiger-ui'])
     .config(function ($locationProvider, $routeProvider, $httpProvider, $translateProvider, blacktigerProvider) {
-        $httpProvider.interceptors.push(function($location) {
+        $httpProvider.interceptors.push(function ($location) {
             return {
-                'responseError': function(rejection) {
-                    if(rejection.status === 401) {
+                'responseError': function (rejection) {
+                    if (rejection.status === 401) {
                         $location.path('/login');
                     }
                     return rejection;
@@ -47,22 +47,22 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
         var langData = language.split("-");
         $translateProvider.preferredLanguage(langData[0]);
         $translateProvider.fallbackLanguage('en');
-        
+
         var search = window.location.search;
-        if(search.indexOf('?server=') === 0) {
+        if (search.indexOf('?server=') === 0) {
             blacktigerProvider.setServiceUrl(search.substr(8));
         }
 
-    }).run(function($location, LoginSvc) {
-        LoginSvc.authenticate().then(angular.noop, function() {
+    }).run(function ($location, LoginSvc) {
+        LoginSvc.authenticate().then(angular.noop, function () {
             $location.path('login');
         });
     })
-    .filter('filterByRoles', function() {
-        return function(input, roles) {
+    .filter('filterByRoles', function () {
+        return function (input, roles) {
             var out = [];
-            angular.forEach(input, function(entry) {
-                if(!entry.requiredRole || (roles && roles.indexOf(entry.requiredRole) >= 0)) {
+            angular.forEach(input, function (entry) {
+                if (!entry.requiredRole || (roles && roles.indexOf(entry.requiredRole) >= 0)) {
                     out.push(entry);
                 }
             });
@@ -76,12 +76,12 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
                 $scope.participants = MeetingSvc.getParticipantList();
                 $scope.forcedHidden = false;
 
-                $scope.isCommentRequested = function() {
-                    
+                $scope.isCommentRequested = function () {
+
                     var commentRequested = false;
-                    
-                    angular.forEach($scope.participants, function(p) {
-                        if(p.commentRequested) {
+
+                    angular.forEach($scope.participants, function (p) {
+                        if (p.commentRequested) {
                             commentRequested = true;
                             return false;
                         }
@@ -90,8 +90,8 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
 
                 };
 
-                $scope.$watch('isCommentRequested()', function(value) {
-                    if(value === true) {
+                $scope.$watch('isCommentRequested()', function (value) {
+                    if (value === true) {
                         $scope.forcedHidden = false;
                     }
                 });
@@ -256,16 +256,16 @@ function MenuCtrl($scope, $location) {
 
 function RoomDisplayCtrl($scope, RoomSvc, LoginSvc, $rootScope, MeetingSvc) {
     $scope.rooms = null;
-    
-    $scope.updateCurrentRoom = function() {
-        if ($scope.currentUser && $scope.currentUser.roles.indexOf('ROLE_HOST') >= 0 && 
+
+    $scope.updateCurrentRoom = function () {
+        if ($scope.currentUser && $scope.currentUser.roles.indexOf('ROLE_HOST') >= 0 &&
             $scope.rooms !== null && $scope.rooms.length > 0) {
             $rootScope.currentRoom = $scope.rooms[0];
             MeetingSvc.setRoom($rootScope.currentRoom);
         }
     };
-    
-    $scope.$on("login", function() {
+
+    $scope.$on("login", function () {
         $scope.rooms = RoomSvc.query();
         $scope.rooms.$promise.then($scope.updateCurrentRoom);
         $scope.currentUser = LoginSvc.getCurrentUser();
@@ -278,14 +278,14 @@ function LoginCtrl($scope, $location, LoginSvc) {
     $scope.password = "";
     $scope.rememberMe = false;
 
-    $scope.login = function() {
-        LoginSvc.authenticate($scope.username, $scope.password, $scope.rememberMe).then(function(user) {
-            if(user.roles.indexOf('ROLE_HOST') >= 0) {
+    $scope.login = function () {
+        LoginSvc.authenticate($scope.username, $scope.password, $scope.rememberMe).then(function (user) {
+            if (user.roles.indexOf('ROLE_HOST') >= 0) {
                 $location.path('');
-            } else if(user.roles.indexOf('ROLE_ADMIN') >= 0) {
+            } else if (user.roles.indexOf('ROLE_ADMIN') >= 0) {
                 $location.path('/admin/realtime');
             }
-        }, function(reason) {
+        }, function (reason) {
             alert(reason);
         });
     }
@@ -298,113 +298,144 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
         phoneNumber: $scope.currentRoom
     };
     $scope.history = [];
-    $cookieStore.put($scope.historyCookieName, []);
-    
-    $scope.isHostInConference = function() {
+    $cookieStore.put($scope.historyCookieName, {});
+
+    $scope.isHostInConference = function () {
         var value = false;
-        angular.forEach($scope.participants, function(p) {
-            if(p.host === true) {
+        angular.forEach($scope.participants, function (p) {
+            if (p.host === true) {
                 value = true;
                 return false;
             }
         });
         return value;
     };
-    
+
     $scope.kickParticipant = function (channel) {
         MeetingSvc.kick(channel);
     };
 
     $scope.muteParticipant = function (channel, muted) {
-        if(muted) {
+        if (muted) {
             MeetingSvc.mute(channel);
         } else {
             MeetingSvc.unmute(channel);
         }
     };
 
-    $scope.changeName = function(phoneNumber, currentName) {
+    $scope.changeName = function (phoneNumber, currentName) {
         var modalInstance = $modal.open({
-        templateUrl: 'assets/templates/modal-edit-name.html',
-        controller: ModalEditNameCtrl,
-        resolve: {
-            phoneNumber: function() {
-                return phoneNumber;
-            },
-            currentName: function () {
-              return currentName;
+            templateUrl: 'assets/templates/modal-edit-name.html',
+            controller: ModalEditNameCtrl,
+            resolve: {
+                phoneNumber: function () {
+                    return phoneNumber;
+                },
+                currentName: function () {
+                    return currentName;
+                }
             }
-          }
         });
 
         modalInstance.result.then(function (newName) {
-          PhoneBookSvc.updateEntry(phoneNumber, newName);
+            PhoneBookSvc.updateEntry(phoneNumber, newName);
         });
     }
 
-    $scope.$on('PhoneBookSvc.update', function(event, phone, name) {
+    $scope.$on('PhoneBookSvc.update', function (event, phone, name) {
         // Make sure names in participantlist are update.
-        angular.forEach($scope.participants, function(p) {
+        angular.forEach($scope.participants, function (p) {
             if (p.phoneNumber === phone) {
                 p.name = name;
             }
         });
 
         // Make sure names in historylist are update.
-        angular.forEach($scope.history, function(e) {
+        angular.forEach($scope.history, function (e) {
             if (e.phoneNumber === phone) {
                 e.name = name;
             }
         });
     });
 
-    $scope.updateHistory = function() {
+    $scope.calculateTotalDuration = function (entry) {
+        var duration = 0;
+        angular.forEach(entry.calls, function (call) {
+            if (call.end !== null) {
+                duration += call.end - call.start;
+            }
+        });
+        return duration;
+    };
+
+    $scope.updateHistory = function () {
         var history = $cookieStore.get($scope.historyCookieName),
             participants = MeetingSvc.getParticipantList(),
             cleansedHistory = [];
 
-        angular.forEach(history, function(number) {
+        angular.forEach(history, function (entry) {
             var stillParticipating = false;
-            angular.forEach(participants, function(participant) {
-                if (participant.phoneNumber === number) {
+            angular.forEach(participants, function (participant) {
+                if (participant.phoneNumber === entry.phoneNumber) {
                     stillParticipating = true;
                     return false;
                 }
             });
 
             if (!stillParticipating) {
-                cleansedHistory.push(number);
+                cleansedHistory.push(entry);
             }
         });
 
-        if(cleansedHistory.length ===0) {
-            $scope.history = [];
-        } else {
-            ReportSvc.findByNumbers($scope.currentRoom.id, cleansedHistory).then(function (data) {
-                $scope.history = data;
-            });
-        }
+        $scope.history = cleansedHistory;
+
     };
-    
-    $scope.$on('MeetingSvc.Join', function(event, participant) {
+
+    $scope.$on('MeetingSvc.Join', function (event, participant) {
         $log.debug('New participants - adding to history.');
-        var history = $cookieStore.get($scope.historyCookieName);
-        if (history.indexOf(participant.phoneNumber)<0) {
-            history.push(participant.phoneNumber);
-            $cookieStore.put($scope.historyCookieName, history);
+        var entry, call, history = $cookieStore.get($scope.historyCookieName);
+        if (history[participant.phoneNumber] === undefined) {
+            entry = {
+                phoneNumber: participant.phoneNumber,
+                name: participant.name,
+                firstCall: new Date().getTime(),
+                calls: []
+            };
+            history[participant.phoneNumber] = entry;
+        } else {
+            entry = history[participant.phoneNumber];
         }
-        //$scope.updateHistory();
+
+        call = {
+            start: new Date().getTime(),
+            end: null
+        };
+        entry.calls.push(call);
+
+        $cookieStore.put($scope.historyCookieName, history);
+        $scope.updateHistory();
     });
 
-    $scope.$on('MeetingSvc.Leave', function(event, participant) {
+    $scope.$on('MeetingSvc.Leave', function (event, participant) {
         $log.debug('MeetingSvc.leave event received - updating history.');
+        var history = $cookieStore.get($scope.historyCookieName);
+        var entry = history[participant.phoneNumber];
+        if (entry) {
+            angular.forEach(entry.calls, function (call) {
+                if (call.end === null) {
+                    call.end = new Date().getTime();
+                    $cookieStore.put($scope.historyCookieName, history);
+                    return false;
+                }
+            });
+        }
         $scope.updateHistory();
     });
 
 }
 
 function ModalEditNameCtrl($scope, $modalInstance, phoneNumber, currentName) {
-    $scope.data =  {
+    $scope.data = {
         name: currentName,
         phoneNumber: phoneNumber
     }
@@ -419,28 +450,28 @@ function ModalEditNameCtrl($scope, $modalInstance, phoneNumber, currentName) {
 }
 
 function SettingsCtrl($scope, SipUserSvc, RoomSvc) {
-    $scope.selectedView='settings';
+    $scope.selectedView = 'settings';
     $scope.user = {};
     $scope.contact = angular.copy($scope.currentRoom.contact);
 
-    $scope.reset = function() {
+    $scope.reset = function () {
         $scope.user.name = '';
         $scope.user.phoneNumber = '';
         $scope.user.email = '';
 
     };
 
-    $scope.createUser = function() {
-        SipUserSvc.create($scope.user).then(function() {
+    $scope.createUser = function () {
+        SipUserSvc.create($scope.user).then(function () {
             $scope.reset();
             $scope.status = 'success';
-        }, function(reason) {
+        }, function (reason) {
             $scope.reset();
             $scope.status = 'error';
         });
     };
 
-    $scope.updateContact = function() {
+    $scope.updateContact = function () {
         $scope.currentRoom.contact = angular.copy($scope.contact);
         RoomSvc.save($scope.currentRoom);
     };
@@ -453,11 +484,11 @@ function RealtimeCtrl($scope, SystemSvc, RealtimeSvc, $timeout) {
 
     $scope.rooms = RealtimeSvc.getRoomList();
 
-    $scope.getNoOfParticipants = function() {
+    $scope.getNoOfParticipants = function () {
         var count = 0;
-        angular.forEach($scope.rooms, function(room) {
-            angular.forEach(room.participants, function(p) {
-                if(!p.host) {
+        angular.forEach($scope.rooms, function (room) {
+            angular.forEach(room.participants, function (p) {
+                if (!p.host) {
                     count++;
                 }
             });
@@ -465,27 +496,27 @@ function RealtimeCtrl($scope, SystemSvc, RealtimeSvc, $timeout) {
         return count;
     };
 
-    $scope.getSipPercentage = function() {
+    $scope.getSipPercentage = function () {
         var count = 0;
-        angular.forEach($scope.rooms, function(room) {
-            angular.forEach(room.participants, function(p) {
-                if(!p.host && p.phoneNumber.indexOf('#') === 0) {
+        angular.forEach($scope.rooms, function (room) {
+            angular.forEach(room.participants, function (p) {
+                if (!p.host && p.phoneNumber.indexOf('#') === 0) {
                     count++;
                 }
             });
         });
-        if(count === 0) {
+        if (count === 0) {
             return 0.0;
         } else {
             return (count / $scope.getNoOfParticipants()) * 100;
         }
     };
 
-    $scope.getNoOfCommentRequests = function() {
+    $scope.getNoOfCommentRequests = function () {
         var count = 0;
-        angular.forEach($scope.rooms, function(room) {
-            angular.forEach(room.participants, function(p) {
-                if(p.commentRequested) {
+        angular.forEach($scope.rooms, function (room) {
+            angular.forEach(room.participants, function (p) {
+                if (p.commentRequested) {
                     count++;
                 }
             });
@@ -493,11 +524,11 @@ function RealtimeCtrl($scope, SystemSvc, RealtimeSvc, $timeout) {
         return count;
     };
 
-    $scope.getNoOfOpenMicrophones = function() {
+    $scope.getNoOfOpenMicrophones = function () {
         var count = 0;
-        angular.forEach($scope.rooms, function(room) {
-            angular.forEach(room.participants, function(p) {
-                if(!p.host && !p.muted) {
+        angular.forEach($scope.rooms, function (room) {
+            angular.forEach(room.participants, function (p) {
+                if (!p.host && !p.muted) {
                     count++;
                 }
             });
@@ -505,13 +536,13 @@ function RealtimeCtrl($scope, SystemSvc, RealtimeSvc, $timeout) {
         return count;
     };
 
-    $scope.updateSystemInfo = function() {
-        SystemSvc.getSystemInfo().then(function(data) {
+    $scope.updateSystemInfo = function () {
+        SystemSvc.getSystemInfo().then(function (data) {
             $scope.system = data;
         });
         $scope.systemInfoTimerPromise = $timeout($scope.updateSystemInfo, 1000);
     };
-    
+
     $scope.$on('$destroy', function cleanup() {
         $timeout.cancel($scope.systemInfoTimerPromise);
     });
@@ -521,7 +552,7 @@ function RealtimeCtrl($scope, SystemSvc, RealtimeSvc, $timeout) {
 
 function HistoryCtrl($scope, ReportSvc) {
     $scope.searchHistory = function () {
-        ReportSvc.getReport().then(function(data) {
+        ReportSvc.getReport().then(function (data) {
             $scope.historyData = data;
             $scope.summaryHistory();
         });
