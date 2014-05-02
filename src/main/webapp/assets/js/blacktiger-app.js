@@ -50,7 +50,11 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
 
         var search = window.location.search;
         if (search.indexOf('?server=') === 0) {
-            blacktigerProvider.setServiceUrl(search.substr(8));
+            var url = search.substr(8);
+            if(url.charAt(url.length-1) !== '/') {
+                url = url + '/';
+            }
+            blacktigerProvider.setServiceUrl(url);
         }
 
     }).run(function ($location, LoginSvc) {
@@ -540,7 +544,7 @@ function RealtimeCtrl($scope, SystemSvc, RealtimeSvc, $timeout) {
         SystemSvc.getSystemInfo().then(function (data) {
             $scope.system = data;
         });
-        $scope.systemInfoTimerPromise = $timeout($scope.updateSystemInfo, 1000);
+        //$scope.systemInfoTimerPromise = $timeout($scope.updateSystemInfo, 1000);
     };
 
     $scope.$on('$destroy', function cleanup() {

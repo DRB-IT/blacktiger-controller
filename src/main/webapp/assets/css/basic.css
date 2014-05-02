@@ -70,6 +70,6 @@ span.sorting:after { content: "↕"; margin-left: 3px; }
     -webkit-animation-name: shake;
     animation-duration: 0.7s;
     -webkit-animation-duration: 0.7s;
-    animation-iteration-count:7;
-    -webkit-animation-iteration-count:7;
+    animation-iteration-count:21;
+    -webkit-animation-iteration-count:21;
 }

@@ -1,7 +1,7 @@
 angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
     .provider('blacktiger', function () {
         'use strict';
-        var serviceUrl = "http://localhost:8080/";
+        var serviceUrl = "http://b.dev1.telesal.org/";
         var forceLongPolling = false;
         
         this.setServiceUrl = function (url) {
@@ -209,7 +209,11 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
         }
     }).factory('MeetingSvc', function ($rootScope, $timeout, ParticipantSvc, blacktiger, StompSvc, $log) {
         'use strict';
-        var participants = [], currentRoom = null, commentCancelPromiseArray = [], stompClient;
+        var participants = [], 
+            currentRoom = null, 
+            commentCancelPromiseArray = [], 
+            stompClient,
+            commentRequestTimeout = 60000;
     
         var indexByChannel = function(channel) {
             var index = -1;
@@ -276,7 +280,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                     setParticipantCommentRequested(event.channel, true);
                     promise = $timeout(function() {
                             setParticipantCommentRequested(event.channel, false);
-                        }, 15000);
+                        }, commentRequestTimeout);
                     updateCancelPromise(event.channel, promise);
                     break;
                 case 'CommentRequestCancel':
@@ -425,7 +429,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
     
         var initializeSocket = function() {
             stompClient = StompSvc(blacktiger.getServiceUrl() + 'socket');
-            stompClient.connect("admin", "123", function(){
+            stompClient.connect($rootScope.credentials.username, $rootScope.credentials.password, function(){
                 //+ currentRoom
                 
                 stompClient.subscribe("/rooms/*", function(data) {
