@@ -249,9 +249,12 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
     
         var setParticipantCommentRequested = function(userId, value) {
             var index = indexByChannel(userId);
-            if(index >= 0) {
-                participants[index].commentRequested = value;
-            }
+            participants[index].commentRequested = !value;
+            $timeout(function() {
+                if(index >= 0) {
+                    participants[index].commentRequested = value;
+                }
+            }, 10);
         };
     
         var handleEvent = function(event) {
