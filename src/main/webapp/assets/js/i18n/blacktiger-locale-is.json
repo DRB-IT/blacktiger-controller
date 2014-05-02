@@ -1,7 +1,7 @@
 {
     "SYSTEM": {
         "NAME": "Telesal",
-        "COPYRIGHTHOLDER": "Regional nefndarinnar um byggingarmál"
+        "COPYRIGHTHOLDER": "telesal.org"
     },
     "NAVIGATION": {
         "PARTICIPANTS": "Hlustendur nú",
@@ -48,7 +48,8 @@
         "MINIMUM_DURATION": "Min. lengd"
     },
     "GENERAL": {
-        "OK": "Ok"
+        "OK": "Ok",
+        "TECHNICALLY_RESPONSIBLE": "Tæknilega ábyrgð"
     }
 
 }

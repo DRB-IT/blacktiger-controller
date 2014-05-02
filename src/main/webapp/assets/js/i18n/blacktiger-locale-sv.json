@@ -1,7 +1,7 @@
 {
     "SYSTEM": {
         "NAME": "Telesal",
-        "COPYRIGHTHOLDER": "Regionala Byggningskommittén"
+        "COPYRIGHTHOLDER": "telesal.org"
     },
     "NAVIGATION": {
         "PARTICIPANTS": "Lyssnare nu",
@@ -48,7 +48,8 @@
         "MINIMUM_DURATION": "Minsta varighet"
     },
     "GENERAL": {
-        "OK": "Ok"
+        "OK": "Ok",
+        "TECHNICALLY_RESPONSIBLE": "Tekniskt ansvarig"
     }
 
 }

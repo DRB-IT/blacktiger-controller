@@ -1,7 +1,7 @@
 {
     "SYSTEM": {
         "NAME": "Telesal",
-        "COPYRIGHTHOLDER": "The Regional Committee for Construction"
+        "COPYRIGHTHOLDER": "telesal.org"
     },
     "NAVIGATION": {
         "PARTICIPANTS": "Current Listeners",
@@ -48,7 +48,8 @@
         "MINIMUM_DURATION": "Min. duration"
     },
     "GENERAL": {
-        "OK": "Ok"
+        "OK": "Ok",
+        "TECHNICALLY_RESPONSIBLE": "Technically Responsible"
     }
 
 }

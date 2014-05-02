@@ -1,7 +1,7 @@
 {
     "SYSTEM": {
         "NAME": "Telesal",
-        "COPYRIGHTHOLDER": "Det Regionale Byggeudvalg"
+        "COPYRIGHTHOLDER": "telesal.org"
     },
     "NAVIGATION": {
         "PARTICIPANTS": "Maannakkut tusarnaartut",
@@ -48,7 +48,8 @@
         "MINIMUM_DURATION": "Min. sivisussusaa"
     },
     "GENERAL": {
-        "OK": "Ok"
+        "OK": "Ok",
+        "TECHNICALLY_RESPONSIBLE": "Teknisk ansvarlig"
     }
 
 }
