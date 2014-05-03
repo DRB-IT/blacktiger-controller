@@ -38,8 +38,8 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                             if(!reason || '' === reason) {
                                 reason = 'Unable to communicate with server';
                             }
-                            console.info('Unable to authenticate: ' + reason);
-                            return $q.reject('Unable to authenticate. Reason: ' + reason);
+                            console.info('Unable to authenticate: ' + reason.message);
+                            return $q.reject('Unable to authenticate. Reason: ' + reason.message);
                         }
                         $rootScope.credentials = {username: username, password: password};
                         user = response.data;
