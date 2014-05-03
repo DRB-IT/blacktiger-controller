@@ -49,7 +49,8 @@
     },
     "GENERAL": {
         "OK": "Ok",
-        "TECHNICALLY_RESPONSIBLE": "Technically Responsible"
+        "TECHNICALLY_RESPONSIBLE": "Technically Responsible",
+        "HALL": "hall"
     }
 
 }

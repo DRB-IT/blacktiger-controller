@@ -6,7 +6,7 @@
     "NAVIGATION": {
         "PARTICIPANTS": "Lyttere nu",
         "REPORT": "Lytterrapport",
-        "HELP": "Hjælp",
+        "HELP": "Hjálp",
         "ADMIN": {
             "REALTIME": "Realtid",
             "HISTORY": "Historik"
@@ -49,7 +49,8 @@
     },
     "GENERAL": {
         "OK": "Ok",
-        "TECHNICALLY_RESPONSIBLE": "Tekniskur ábyrgd"
+        "TECHNICALLY_RESPONSIBLE": "Tekniskur ábyrgd",
+        "HALL": "salur"
     }
 
 }

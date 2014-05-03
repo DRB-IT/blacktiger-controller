@@ -49,7 +49,8 @@
     },
     "GENERAL": {
         "OK": "Ok",
-        "TECHNICALLY_RESPONSIBLE": "Tekniskt ansvarig"
+        "TECHNICALLY_RESPONSIBLE": "Tekniskt ansvarig",
+        "HALL": "hall"
     }
 
 }

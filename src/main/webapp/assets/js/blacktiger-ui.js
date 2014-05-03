@@ -51,6 +51,15 @@ angular.module('blacktiger-ui',[])
             },
             templateUrl: 'assets/templates/bt-room-status.html'
         };
+    }).directive('btRoomInfo', function () {
+        return {
+            restrict: 'E',
+            scope: {
+                room: '=',
+                contactLink: '@'
+            },
+            templateUrl: 'assets/templates/bt-room-info.html'
+        };
     }).directive('modalWindow', function(){
     return {
         restrict: 'EA',

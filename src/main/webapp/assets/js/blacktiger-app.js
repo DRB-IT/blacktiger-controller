@@ -24,7 +24,15 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
         }).
         when('/settings', {
             controller: SettingsCtrl,
-            templateUrl: 'assets/templates/settings.html'
+            templateUrl: 'assets/templates/settings-general.html'
+        }).
+        when('/settings/contact', {
+            controller: SettingsCtrl,
+            templateUrl: 'assets/templates/settings-contact.html'
+        }).
+        when('/settings/create-listener', {
+            controller: SettingsCtrl,
+            templateUrl: 'assets/templates/settings-create-listener.html'
         }).
         when('/admin/realtime', {
             controller: RealtimeCtrl,

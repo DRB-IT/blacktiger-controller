@@ -47,8 +47,9 @@
             </div>
             <div class="row" id="FooterContainer">
                 <div class="col-xs-9" data-ng-controller="RoomDisplayCtrl" >
-                    <small ng-if="currentRoom">{{currentRoom.name}} <span title="logged in as {{currentUser.username}} with {{currentUser.roles}}">•</span> {{currentRoom.id}} • {{ 'GENERAL.TECHNICALLY_RESPONSIBLE' | translate }}: <a>{{currentRoom.contact.name}}</a></small>
+                    <small ng-if="currentRoom"><bt-room-info room="currentRoom" contact-link="#/settings/contact"></bt-room-info></small>
                 </div>
+                <span title="logged in as {{currentUser.username}} with {{currentUser.roles}}"></span>
                 <div class="col-xs-3 text-right"><small class="text-muted">{{ 'SYSTEM.COPYRIGHTHOLDER' | translate }}</small></div>
             </div>
         </div>

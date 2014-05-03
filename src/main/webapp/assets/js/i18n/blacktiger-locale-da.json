@@ -50,7 +50,8 @@
     },
     "GENERAL": {
         "OK": "Ok",
-        "TECHNICALLY_RESPONSIBLE": "Teknisk ansvarlig"
+        "TECHNICALLY_RESPONSIBLE": "Teknisk ansvarlig",
+        "HALL": "sal"
     }
 
 }
