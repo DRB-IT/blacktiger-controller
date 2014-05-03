@@ -519,14 +519,10 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                 });
             },
 
-            isNumberAvailable: function(number) {
-                var data = {phoneNumber: number};
-                return $http({method: 'GET', url: blacktiger.getServiceUrl() + 'sipaccounts', params: data}).then(function (response) {
-                    if(angular.isArray(response.data) && response.data > 0) {
-                        return false;
-                    } else {
-                        return true;
-                    }
+            get: function(key, number) {
+                var data = {key: key};
+                return $http({method: 'GET', url: blacktiger.getServiceUrl() + 'sipaccounts/' + number, params: data}).then(function (response) {
+                    return response.data;
                 });
             }
         };

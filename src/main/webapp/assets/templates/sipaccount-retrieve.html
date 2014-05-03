@@ -1,0 +1,23 @@
+<div class="col-md-6 col-md-offset-3">
+    <h1>Dine personlige oplysninger</h1>
+    <div class="alert alert-danger" ng-class="{hidden:!status}">
+        {{status}}
+    </div>
+    <div class="alert alert-success" ng-class="{hidden:!sipinfo}">
+        <b>Dine oplysninger er:</b><br>
+        Sip-bruger: {{sipinfo.sipId}}<br>
+        Sip-password: {{sipinfo.sipPass}}<br>
+        
+    </div>
+    <form id="getsipform">
+        <div class="form-group">
+            <label for="getsip-inputphone">Indtast dit telefonnummer</label>
+            <div class="row">
+                <div class="col-sm-12 col-xs-10">
+                    <input type="text" class="form-control input-lg" ng-model="phoneNumber" title="Telefonnummer" placeholder="Telefonnummer" autofocus="true">
+                </div>
+            </div>
+        </div>
+        <button type="button" ng-click="getSip()" class="btn btn-lg btn-success">Hent mine oplysninger</button>
+    </form>
+</div>

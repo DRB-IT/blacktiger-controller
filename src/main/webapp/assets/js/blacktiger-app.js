@@ -2,6 +2,8 @@
 
 var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.translate', 'ui.bootstrap', 'blacktiger-service', 'blacktiger-ui'])
     .config(function ($locationProvider, $routeProvider, $httpProvider, $translateProvider, blacktigerProvider) {
+        var mode = "normal", token, params = [];
+        
         $httpProvider.interceptors.push(function ($location) {
             return {
                 'responseError': function (rejection) {
@@ -13,38 +15,82 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
             };
         });
 
-        $routeProvider.
-        when('/', {
-            controller: RoomCtrl,
-            templateUrl: 'assets/templates/room.html'
-        }).
-        when('/login', {
-            controller: LoginCtrl,
-            templateUrl: 'assets/templates/login.html'
-        }).
-        when('/settings', {
-            controller: SettingsCtrl,
-            templateUrl: 'assets/templates/settings-general.html'
-        }).
-        when('/settings/contact', {
-            controller: SettingsCtrl,
-            templateUrl: 'assets/templates/settings-contact.html'
-        }).
-        when('/settings/create-listener', {
-            controller: SettingsCtrl,
-            templateUrl: 'assets/templates/settings-create-listener.html'
-        }).
-        when('/admin/realtime', {
-            controller: RealtimeCtrl,
-            templateUrl: 'assets/templates/realtime-status.html'
-        }).
-        when('/admin/history', {
-            controller: HistoryCtrl,
-            templateUrl: 'assets/templates/system-history.html'
-        }).
-        otherwise({
-            redirectTo: '/'
-        });
+        // Find params
+        var search = window.location.search;
+        if(search.length > 0 && search.charAt(0) === '?') {
+            search = search.substring(1);
+            var list = search.split('&');
+            angular.forEach(list, function(entry) {
+                var elements = entry.split('=');
+                if(elements.length > 1) {
+                    params[elements[0]] = elements[1];
+                }
+            });
+        }
+        
+        if(angular.isDefined(params['server'])) {
+            var url = params['server'];
+            if(url.charAt(url.length-1) !== '/') {
+                url = url + '/';
+            }
+            blacktigerProvider.setServiceUrl(url);
+        }
+        
+        if (angular.isDefined(params['token'])) {
+            mode = "token";
+            token = params['token'];
+        }
+        
+        if(mode === 'normal') {
+            $routeProvider.
+            when('/', {
+                controller: RoomCtrl,
+                templateUrl: 'assets/templates/room.html'
+            }).
+            when('/login', {
+                controller: LoginCtrl,
+                templateUrl: 'assets/templates/login.html'
+            }).
+            when('/settings', {
+                controller: SettingsCtrl,
+                templateUrl: 'assets/templates/settings-general.html'
+            }).
+            when('/settings/contact', {
+                controller: SettingsCtrl,
+                templateUrl: 'assets/templates/settings-contact.html'
+            }).
+            when('/settings/create-listener', {
+                controller: SettingsCtrl,
+                templateUrl: 'assets/templates/settings-create-listener.html'
+            }).
+            when('/admin/realtime', {
+                controller: RealtimeCtrl,
+                templateUrl: 'assets/templates/realtime-status.html'
+            }).
+            when('/admin/history', {
+                controller: HistoryCtrl,
+                templateUrl: 'assets/templates/system-history.html'
+            }).
+            otherwise({
+                redirectTo: '/'
+            });
+        }
+        
+        if(mode === 'token') {
+            $routeProvider.
+            when('/', {
+                controller: SipAccountRetrievalCtrl,
+                templateUrl: 'assets/templates/sipaccount-retrieve.html',
+                resolve: {
+                    token: function() {
+                        return token;
+                    }
+                }
+            }).
+            otherwise({
+                redirectTo: '/'
+            })
+        }
 
         $translateProvider.useStaticFilesLoader({
             prefix: 'assets/js/i18n/blacktiger-locale-',
@@ -55,15 +101,6 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
         var langData = language.split("-");
         $translateProvider.preferredLanguage(langData[0]);
         $translateProvider.fallbackLanguage('en');
-
-        var search = window.location.search;
-        if (search.indexOf('?server=') === 0) {
-            var url = search.substr(8);
-            if(url.charAt(url.length-1) !== '/') {
-                url = url + '/';
-            }
-            blacktigerProvider.setServiceUrl(url);
-        }
 
     }).run(function ($location, LoginSvc) {
         LoginSvc.authenticate().then(angular.noop, function () {
@@ -592,6 +629,17 @@ function HistoryCtrl($scope, ReportSvc) {
         $scope.minDuration = $scope.duration;
         $scope.predicate = 'firstCallTimestamp';
     }
+}
+
+function SipAccountRetrievalCtrl($scope, SipUserSvc, token) {
+    $scope.getSip = function() {
+        $scope.status="Henter oplysninger."
+        $scope.sipinfo = null;
+        SipUserSvc.get(token, $scope.phoneNumber).then(function(data) {
+            $scope.status=null;
+            $scope.sipinfo = data;
+        });
+    };
 }
 
 /** BOOTSTRAP **/
