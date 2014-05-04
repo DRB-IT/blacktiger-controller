@@ -632,12 +632,20 @@ function HistoryCtrl($scope, ReportSvc) {
 }
 
 function SipAccountRetrievalCtrl($scope, SipUserSvc, token) {
+    
+    $scope.cleanNumber = function(number) {
+        return number.replace(/[\+\-\/\(\) ]/g, '');
+    };
+    
     $scope.getSip = function() {
         $scope.status="Henter oplysninger."
         $scope.sipinfo = null;
-        SipUserSvc.get(token, $scope.phoneNumber).then(function(data) {
+        SipUserSvc.get(token, $scope.cleanNumber($scope.phoneNumber)).then(function(data) {
             $scope.status=null;
             $scope.sipinfo = data;
+        }, function(reason) {
+            $scope.status="Vi kender ikke det nummer du tastede, måske tastede du forkert? Eller har du et andet telefonnummer, så prøv det. Kontakt evt. din lokale teknisk ansvarlige og bed ham oprette dig igen med dit korrekte telefonnummer.";
+            $scope.sipinfo = null;
         });
     };
 }
