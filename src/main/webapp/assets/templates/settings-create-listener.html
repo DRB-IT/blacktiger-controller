@@ -12,7 +12,7 @@
 
     <div class="col-sm-8">
         <h3>Opret computer-lytter</h3>
-        <p>Hvis en ønsker at lytte til møderne via en computer, skal der oprettes en computer-konto som knyttes til lytterens mobil- eller telefonnummer. Computer-lyttere vises med <span class="glyphicon glyphicon-hdd"></span> på status-siden. Computer-konti der ikke har ringet op i et år, slettes automatisk. Hvis lytteren har mistet sit kodeord til computer-kontoen, skal den oprettes igen.</p>
+        <p>Hvis en ønsker at lytte til møderne via en computer, skal der oprettes en computer-konto som knyttes til lytterens mobil- eller telefonnummer. Computer-lyttere vises med <span class="glyphicon glyphicon-hdd"></span> på status-siden. Computer-konti der ikke har ringet op i et år, slettes automatisk. Hvis lytteren har mistet sit kodeord til computer-kontoen, skal lytteren oprettes igen ved at udfylde felterne herunder.</p>
 
         <div class="alert alert-success" ng-show="status==='success'">
             <b>Success!</b> Kontoen blev oprettet og der sendt en e-mail til den angivne e-mail-adresse med yderligere oplysninger.
@@ -35,9 +35,9 @@
                 <input type="text" class="form-control" ng-model="user.name" placeholder="Fornavn Efternavn">
             </div>
             <div class="form-group">
-                <label for="createPhone">Telefonnummer</label>
+                <label for="createPhone">Mobil- eller fastnetnummer</label>
                 <input type="text" class="form-control" ng-model="user.phoneNumber" placeholder="+45" value="+45">
-                <span class="help-block">Nummeret gemmes krypteret.</span>
+                <span class="help-block">Nummeret vises på skærmen i rigssalen når lytteren ringer ind fra sin computer.</span>
             </div>
             <div class="form-group">
                 <label for="createEmail">Send kontooplysninger til</label>
