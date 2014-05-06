@@ -29,18 +29,25 @@
 
         <form role="form" novalidate>
             <div class="form-group">
-                <label for="createName">Navn</label>
+                <label>Navn</label>
                 <input type="text" class="form-control" ng-model="contact.name" placeholder="Fornavn Efternavn">
             </div>
             <div class="form-group">
-                <label for="createPhone">Mobiltelefonnummer </label>
+                <label>Mobiltelefonnummer </label>
                 <input type="text" class="form-control" ng-model="contact.phoneNumber" placeholder="+45">
             </div>
             <div class="form-group">
-                <label for="createEmail">E-mail-adresse </label>
+                <label>E-mail-adresse </label>
                 <input type="email" class="form-control" ng-model="contact.email" placeholder="example@mail.com">
             </div>
-            <button type="button" class="btn btn-success" ng-click="updateContact()"><span class="glyphicon glyphicon-ok"></span></button>
+            <div class="form-group">
+                <label>Kommentar </label>
+                <input type="text" class="form-control" ng-model="contact.comment">
+            </div>
+            <button type="button" class="btn btn-success" ng-click="updateContact()" ng-disabled="contact_status !== null">
+                <span class="glyphicon glyphicon-ok" ng-if="contact_status!=='Saved'"></span>
+                <span ng-if="contact_status==='Saved'">Gemt</span>
+            </button>
         </form>
     </div>
 </div>

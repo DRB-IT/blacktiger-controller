@@ -530,6 +530,7 @@ function SettingsCtrl($scope, SipUserSvc, RoomSvc) {
     $scope.selectedView = 'settings';
     $scope.user = {};
     $scope.contact = angular.copy($scope.currentRoom.contact);
+    $scope.contact_status = null;
 
     $scope.reset = function () {
         $scope.user.name = '';
@@ -549,8 +550,11 @@ function SettingsCtrl($scope, SipUserSvc, RoomSvc) {
     };
 
     $scope.updateContact = function () {
+        $scope.contact_status = "Saving";
         $scope.currentRoom.contact = angular.copy($scope.contact);
-        RoomSvc.save($scope.currentRoom);
+        RoomSvc.save($scope.currentRoom).$promise.then(function() {
+            $scope.contact_status = "Saved";
+        });
     };
 
 }
