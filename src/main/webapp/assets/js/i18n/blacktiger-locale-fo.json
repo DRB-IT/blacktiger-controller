@@ -16,9 +16,9 @@
         "WARNINGS": {
             "NO_PARTICIPANTS_AND_TRANSMITTERS": "Der er i øjeblikket hverken transmission til, eller deltagere i, telefonmødet.",
             "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "Der sendes ikke lyd til lytterne!",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "For at transmittere lyd, ring op til nummer <b>{{phoneNumber}}</b> med X-Lite; ring ikke til det 8-cifrede nummer, det er kun til brug for lytterne!",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "Er mødet slut, tryk <i class=\"icon-remove\"></i> ud for hver lytter, så de ikke betaler unødigt!",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Hvis X-Lite ikke vil ringe op, så tryk Exit i X-Lite og start den igen."
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "Kontroller at X-Lite er startet",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "I X-Lite, ring op til {{phoneNumber}}",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Ring op til samme nummer fra en anden telefon og kontroller lydstyrken og -kvaliteten"
         },
         "INFO": {
             "NO_PARTICIPANTS": "Der er pt. ingen lyttere",

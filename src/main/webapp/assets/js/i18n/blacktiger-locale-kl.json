@@ -16,9 +16,9 @@
         "WARNINGS": {
             "NO_PARTICIPANTS_AND_TRANSMITTERS": "Oqarasuaatikkut ataatsimiinnermi maannakkut aallakaatitsisoqaranilu tusarnaartoqanngilaq.",
             "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "Tusarnaartunut nipeqanngilaq!",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "Aallakaatitsiniarnermut uunga normumut sianerit <b>{phoneNumber}</b> med X-Lite; Normumut arfineq-pingasunik kisitsisitalimmut sianernat, tusarnaartunuinnaagami!",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "Ataatsimiinneq naappat tusarnaartut tamarmik peerneqassapput <i class=\"icon-remove\"></i> pisariaqanngitsumik akiliinnginnerussammata!",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "X-Lite sianerusunngippat, Exit X-lite-mi tooruk X-Lite-lu aallarteqqillugu."
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "Kontroller at X-Lite er startet",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "I X-Lite, ring op til {{phoneNumber}}",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Ring op til samme nummer fra en anden telefon og kontroller lydstyrken og -kvaliteten"
         },
         "INFO": {
             "NO_PARTICIPANTS": "Maannakkut tusarnaartoqanngilaq",

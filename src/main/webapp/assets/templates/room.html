@@ -11,9 +11,9 @@
     <div class="alert alert-danger" ng-show="!isHostInConference() && (participants|filter:{host:false}).length>0">
         <b>{{'PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE' | translate}}</b>
         <ol>
-            <li ng-bind-html-unsafe="'PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1' | translate:translationData "></li>
-            <li ng-bind-html-unsafe="'PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2' | translate"></li>
-            <li ng-bind-html-unsafe="'PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3' | translate"></li>
+            <li>{{'PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1' | translate}}</li>
+            <li>{{'PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2' | translate:currentRoom}}</li>
+            <li>{{'PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3' | translate}}</li>
         </ol>
     </div>
     
