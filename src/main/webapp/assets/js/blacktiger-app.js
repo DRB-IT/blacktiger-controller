@@ -432,7 +432,7 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
                 }
             });
 
-            if (!stillParticipating) {
+            if (!stillParticipating && !entry.host) {
                 cleansedHistory.push(entry);
             }
         });
@@ -444,6 +444,11 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
     };
 
     $scope.$on('MeetingSvc.Join', function (event, participant) {
+        //Ignore the host. It will not be part of the history.
+        if(participant.host) {
+            return;
+        }
+        
         $log.debug('New participants - adding to history.');
         var entry, call, history = $cookieStore.get($scope.historyCookieName);
         if (history[participant.phoneNumber] === undefined) {
