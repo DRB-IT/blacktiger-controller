@@ -32,7 +32,8 @@
         "UNKNOWN": "Ukendt",
         "KINGDOM_HALL": "Rigssal",
         "PARTICIPANTS": "Lyttere",
-        "ABORT_TRANSMISSION": "Afbryd transmissionen"
+        "ABORT_TRANSMISSION": "Afbryd transmissionen",
+        "COMPLETED_CALLS": "{{noOfCompletedCalls}} afsluttede opkald"
     },
     "REPORT": {
         "NUMBER": "Nummer",

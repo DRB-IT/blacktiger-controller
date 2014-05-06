@@ -32,7 +32,8 @@
         "UNKNOWN": "Ilisimaneqanngilaq",
         "KINGDOM_HALL": "Rigssali",
         "PARTICIPANTS": "Tusarnaartut",
-        "ABORT_TRANSMISSION": "Aallakaatitsineq unitsiguk"
+        "ABORT_TRANSMISSION": "Aallakaatitsineq unitsiguk",
+        "COMPLETED_CALLS": "{{noOfCompletedCalls}} afsluttede opkald"
     },
     "REPORT": {
         "NUMBER": "Normu",

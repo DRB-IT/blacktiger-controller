@@ -32,7 +32,8 @@
         "UNKNOWN": "Óþekkt",
         "KINGDOM_HALL": "Ríkisal",
         "PARTICIPANTS": "Hlustun",
-        "ABORT_TRANSMISSION": "Aftengja sendingu"
+        "ABORT_TRANSMISSION": "Aftengja sendingu",
+        "COMPLETED_CALLS": "{{noOfCompletedCalls}} completed call(s)"
     },
     "REPORT": {
         "NUMBER": "Númer",

@@ -32,7 +32,8 @@
         "UNKNOWN": "Ukjent",
         "KINGDOM_HALL": "Rikets sal",
         "PARTICIPANTS": "Lyttere",
-        "ABORT_TRANSMISSION": "Avbryt transmisjonen"
+        "ABORT_TRANSMISSION": "Avbryt transmisjonen",
+        "COMPLETED_CALLS": "{{noOfCompletedCalls}} completed call(s)"
     },
     "REPORT": {
         "NUMBER": "Nummer",

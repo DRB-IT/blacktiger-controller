@@ -344,7 +344,8 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
     $scope.participants = MeetingSvc.getParticipantList();
     $scope.historyCookieName = 'meetingHistory';
     $scope.translationData = {
-        phoneNumber: $scope.currentRoom
+        noOfParticipants: 0,
+        noOfCompletedCalls: 0
     };
     $scope.history = [];
     $cookieStore.put($scope.historyCookieName, {});
@@ -437,7 +438,9 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
         });
 
         $scope.history = cleansedHistory;
-
+        
+        $scope.translationData.noOfParticipants = participants.length;
+        $scope.translationData.noOfCompletedCalls = $scope.history.length;
     };
 
     $scope.$on('MeetingSvc.Join', function (event, participant) {
@@ -463,6 +466,7 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
 
         $cookieStore.put($scope.historyCookieName, history);
         $scope.updateHistory();
+        
     });
 
     $scope.$on('MeetingSvc.Leave', function (event, participant) {

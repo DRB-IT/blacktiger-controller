@@ -31,8 +31,9 @@
         "EDIT": "Edit",
         "UNKNOWN": "Unknown",
         "KINGDOM_HALL": "Kingdom Hall",
-        "PARTICIPANTS": "Listeners",
-        "ABORT_TRANSMISSION": "Abort Transmission"
+        "PARTICIPANTS": "{{noOfParticipants}} Listener(s)",
+        "ABORT_TRANSMISSION": "Abort Transmission",
+        "COMPLETED_CALLS": "{{noOfCompletedCalls}} completed call(s)"
     },
     "REPORT": {
         "NUMBER": "Number",

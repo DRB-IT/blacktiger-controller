@@ -32,7 +32,8 @@
         "UNKNOWN": "Okänd",
         "KINGDOM_HALL": "Rikets sal",
         "PARTICIPANTS": "Lyssnare",
-        "ABORT_TRANSMISSION": "Avbryt transmissionen"
+        "ABORT_TRANSMISSION": "Avbryt transmissionen",
+        "COMPLETED_CALLS": "{{noOfCompletedCalls}} completed call(s)"
     },
     "REPORT": {
         "NUMBER": "Nummer",

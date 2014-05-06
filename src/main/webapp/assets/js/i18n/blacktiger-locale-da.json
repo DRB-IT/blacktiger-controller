@@ -31,9 +31,9 @@
         "EDIT": "Rediger",
         "UNKNOWN": "Ukendt",
         "KINGDOM_HALL": "Rigssal",
-        "PARTICIPANTS": "Lyttere",
+        "PARTICIPANTS": "{{noOfParticipants}} Lytter(e)",
         "ABORT_TRANSMISSION": "Afbryd",
-        "COMPLETED_CALLS": "Afsluttede opkald"
+        "COMPLETED_CALLS": "{{noOfCompletedCalls}} afsluttede opkald"
     },
     "REPORT": {
         "NUMBER": "Nummer",
