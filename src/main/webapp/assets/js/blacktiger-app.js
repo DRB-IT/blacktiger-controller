@@ -417,6 +417,17 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
         });
         return duration;
     };
+    
+    $scope.noOfCallsForPhoneNumber = function(phoneNumber) {
+        var count = 0, history = $cookieStore.get($scope.historyCookieName);
+        angular.forEach(history, function (entry) {
+            if (phoneNumber === entry.phoneNumber) {
+                count = entry.calls.length;
+            }
+        });
+
+        return count;
+    };
 
     $scope.updateHistory = function () {
         var history = $cookieStore.get($scope.historyCookieName),
