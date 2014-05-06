@@ -102,8 +102,12 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
         $translateProvider.preferredLanguage(langData[0]);
         $translateProvider.fallbackLanguage('en');
 
-    }).run(function ($location, LoginSvc) {
+    }).run(function ($location, LoginSvc, $rootScope) {
         LoginSvc.authenticate().then(angular.noop, function () {
+            $location.path('login');
+        });
+        
+        $rootScope.$on("logout", function(user) {
             $location.path('login');
         });
     })
@@ -267,7 +271,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
 
 /*************************************** CONTROLLERS ********************************************/
 
-function MenuCtrl($scope, $location) {
+function MenuCtrl($scope, $location, LoginSvc) {
     $scope.location = $location;
     $scope.links = [
         {
@@ -301,6 +305,10 @@ function MenuCtrl($scope, $location) {
             requiredRole: 'ROLE_ADMIN'
         }
     ];
+    
+    $scope.logout = function() {
+        LoginSvc.deauthenticate();
+    };
 }
 
 function RoomDisplayCtrl($scope, RoomSvc, LoginSvc, $rootScope, MeetingSvc) {

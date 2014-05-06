@@ -31,13 +31,13 @@
         <script type="text/javascript" src="assets/js/blacktiger-service.js"></script>
     </head>
     <body>
-        <div class="container-fluid-header">
+        <div class="container-fluid-header" data-ng-controller="MenuCtrl">
             <span class="brand"><img src="assets/img/tslogo50.png" alt="{{'SYSTEM.NAME' | translate }} logo" /><span>{{'SYSTEM.NAME' | translate }}</span></span>
-            <ul class="menu-bar" data-ng-controller="MenuCtrl">
+            <ul class="menu-bar">
                 <li data-ng-repeat="link in links | filterByRoles:currentUser.roles" data-ng-class="(link.url.substring(1) == location.path() && 'active')"><a href="{{ link.url }}" title="{{ link.name | translate }}"><span class="glyphicon glyphicon-{{link.icon}}"></span></a></li>
             </ul>
             <ul class="menu-bar pull-right">
-                <li><a href="j_spring_security_logout" title="Log ud"><span class="glyphicon glyphicon-remove-sign"></span></a></li>
+                <li><a ng-click="logout()" title="Log ud"><span class="glyphicon glyphicon-remove-sign"></span></a></li>
             </ul>
         </div>
         <div class="container-fluid-content">

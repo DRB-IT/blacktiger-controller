@@ -28,19 +28,31 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
         return {
             authenticate: function(username, password, remember) {
 
-                var user = null, credentials, authHeader;
+                var user = null, authHeader, token;
 
-                if(username && password) {
-                    authHeader = 'Basic ' + btoa(username + ':' + password);
+                if(!username && !password) {
+                    token = $cookieStore.get('LoginToken');
+                } else if(username && password) {
+                    token = btoa(username + ':' + password);
+                }
+
+                if(token) {
+                    authHeader = 'Basic ' + token;
                     return $http.get(blacktiger.getServiceUrl() + "system/authenticate", {headers: {'Authorization': authHeader}}).then(function(response) {
                         if(response.status !== 200) {
                             var reason = response.data;
                             if(!reason || '' === reason) {
                                 reason = 'Unable to communicate with server';
                             }
+                            $cookieStore.remove('LoginToken');
                             console.info('Unable to authenticate: ' + reason.message);
                             return $q.reject('Unable to authenticate. Reason: ' + reason.message);
                         }
+                        
+                        if(remember) {
+                            $cookieStore.put('LoginToken', token);
+                        }
+                        
                         $rootScope.credentials = {username: username, password: password};
                         user = response.data;
 
@@ -49,7 +61,6 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
                         }
 
                         $log.info('Authenticatated. Returning user.');
-                        //$http.defaults.headers.common['X-Auth-Token'] = user.authtoken;
                         $http.defaults.headers.common['Authorization'] = authHeader;
 
                         $log.info('Logged in as ' + user.username);
@@ -66,6 +77,11 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource'])
             },
             getCurrentUser: function() {
                 return currentUser;
+            },
+            deauthenticate: function() {
+                $http.defaults.headers.common['Authorization'] = undefined;
+                $cookieStore.remove('LoginToken');
+                $rootScope.$broadcast("logout", currentUser);
             }
         }
     }).factory('SystemSvc', function($http, blacktiger) {
