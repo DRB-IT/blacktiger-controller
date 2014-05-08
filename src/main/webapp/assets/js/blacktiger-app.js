@@ -3,7 +3,7 @@
 var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.translate', 'ui.bootstrap', 'blacktiger-service', 'blacktiger-ui'])
     .config(function ($locationProvider, $routeProvider, $httpProvider, $translateProvider, blacktigerProvider) {
         var mode = "normal", token, params = [];
-        
+
         $httpProvider.interceptors.push(function ($location) {
             return {
                 'responseError': function (rejection) {
@@ -27,7 +27,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
                 }
             });
         }
-        
+
         if(angular.isDefined(params['server'])) {
             var url = params['server'];
             if(url.charAt(url.length-1) !== '/') {
@@ -35,12 +35,12 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
             }
             blacktigerProvider.setServiceUrl(url);
         }
-        
+
         if (angular.isDefined(params['token'])) {
             mode = "token";
             token = params['token'];
         }
-        
+
         if(mode === 'normal') {
             $routeProvider.
             when('/', {
@@ -75,7 +75,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
                 redirectTo: '/'
             });
         }
-        
+
         if(mode === 'token') {
             $routeProvider.
             when('/', {
@@ -106,7 +106,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
         LoginSvc.authenticate().then(angular.noop, function () {
             $location.path('login');
         });
-        
+
         $rootScope.$on("logout", function(user) {
             $location.path('login');
         });
@@ -305,7 +305,7 @@ function MenuCtrl($scope, $location, LoginSvc) {
             requiredRole: 'ROLE_ADMIN'
         }
     ];
-    
+
     $scope.logout = function() {
         LoginSvc.deauthenticate();
     };
@@ -325,7 +325,6 @@ function RoomDisplayCtrl($scope, RoomSvc, LoginSvc, $rootScope, MeetingSvc) {
     $scope.$on("login", function () {
         $scope.rooms = RoomSvc.query();
         $scope.rooms.$promise.then($scope.updateCurrentRoom);
-        $scope.currentUser = LoginSvc.getCurrentUser();
     });
 
 }
@@ -425,7 +424,7 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
         });
         return duration;
     };
-    
+
     $scope.noOfCallsForPhoneNumber = function(phoneNumber) {
         var count = 0, history = $cookieStore.get($scope.historyCookieName);
         angular.forEach(history, function (entry) {
@@ -457,7 +456,7 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
         });
 
         $scope.history = cleansedHistory;
-        
+
         $scope.translationData.noOfParticipants = participants.length;
         $scope.translationData.noOfCompletedCalls = $scope.history.length;
     };
@@ -467,7 +466,7 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
         if(participant.host) {
             return;
         }
-        
+
         $log.debug('New participants - adding to history.');
         var entry, call, history = $cookieStore.get($scope.historyCookieName);
         if (history[participant.phoneNumber] === undefined) {
@@ -490,7 +489,7 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
 
         $cookieStore.put($scope.historyCookieName, history);
         $scope.updateHistory();
-        
+
     });
 
     $scope.$on('MeetingSvc.Leave', function (event, participant) {
@@ -664,11 +663,11 @@ function HistoryCtrl($scope, ReportSvc) {
 }
 
 function SipAccountRetrievalCtrl($scope, SipUserSvc, token) {
-    
+
     $scope.cleanNumber = function(number) {
         return number.replace(/[\+\-\/\(\) ]/g, '');
     };
-    
+
     $scope.getSip = function() {
         $scope.status="Henter oplysninger."
         $scope.sipinfo = null;

@@ -78,6 +78,8 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                 $http.defaults.headers.common['Authorization'] = undefined;
                 localStorageService.remove('LoginToken');
                 $rootScope.$broadcast("logout", currentUser);
+                currentUser = null;
+                $rootScope.currentUser = null;
             }
         }
     }).factory('SystemSvc', function($http, blacktiger) {

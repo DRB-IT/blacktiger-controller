@@ -37,7 +37,7 @@
                 <li data-ng-repeat="link in links | filterByRoles:currentUser.roles" data-ng-class="(link.url.substring(1) == location.path() && 'active')"><a href="{{ link.url }}" title="{{ link.name | translate }}"><span class="glyphicon glyphicon-{{link.icon}}"></span></a></li>
             </ul>
             <ul class="menu-bar pull-right">
-                <li><a ng-click="logout()" title="Log ud"><span class="glyphicon glyphicon-remove-sign"></span></a></li>
+                <li><a ng-if="currentUser" ng-click="logout()" title="Log ud"><span class="glyphicon glyphicon-remove-sign"></span></a></li>
             </ul>
         </div>
         <div class="container-fluid-content">
