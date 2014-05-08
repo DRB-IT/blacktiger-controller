@@ -5,6 +5,7 @@
     },
     "NAVIGATION": {
         "PARTICIPANTS": "Current Listeners",
+        "SETTINGS": "Settings",
         "REPORT": "Listener Report",
         "HELP": "Help",
         "ADMIN": {
@@ -46,12 +47,57 @@
         "CALL_COMMENCED": "Call Started",
         "AFTER_TIME": "After",
         "BEFORE_TIME": "Before",
-        "MINIMUM_DURATION": "Min. duration"
+        "MINIMUM_DURATION": "Min. duration",
+        "DELETE": "Delete History",
+        "NO_ENTRIES": "No history has been recorded for today."
     },
     "GENERAL": {
         "OK": "Ok",
         "TECHNICALLY_RESPONSIBLE": "Technically Responsible",
-        "HALL": "hall"
+        "HALL": "hall",
+        "LOGOUT": "Log out"
+    },
+    "SETTINGS": {
+        "GENERAL" : {
+            "TITLE": "Settings",
+            "LOGGED_IN_AS": "You are logged in as <b>{{name}}</b>",
+            "TECHNICALLY_RESPONSIBLE": "The technically responsible for this hall is <b>{{name}}</b>",
+            "CONTACT_LINK": "See contact information",
+            "FIND_HELP": "Find Help",
+            "FIND_HELP_DESC": "Click <span class=\"glyphicon glyphicon-question-sign\"></span> at the top of the page if you need help."
+        },
+        "CREATE_SIP_ACCOUNT": {
+            "TITLE": "Create Computer Listener",
+            "DESCRIPTION": "If one wants to listen to meetings via a computer, a computer account attached to the listener's mobile or telephone number is needed. Computer listeners are displayed with <span class=\"glyphicon glyphicon-hdd\"></span> on the status page. Computer accounts that have not made any calls for a year, will be automatically deleted. If the listener has lost the password for the computer account, the listener is created again by filling in the fields below.",
+            "TITLE_NAME": "Name",
+            "PLACEHOLDER_NAME": "Name Surname",
+            "TITLE_PHONE": "Cell Phone or Landline Number",
+            "DESCRIPTION_PHONE": "The number is displayed at the Kingdom Hall when the listener calling from his computer.",
+            "TITLE_EMAIL": "Send Account Information to",
+            "PLACEHOLDER_EMAIL": "E-mail Address",
+            "DESCRIPTION_EMAIL": "Necessary information is sent to this email address. E-mail address is not stored in TeleSal.",
+            "SAVED": "Saved",
+            "ALERT_SUCCESS": "<b>Success!</b> The account was created and sent an e-mail to the specified e-mail address with details.",
+            "ALERT_ERROR": "<b>System Error!</b> The account was not created. Please try again shortly.",
+            "ALERT_EXISTS": "A computer account using this phone number is already created. However, you can delete the old password and have a new password send for this account - do you want to do that?"
+
+        },
+        "CONTACT": {
+            "TITLE": "Technical Contact",
+            "SUBTITLE": "The Halls Technical Manager",
+            "DESCRIPTION": "There is only one technical manager for each conference room, no matter how many congregations are using it. The technical contact person is appointed by the Kingdom Hall Committee.",
+            "TITLE_NAME": "Name",
+            "PLACEHOLDER_NAME": "Name Surname",
+            "TITLE_PHONE": "Cell Phone Number",
+            "TITLE_EMAIL": "E-mail Address",
+            "PLACEHOLDER_EMAIL": "exampel@mail.com",
+            "TITLE_COMMENT": "Comment",
+            "SAVED": "Saved",
+            "ALERT_SUCCESS": "<b>Success!</b> Changes have been saved.",
+            "ALERT_ERROR": "<b>Fejl!</b> Changes were not saved. Please try again shortly.",
+            "ALERT_WARNING": "There is only one technical manager for each conference room, no matter how many congregations are using it. Is this the correct name, phone number and email address of the person whom the Kingdom Hall Committee has appointed as technical manager for Telesal in this Kingdom Hall?"
+
+        }
     }
 
 }

@@ -1,48 +1,44 @@
 <div class="row">
     <div class="col-sm-4">
         <div class="list-group">
-            <a class="list-group-item" href="#/settings">Indstillinger</a>
+            <a class="list-group-item" href="#/settings" translate="SETTINGS.GENERAL.TITLE"></a>
             <!--<a class="list-group-item" href="/settings-hall.html">Salen</a>-->
-            <a class="list-group-item active" href="#/settings/create-listener">Opret computer-lytter</a>
+            <a class="list-group-item active" href="#/settings/create-listener" translate="SETTINGS.CREATE_SIP_ACCOUNT.TITLE"></a>
             <!--<a class="list-group-item" href="/settings-edit.html">Rediger lytter</a>-->
-            <a class="list-group-item" href="#/settings/contact">Teknisk Kontakt</a>
+            <a class="list-group-item" href="#/settings/contact" translate="SETTINGS.CONTACT.TITLE"></a>
         </div>
     </div>
 
 
     <div class="col-sm-8">
-        <h3>Opret computer-lytter</h3>
-        <p>Hvis en ønsker at lytte til møderne via en computer, skal der oprettes en computer-konto som knyttes til lytterens mobil- eller telefonnummer. Computer-lyttere vises med <span class="glyphicon glyphicon-hdd"></span> på status-siden. Computer-konti der ikke har ringet op i et år, slettes automatisk. Hvis lytteren har mistet sit kodeord til computer-kontoen, skal lytteren oprettes igen ved at udfylde felterne herunder.</p>
+        <h3 translate="SETTINGS.CREATE_SIP_ACCOUNT.TITLE"></h3>
+        <p translate="SETTINGS.CREATE_SIP_ACCOUNT.DESCRIPTION"></p>
 
-        <div class="alert alert-success" ng-show="status==='success'">
-            <b>Success!</b> Kontoen blev oprettet og der sendt en e-mail til den angivne e-mail-adresse med yderligere oplysninger.
-        </div>
-        <div class="alert alert-danger" ng-show="status==='error'">
-            <b>Systemfejl!</b> Kontoen blev ikke oprettet. Prøv igen om lidt.
-        </div>
-        <div class="alert alert-danger" ng-show="status==='invalid'">
+        <div class="alert alert-success" ng-show="status==='success'" translate="SETTINGS.CREATE_SIP_ACCOUNT.ALERT_SUCCESS"></div>
+        <div class="alert alert-danger" ng-show="status==='error'" translate="SETTINGS.CREATE_SIP_ACCOUNT.ALERT_ERROR"></div>
+        <!--div class="alert alert-danger" ng-show="status==='invalid'">
             Feltet [input name] er ikke udfyldt korrekt. Tjek oplysningerne og prøv igen.
-        </div>
+        </div-->
 
         <div class="alert alert-warning" ng-show="status==='alreadyExists'">
-            <p>Der er tidligere oprettet en computer-konto med dette telefonnummer. Men du kan slette det gamle kodeord og få tilsendt et nyt kodeord for denne konto - vil du det?</p>
-            <p><button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-ok"></span> Ja</button> <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span> Nej</button></p>
+            <p translate="SETTINGS.CREATE_SIP_ACCOUNT.ALERT_EXISTS"></p>
+            <p><button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-ok"></span> {{"GENERAL_YES" | translate}}</button> <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span> {{"GENERAL_NO" | translate}}</button></p>
         </div>
 
         <form role="form" novalidate name="createForm">
             <div class="form-group" ng-class="{'has-error':!createForm.name.$valid}">
-                <label for="createName">Navn</label>
-                <input type="text" class="form-control" ng-model="user.name" name="name" placeholder="Fornavn Efternavn" ng-required="true" ng-pattern="/^[\w]{2,} [\w]{2,}$/">
+                <label translate="SETTINGS.CREATE_SIP_ACCOUNT.TITLE_NAME"></label>
+                <input type="text" class="form-control" ng-model="user.name" name="name" placeholder="{{'SETTINGS.CREATE_SIP_ACCOUNT.PLACEHOLDER_NAME' | translate}}" ng-required="true" ng-pattern="/^[\w]{2,} [\w]{2,}$/">
             </div>
             <div class="form-group" ng-class="{'has-error':!createForm.phoneNumber.$valid}">
-                <label for="createPhone">Mobil- eller fastnetnummer</label>
-                <input type="text" class="form-control" ng-model="user.phoneNumber" name="phoneNumber" placeholder="+{{currentRoom.countryCallingCode}}" ng-pattern="e164Pattern" ng-required="true" ng-blur="trimPhoneNumber()">
-                <span class="help-block">Nummeret vises på skærmen i rigssalen når lytteren ringer ind fra sin computer.</span>
+                <label translate="SETTINGS.CREATE_SIP_ACCOUNT.TITLE_PHONE"></label>
+                <input type="text" class="form-control" ng-model="user.phoneNumber" name="phoneNumber" placeholder="+{{currentRoom.countryCallingCode}}" ng-pattern="e164Pattern" ng-required="true">
+                <span class="help-block" translate="SETTINGS.CREATE_SIP_ACCOUNT.DESCRIPTION_PHONE"></span>
             </div>
             <div class="form-group" ng-class="{'has-error':!createForm.email.$valid}">
-                <label for="createEmail">Send kontooplysninger til</label>
-                <input type="email" class="form-control" ng-model="user.email" name="email" placeholder="E-mail-adresse" ng-required="true">
-                <span class="help-block">Nødvendige oplysninger sendes til denne e-mail-adresse. E-mail-adressen bliver ikke gemt hos TeleSal.</span>
+                <label translate="SETTINGS.CREATE_SIP_ACCOUNT.TITLE_EMAIL">Send kontooplysninger til</label>
+                <input type="email" class="form-control" ng-model="user.email" name="email" placeholder="{{'SETTINGS.CREATE_SIP_ACCOUNT.PLACEHOLDER_EMAIL' | translate}}" ng-required="true">
+                <span class="help-block" translate="SETTINGS.CREATE_SIP_ACCOUNT.DESCRIPTION_EMAIL"></span>
             </div>
             <button type="button" class="btn btn-success" ng-disabled="!createForm.$valid" ng-click="createUser()"><span class="glyphicon glyphicon-ok"></span></button>
         </form>

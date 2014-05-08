@@ -1,52 +1,48 @@
 <div class="row">
     <div class="col-sm-4">
         <div class="list-group">
-            <a class="list-group-item" href="#/settings">Indstillinger</a>
+            <a class="list-group-item" href="#/settings" translate="SETTINGS.GENERAL.TITLE"></a>
             <!--<a class="list-group-item" href="/settings-hall.html">Salen</a>-->
-            <a class="list-group-item" href="#/settings/create-listener">Opret computer-lytter</a>
+            <a class="list-group-item" href="#/settings/create-listener" translate="SETTINGS.CREATE_SIP_ACCOUNT.TITLE"></a>
             <!--<a class="list-group-item" href="/settings-edit.html">Rediger lytter</a>-->
-            <a class="list-group-item active" href="#/settings/contact">Teknisk Kontakt</a>
+            <a class="list-group-item active" href="#/settings/contact" translate="SETTINGS.CONTACT.TITLE"></a>
         </div>
     </div>
     <div class="col-sm-8">
-        <h3>Salens teknisk ansvarlige</h3>
-        <p>Der er kun én teknisk ansvarlig for hver mødesal, uanset hvor mange menigheder der benytter den. Den teknisk ansvarlige udnævnes af rigssalsudvalget.</p>
+        <h3 translate="SETTINGS.CONTACT.SUBTITLE"></h3>
+        <p translate="SETTINGS.CONTACT.DESCRIPTION"></p>
 
-        <div class="alert alert-success" ng-show="status==='success'">
-            <b>Success!</b> Ændringerne blev gemt.
-        </div>
-        <div class="alert alert-danger" ng-show="status==='error'">
-            <b>Fejl!</b> Ændringerne blev ikke gemt. Prøv igen om lidt.
-        </div>
-        <div class="alert alert-danger" ng-show="status==='invalid'">
+        <div class="alert alert-success" ng-show="status==='success'" translate="SETTINGS.CONTACT.ALERT_SUCCESS"></div>
+        <div class="alert alert-danger" ng-show="status==='error'" translate="SETTINGS.CONTACT.ALERT_ERROR"></div>
+        <!--div class="alert alert-danger" ng-show="status==='invalid'">
             Feltet [input name] er ikke udfyldt korrekt.
-        </div>
+        </div-->
 
         <div class="alert alert-warning" ng-show="status==='warning'">
-            <p>Der er kun én teknisk ansvarlig for Telesal, uanset hvor mange menigheder der benytter denne mødesal. Er dette det korrekte navn, mobiltelefonnummer og e-mail-adresse på den som rigssalsudvalget har udnævnt som teknisk ansvarlig for Telesal i denne mødesal?</p>
-            <p><button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-ok"></span> Ja</button> <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span> Nej</button></p>
+            <p translate="SETTINGS.CONTACT.ALERT_WARNING"></p>
+            <p><button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-ok"></span> {{"GENERAL.YES" | translate}}</button> <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span> {{"GENERAL.YES" | translate}}</button></p>
         </div>
 
         <form role="form" novalidate name="contactForm">
             <div class="form-group" ng-class="{'has-error':!contactForm.name.$valid}">
-                <label>Navn</label>
-                <input type="text" class="form-control" name="name" ng-model="contact.name" placeholder="Fornavn Efternavn" ng-pattern="/^([\w]{2,} ([\w]{2,} )*[\w]{2,})$/" ng-required="true">
+                <label translate="SETTINGS.CONTACT.TITLE_NAME"></label>
+                <input type="text" class="form-control" name="name" ng-model="contact.name" placeholder="{{'SETTINGS.CONTACT.PLACEHOLDER_NAME'}}" ng-pattern="/^([\w]{2,} ([\w]{2,} )*[\w]{2,})$/" ng-required="true">
             </div>
             <div class="form-group" ng-class="{'has-error':!contactForm.phoneNumber.$valid}">
-                <label>Mobiltelefonnummer </label>
+                <label translate="SETTINGS.CONTACT.TITLE_PHONE"></label>
                 <input type="text" class="form-control" name="phoneNumber" ng-model="contact.phoneNumber" placeholder="+{{currentRoom.countryCallingCode}}" ng-pattern="e164Pattern" ng-required="true">
             </div>
             <div class="form-group" ng-class="{'has-error':!contactForm.email.$valid}">
-                <label>E-mail-adresse </label>
-                <input type="email" class="form-control" name="email" ng-model="contact.email" placeholder="example@mail.com" ng-required="true">
+                <label translate="SETTINGS.CONTACT.TITLE_EMAIL"></label>
+                <input type="email" class="form-control" name="email" ng-model="contact.email" placeholder="{{'SETTINGS.CONTACT.PLACEHOLDER_EMAIL'}}" ng-required="true">
             </div>
             <div class="form-group">
-                <label>Kommentar </label>
+                <label translate="SETTINGS.CONTACT.TITLE_COMMENT"></label>
                 <input type="text" class="form-control" ng-model="contact.comment">
             </div>
             <button type="button" class="btn btn-success" ng-click="updateContact()" ng-disabled="!contactForm.$valid || contact_status !== null">
                 <span class="glyphicon glyphicon-ok" ng-if="contact_status!=='Saved'"></span>
-                <span ng-if="contact_status==='Saved'">Gemt</span>
+                <span ng-if="contact_status==='Saved'" translate="SETTINGS.CONTACT.SAVED">Gemt</span>
             </button>
         </form>
     </div>

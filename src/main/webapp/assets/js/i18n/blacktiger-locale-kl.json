@@ -5,6 +5,7 @@
     },
     "NAVIGATION": {
         "PARTICIPANTS": "Maannakkut tusarnaartut",
+        "SETTINGS": "Indstillinger",
         "REPORT": "Tusarnaartunik nalunaarusiaq",
         "HELP": "Ikiuut",
         "ADMIN": {
@@ -46,12 +47,57 @@
         "CALL_COMMENCED": "Sianerpoq",
         "AFTER_TIME": "Nalunaaqutaq xx-nngoreerpat",
         "BEFORE_TIME": "Nalunaaqutaq xx-nngunngitsoq",
-        "MINIMUM_DURATION": "Min. sivisussusaa"
+        "MINIMUM_DURATION": "Min. sivisussusaa",
+        "DELETE": "Slet historik",
+        "NO_ENTRIES": "Der er ingen historik gemt for idag."
     },
     "GENERAL": {
         "OK": "Ok",
         "TECHNICALLY_RESPONSIBLE": "Teknisk ansvarlig",
-        "HALL": "sal"
+        "HALL": "sal",
+        "LOGOUT": "Log ud"
+    },
+    "SETTINGS": {
+        "GENERAL" : {
+            "TITLE": "Indstillinger",
+            "LOGGED_IN_AS": "Der er logget ind som <b>{{name}}</b>",
+            "TECHNICALLY_RESPONSIBLE": "Den teknisk ansvarlige for denne sal er <b>{{name}}</b>",
+            "CONTACT_LINK": "Se kontaktinformation",
+            "FIND_HELP": "Find hjælp",
+            "FIND_HELP_DESC": "Klik på <span class=\"glyphicon glyphicon-question-sign\"></span> i toppen af siden hvis du har brug for hjælp."
+        },
+        "CREATE_SIP_ACCOUNT": {
+            "TITLE": "Opret computer-lytter",
+            "DESCRIPTION": "Hvis en ønsker at lytte til møderne via en computer, skal der oprettes en computer-konto som knyttes til lytterens mobil- eller telefonnummer. Computer-lyttere vises med <span class=\"glyphicon glyphicon-hdd\"></span> på status-siden. Computer-konti der ikke har ringet op i et år, slettes automatisk. Hvis lytteren har mistet sit kodeord til computer-kontoen, skal lytteren oprettes igen ved at udfylde felterne herunder.",
+            "TITLE_NAME": "Navn",
+            "PLACEHOLDER_NAME": "Fornavn Efternavn",
+            "TITLE_PHONE": "Mobil- eller fastnetnummer",
+            "DESCRIPTION_PHONE": "Nummeret vises på skærmen i rigssalen når lytteren ringer ind fra sin computer.",
+            "TITLE_EMAIL": "Send kontooplysninger til",
+            "PLACEHOLDER_EMAIL": "E-mail-adresse",
+            "DESCRIPTION_EMAIL": "Nødvendige oplysninger sendes til denne e-mail-adresse. E-mail-adressen bliver ikke gemt hos TeleSal.",
+            "SAVED": "Gemt",
+            "ALERT_SUCCESS": "<b>Success!</b> Kontoen blev oprettet og der sendt en e-mail til den angivne e-mail-adresse med yderligere oplysninger.",
+            "ALERT_ERROR": "<b>Systemfejl!</b> Kontoen blev ikke oprettet. Prøv igen om lidt.",
+            "ALERT_EXISTS": "Der er tidligere oprettet en computer-konto med dette telefonnummer. Men du kan slette det gamle kodeord og få tilsendt et nyt kodeord for denne konto - vil du det?"
+
+        },
+        "CONTACT": {
+            "TITLE": "Teknisk kontakt",
+            "SUBTITLE": "Salens tekniske ansvarlige",
+            "DESCRIPTION": "Der er kun én teknisk ansvarlig for hver mødesal, uanset hvor mange menigheder der benytter den. Den teknisk ansvarlige udnævnes af rigssalsudvalget.",
+            "TITLE_NAME": "Navn",
+            "PLACEHOLDER_NAME": "Fornavn Efternavn",
+            "TITLE_PHONE": "Mobiltelefonnummer",
+            "TITLE_EMAIL": "E-mail-adresse",
+            "PLACEHOLDER_EMAIL": "eksempel@mail.dk",
+            "TITLE_COMMENT": "Kommentar",
+            "SAVED": "Gemt",
+            "ALERT_SUCCESS": "<b>Success!</b> Ændringerne blev gemt.",
+            "ALERT_ERROR": "<b>Fejl!</b> Ændringerne blev ikke gemt. Prøv igen om lidt.",
+            "ALERT_WARNING": "Der er kun én teknisk ansvarlig for Telesal, uanset hvor mange menigheder der benytter denne mødesal. Er dette det korrekte navn, mobiltelefonnummer og e-mail-adresse på den som rigssalsudvalget har udnævnt som teknisk ansvarlig for Telesal i denne mødesal?"
+
+        }
     }
 
 }
