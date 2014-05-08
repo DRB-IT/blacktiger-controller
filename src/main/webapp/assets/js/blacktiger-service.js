@@ -19,6 +19,9 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                 },
                 isLongPollingForced: function() {
                     return forceLongPolling;
+                },
+                getE164Pattern: function() {
+                  return /^\+[0-9]{5,15}$/;
                 }
             };
         };

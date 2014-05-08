@@ -16,7 +16,7 @@
             <b>Success!</b> Ændringerne blev gemt.
         </div>
         <div class="alert alert-danger" ng-show="status==='error'">
-            <b>Fejl!</b> Ændringerne blev ikke gemt. Prøv igen om lidt. 
+            <b>Fejl!</b> Ændringerne blev ikke gemt. Prøv igen om lidt.
         </div>
         <div class="alert alert-danger" ng-show="status==='invalid'">
             Feltet [input name] er ikke udfyldt korrekt.
@@ -27,24 +27,24 @@
             <p><button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-ok"></span> Ja</button> <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span> Nej</button></p>
         </div>
 
-        <form role="form" novalidate>
-            <div class="form-group">
+        <form role="form" novalidate name="contactForm">
+            <div class="form-group" ng-class="{'has-error':!contactForm.name.$valid}">
                 <label>Navn</label>
-                <input type="text" class="form-control" ng-model="contact.name" placeholder="Fornavn Efternavn">
+                <input type="text" class="form-control" name="name" ng-model="contact.name" placeholder="Fornavn Efternavn" ng-pattern="/^([\w]{2,} ([\w]{2,} )*[\w]{2,})$/" ng-required="true">
             </div>
-            <div class="form-group">
+            <div class="form-group" ng-class="{'has-error':!contactForm.phoneNumber.$valid}">
                 <label>Mobiltelefonnummer </label>
-                <input type="text" class="form-control" ng-model="contact.phoneNumber" placeholder="+45">
+                <input type="text" class="form-control" name="phoneNumber" ng-model="contact.phoneNumber" placeholder="+{{currentRoom.countryCallingCode}}" ng-pattern="e164Pattern" ng-required="true">
             </div>
-            <div class="form-group">
+            <div class="form-group" ng-class="{'has-error':!contactForm.email.$valid}">
                 <label>E-mail-adresse </label>
-                <input type="email" class="form-control" ng-model="contact.email" placeholder="example@mail.com">
+                <input type="email" class="form-control" name="email" ng-model="contact.email" placeholder="example@mail.com" ng-required="true">
             </div>
             <div class="form-group">
                 <label>Kommentar </label>
                 <input type="text" class="form-control" ng-model="contact.comment">
             </div>
-            <button type="button" class="btn btn-success" ng-click="updateContact()" ng-disabled="contact_status !== null">
+            <button type="button" class="btn btn-success" ng-click="updateContact()" ng-disabled="!contactForm.$valid || contact_status !== null">
                 <span class="glyphicon glyphicon-ok" ng-if="contact_status!=='Saved'"></span>
                 <span ng-if="contact_status==='Saved'">Gemt</span>
             </button>

@@ -29,22 +29,22 @@
             <p><button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-ok"></span> Ja</button> <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span> Nej</button></p>
         </div>
 
-        <form role="form" novalidate>
-            <div class="form-group">
+        <form role="form" novalidate name="createForm">
+            <div class="form-group" ng-class="{'has-error':!createForm.name.$valid}">
                 <label for="createName">Navn</label>
-                <input type="text" class="form-control" ng-model="user.name" placeholder="Fornavn Efternavn">
+                <input type="text" class="form-control" ng-model="user.name" name="name" placeholder="Fornavn Efternavn" ng-required="true" ng-pattern="/^[\w]{2,} [\w]{2,}$/">
             </div>
-            <div class="form-group">
+            <div class="form-group" ng-class="{'has-error':!createForm.phoneNumber.$valid}">
                 <label for="createPhone">Mobil- eller fastnetnummer</label>
-                <input type="text" class="form-control" ng-model="user.phoneNumber" placeholder="+45" value="+45">
+                <input type="text" class="form-control" ng-model="user.phoneNumber" name="phoneNumber" placeholder="+{{currentRoom.countryCallingCode}}" ng-pattern="e164Pattern" ng-required="true" ng-blur="trimPhoneNumber()">
                 <span class="help-block">Nummeret vises på skærmen i rigssalen når lytteren ringer ind fra sin computer.</span>
             </div>
-            <div class="form-group">
+            <div class="form-group" ng-class="{'has-error':!createForm.email.$valid}">
                 <label for="createEmail">Send kontooplysninger til</label>
-                <input type="email" class="form-control" ng-model="user.email" placeholder="E-mail-adresse">
+                <input type="email" class="form-control" ng-model="user.email" name="email" placeholder="E-mail-adresse" ng-required="true">
                 <span class="help-block">Nødvendige oplysninger sendes til denne e-mail-adresse. E-mail-adressen bliver ikke gemt hos TeleSal.</span>
             </div>
-            <button type="button" class="btn btn-success" ng-click="createUser()"><span class="glyphicon glyphicon-ok"></span></button>
+            <button type="button" class="btn btn-success" ng-disabled="!createForm.$valid" ng-click="createUser()"><span class="glyphicon glyphicon-ok"></span></button>
         </form>
     </div>
 

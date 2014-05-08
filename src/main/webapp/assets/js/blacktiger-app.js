@@ -56,11 +56,11 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
                 templateUrl: 'assets/templates/settings-general.html'
             }).
             when('/settings/contact', {
-                controller: SettingsCtrl,
+                controller: ContactCtrl,
                 templateUrl: 'assets/templates/settings-contact.html'
             }).
             when('/settings/create-listener', {
-                controller: SettingsCtrl,
+                controller: CreateSipAccountCtrl,
                 templateUrl: 'assets/templates/settings-create-listener.html'
             }).
             when('/admin/realtime', {
@@ -525,28 +525,36 @@ function ModalEditNameCtrl($scope, $modalInstance, phoneNumber, currentName) {
     };
 }
 
-function SettingsCtrl($scope, SipUserSvc, RoomSvc) {
-    $scope.selectedView = 'settings';
+function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger) {
     $scope.user = {};
-    $scope.contact = angular.copy($scope.currentRoom.contact);
-    $scope.contact_status = null;
+    $scope.e164Pattern = blacktiger.getE164Pattern();
+
 
     $scope.reset = function () {
-        $scope.user.name = '';
-        $scope.user.phoneNumber = '';
-        $scope.user.email = '';
+      $scope.user.name = '';
+      $scope.user.phoneNumber = '+' + $scope.currentRoom.countryCallingCode;
+      $scope.user.email = '';
 
     };
 
     $scope.createUser = function () {
-        SipUserSvc.create($scope.user).then(function () {
-            $scope.reset();
-            $scope.status = 'success';
-        }, function (reason) {
-            $scope.reset();
-            $scope.status = 'error';
-        });
+      SipUserSvc.create($scope.user).then(function () {
+          $scope.reset();
+          $scope.status = 'success';
+      }, function (reason) {
+          $scope.reset();
+          $scope.status = 'error';
+      });
     };
+
+    $scope.reset();
+
+}
+
+function ContactCtrl($scope, SipUserSvc, RoomSvc, blacktiger) {
+    $scope.contact = angular.copy($scope.currentRoom.contact);
+    $scope.contact_status = null;
+    $scope.e164Pattern = blacktiger.getE164Pattern();
 
     $scope.updateContact = function () {
         $scope.contact_status = "Saving";
@@ -555,6 +563,10 @@ function SettingsCtrl($scope, SipUserSvc, RoomSvc) {
             $scope.contact_status = "Saved";
         });
     };
+}
+
+function SettingsCtrl($scope, SipUserSvc, RoomSvc, blacktiger) {
+
 
 }
 
