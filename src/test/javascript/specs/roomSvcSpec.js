@@ -1,18 +1,20 @@
 describe('Unit testing RoomSvc', function() {
     var RoomSvc;
     var $httpBackend;
+    var blacktiger;
 
     beforeEach(module('blacktiger-service'));
 
-    beforeEach(inject(function(_RoomSvc_, _$httpBackend_){
+    beforeEach(inject(function(_RoomSvc_, _$httpBackend_, _blacktiger_){
         RoomSvc = _RoomSvc_;
         $httpBackend = _$httpBackend_;
+        blacktiger = _blacktiger_;
     }));
 
-   
+
 
     it('retreives room objects', function() {
-        $httpBackend.expectGET("http://localhost:8080/rooms").respond([{
+        $httpBackend.expectGET(blacktiger.getServiceUrl() + 'rooms').respond([{
                 id: 'DK-9000-2',
                 name: 'DK-9000-1 Aalborg, sal 2',
                 contact: {
@@ -27,7 +29,7 @@ describe('Unit testing RoomSvc', function() {
         var rooms = null;
 
         rooms = RoomSvc.query();
-        
+
         $httpBackend.flush();
         expect(rooms[0].id).toBe('DK-9000-2');
         expect(rooms[0].name).toBe('DK-9000-1 Aalborg, sal 2');
@@ -37,7 +39,7 @@ describe('Unit testing RoomSvc', function() {
     });
 
     it('retreives specific room object', function() {
-        $httpBackend.expectGET("http://localhost:8080/rooms/DK-9000-2").respond({
+        $httpBackend.expectGET(blacktiger.getServiceUrl() + 'rooms/DK-9000-2').respond({
                 id: 'DK-9000-2',
                 name: 'DK-9000-1 Aalborg, sal 2',
                 contact: {
@@ -52,9 +54,9 @@ describe('Unit testing RoomSvc', function() {
         var room = null;
 
         room = RoomSvc.get('DK-9000-2');
-        
+
         $httpBackend.flush();
-        
+
         expect(room.id).toBe('DK-9000-2');
         expect(room.name).toBe('DK-9000-1 Aalborg, sal 2');
         expect(room.contact.name).toBe('John Doe');
@@ -63,4 +65,3 @@ describe('Unit testing RoomSvc', function() {
 
 
 });
-

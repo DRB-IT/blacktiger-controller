@@ -4,20 +4,22 @@ describe('Unit testing LoginSvc', function() {
     var LoginSvc;
     var $httpBackend;
     var $cookieStore;
+    var blacktiger;
 
     beforeEach(module('blacktiger-service'));
 
-    beforeEach(inject(function(_$compile_, _$rootScope_, _LoginSvc_, _$httpBackend_, _$cookieStore_){
+    beforeEach(inject(function(_$compile_, _$rootScope_, _LoginSvc_, _$httpBackend_, _$cookieStore_, _blacktiger_){
         $compile = _$compile_;
         $rootScope = _$rootScope_;
         LoginSvc = _LoginSvc_;
         $httpBackend = _$httpBackend_;
         $cookieStore = _$cookieStore_;
+        blacktiger = _blacktiger_;
     }));
 
     it('sends an authentication request with username and password', function() {
         var username = 'john', password = 'doe';
-        $httpBackend.expectGET('http://localhost:8080/system/authenticate').respond({
+        $httpBackend.expectGET(blacktiger.getServiceUrl() + 'system/authenticate').respond({
             username: 'john',
             authtoken: 'qwerty',
             roles: ['ROLE_USER']
@@ -78,4 +80,3 @@ describe('Unit testing LoginSvc', function() {
 
 
 });
-

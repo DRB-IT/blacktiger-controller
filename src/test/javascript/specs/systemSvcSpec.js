@@ -2,17 +2,19 @@ describe('Unit testing SystemSvc', function() {
     var $rootScope;
     var $httpBackend;
     var SystemSvc;
+    var blacktiger;
 
     beforeEach(module('blacktiger-service'));
 
-    beforeEach(inject(function(_$rootScope_, _$httpBackend_, _SystemSvc_){
+    beforeEach(inject(function(_$rootScope_, _$httpBackend_, _SystemSvc_, _blacktiger_){
         $rootScope = _$rootScope_;
         $httpBackend = _$httpBackend_;
         SystemSvc = _SystemSvc_;
+        blacktiger = _blacktiger_;
     }));
 
     it('retreives system information.', function() {
-        $httpBackend.expectGET('http://localhost:8080/system/information').respond({
+        $httpBackend.expectGET(blacktiger.getServiceUrl() + 'system/information').respond({
             cores: 24,
             load: {
                 disk: 25.0,
@@ -46,4 +48,3 @@ describe('Unit testing SystemSvc', function() {
         });
     });
 });
-
