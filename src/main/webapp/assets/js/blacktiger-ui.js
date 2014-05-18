@@ -68,21 +68,21 @@ angular.module('blacktiger-ui',[])
             },
             controller: function($scope, $interval) {
                 $scope.duration = 0;
-                
+
                 if(angular.isNumber($scope.since)) {
                     $scope.since = new Date($scope.since);
                 }
-                
+
                 $scope.updateDuration = function() {
-                    $scope.duration = (new Date().getTime() - $scope.since.getTime()) / 60000;
+                    $scope.duration = Math.max((new Date().getTime() - $scope.since.getTime()) / 60000, 0);
                 };
-                
+
                 $scope.task = $interval($scope.updateDuration, 5000);
-                
+
                 $scope.$on('$destroy', function() {
                     $interval.cancel($scope.task);
                 });
-                
+
                 $scope.updateDuration();
             },
             templateUrl: 'assets/templates/bt-duration.html'
