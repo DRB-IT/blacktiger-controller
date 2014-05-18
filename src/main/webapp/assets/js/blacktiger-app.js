@@ -290,7 +290,8 @@ function MenuCtrl($scope, $location, LoginSvc) {
             url: "http://telesal.dk/wiki",
             name: 'NAVIGATION.HELP',
             icon: 'question-sign',
-            requiredRole: 'ROLE_HOST'
+            requiredRole: 'ROLE_HOST',
+            target: '_blank'
         },
         {
             url: "#/admin/realtime",
