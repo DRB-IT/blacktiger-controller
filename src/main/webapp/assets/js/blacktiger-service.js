@@ -247,6 +247,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             var index = indexByChannel(channel);
             if(index >= 0) {
                 var p = participants[index];
+                p.commentRequested = false;
                 if(value !== p.muted) {
                     p = angular.copy(p);
                     p.muted = value;
@@ -365,11 +366,9 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             },
             mute: function(userId) {
                 handleMute(userId, true);
-                //ParticipantSvc.mute(currentRoom.id, userId);
             },
             unmute: function(userId) {
                 handleMute(userId, false);
-                //ParticipantSvc.unmute(currentRoom.id, userId);
             }
         };
 
