@@ -462,6 +462,11 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
         $scope.translationData.noOfCompletedCalls = $scope.history.length;
     };
 
+    $scope.deleteHistory = function() {
+        $cookieStore.put($scope.historyCookieName, []);
+        $scope.updateHistory();
+    };
+
     $scope.$on('MeetingSvc.Join', function (event, participant) {
         //Ignore the host. It will not be part of the history.
         if(participant.host) {
