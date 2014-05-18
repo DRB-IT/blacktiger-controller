@@ -108,6 +108,9 @@
             "ALERT_WARNING": "Der er kun én teknisk ansvarlig for Telesal, uanset hvor mange menigheder der benytter denne mødesal. Er dette det korrekte navn, mobiltelefonnummer og e-mail-adresse på den som rigssalsudvalget har udnævnt som teknisk ansvarlig for Telesal i denne mødesal?"
 
         }
+    },
+    "SIP_ACCOUNT_RETRIEVAL": {
+        "DESCRIPTION": "<b>Kontroller at dette er dit navn og telefonnummer:</b><br>{{name}}, {{phoneNumber}}<br>Hvis der er fejl i oplysningerne, så kontakt den teknisk ansvarlige for din mødesal.<br><br>Du skal bruge oplysningerne nedenfor for at kunne lytte til møderne fra din computer. Du kan bruge de samme oplysninger på flere enheder, fx en pc og en tablet.<br>OBS! Du må IKKE give disse oplysninger til andre, da de er knyttet til dit navn og telefonnummer!<br><br>Brugernavn: {{sipId}}<br>Kodeord: {{sipPass}}<br><br>Følg vejledningen på <a>dette link</a>"
     }
 
 }

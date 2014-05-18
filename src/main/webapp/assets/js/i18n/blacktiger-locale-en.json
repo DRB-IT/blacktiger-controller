@@ -15,7 +15,7 @@
     },
     "PARTICIPANTS": {
         "WARNINGS": {
-            "NO_PARTICIPANTS_AND_TRANSMITTERS": "There are currently no transmission to, or participants in the conference.",
+            "NO_PARTICIPANTS_AND_TRANSMITTERS": "There is currently no transmission to, or participants in the conference.",
             "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "No sound is being transmitted to the participants!",
             "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "Check that X-Lite is started",
             "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "In X-lite call {{phoneNumber}}",
@@ -98,6 +98,9 @@
             "ALERT_WARNING": "There is only one technical manager for each conference room, no matter how many congregations are using it. Is this the correct name, phone number and email address of the person whom the Kingdom Hall Committee has appointed as technical manager for Telesal in this Kingdom Hall?"
 
         }
+    },
+    "SIP_ACCOUNT_RETRIEVAL": {
+        "DESCRIPTION": "<b>Make sure that this is your name and phone number:</b><br>{{name}}, {{phoneNumber}}<br>If there is any mistake in these informations, please contact the technical manager of your Kingdom Hall.<br><br>You need the following informations in order to listen to the meetings from your computer. You can use the same information from several devices, fx. a PC and a tablet. <br>REMARK! You are NOT allowed to distribute these informations to others as they are bound to your name and phone number!<br><br>Brugernavn: {{sipId}}<br>Kodeord: {{sipPass}}<br><br>Follow the guide available at <a>this link</a>"
     }
 
 }

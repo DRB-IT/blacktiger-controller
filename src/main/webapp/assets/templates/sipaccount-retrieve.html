@@ -3,12 +3,7 @@
     <div class="alert alert-danger" ng-class="{hidden:!status}">
         {{status}}
     </div>
-    <div class="alert alert-success" ng-class="{hidden:!sipinfo}">
-        <b>Dine oplysninger er:</b><br>
-        Sip-bruger: {{sipinfo.sipId}}<br>
-        Sip-password: {{sipinfo.sipPass}}<br>
-        
-    </div>
+    <div class="alert alert-success" ng-class="{hidden:!sipinfo}" translate="SIP_ACCOUNT_RETRIEVAL.DESCRIPTION" translate-values="{sipId:sipinfo.sipId,sipPass:sipinfo.sipPass,name:sipinfo.name,phoneNumber:sipinfo.phoneNumber}"></div>
     <form id="getsipform">
         <div class="form-group">
             <label for="getsip-inputphone">Indtast dit telefonnummer</label>
