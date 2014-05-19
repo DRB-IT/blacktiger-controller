@@ -2,7 +2,7 @@
 
 var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.translate', 'ui.bootstrap', 'blacktiger-service', 'blacktiger-ui'])
     .config(function ($locationProvider, $routeProvider, $httpProvider, $translateProvider, blacktigerProvider) {
-        var mode = "normal", token, params = [];
+        var mode = "normal", token, params = [], search, list, url, elements, language, langData;
 
         $httpProvider.interceptors.push(function ($location) {
             return {
@@ -16,12 +16,12 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
         });
 
         // Find params
-        var search = window.location.search;
+        search = window.location.search;
         if(search.length > 0 && search.charAt(0) === '?') {
             search = search.substring(1);
-            var list = search.split('&');
+            list = search.split('&');
             angular.forEach(list, function(entry) {
-                var elements = entry.split('=');
+                elements = entry.split('=');
                 if(elements.length > 1) {
                     params[elements[0]] = elements[1];
                 }
@@ -29,7 +29,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
         }
 
         if(angular.isDefined(params['server'])) {
-            var url = params['server'];
+            url = params['server'];
             if(url.charAt(url.length-1) !== '/') {
                 url = url + '/';
             }
@@ -97,8 +97,8 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
             suffix: '.json'
         });
 
-        var language = window.navigator.browserLanguage || window.navigator.language;
-        var langData = language.split("-");
+        language = window.navigator.browserLanguage || window.navigator.language;
+        langData = language.split("-");
         $translateProvider.preferredLanguage(langData[0]);
         $translateProvider.fallbackLanguage('en');
 
@@ -199,8 +199,8 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
                 };
 
                 $scope.getSongNumbers = function () {
-                    var numbers = [];
-                    for (var i = 1; i <= RemoteSongSvc.getNumberOfSongs(); i++) {
+                    var numbers = [], i;
+                    for (i = 1; i <= RemoteSongSvc.getNumberOfSongs(); i++) {
                         numbers[numbers.length] = i;
                     }
                     return numbers;
@@ -254,8 +254,8 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
                 $rootScope.$on('audioplayer.stopped', $scope.updateProgress);
 
                 StorageSvc.init().then(function () {
-                    var nameArray = [];
-                    for (var i = 1; i <= RemoteSongSvc.getNumberOfSongs(); i++) {
+                    var nameArray = [], i;
+                    for (i = 1; i <= RemoteSongSvc.getNumberOfSongs(); i++) {
                         nameArray[i - 1] = "song_" + i + ".mp3";
                     }
                     StorageSvc.hasBlobs(nameArray).then(function () {
@@ -500,8 +500,8 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
 
     $scope.$on('MeetingSvc.Leave', function (event, participant) {
         $log.debug('MeetingSvc.leave event received - updating history.');
-        var history = $cookieStore.get($scope.historyCookieName);
-        var entry = history[participant.phoneNumber];
+        var history = $cookieStore.get($scope.historyCookieName), entry;
+        entry = history[participant.phoneNumber];
         if (entry) {
             angular.forEach(entry.calls, function (call) {
                 if (call.end === null) {
