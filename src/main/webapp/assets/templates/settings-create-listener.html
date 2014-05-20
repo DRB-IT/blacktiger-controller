@@ -20,15 +20,11 @@
             Feltet [input name] er ikke udfyldt korrekt. Tjek oplysningerne og prøv igen.
         </div-->
 
-        <div class="alert alert-warning" ng-show="status==='alreadyExists'">
-            <p translate="SETTINGS.CREATE_SIP_ACCOUNT.ALERT_EXISTS"></p>
-            <p><button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-ok"></span> {{"GENERAL_YES" | translate}}</button> <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span> {{"GENERAL_NO" | translate}}</button></p>
-        </div>
 
         <form role="form" novalidate name="createForm">
             <div class="form-group" ng-class="{'has-error':!createForm.name.$valid}">
                 <label translate="SETTINGS.CREATE_SIP_ACCOUNT.TITLE_NAME"></label>
-                <input type="text" class="form-control" ng-model="user.name" name="name" placeholder="{{'SETTINGS.CREATE_SIP_ACCOUNT.PLACEHOLDER_NAME' | translate}}" ng-required="true" ng-pattern="/^[\w]{2,} [\w]{2,}$/">
+                <input type="text" class="form-control" ng-model="user.name" name="name" placeholder="{{'SETTINGS.CREATE_SIP_ACCOUNT.PLACEHOLDER_NAME' | translate}}" ng-required="true" ng-pattern="/^([\w]{2,} ([\w]{2,} )*[\w]{2,})$/">
             </div>
             <div class="form-group" ng-class="{'has-error':!createForm.phoneNumber.$valid}">
                 <label translate="SETTINGS.CREATE_SIP_ACCOUNT.TITLE_PHONE"></label>
