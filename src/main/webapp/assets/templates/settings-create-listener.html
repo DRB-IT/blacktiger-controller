@@ -14,7 +14,7 @@
         <h3 translate="SETTINGS.CREATE_SIP_ACCOUNT.TITLE"></h3>
         <p translate="SETTINGS.CREATE_SIP_ACCOUNT.DESCRIPTION"></p>
 
-        <div class="alert alert-success" ng-show="status==='success'" translate="SETTINGS.CREATE_SIP_ACCOUNT.ALERT_SUCCESS"></div>
+        <div class="alert alert-success" ng-show="status==='success'" translate="SETTINGS.CREATE_SIP_ACCOUNT.ALERT_SUCCESS" translate-values="{name:created.name, phoneNumber:created.phoneNumber, email: created.email}"></div>
         <div class="alert alert-danger" ng-show="status==='error'" translate="SETTINGS.CREATE_SIP_ACCOUNT.ALERT_ERROR"></div>
         <!--div class="alert alert-danger" ng-show="status==='invalid'">
             Feltet [input name] er ikke udfyldt korrekt. Tjek oplysningerne og prøv igen.

@@ -87,7 +87,7 @@
             "PLACEHOLDER_EMAIL": "E-mail-adresse",
             "DESCRIPTION_EMAIL": "Nødvendige oplysninger sendes til denne e-mail-adresse. E-mail-adressen bliver ikke gemt hos TeleSal.",
             "SAVED": "Gemt",
-            "ALERT_SUCCESS": "<b>Success!</b> Kontoen blev oprettet og der sendt en e-mail til den angivne e-mail-adresse med yderligere oplysninger.",
+            "ALERT_SUCCESS": "<b>Success!</b> Kontoen blev oprettet med følgende informationer og der sendt en e-mail til den angivne e-mail-adresse oplysninger:<br>Navn: {{name}}<br>Telefon: {{phoneNumber}}<br>Email: {{email}}",
             "ALERT_ERROR": "<b>Systemfejl!</b> Kontoen blev ikke oprettet. Prøv igen om lidt.",
             "ALERT_EXISTS": "Der er tidligere oprettet en computer-konto med dette telefonnummer. Men du kan slette det gamle kodeord og få tilsendt et nyt kodeord for denne konto - vil du det?"
 

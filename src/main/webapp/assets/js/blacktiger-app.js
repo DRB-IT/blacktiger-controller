@@ -545,6 +545,7 @@ function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger) {
 
     $scope.createUser = function () {
       SipUserSvc.create($scope.user).then(function () {
+          $scope.created = angular.copy($scope.user);
           $scope.reset();
           $scope.status = 'success';
       }, function (reason) {
