@@ -42,7 +42,8 @@
         "KINGDOM_HALL": "Rigssal",
         "PARTICIPANTS": "Lyttere",
         "ABORT_TRANSMISSION": "Afbryd transmissionen",
-        "COMPLETED_CALLS": "{{noOfCompletedCalls}} afsluttede opkald"
+        "COMPLETED_CALLS": "{{noOfCompletedCalls}} afsluttede opkald",
+        "WANTS_TO_COMMENT": "Ønsker at svare"
     },
     "REPORT": {
         "NUMBER": "Nummer",

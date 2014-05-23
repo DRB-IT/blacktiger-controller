@@ -42,7 +42,8 @@
         "KINGDOM_HALL": "Rikets sal",
         "PARTICIPANTS": "Lyssnare",
         "ABORT_TRANSMISSION": "Avbryt transmissionen",
-        "COMPLETED_CALLS": "{{noOfCompletedCalls}} completed call(s)"
+        "COMPLETED_CALLS": "{{noOfCompletedCalls}} completed call(s)",
+        "WANTS_TO_COMMENT": "Wants to comment"
     },
     "REPORT": {
         "NUMBER": "Nummer",

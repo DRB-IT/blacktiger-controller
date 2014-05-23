@@ -42,7 +42,8 @@
         "KINGDOM_HALL": "Ríkisal",
         "PARTICIPANTS": "Hlustun",
         "ABORT_TRANSMISSION": "Aftengja sendingu",
-        "COMPLETED_CALLS": "{{noOfCompletedCalls}} completed call(s)"
+        "COMPLETED_CALLS": "{{noOfCompletedCalls}} completed call(s)",
+        "WANTS_TO_COMMENT": "Wants to comment"
     },
     "REPORT": {
         "NUMBER": "Númer",

@@ -42,7 +42,8 @@
         "KINGDOM_HALL": "Rigssali",
         "PARTICIPANTS": "Tusarnaartut",
         "ABORT_TRANSMISSION": "Aallakaatitsineq unitsiguk",
-        "COMPLETED_CALLS": "{{noOfCompletedCalls}} afsluttede opkald"
+        "COMPLETED_CALLS": "{{noOfCompletedCalls}} afsluttede opkald",
+        "WANTS_TO_COMMENT": "Ønsker at svare"
     },
     "REPORT": {
         "NUMBER": "Normu",

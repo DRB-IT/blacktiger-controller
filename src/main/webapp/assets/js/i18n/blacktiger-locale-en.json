@@ -42,7 +42,8 @@
         "KINGDOM_HALL": "Kingdom Hall",
         "PARTICIPANTS": "{{noOfParticipants}} Listener(s)",
         "ABORT_TRANSMISSION": "Abort Transmission",
-        "COMPLETED_CALLS": "{{noOfCompletedCalls}} completed call(s)"
+        "COMPLETED_CALLS": "{{noOfCompletedCalls}} completed call(s)",
+        "WANTS_TO_COMMENT": "Wants to comment"
     },
     "REPORT": {
         "NUMBER": "Number",
