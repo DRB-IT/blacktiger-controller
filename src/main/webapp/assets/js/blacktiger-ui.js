@@ -1,12 +1,12 @@
 angular.module('blacktiger-ui',[])
-    .directive('btIconifiednumber', function () {
+    .directive('btNumberIcon', function () {
         return {
             restrict: 'E',
             scope: {
-                number: '@'
+                type: '@'
             },
             controller: function ($scope, $element, $attrs) {
-                if ($scope.number.indexOf("#") === 0) {
+                if ($scope.type === 'Sip') {
                     $scope.iconclass = 'hdd';
                     $scope.cleannumber = $scope.number;
                 } else {
@@ -14,7 +14,7 @@ angular.module('blacktiger-ui',[])
                     $scope.cleannumber = $scope.number;
                 }
             },
-            template: '<span class="glyphicon glyphicon-{{iconclass}}"></span> {{cleannumber}}'
+            template: '<span class="glyphicon glyphicon-{{iconclass}}" ></span>'
         };
     }).directive('btRoomStatus', function () {
         return {

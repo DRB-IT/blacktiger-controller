@@ -37,7 +37,7 @@
         </tr>
         <tr ng-repeat="participant in participants | filter:{host:false}">
             <td class="participantNumber" data-type="participant-number" data-id="{{participant.channel}}" data-number="{{participant.phoneNumber}}">
-                <bt-iconifiednumber number="{{participant.phoneNumber}}"></bt-iconifiednumber>
+                <bt-number-icon type="{{participant.type}}"></bt-number-icon> {{participant.phoneNumber}}
             </td>
             <td class="participantName">
                 {{participant.name}}
