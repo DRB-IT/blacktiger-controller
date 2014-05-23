@@ -1,4 +1,12 @@
 {
+    "LOGIN": {
+        "USERNAME": "Brugernavn",
+        "PASSWORD": "Kodeord",
+        "REMEMBER_ME": "Gem på denne computer",
+        "LOG_IN": "Log ind",
+        "ALERT": "<strong>Du skal logge ind</strong> for at se status på transmissionen.",
+        "INVALID_CREDENTIALS": "Brugernavn eller kodeord er forkert."
+    },
     "SYSTEM": {
         "NAME": "Telesal",
         "COPYRIGHTHOLDER": "telesal.org"

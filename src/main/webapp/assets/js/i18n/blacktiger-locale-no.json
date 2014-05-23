@@ -1,4 +1,12 @@
 {
+    "LOGIN": {
+        "USERNAME": "Username",
+        "PASSWORD": "Password",
+        "REMEMBER_ME": "Save on this computer",
+        "LOG_IN": "Log in",
+        "ALERT": "<strong>Login is required</strong> in order to see the transmission.",
+        "INVALID_CREDENTIALS": "Username or password is invalid."
+    },
     "SYSTEM": {
         "NAME": "Telesal",
         "COPYRIGHTHOLDER": "telesal.org"

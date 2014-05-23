@@ -1,27 +1,23 @@
 
-<div class="alert alert-info">
-    <strong>Du skal logge ind</strong> for at se status på transmissionen.
-</div>
-<!--div class="alert alert-danger hidden">
-    Brugernavn eller kodeord er forkert.
-</div-->
+<div class="alert alert-info" ng-class="{'hidden':status!=null}" translate="LOGIN.ALERT"></div>
+<div class="alert alert-danger" ng-class="{'hidden':status!='invalid'}" translate="LOGIN.INVALID_CREDENTIALS"></div>
 <div class="row">
     <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
         <form id="loginform">
             <div class="form-group">
-                <label for="login-username">Brugernavn</label>
+                <label for="login-username" translate="LOGIN.USERNAME"></label>
                 <input type="text" class="form-control" ng-model="username">
             </div>
             <div class="form-group">
-                <label for="login-password">Kodeord</label>
+                <label for="login-password" translate="LOGIN.PASSWORD"></label>
                 <input type="password" class="form-control" ng-model="password">
             </div>
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" ng-model="rememberMe"> Gem på denne computer
+                    <input type="checkbox" ng-model="rememberMe" translate="LOGIN.REMEMBER_ME"> {{"LOGIN.REMEMBER_ME" | translate}}
                 </label>
             </div>
-            <button type="submit" ng-click="login()" class="btn btn-default">Log ind</button>
+            <button type="submit" ng-click="login()" class="btn btn-default" translate="LOGIN.LOG_IN"></button>
         </form>
     </div>
 </div>

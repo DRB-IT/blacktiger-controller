@@ -97,7 +97,8 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
             suffix: '.json'
         });
 
-        language = window.navigator.browserLanguage || window.navigator.language;
+        language = window.navigator.userLanguage || window.navigator.language;
+        language = 'en';
         langData = language.split("-");
         $translateProvider.preferredLanguage(langData[0]);
         $translateProvider.fallbackLanguage('en');
@@ -334,16 +335,18 @@ function LoginCtrl($scope, $location, LoginSvc) {
     $scope.username = "";
     $scope.password = "";
     $scope.rememberMe = false;
+    $scope.status = null;
 
     $scope.login = function () {
         LoginSvc.authenticate($scope.username, $scope.password, $scope.rememberMe).then(function (user) {
+            $scope.status = 'success';
             if (user.roles.indexOf('ROLE_HOST') >= 0) {
                 $location.path('');
             } else if (user.roles.indexOf('ROLE_ADMIN') >= 0) {
                 $location.path('/admin/realtime');
             }
         }, function (reason) {
-            alert(reason);
+            $scope.status = "invalid";
         });
     }
 }
