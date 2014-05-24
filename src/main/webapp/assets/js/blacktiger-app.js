@@ -534,27 +534,55 @@ function ModalEditNameCtrl($scope, $modalInstance, phoneNumber, currentName) {
     };
 }
 
-function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger) {
+function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger, $translate) {
     $scope.user = {};
+    $scope.mailText = '';
     $scope.e164Pattern = blacktiger.getE164Pattern();
+    $scope.innerMailTextPattern = /.*/;
+    $scope.mailTextPattern = (function() {
+        return {
+            test: function(value) {
+                var result = $scope.innerMailTextPattern.test(value);
+                return result;
+            }
+        };
+    })();
 
 
     $scope.reset = function () {
-      $scope.user.name = '';
-      $scope.user.phoneNumber = '+' + $scope.currentRoom.countryCallingCode;
-      $scope.user.email = '';
-
+        $scope.user.name = '';
+        $scope.user.phoneNumber = '+' + $scope.currentRoom.countryCallingCode;
+        $scope.user.email = '';
+        $scope.mailText = $translate.instant('SETTINGS.CREATE_SIP_ACCOUNT.DEFAULT_MAILTEXT');
     };
 
     $scope.createUser = function () {
-      SipUserSvc.create($scope.user).then(function () {
-          $scope.created = angular.copy($scope.user);
-          $scope.reset();
-          $scope.status = 'success';
-      }, function (reason) {
-          $scope.reset();
-          $scope.status = 'error';
-      });
+        var data = {
+            account: $scope.user,
+            mailText: $scope.mailText
+        };
+        SipUserSvc.create($scope.user).then(function () {
+            $scope.created = angular.copy($scope.user);
+            $scope.reset();
+            $scope.status = 'success';
+        }, function (reason) {
+            $scope.reset();
+            $scope.status = 'error';
+        });
+    };
+
+    $scope.onPhoneNumberChanged = function() {
+        var number = $scope.user.phoneNumber ? $scope.user.phoneNumber.replace(/[\+\s\-\(\)]/, '') : '',
+            noOfCharsToPull = Math.min(4, number.length),
+            pattern;
+
+        if(noOfCharsToPull === 0) {
+            $scope.innerMailTextPattern = '/.*/';
+        } else {
+            number = number.substr(number.length - noOfCharsToPull, number.length);
+            $scope.innerMailTextPattern = new RegExp('^((?!' + number + ').)*$');
+        }
+
     };
 
     $scope.reset();

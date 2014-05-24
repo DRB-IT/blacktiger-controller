@@ -88,7 +88,11 @@
             "SAVED": "Gemt",
             "ALERT_SUCCESS": "<b>Success!</b> Kontoen blev oprettet med følgende informationer og der sendt en e-mail til den angivne e-mail-adresse oplysninger:<br>Navn: {{name}}<br>Telefon: {{phoneNumber}}<br>Email: {{email}}",
             "ALERT_ERROR": "<b>Systemfejl!</b> Kontoen blev ikke oprettet. Prøv igen om lidt.",
-            "ALERT_EXISTS": "Der er tidligere oprettet en computer-konto med dette telefonnummer. Men du kan slette det gamle kodeord og få tilsendt et nyt kodeord for denne konto - vil du det?"
+            "ALERT_EXISTS": "Der er tidligere oprettet en computer-konto med dette telefonnummer. Men du kan slette det gamle kodeord og få tilsendt et nyt kodeord for denne konto - vil du det?",
+            "DESCRIPTION_MAILTEXT": "Denne besked sendes i e-mailen. Du må ikke skrive modtagerens telefonnummer i dette felt.",
+            "TITLE_MAILTEXT": "Tekst til brugeren",
+            "DEFAULT_MAILTEXT": "Her er de oplysninger du skal bruge for at kunne lytte til møderne fra din computer. Kontakt den teknisk ansvarlige hvis der er noget du er i tvivl om. Klik på linket nedenfor."
+
 
         },
         "CONTACT": {

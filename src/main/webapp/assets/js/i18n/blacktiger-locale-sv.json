@@ -88,7 +88,10 @@
             "SAVED": "Saved",
             "ALERT_SUCCESS": "<b>Success!</b> The account was created with the following information and an e-mail was sent to the specified e-mail address with details:<br>Name: {{name}}<br>Phonenumber: {{phoneNumber}}<br>Email: {{email}}",
             "ALERT_ERROR": "<b>System Error!</b> The account was not created. Please try again shortly.",
-            "ALERT_EXISTS": "A computer account using this phone number is already created. However, you can delete the old password and have a new password send for this account - do you want to do that?"
+            "ALERT_EXISTS": "A computer account using this phone number is already created. However, you can delete the old password and have a new password send for this account - do you want to do that?",
+            "DESCRIPTION_MAILTEXT": "This message is sent in the mail. Do not write the recipient's phone number in this field.",
+            "TITLE_MAILTEXT": "Message for the user",
+            "DEFAULT_MAILTEXT": "Here is the information you need in order to listen to the meetings from your computer. Contact the technical manager if there is anything you are unsure about. Click on the link below."
 
         },
         "CONTACT": {
