@@ -17,8 +17,7 @@
         </ol>
     </div>
 
-    <h3>{{'PARTICIPANTS.PARTICIPANTS' | translate:translationData}}
-        <small class="pull-right" ng-show="(participants|filter:{host:true}).length==0">{{'PARTICIPANTS.INFO.NO_HOST' | translate}}</small>
+    <h3><span ng-if="(participants|filter:{host:false}).length>0">{{'PARTICIPANTS.PARTICIPANTS' | translate:translationData}}</span>
         <small class="pull-right" ng-repeat="participant in participants | filter:{host:true}" ng-animate=" 'animate' ">{{participant.name ? participant.name : 'No name'}} &bull; <a href="#" class="text-danger" ng-click="kickParticipant(participant.channel)" title="{{'PARTICIPANTS.ABORT_TRANSMISSION' | translate}}">{{'PARTICIPANTS.ABORT_TRANSMISSION' | translate}} <span class="glyphicon glyphicon-off"></span></a></small>
     </h3>
     <table class="table table-striped table-hover table-condensed participantsTable">
