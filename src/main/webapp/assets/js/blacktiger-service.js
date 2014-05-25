@@ -1,8 +1,15 @@
 angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageModule'])
     .provider('blacktiger', function () {
         'use strict';
-        var serviceUrl = "http://b.dev1.telesal.org/";
-        var forceLongPolling = false;
+        var serviceUrl = "http://b.dev1.telesal.org/",
+            languageNames = {
+                'da': 'Dansk',
+                'en': 'English',
+                'fo': 'Føroysk',
+                'kl': 'Kalaallisut',
+                'sv': 'Svenska',
+                'no': 'Norsk'
+            };
 
         this.setServiceUrl = function (url) {
             serviceUrl = url;
@@ -22,7 +29,10 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                 },
                 getE164Pattern: function() {
                   return /^\+[0-9]{5,15}$/;
-                }
+              },
+              getLanguageNames: function() {
+                  return languageNames;
+              }
             };
         };
     }).factory('LoginSvc', function($q, localStorageService, $http, $rootScope, blacktiger, $log) {

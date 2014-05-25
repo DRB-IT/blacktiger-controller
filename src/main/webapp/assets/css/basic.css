@@ -16,6 +16,7 @@ body {background-color: #f3f3f3;}
 .brand span{margin-left: 10px;}
 .menu-bar{list-style: none; margin: 0; padding: 0; float: left;}
 .menu-bar li{float: left;}
+.menu-bar li>span{line-height: 50px;padding: 0 15px; display: block; font-size: larger;}
 .menu-bar a{color: #c2c2c2; line-height: 50px; padding: 0 15px; display: block; font-size: larger;}
 .menu-bar li:hover a{color: #fff; background: none;}
 .menu-bar li.active a{color: #fff; background-color: #191919;}

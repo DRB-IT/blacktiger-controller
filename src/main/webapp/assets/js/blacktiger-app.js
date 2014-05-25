@@ -272,7 +272,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
 
 /*************************************** CONTROLLERS ********************************************/
 
-function MenuCtrl($scope, $location, LoginSvc) {
+function MenuCtrl($scope, $location, LoginSvc, $rootScope, $translate, blacktiger) {
     $scope.location = $location;
     $scope.links = [
         {
@@ -307,10 +307,32 @@ function MenuCtrl($scope, $location, LoginSvc) {
             requiredRole: 'ROLE_ADMIN'
         }
     ];
+    $scope.languages = [{locale:'da', 'localizedLanguage':'Dansk'}];
 
     $scope.logout = function() {
         LoginSvc.deauthenticate();
     };
+
+    $scope.$watch('language', function() {
+        if($scope.language !== undefined && $scope.language !== $translate.use()) {
+            $translate.use($scope.language);
+        }
+    });
+
+    $rootScope.$on('$translateChangeSuccess', function () {
+        $scope.language = $translate.use();
+        $scope.languages = [];
+        angular.forEach(['da', 'en', 'fo', 'kl', 'no', 'sv'], function(entry) {
+            $translate('GENERAL.LANGUAGE.' + entry.toUpperCase()).then(function (translation) {
+                $scope.languages.push({
+                    locale: entry,
+                    localizedLanguage : translation,
+                    language: blacktiger.getLanguageNames()[entry]
+                });
+            });
+        });
+
+    });
 }
 
 function RoomDisplayCtrl($scope, RoomSvc, LoginSvc, $rootScope, MeetingSvc) {

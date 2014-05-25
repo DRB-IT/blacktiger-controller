@@ -61,10 +61,20 @@
         "NO_ENTRIES": "No history has been recorded for today."
     },
     "GENERAL": {
+        "LANGUAGE": {
+            "DA": "Danish",
+            "EN": "English",
+            "FO": "Faroese",
+            "KL": "Greenlandic",
+            "NO": "Norwegian",
+            "SV": "Swedish"
+        },
         "OK": "Ok",
         "TECHNICALLY_RESPONSIBLE": "Teknisk ansvarlig",
         "HALL": "hall",
-        "LOGOUT": "Log out"
+        "LOGOUT": "Log out",
+        "YES": "Yes",
+        "NO": "No"
     },
     "SETTINGS": {
         "GENERAL" : {

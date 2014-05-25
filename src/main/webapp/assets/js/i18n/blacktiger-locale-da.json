@@ -60,6 +60,14 @@
         "NO_ENTRIES": "Der er ingen historik gemt for idag."
     },
     "GENERAL": {
+        "LANGUAGE": {
+            "DA": "Dansk",
+            "EN": "Engelsk",
+            "FO": "Færøsk",
+            "KL": "Grønlandsk",
+            "NO": "Norsk",
+            "SV": "Svensk"
+        },
         "OK": "Ok",
         "TECHNICALLY_RESPONSIBLE": "Teknisk ansvarlig",
         "HALL": "sal",

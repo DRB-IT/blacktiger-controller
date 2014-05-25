@@ -44,7 +44,14 @@
                 </li>
             </ul>
             <ul class="menu-bar pull-right">
-                <li><a ng-if="currentUser" ng-click="logout()" title="{{'GENERAL.LOGOUT' | translate}}"><span class="glyphicon glyphicon-remove-sign"></span></a></li>
+                <li>
+                    <span>
+                        <select ng-model="language" ng-options="locale.locale as (locale.locale === language ? locale.localizedLanguage : locale.localizedLanguage+' ('+locale.language+')') for locale in languages | orderBy:'locale.localizedLanguage'"></select>
+                    </span>
+                </li>
+                <li>
+                    <a ng-if="currentUser" ng-click="logout()" title="{{'GENERAL.LOGOUT' | translate}}"><span class="glyphicon glyphicon-remove-sign"></span></a>
+                </li>
             </ul>
         </div>
         <div class="container-fluid-content">
