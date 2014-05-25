@@ -13,7 +13,6 @@ python -m SimpleHTTPServer
 python -m http.server
 ```
 (On Windows you will of course need to install Python first)
-Or... simply go to http://drb-it.github.io/blacktiger-web to see the current edition.
 
 
 Tests
