@@ -293,7 +293,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                     break;
                 case 'Leave':
                     $log.info('Leave Event Recieved for participantId "' + angular.toJson(event) + '"');
-                    index = indexByChannel(event.channel);
+                    index = indexByChannel(event.participant.channel);
                     if(index >= 0) {
                         var p = participants[index];
                         participants.splice(index, 1);

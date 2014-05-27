@@ -502,6 +502,7 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
         var entry, call, history = $cookieStore.get($scope.historyCookieName);
         if (history[participant.phoneNumber] === undefined) {
             entry = {
+                type: participant.type,
                 phoneNumber: participant.phoneNumber,
                 name: participant.name,
                 firstCall: new Date().getTime(),
