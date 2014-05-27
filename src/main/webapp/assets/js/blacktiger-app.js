@@ -1,6 +1,6 @@
 /*************************************** MODULE ********************************************/
 
-var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.translate', 'ui.bootstrap', 'blacktiger-service', 'blacktiger-ui'])
+var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.translate', 'ui.bootstrap', 'blacktiger-service', 'blacktiger-ui', 'teljs'])
     .config(function ($locationProvider, $routeProvider, $httpProvider, $translateProvider, blacktigerProvider) {
         var mode = "normal", token, params = [], search, list, url, elements, language, langData;
 
@@ -616,6 +616,7 @@ function ContactCtrl($scope, SipUserSvc, RoomSvc, blacktiger) {
     $scope.contact_status = null;
     $scope.e164Pattern = blacktiger.getE164Pattern();
 
+    $scope.contact.name.$formatters
     $scope.updateContact = function () {
         $scope.contact_status = "Saving";
         $scope.currentRoom.contact = angular.copy($scope.contact);

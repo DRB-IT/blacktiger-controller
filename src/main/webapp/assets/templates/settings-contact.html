@@ -30,7 +30,7 @@
             </div>
             <div class="form-group" ng-class="{'has-error':!contactForm.phoneNumber.$valid}">
                 <label translate="SETTINGS.CONTACT.TITLE_PHONE"></label>
-                <input type="text" class="form-control" name="phoneNumber" ng-model="contact.phoneNumber" placeholder="+{{currentRoom.countryCallingCode}}" ng-pattern="e164Pattern" ng-required="true">
+                <input type="tel" international="true" class="form-control" name="phoneNumber" ng-model="contact.phoneNumber" placeholder="+{{currentRoom.countryCallingCode}}" ng-required="true">
             </div>
             <div class="form-group" ng-class="{'has-error':!contactForm.email.$valid}">
                 <label translate="SETTINGS.CONTACT.TITLE_EMAIL"></label>

@@ -20,9 +20,6 @@
             Feltet [input name] er ikke udfyldt korrekt. Tjek oplysningerne og prøv igen.
         </div-->
 
-        {{createForm.mailtext.$valid}}
-        {{createForm.mailtext.$error}}
-
         <form role="form" novalidate name="createForm">
             <div class="form-group" ng-class="{'has-error':!createForm.name.$valid}">
                 <label translate="SETTINGS.CREATE_SIP_ACCOUNT.TITLE_NAME"></label>
@@ -30,7 +27,7 @@
             </div>
             <div class="form-group" ng-class="{'has-error':!createForm.phoneNumber.$valid}">
                 <label translate="SETTINGS.CREATE_SIP_ACCOUNT.TITLE_PHONE"></label>
-                <input type="text" class="form-control" ng-model="user.phoneNumber" name="phoneNumber" placeholder="+{{currentRoom.countryCallingCode}}" ng-pattern="e164Pattern" ng-required="true" ng-change="onPhoneNumberChanged()">
+                <input type="tel" international="true" class="form-control" ng-model="user.phoneNumber" name="phoneNumber" placeholder="+{{currentRoom.countryCallingCode}}" ng-required="true" ng-change="onPhoneNumberChanged()">
                 <span class="help-block" translate="SETTINGS.CREATE_SIP_ACCOUNT.DESCRIPTION_PHONE"></span>
             </div>
             <div class="form-group" ng-class="{'has-error':!createForm.email.$valid}">
