@@ -26,7 +26,7 @@
             "NO_PARTICIPANTS_AND_TRANSMITTERS": "Það eru nú engin sending til, eða þátttakendur í ráðstefnunni.",
             "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "Það er ekki send hljóð til hlustenda!",
             "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "Check that X-Lite is started",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "In X-lite call {{phoneNumber}}",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "In X-lite call {{phoneNumber | telephone}}",
             "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Call the same number from another phone and check the volume and quality."
         },
         "INFO": {

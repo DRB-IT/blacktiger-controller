@@ -286,14 +286,15 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
         };
 
         var handleEvent = function(event) {
-            var index, participant, promise;
+            var index, participant, promise, channel;
+            channel = event.participant ? event.participant.channel : event.channel;
             switch(event.type) {
                 case 'Join':
                     onJoin(event.participant);
                     break;
                 case 'Leave':
                     $log.info('Leave Event Recieved for participantId "' + angular.toJson(event) + '"');
-                    index = indexByChannel(event.participant.channel);
+                    index = indexByChannel(channel);
                     if(index >= 0) {
                         var p = participants[index];
                         participants.splice(index, 1);
@@ -302,31 +303,31 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
 
                     break;
                 case 'Change':
-                    index = indexByChannel(event.participant.channel);
+                    index = indexByChannel(channel);
                     participants[index] = event.participant;
                     $rootScope.$broadcast('MeetingSvc.Change', event.participant);
                     break;
                 case 'CommentRequest':
                     $log.debug('CommentRequest');
-                    setParticipantCommentRequested(event.channel, true);
+                    setParticipantCommentRequested(channel, true);
                     promise = $timeout(function() {
-                            setParticipantCommentRequested(event.channel, false);
+                            setParticipantCommentRequested(channel, false);
                         }, commentRequestTimeout);
-                    updateCancelPromise(event.channel, promise);
+                    updateCancelPromise(channel, promise);
                     break;
                 case 'CommentRequestCancel':
                     $log.debug('CommentRequestCancel');
-                    setParticipantCommentRequested(event.channel, false);
-                    updateCancelPromise(event.channel);
+                    setParticipantCommentRequested(channel, false);
+                    updateCancelPromise(channel);
                     break;
                 case 'Mute':
                     $log.debug('Mute');
-                    index = indexByChannel(event.channel);
+                    index = indexByChannel(channel);
                     participants[index].muted = true;
                     break;
                 case 'Unmute':
                     $log.debug('Unmute');
-                    index = indexByChannel(event.channel);
+                    index = indexByChannel(channel);
                     participants[index].muted = false;
                     break;
             }

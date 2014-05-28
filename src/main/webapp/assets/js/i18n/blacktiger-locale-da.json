@@ -25,7 +25,7 @@
             "NO_PARTICIPANTS_AND_TRANSMITTERS": "Der er i øjeblikket hverken transmission til, eller deltagere i, telefonmødet.",
             "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "Der sendes ikke lyd til lytterne!",
             "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "Kontroller at X-Lite er startet",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "I X-Lite, ring op til {{phoneNumber}}",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "I X-Lite, ring op til {{phoneNumber | telephone}}",
             "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Ring op til samme nummer fra en anden telefon og kontroller lydstyrken og -kvaliteten"
         },
         "INFO": {

@@ -26,7 +26,7 @@
             "NO_PARTICIPANTS_AND_TRANSMITTERS": "There is currently no transmission to, or participants in the conference.",
             "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "No sound is being transmitted to the participants!",
             "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "Check that X-Lite is started",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "In X-lite call {{phoneNumber}}",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "In X-lite call {{phoneNumber | telephone}}",
             "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Call the same number from another phone and check the volume and quality."
         },
         "INFO": {

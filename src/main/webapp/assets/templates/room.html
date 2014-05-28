@@ -35,7 +35,7 @@
         </tr>
         <tr ng-repeat="participant in participants | filter:{host:false}">
             <td class="participantNumber" data-type="participant-number" data-id="{{participant.channel}}" data-number="{{participant.phoneNumber}}">
-                <bt-number-icon type="{{participant.type}}"></bt-number-icon> {{participant.phoneNumber}}
+                <bt-number-icon type="{{participant.type}}"></bt-number-icon> {{participant.phoneNumber | telephone}}
             </td>
             <td class="participantName">
                 {{participant.name}}
@@ -78,7 +78,7 @@
             <td colspan="6">{{'REPORT.NO_ENTRIES' | translate}}</td>
         </tr>
         <tr ng-repeat="entry in history | orderBy:predicate:reverse">
-            <td class="participantNumber"><bt-number-icon type="{{entry.type}}"></bt-number-icon> {{entry.phoneNumber}}</td>
+            <td class="participantNumber"><bt-number-icon type="{{entry.type}}"></bt-number-icon> {{entry.phoneNumber | telephone}}</td>
             <td class="participantName">{{entry.name}}</td>
             <td class="participantHistory">{{entry.firstCall | date:'HH:mm'}}</td>
             <td class="participantHistory">{{entry.calls.length}}</td>
