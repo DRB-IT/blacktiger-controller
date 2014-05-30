@@ -17,7 +17,8 @@
                     <input type="checkbox" ng-model="rememberMe"> {{"LOGIN.REMEMBER_ME" | translate}}
                 </label>
             </div>
-            <button type="submit" ng-click="login()" class="btn btn-default" translate="LOGIN.LOG_IN"></button>
+            <button type="submit" ng-click="login()" class="btn btn-primary" translate="LOGIN.LOG_IN"></button>
+            <button ng-click="requestPassword()" class="btn btn-default" translate="LOGIN.FORGOT_PASSWORD"></button>
         </form>
     </div>
 </div>

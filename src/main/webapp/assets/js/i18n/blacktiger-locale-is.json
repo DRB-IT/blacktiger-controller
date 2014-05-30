@@ -5,7 +5,17 @@
         "REMEMBER_ME": "Save on this computer",
         "LOG_IN": "Log in",
         "ALERT": "<strong>Login is required</strong> in order to see the transmission.",
-        "INVALID_CREDENTIALS": "Username or password is invalid."
+        "INVALID_CREDENTIALS": "Username or password is invalid.",
+        "FORGOT_PASSWORD": "Forgot Password"
+    },
+    "REQUEST_PASSWORD": {
+        "NAME": "Name",
+        "PHONENUMBER": "Phone Number",
+        "EMAIL": "Email Address",
+        "CITY_OF_HALL": "City of Kingdom Hall",
+        "PHONENUMBER_OF_HALL": "Phone Number for Kingdom Hall",
+        "ERROR": "Could not find a hall matching the input. Please try again.",
+        "SUCCESS": "The hall has been found in telesal and a mail has been to you with further information about username and password for the hall."
     },
     "SYSTEM": {
         "NAME": "Telesal",
@@ -70,6 +80,7 @@
             "SV": "Swedish"
         },
         "OK": "Ok",
+        "CANCEL": "Cancel",
         "TECHNICALLY_RESPONSIBLE": "Tæknilega ábyrgð",
         "HALL": "sal",
         "LOGOUT": "Log out",

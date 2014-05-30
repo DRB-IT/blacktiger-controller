@@ -5,7 +5,17 @@
         "REMEMBER_ME": "Gem på denne computer",
         "LOG_IN": "Log ind",
         "ALERT": "<strong>Du skal logge ind</strong> for at se status på transmissionen.",
-        "INVALID_CREDENTIALS": "Brugernavn eller kodeord er forkert."
+        "INVALID_CREDENTIALS": "Brugernavn eller kodeord er forkert.",
+        "FORGOT_PASSWORD": "Glemt kodeord"
+    },
+    "REQUEST_PASSWORD": {
+        "NAME": "Navn",
+        "PHONENUMBER": "Telefonnummer",
+        "EMAIL": "Email-adresse",
+        "CITY_OF_HALL": "By rigssalen ligger i",
+        "PHONENUMBER_OF_HALL": "Telefonnummer til rigssalen",
+        "ERROR": "Kunne ikke finde en sal der matchede de indtastede oplysninger. Prøv igen",
+        "SUCCESS": "Salen blev fundet i telesal og der er nu sendt en mail til dig med oplysninger om brugernavnet og password for salen."
     },
     "SYSTEM": {
         "NAME": "Telesal",
@@ -70,6 +80,7 @@
             "SV": "Svensk"
         },
         "OK": "Ok",
+        "CANCEL": "Annuller",
         "TECHNICALLY_RESPONSIBLE": "Teknisk ansvarlig",
         "HALL": "sal",
         "LOGOUT": "Log ud",

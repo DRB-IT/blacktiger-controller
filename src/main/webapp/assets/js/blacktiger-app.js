@@ -51,6 +51,10 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
                 controller: LoginCtrl,
                 templateUrl: 'assets/templates/login.html'
             }).
+            when('/request_password', {
+                controller: RequestPasswordCtrl,
+                templateUrl: 'assets/templates/request-password.html'
+            }).
             when('/settings', {
                 controller: SettingsCtrl,
                 templateUrl: 'assets/templates/settings-general.html'
@@ -89,7 +93,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
             }).
             otherwise({
                 redirectTo: '/'
-            })
+            });
         }
 
         $translateProvider.useStaticFilesLoader({
@@ -121,7 +125,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
                 }
             });
             return out;
-        }
+        };
     })
     .directive('btCommentAlert', function () {
         return {
@@ -370,7 +374,33 @@ function LoginCtrl($scope, $location, LoginSvc) {
         }, function (reason) {
             $scope.status = "invalid";
         });
-    }
+    };
+    
+    $scope.requestPassword = function() {
+        $location.path('/request_password');
+    };
+}
+
+function RequestPasswordCtrl($scope, $location, $http, blacktiger) {
+    $scope.request = {
+        phoneNumber: '+45',
+        phoneNumberOfHall: '+45'
+    };
+    $scope.status = null;
+    
+    $scope.send = function() {
+        $http.post(blacktiger.getServiceUrl() + 'system/passwordRequests', $scope.request).then(function(response) {
+            if(response.status !== 200) {
+                $scope.status = 'error';
+            } else {
+                $scope.status = 'ok';
+            }
+        });
+    };
+    
+    $scope.cancel = function() {
+        $location.path('/login');
+    };
 }
 
 function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, ReportSvc, $log) {
@@ -423,7 +453,7 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
         modalInstance.result.then(function (newName) {
             PhoneBookSvc.updateEntry(phoneNumber, newName);
         });
-    }
+    };
 
     $scope.$on('PhoneBookSvc.update', function (event, phone, name) {
         // Make sure names in participantlist are update.
@@ -546,7 +576,7 @@ function ModalEditNameCtrl($scope, $modalInstance, phoneNumber, currentName) {
     $scope.data = {
         name: currentName,
         phoneNumber: phoneNumber
-    }
+    };
 
     $scope.ok = function () {
         $modalInstance.close($scope.data.name);
@@ -617,7 +647,6 @@ function ContactCtrl($scope, SipUserSvc, RoomSvc, blacktiger) {
     $scope.contact_status = null;
     $scope.e164Pattern = blacktiger.getE164Pattern();
 
-    $scope.contact.name.$formatters
     $scope.updateContact = function () {
         $scope.contact_status = "Saving";
         $scope.currentRoom.contact = angular.copy($scope.contact);
@@ -634,8 +663,7 @@ function SettingsCtrl($scope, SipUserSvc, RoomSvc, blacktiger) {
 
 function RealtimeCtrl($scope, SystemSvc, RealtimeSvc, $timeout) {
     $scope.system = {};
-    $scope.systemInfoTimerPromise;
-
+    
     $scope.rooms = RealtimeSvc.getRoomList();
 
     $scope.getNoOfParticipants = function () {
@@ -710,7 +738,7 @@ function HistoryCtrl($scope, ReportSvc) {
             $scope.historyData = data;
             $scope.summaryHistory();
         });
-    }
+    };
     $scope.summaryHistory = function () {
         $scope.sumHalls = 0;
         $scope.sumParticipants = 0;
@@ -733,7 +761,7 @@ function HistoryCtrl($scope, ReportSvc) {
         $scope.sumDuration = countDuration / $scope.sumParticipants;
         $scope.minDuration = $scope.duration;
         $scope.predicate = 'firstCallTimestamp';
-    }
+    };
 }
 
 function SipAccountRetrievalCtrl($scope, SipUserSvc, token) {
@@ -743,7 +771,7 @@ function SipAccountRetrievalCtrl($scope, SipUserSvc, token) {
     };
 
     $scope.getSip = function() {
-        $scope.status="Henter oplysninger."
+        $scope.status="Henter oplysninger.";
         $scope.sipinfo = null;
         SipUserSvc.get(token, $scope.cleanNumber($scope.phoneNumber)).then(function(data) {
             $scope.status=null;
