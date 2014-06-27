@@ -19,17 +19,19 @@
         <script type="text/javascript" src="assets/js/angular-1.2.10/angular-route.min.js"></script>
         <script type="text/javascript" src="assets/js/angular-1.2.10/angular-resource.min.js"></script>
         <script type="text/javascript" src="assets/js/angular-1.2.10/i18n/angular-locale_da.js"></script>
-        <!--script type="text/javascript" src="assets/js/angular-1.2.10/i18n/angular-locale_en.js"></script>
+        <script type="text/javascript" src="assets/js/angular-1.2.10/i18n/angular-locale_en.js"></script>
         <script type="text/javascript" src="assets/js/angular-1.2.10/i18n/angular-locale_sv.js"></script>
-        <script type="text/javascript" src="assets/js/angular-1.2.10/i18n/angular-locale_no.js"></script-->
+        <script type="text/javascript" src="assets/js/angular-1.2.10/i18n/angular-locale_no.js"></script>
         <script type="text/javascript" src="assets/js/angular-local-storage-0.0.3/angular-local-storage.min.js"></script>
         <script type="text/javascript" src="assets/js/sockjs-0.3.4/sockjs.min.js"></script>
         <script type="text/javascript" src="assets/js/stomp-2.3.0/stomp.min.js"></script>
         <script type="text/javascript" src="assets/js/ui-bootstrap-0.10.0/ui-bootstrap-tpls.min.js"></script>
         <script type="text/javascript" src="assets/js/angular-translate-2.1.0/angular-translate.js"></script>
         <script type="text/javascript" src="assets/js/angular-translate-2.1.0/angular-translate-loader-static-files.min.js"></script>
+        <script type="text/javascript" src="assets/js/teljs/tel.js"></script>
+        <script type="text/javascript" src="assets/js/teljs/tel_meta.js"></script>
 
-        <script src="assets/js/blacktiger-2.0.3.js"></script>
+        <script src="assets/js/blacktiger-2.0.4.js"></script>
     </head>
     <body>
         <div class="container-fluid-header" data-ng-controller="MenuCtrl">
@@ -40,7 +42,14 @@
                 </li>
             </ul>
             <ul class="menu-bar pull-right">
-                <li><a ng-if="currentUser" ng-click="logout()" title="{{'GENERAL.LOGOUT' | translate}}"><span class="glyphicon glyphicon-remove-sign"></span></a></li>
+                <li>
+                    <span>
+                        <select ng-model="language" ng-options="locale.locale as (locale.locale === language ? locale.localizedLanguage : locale.localizedLanguage+' ('+locale.language+')') for locale in languages | orderBy:'locale.localizedLanguage'"></select>
+                    </span>
+                </li>
+                <li>
+                    <a ng-if="currentUser" ng-click="logout()" title="{{'GENERAL.LOGOUT' | translate}}"><span class="glyphicon glyphicon-remove-sign"></span></a>
+                </li>
             </ul>
         </div>
         <div class="container-fluid-content">

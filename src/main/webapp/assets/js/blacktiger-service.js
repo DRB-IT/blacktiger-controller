@@ -541,7 +541,11 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
         'use strict';
         return {
             create: function (user) {
-                return $http.post(blacktiger.getServiceUrl() + 'sipaccounts', user).then(function () {
+                return $http.post(blacktiger.getServiceUrl() + 'sipaccounts', user).then(function (response) {
+                    if(response.status !== 200) {
+                        var message = response.data && response.data.message ? response.data.message: response.status;
+                        return $q.reject(message);
+                    }
                     return;
                 });
             },
