@@ -627,13 +627,18 @@ function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger, $translate) {
     $scope.onPhoneNumberChanged = function() {
         var number = $scope.user.phoneNumber ? $scope.user.phoneNumber.replace(/[\+\s\-\(\)]/, '') : '',
             noOfCharsToPull = Math.min(4, number.length),
-            pattern;
+            pattern, i;
 
         if(noOfCharsToPull === 0) {
             $scope.innerMailTextPattern = '/.*/';
         } else {
             number = number.substr(number.length - noOfCharsToPull, number.length);
-            $scope.innerMailTextPattern = new RegExp('^((?!' + number + ').)*$');
+            pattern = "^((?!("+number.charAt(0)+")";
+            for(i=1;i<number.length;i++) {
+                pattern += "[\\s\\w\\W]{0,1}("+number.charAt(i)+")";
+            }
+            pattern += ").)*$";
+            $scope.innerMailTextPattern = new RegExp(pattern);//'^((?!' + number + ').)*$');
         }
 
     };
