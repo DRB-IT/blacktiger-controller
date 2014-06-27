@@ -614,8 +614,8 @@ function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger, $translate) {
             account: $scope.user,
             mailText: $scope.mailText
         };
-        SipUserSvc.create($scope.user).then(function () {
-            $scope.created = angular.copy($scope.user);
+        SipUserSvc.create(data).then(function () {
+            $scope.created = angular.copy(data);
             $scope.reset();
             $scope.status = 'success';
         }, function (reason) {
