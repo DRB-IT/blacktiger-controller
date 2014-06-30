@@ -463,12 +463,15 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
             }
         });
 
-        // Make sure names in historylist are update.
-        angular.forEach($scope.history, function (e) {
-            if (e.phoneNumber === phone) {
-                e.name = name;
+        // Make sure names in historydata in cookie is updated and update history display.
+        var history = $cookieStore.get($scope.historyCookieName);
+        angular.forEach(history, function (entry) {
+            if (phone === entry.phoneNumber) {
+                entry.name = name;
             }
         });
+        $cookieStore.put($scope.historyCookieName, history);
+        $scope.updateHistory();
     });
 
     $scope.calculateTotalDuration = function (entry) {
