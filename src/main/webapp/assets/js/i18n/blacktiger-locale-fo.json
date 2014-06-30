@@ -53,7 +53,8 @@
         "PARTICIPANTS": "Lyttere",
         "ABORT_TRANSMISSION": "Afbryd transmissionen",
         "COMPLETED_CALLS": "{{noOfCompletedCalls}} afsluttede opkald",
-        "WANTS_TO_COMMENT": "Ønsker at svare"
+        "WANTS_TO_COMMENT": "Ønsker at svare",
+        "ENTER_NAME": "Angiv navn"
     },
     "REPORT": {
         "NUMBER": "Nummer",

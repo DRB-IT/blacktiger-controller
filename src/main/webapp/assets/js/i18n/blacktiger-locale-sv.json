@@ -53,7 +53,8 @@
         "PARTICIPANTS": "Lyssnare",
         "ABORT_TRANSMISSION": "Avbryt transmissionen",
         "COMPLETED_CALLS": "{{noOfCompletedCalls}} completed call(s)",
-        "WANTS_TO_COMMENT": "Wants to comment"
+        "WANTS_TO_COMMENT": "Wants to comment",
+        "ENTER_NAME": "Enter Name"
     },
     "REPORT": {
         "NUMBER": "Nummer",

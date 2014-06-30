@@ -38,6 +38,7 @@
                 <bt-number-icon type="{{participant.type}}"></bt-number-icon> {{participant.phoneNumber | telephone}}
             </td>
             <td class="participantName">
+                <a ng-if="!(participant.name.length>0)" ng-click="changeName(participant.phoneNumber, participant.name)">({{'PARTICIPANTS.ENTER_NAME' | translate}})</a>
                 {{participant.name}}
                 <span ng-hide="participant.muted" class="label label-warning" translate="PARTICIPANTS.INFO.UNMUTED"></span>
                 <a ng-show="participant.commentRequested" ng-click="muteParticipant(participant.channel, false)" class="label label-primary shake" translate="PARTICIPANTS.WANTS_TO_COMMENT"></a>
