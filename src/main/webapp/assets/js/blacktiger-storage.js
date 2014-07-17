@@ -240,7 +240,7 @@ angular.module('blacktiger-storage', [])
             }
         };
     }).factory('RemoteSongSvc', function ($q, $http) {
-        var baseUrl = "http://telesal.s3.amazonaws.com/music/";
+        var baseUrl = "assets/music/"; //"http://telesal.s3.amazonaws.com/music/";
         var baseSongName = "iasn_E_000";
         var replacePattern = /(iasn_E_)([0]{3})/;
         var lpad = function (s, width, char) {
@@ -249,7 +249,7 @@ angular.module('blacktiger-storage', [])
 
         return {
             getNumberOfSongs: function () {
-                return 135;
+                return 1; //135;
             },
             readBlob: function (number) {
                 var deferred = $q.defer(),

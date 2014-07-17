@@ -156,7 +156,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
             },
             templateUrl: 'assets/templates/bt-commentalert.html'
         };
-    }).directive('musicplayer', function () {
+    }).directive('btMusicplayer', function () {
         return {
             restrict: 'E',
             scope: {
@@ -532,8 +532,9 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
         }
 
         $log.debug('New participants - adding to history.');
-        var entry, call, history = $cookieStore.get($scope.historyCookieName);
-        if (history[participant.phoneNumber] === undefined) {
+        var entry, call, history = $cookieStore.get($scope.historyCookieName),
+            key = participant.type + '_' + participant.phoneNumber;
+        if (history[key] === undefined) {
             entry = {
                 type: participant.type,
                 phoneNumber: participant.phoneNumber,
@@ -541,9 +542,9 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
                 firstCall: new Date().getTime(),
                 calls: []
             };
-            history[participant.phoneNumber] = entry;
+            history[key] = entry;
         } else {
-            entry = history[participant.phoneNumber];
+            entry = history[key];
         }
 
         call = {
@@ -559,8 +560,9 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
 
     $scope.$on('MeetingSvc.Leave', function (event, participant) {
         $log.debug('MeetingSvc.leave event received - updating history.');
-        var history = $cookieStore.get($scope.historyCookieName), entry;
-        entry = history[participant.phoneNumber];
+        var history = $cookieStore.get($scope.historyCookieName), entry,
+            key = participant.type + '_' + participant.phoneNumber;
+        entry = history[key];
         if (entry) {
             angular.forEach(entry.calls, function (call) {
                 if (call.end === null) {
