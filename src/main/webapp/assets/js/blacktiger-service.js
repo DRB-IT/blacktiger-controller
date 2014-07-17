@@ -35,6 +35,37 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
               }
             };
         };
+    }).factory('RemoteSongSvc', function ($q, $http) {
+        var baseUrl = "assets/music/"; //"http://telesal.s3.amazonaws.com/music/";
+        var baseSongName = "iasn_E_000";
+        var replacePattern = /(iasn_E_)([0]{3})/;
+        var lpad = function (s, width, char) {
+            return (s.length >= width) ? s : (new Array(width).join(char) + s).slice(-width);
+        };
+
+        return {
+            getNumberOfSongs: function () {
+                return 1; //135;
+            },
+            readBlob: function (number) {
+                var deferred = $q.defer(),
+                    numberf = lpad(number, 3, '0'),
+                    songName = baseSongName.replace(replacePattern, "\$1" + numberf.toString() + ".mp3"),
+                    url = baseUrl + songName;
+
+                $http({
+                    method: 'GET',
+                    url: url,
+                    responseType: 'blob'
+                }).success(function (data, status, headers, config) {
+                    deferred.resolve(data);
+                }).error(function (data, status, headers, config) {
+                    deferred.reject();
+                });
+                return deferred.promise;
+            }
+
+        };
     }).factory('LoginSvc', function($q, localStorageService, $http, $rootScope, blacktiger, $log) {
         'use strict'
         var currentUser = null;
