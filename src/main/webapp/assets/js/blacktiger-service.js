@@ -17,7 +17,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
 
         this.setForceLongPolling = function(value) {
             forceLongPolling = value;
-        }
+        };
 
         this.$get = function () {
             return {
@@ -35,12 +35,13 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
               }
             };
         };
-    }).factory('RemoteSongSvc', function ($q, $http) {
+    })/*.factory('RemoteSongSvc', function ($q, $http) {
+        'use strict';
         var baseUrl = "assets/music/"; //"http://telesal.s3.amazonaws.com/music/";
         var baseSongName = "iasn_E_000";
         var replacePattern = /(iasn_E_)([0]{3})/;
-        var lpad = function (s, width, char) {
-            return (s.length >= width) ? s : (new Array(width).join(char) + s).slice(-width);
+        var lpad = function (s, width, character) {
+            return (s.length >= width) ? s : (new Array(width).join(character) + s).slice(-width);
         };
 
         return {
@@ -66,8 +67,8 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             }
 
         };
-    }).factory('LoginSvc', function($q, localStorageService, $http, $rootScope, blacktiger, $log) {
-        'use strict'
+    })*/.factory('LoginSvc', function($q, localStorageService, $http, $rootScope, blacktiger, $log) {
+        'use strict';
         var currentUser = null;
         return {
             authenticate: function(username, password, remember) {
@@ -125,7 +126,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                 currentUser = null;
                 $rootScope.currentUser = null;
             }
-        }
+        };
     }).factory('SystemSvc', function($http, blacktiger) {
         'use strict'
         return {
@@ -134,7 +135,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                     return response.data;
                 });
             }
-        }
+        };
     }).factory('RoomSvc', function (blacktiger, $resource) {
         'use strict';
         var resource = $resource(blacktiger.getServiceUrl() + 'rooms/:id', {},
@@ -231,40 +232,40 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                 var args = arguments;
                 $rootScope.$apply(function() {
                     callback(args[0]);
-                })
-            })
-        }
+                });
+            });
+        };
 
         NGStomp.prototype.send = function(queue, headers, data) {
             this.stompClient.send(queue, headers, data);
-        }
+        };
 
         NGStomp.prototype.connect = function(user, password, on_connect, on_error, vhost) {
             this.stompClient.connect(user, password,
                 function(frame) {
                     $rootScope.$apply(function() {
                         on_connect.apply(stompClient, frame);
-                    })
+                    });
                 },
                 function(frame) {
                     $rootScope.$apply(function() {
                         on_error.apply(frame);
-                    })
+                    });
                 }, vhost);
-        }
+        };
 
         NGStomp.prototype.disconnect = function(callback) {
             this.stompClient.disconnect(function() {
                 var args = arguments;
                 $rootScope.$apply(function() {
                     callback.apply(args);
-                })
-            })
-        }
+                });
+            });
+        };
 
         return function(url) {
             return new NGStomp(url);
-        }
+        };
     }).factory('MeetingSvc', function ($rootScope, $timeout, ParticipantSvc, blacktiger, StompSvc, $log) {
         'use strict';
         var participants = [],
@@ -376,7 +377,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             }, function(){
                 alert('Lost connection');
             }, '/');
-        }
+        };
 
         var onJoin = function(p) {
             participants.push(p);
@@ -562,7 +563,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                 }, 10);
             },
             findByNumbers: function (room, numbers) {
-                var params = {numbers: numbers}
+                var params = {numbers: numbers};
                 return $http.get(blacktiger.getServiceUrl() + "reports/" + room, {params: params}).then(function (request) {
                     return request.data;
                 });
