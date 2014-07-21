@@ -703,6 +703,14 @@ function RealtimeCtrl($scope, SystemSvc, RealtimeSvc, $timeout) {
             return (count / $scope.getNoOfParticipants()) * 100;
         }
     };
+    
+    $scope.getPhonePercentage = function() {
+        if($scope.getNoOfParticipants() === 0) {
+            return 0.0;
+        } else {
+            return 100 - $scope.getSipPercentage();
+        }
+    }
 
     $scope.getNoOfCommentRequests = function () {
         var count = 0;

@@ -142,6 +142,11 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                     {
                         put: {
                             method:'PUT'
+                        },
+                        all: {
+                            method:'GET',
+                            url: blacktiger.getServiceUrl() + 'participants',
+                            isArray: true
                         }
                     });
         var current = null;
@@ -158,6 +163,9 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             },
             save: function(room) {
                 return resource.put({id: room.id}, room);
+            },
+            all: function() {
+                return resource.all();
             }
         };
     }).factory('ParticipantSvc', function (blacktiger, $resource, $log, $http) {
@@ -402,7 +410,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
 
     }).factory('RealtimeSvc', function ($rootScope, $timeout, RoomSvc, StompSvc, blacktiger, $log) {
         'use strict';
-        var rooms = RoomSvc.query('full'), stompClient, commentCancelPromiseArray = [];
+        var rooms = [], stompClient, commentCancelPromiseArray = [];
 
         var indexByChannel = function(participants, userId) {
             var index = -1;
@@ -497,10 +505,19 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
 
         var initializeSocket = function() {
             stompClient = StompSvc(blacktiger.getServiceUrl() + 'socket');
-            stompClient.connect($rootScope.credentials.username, $rootScope.credentials.password, function(){
+            // $rootScope.credentials.username, $rootScope.credentials.password
+            stompClient.connect(null ,null, function(){
                 //+ currentRoom
-
-                stompClient.subscribe("/rooms/*", function(data) {
+                RoomSvc.all().$promise.then(function(result) {
+                    angular.forEach(result, function(room) {
+                        rooms.push(room);
+                    });
+                    stompClient.subscribe("/queue/events/*", function(message) {
+                        var e = angular.fromJson(message.body);
+                        handleEvent(e);
+                    });
+                });
+                /*stompClient.subscribe("/rooms/*", function(data) {
                     var events = angular.fromJson(data.body);
                     for(var i=0;i<events.length;i++) {
                         handleEvent(events[i]);
@@ -510,7 +527,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                         var e = angular.fromJson(message.body);
                         handleEvent(e);
                     });
-                });
+                });*/
 
             }, function(){
                 alert("Unable to connecto to socket");
