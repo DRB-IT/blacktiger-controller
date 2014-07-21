@@ -692,7 +692,7 @@ function RealtimeCtrl($scope, SystemSvc, RealtimeSvc, $timeout) {
         var count = 0;
         angular.forEach($scope.rooms, function (room) {
             angular.forEach(room.participants, function (p) {
-                if (!p.host && p.phoneNumber.indexOf('#') === 0) {
+                if (!p.host && p.type === 'Sip') {
                     count++;
                 }
             });

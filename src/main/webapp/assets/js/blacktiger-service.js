@@ -202,24 +202,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                 //return resource.mute({roomid:roomId, id:id}, false);
             }
         };
-    })/*.factory('EventSvc', function (blacktiger, $http) {
-        'use strict';
-        return {
-            query: function(room, since) {
-                var params = {};
-                if(room) {
-                    params.room = room;
-                }
-
-                if(since) {
-                    params.since = since;
-                }
-                return $http({method: 'GET', url: blacktiger.getServiceUrl() + 'events', params: params}).then(function(response){
-                    return response.data;
-                });
-            }
-        };
-    })*/.factory('StompSvc', function($rootScope) {
+    }).factory('StompSvc', function($rootScope) {
         var stompClient = {};
 
         function NGStomp(url) {
@@ -241,7 +224,9 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
         };
 
         NGStomp.prototype.connect = function(user, password, on_connect, on_error, vhost) {
-            this.stompClient.connect(user, password,
+            // The Spring Stomp implementation does not like user/password, event though it should just ignore it.
+            // Sending empty headers instead of user/pass.
+            this.stompClient.connect({ } ,
                 function(frame) {
                     $rootScope.$apply(function() {
                         on_connect.apply(stompClient, frame);
@@ -251,7 +236,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                     $rootScope.$apply(function() {
                         on_error.apply(frame);
                     });
-                }, vhost);
+                }/*, vhost*/);
         };
 
         NGStomp.prototype.disconnect = function(callback) {
@@ -417,7 +402,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
 
     }).factory('RealtimeSvc', function ($rootScope, $timeout, RoomSvc, StompSvc, blacktiger, $log) {
         'use strict';
-        var rooms = RoomSvc.query('full'), stompClient;
+        var rooms = RoomSvc.query('full'), stompClient, commentCancelPromiseArray = [];
 
         var indexByChannel = function(participants, userId) {
             var index = -1;
@@ -449,14 +434,35 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             });
             return room;
         };
+    
+        var removeRoomById = function(id) {
+            var i;
+            for(i=0;i<rooms.length;i++) {
+                if(id === rooms[i].id) {
+                    break;
+                }
+            }
+            
+            if(i<rooms.length) {
+                rooms.splice(i, 1);
+            }
+        };
 
         var handleEvent = function(event) {
-            var index, participant, promise;
-            var room = getRoomById(event.roomNo);
+            var index, participant, promise, room;
+            if(event.type === 'ConferenceStart') {
+                rooms.push(event.room);
+                return;
+            } else if(event.type === 'ConferenceEnd') {
+                removeRoomById(event.roomNo);
+                return;
+            }
+            
+            room = getRoomById(event.roomNo);
             if(!room.participants) {
                 room.participants = [];
             }
-
+            
             if(event.type === 'Join') {
                 room.participants.push(event.participant);
             } else {
@@ -472,15 +478,15 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                             break;
                         case 'CommentRequest':
                             $log.debug('CommentRequest');
-                            room.participants[index].commentRequest = true;
+                            room.participants[index].commentRequested = true;
                             promise = $timeout(function() {
-                                    room.participants[index].commentRequest = false;
+                                    room.participants[index].commentRequested = false;
                                 }, 15000);
                             updateCancelPromise(userId, promise);
                             break;
                         case 'CommentRequestCancel':
                             $log.debug('CommentRequestCancel');
-                            room.participants[index].commentRequest = false;
+                            room.participants[index].commentRequested = false;
                             updateCancelPromise(userId);
                             break;
                     }
