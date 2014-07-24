@@ -676,6 +676,15 @@ function RealtimeCtrl($scope, SystemSvc, RealtimeSvc, $timeout) {
     
     $scope.rooms = RealtimeSvc.getRoomList();
 
+    $scope.getNoOfParticipantsPerRoom = function() {
+        var noParticipants = $scope.getNoOfParticipants();
+        if(noParticipants === 0 || $scope.rooms.length === 0) {
+            return 0;
+        } else {
+            return $scope.getNoOfParticipants() / $scope.rooms.length;
+        }
+    };
+    
     $scope.getNoOfParticipants = function () {
         var count = 0;
         angular.forEach($scope.rooms, function (room) {

@@ -85,9 +85,11 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                     authHeader = 'Basic ' + token;
                     return $http.get(blacktiger.getServiceUrl() + "system/authenticate", {headers: {'Authorization': authHeader}}).then(function(response) {
                         if(response.status !== 200) {
-                            var reason = response.data;
+                            var reason = response.status == 404 ? null : response.data;
                             if(!reason || '' === reason) {
-                                reason = 'Unable to communicate with server';
+                                reason = {
+                                    message: 'Unable to communicate with server'
+                                };
                             }
                             localStorageService.remove('LoginToken');
                             console.info('Unable to authenticate: ' + reason.message);
