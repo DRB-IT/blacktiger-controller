@@ -366,6 +366,14 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             }
         };
 
+        var clear = function() {
+            if(eventSubscription) {
+                eventSubscription.unsubscribe();
+                eventSubscription = null;
+            }
+            
+            participants.splice(0);
+        }
 
         var subscribeToChanges = function() {
             stompClient = StompSvc(blacktiger.getServiceUrl() + 'socket');
@@ -390,10 +398,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                 return participants;
             },
             setRoom: function(newRoom) {
-                if(eventSubscription) {
-                    eventSubscription.unsubscribe();
-                    eventSubscription = null;
-                }
+                clear();
                 
                 if(!newRoom) {
                     return;
@@ -401,7 +406,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
 
                 currentRoom = newRoom;
                 $log.info('Room changed.');
-                participants.splice(0);
+                
                 ParticipantSvc.query(currentRoom.id).$promise.then(function(data) {
                     angular.forEach(data, function(p) {
                         onJoin(p);
@@ -418,6 +423,9 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             },
             unmute: function(userId) {
                 handleMute(userId, false);
+            },
+            clear: function() {
+                clear();
             }
             
         };

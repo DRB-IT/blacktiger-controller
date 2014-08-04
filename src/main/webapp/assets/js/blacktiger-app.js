@@ -276,7 +276,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
 
 /*************************************** CONTROLLERS ********************************************/
 
-function MenuCtrl($scope, $location, LoginSvc, $rootScope, $translate, blacktiger) {
+function MenuCtrl($scope, $location, LoginSvc, $rootScope, $translate, blacktiger, MeetingSvc) {
     $scope.location = $location;
     $scope.links = [
         {
@@ -314,6 +314,7 @@ function MenuCtrl($scope, $location, LoginSvc, $rootScope, $translate, blacktige
     $scope.languages = [{locale:'da', 'localizedLanguage':'Dansk'}];
 
     $scope.logout = function() {
+        MeetingSvc.clear();
         LoginSvc.deauthenticate();
     };
 
