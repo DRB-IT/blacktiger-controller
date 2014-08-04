@@ -11,6 +11,8 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                 'no': 'Norsk'
             };
 
+        var instanceId = new Date().getTime;
+        
         this.setServiceUrl = function (url) {
             serviceUrl = url;
         };
@@ -32,7 +34,10 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
               },
               getLanguageNames: function() {
                   return languageNames;
-              }
+              },
+                getInstanceId : function() {
+                    return instanceId;
+                }
             };
         };
     })/*.factory('RemoteSongSvc', function ($q, $http) {
@@ -221,7 +226,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
         }
 
         NGStomp.prototype.subscribe = function(queue, callback) {
-            this.stompClient.subscribe(queue, function() {
+            return this.stompClient.subscribe(queue, function() {
                 var args = arguments;
                 $rootScope.$apply(function() {
                     callback(args[0]);
@@ -267,7 +272,8 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             currentRoom = null,
             commentCancelPromiseArray = [],
             stompClient,
-            commentRequestTimeout = 60000;
+            commentRequestTimeout = 60000,
+            eventSubscription = null;
 
         var indexByChannel = function(channel) {
             var index = -1;
@@ -365,7 +371,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             stompClient = StompSvc(blacktiger.getServiceUrl() + 'socket');
             stompClient.connect($rootScope.credentials.username, $rootScope.credentials.password, function(){
                 //+ currentRoom
-                stompClient.subscribe("/queue/events/" + currentRoom.id, function(message) {
+                eventSubscription = stompClient.subscribe("/queue/events/" + currentRoom.id, function(message) {
                     var e = angular.fromJson(message.body);
                     handleEvent(e);
                 });
@@ -384,6 +390,11 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                 return participants;
             },
             setRoom: function(newRoom) {
+                if(eventSubscription) {
+                    eventSubscription.unsubscribe();
+                    eventSubscription = null;
+                }
+                
                 if(!newRoom) {
                     return;
                 }
@@ -408,6 +419,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             unmute: function(userId) {
                 handleMute(userId, false);
             }
+            
         };
 
     }).factory('RealtimeSvc', function ($rootScope, $timeout, RoomSvc, StompSvc, blacktiger, $log) {

@@ -403,9 +403,9 @@ function RequestPasswordCtrl($scope, $location, $http, blacktiger) {
     };
 }
 
-function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, ReportSvc, $log) {
+function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, ReportSvc, $log, blacktiger) {
     $scope.participants = MeetingSvc.getParticipantList();
-    $scope.historyCookieName = 'meetingHistory';
+    $scope.historyCookieName = 'meetingHistory-' + blacktiger.getInstanceId();
     $scope.translationData = {
         noOfParticipants: 0,
         noOfCompletedCalls: 0
