@@ -485,10 +485,10 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
         return duration;
     };
 
-    $scope.noOfCallsForPhoneNumber = function(phoneNumber) {
+    $scope.noOfCallsForCallerId = function(callerId) {
         var count = 0, history = $cookieStore.get($scope.historyCookieName);
         angular.forEach(history, function (entry) {
-            if (phoneNumber === entry.phoneNumber) {
+            if (callerId === entry.callerId) {
                 count = entry.calls.length;
             }
         });
@@ -504,7 +504,7 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
         angular.forEach(history, function (entry) {
             var stillParticipating = false;
             angular.forEach(participants, function (participant) {
-                if (participant.phoneNumber === entry.phoneNumber) {
+                if (participant.callerId === entry.callerId) {
                     stillParticipating = true;
                     return false;
                 }
@@ -534,10 +534,11 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
 
         $log.debug('New participants - adding to history.');
         var entry, call, history = $cookieStore.get($scope.historyCookieName),
-            key = participant.type + '_' + participant.phoneNumber;
+            key = participant.callerId;
         if (history[key] === undefined) {
             entry = {
                 type: participant.type,
+                callerId: participant.callerId,
                 phoneNumber: participant.phoneNumber,
                 name: participant.name,
                 firstCall: new Date().getTime(),
@@ -562,7 +563,7 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
     $scope.$on('MeetingSvc.Leave', function (event, participant) {
         $log.debug('MeetingSvc.leave event received - updating history.');
         var history = $cookieStore.get($scope.historyCookieName), entry,
-            key = participant.type + '_' + participant.phoneNumber;
+            key = participant.callerId;
         entry = history[key];
         if (entry) {
             angular.forEach(entry.calls, function (call) {
