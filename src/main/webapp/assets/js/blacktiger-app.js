@@ -1,9 +1,13 @@
 /*************************************** MODULE ********************************************/
 
-var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.translate', 'ui.bootstrap', 'blacktiger-service', 'blacktiger-ui', 'teljs'])
-    .config(function ($locationProvider, $routeProvider, $httpProvider, $translateProvider, blacktigerProvider) {
+var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.translate', 'ui.bootstrap', 'blacktiger-service', 'blacktiger-ui', 'teljs', 'ngClipboard'])
+    .config(function ($locationProvider, $routeProvider, $httpProvider, $translateProvider, blacktigerProvider, ngClipProvider) {
         var mode = "normal", token, params = [], search, list, url, elements, language, langData;
 
+        // NG_CLIP
+        ngClipProvider.setPath("assets/js/zeroclipboard/dist/ZeroClipboard.swf");
+        
+        // SECURITY (forward to login if not authorized)
         $httpProvider.interceptors.push(function ($location) {
             return {
                 'responseError': function (rejection) {

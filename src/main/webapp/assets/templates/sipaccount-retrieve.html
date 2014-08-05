@@ -1,18 +1,25 @@
 <div class="col-md-6 col-md-offset-3">
-    <h1>Dine personlige oplysninger</h1>
+    <h1 translate="SIP_ACCOUNT_RETRIEVAL.TITLE"></h1>
     <div class="alert alert-danger" ng-class="{hidden:!status}">
         {{status}}
     </div>
-    <div class="alert alert-success" ng-class="{hidden:!sipinfo}" translate="SIP_ACCOUNT_RETRIEVAL.DESCRIPTION" translate-values="{sipId:sipinfo.sipId,sipPass:sipinfo.sipPass,name:sipinfo.name,phoneNumber:sipinfo.phoneNumber}"></div>
+    <div class="alert alert-success" ng-class="{hidden:!sipinfo}">
+        <p translate="SIP_ACCOUNT_RETRIEVAL.DESCRIPTION" translate-values="{name:sipinfo.name,phoneNumber:sipinfo.phoneNumber}"></p>
+        <p>
+            {{'LOGIN.USERNAME' | translate }}: {{sipinfo.sipId}} <button type="button" class="btn btn-default btn-xs" clip-copy="sipinfo.sipId"><span class="glyphicon glyphicon-transfer"></span></button><br>
+            {{'LOGIN.PASSWORD' | translate }}: {{sipinfo.sipPass}} <button type="button" class="btn btn-default btn-xs" clip-copy="sipinfo.sipPass"><span class="glyphicon glyphicon-transfer"></span></button><br>
+        </p>
+        <p translate="SIP_ACCOUNT_RETRIEVAL.FOOTNOTE"></p>
+    </div>
     <form id="getsipform">
         <div class="form-group">
-            <label for="getsip-inputphone">Indtast dit telefonnummer</label>
+            <label for="getsip-inputphone"  translate="SIP_ACCOUNT_RETRIEVAL.ENTER_PHONE"></label>
             <div class="row">
                 <div class="col-sm-12 col-xs-10">
-                    <input type="text" class="form-control input-lg" ng-model="phoneNumber" title="Telefonnummer" placeholder="Telefonnummer" autofocus="true" ng-pattern="/^[0-9+\-\/\(\) ]+$/" ng-required>
+                    <input type="text" class="form-control input-lg" ng-model="phoneNumber" title="{{'GENERAL.PHONENUMBER' | translate}}" placeholder="{{'GENERAL.PHONENUMBER' | translate}}" autofocus="true" ng-pattern="/^[0-9+\-\/\(\) ]+$/" ng-required>
                 </div>
             </div>
         </div>
-        <button type="button" ng-click="getSip()" class="btn btn-lg btn-success" ng-disabled="!phoneNumber">Hent mine oplysninger</button>
+        <button type="button" ng-click="getSip()" class="btn btn-lg btn-success" ng-disabled="!phoneNumber" translate="SIP_ACCOUNT_RETRIEVAL.RETRIEVE_INFORMATION"></button>
     </form>
 </div>

@@ -86,7 +86,9 @@
         "HALL": "hall",
         "LOGOUT": "Log out",
         "YES": "Yes",
-        "NO": "No"
+        "NO": "No",
+        "PHONENUMBER": "Phone Number",
+        "EMAIL": "Email Address" 
     },
     "SETTINGS": {
         "GENERAL" : {
@@ -133,7 +135,11 @@
         }
     },
     "SIP_ACCOUNT_RETRIEVAL": {
-        "DESCRIPTION": "<b>Make sure that this is your name and phone number:</b><br>{{name}}, {{phoneNumber}}<br>If there is any mistake in these informations, please contact the technical manager of your Kingdom Hall.<br><br>You need the following informations in order to listen to the meetings from your computer. You can use the same information from several devices, fx. a PC and a tablet. <br>REMARK! You are NOT allowed to distribute these informations to others as they are bound to your name and phone number!<br><br>Brugernavn: {{sipId}}<br>Kodeord: {{sipPass}}<br><br>Follow the guide available at <a>this link</a>"
+        "DESCRIPTION": "<b>Make sure that this is your name and phone number:</b><br>{{name}}, {{phoneNumber}}<br>If there is any mistake in these informations, please contact the technical manager of your Kingdom Hall.<br><br>You need the following informations in order to listen to the meetings from your computer. You can use the same information from several devices, fx. a PC and a tablet. <br>REMARK! You are NOT allowed to distribute these informations to others as they are bound to your name and phone number!",
+        "FOOTNOTE": "Follow the guide available at <a>this link</a>",
+        "RETRIEVE_INFORMATION": "Retrieve my information",
+        "TITLE": "Your Personal Information",
+        "ENTER_PHONE": "Enter Phone Number"
     }
 
 }
