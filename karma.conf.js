@@ -17,12 +17,12 @@ module.exports = function(config) {
       'src/main/webapp/assets/js/**/angular.js',
       'src/main/webapp/assets/js/**/angular-cookies.js',
       'src/main/webapp/assets/js/**/angular-resource.js',
-      'src/main/webapp/assets/js/**/angular-local-storage.min.js',
+      'src/main/webapp/assets/js/**/angular-local-storage.js',
       'src/main/webapp/assets/js/**/angular-mocks.js',
       'src/main/webapp/assets/js/blacktiger-ui.js',
       'src/main/webapp/assets/js/blacktiger-service.js',
-      'src/main/webapp/assets/js/sockjs-0.3.4.js',
-      'src/main/webapp/assets/js/stomp.min.js',
+      'src/main/webapp/assets/js/**/sockjs.js',
+      'src/main/webapp/assets/js/**/stomp.js',
       'src/test/javascript/specs/*.js'
     ],
 

@@ -34,12 +34,13 @@
                         <exclude>**/*.min.js</exclude>
                         <exclude>**/analytics.js</exclude>
                         <exclude>**/blacktiger-storage.js</exclude>
+                        <exclude>assets/js/angular/**/*</exclude>
                         <exclude>assets/js/angular-*/**/*</exclude>
-                        <exclude>assets/js/jquery-*/**/*</exclude>
-                        <exclude>assets/js/sockjs-*/**/*</exclude>
+                        <exclude>assets/js/jquery/**/*</exclude>
+                        <exclude>assets/js/ng-clip/**/*</exclude>
+                        <exclude>assets/js/sockjs/**/*</exclude>
                         <exclude>assets/js/stomp-*/**/*</exclude>
                         <exclude>assets/js/ui-bootstrap-*/**/*</exclude>
-                        <exclude>assets/js/angular-*/**/*</exclude>
                         <exclude>**/*.css</exclude>
                         <!--exclude>**/compressed.css</exclude>
                         <exclude>**/*.min.css</exclude-->
