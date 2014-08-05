@@ -1,6 +1,6 @@
 {
     "name": "blacktiger-web",
-    "version": "2.0.7",
+    "version": "2.0.8",
     "homepage": "https://github.com/DRB-IT/blacktiger-web",
     "dependencies": {
         "ng-clip": "~0.2.2",
