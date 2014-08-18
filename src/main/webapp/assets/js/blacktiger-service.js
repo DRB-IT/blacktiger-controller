@@ -434,10 +434,10 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
         'use strict';
         var rooms = [], stompClient, commentCancelPromiseArray = [];
 
-        var indexByChannel = function(participants, userId) {
+        var indexByChannel = function(participants, channel) {
             var index = -1;
             angular.forEach(participants, function(p, currentIndex) {
-                if(p.userId === userId) {
+                if(p.channel === channel) {
                     index = currentIndex;
                     return false;
                 }
@@ -496,8 +496,8 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             if(event.type === 'Join') {
                 room.participants.push(event.participant);
             } else {
-                var userId = event.participant ? event.participant.userId : event.participantId;
-                index = indexByChannel(room.participants, userId);
+                var channel = event.participant ? event.participant.channel : event.channel;
+                index = indexByChannel(room.participants, channel);
                 if(index>=0) {
                     switch(event.type) {
                         case 'Leave':
@@ -512,12 +512,20 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                             promise = $timeout(function() {
                                     room.participants[index].commentRequested = false;
                                 }, 15000);
-                            updateCancelPromise(userId, promise);
+                            updateCancelPromise(channel, promise);
                             break;
                         case 'CommentRequestCancel':
                             $log.debug('CommentRequestCancel');
                             room.participants[index].commentRequested = false;
-                            updateCancelPromise(userId);
+                            updateCancelPromise(channel);
+                            break;
+                        case 'Mute':
+                            $log.debug('Mute');
+                            room.participants[index].muted = true;
+                            break;
+                        case 'Unmute':
+                            $log.debug('Unmute');
+                            room.participants[index].muted = false;
                             break;
                     }
                 }
