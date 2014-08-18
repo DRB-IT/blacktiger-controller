@@ -6,8 +6,8 @@
     <div class="alert alert-success" ng-class="{hidden:!sipinfo}">
         <p translate="SIP_ACCOUNT_RETRIEVAL.DESCRIPTION" translate-values="{name:sipinfo.name,phoneNumber:sipinfo.phoneNumber}"></p>
         <p>
-            {{'LOGIN.USERNAME' | translate }}: {{sipinfo.sipId}} <button type="button" class="btn btn-default btn-xs" clip-copy="sipinfo.sipId"><span class="glyphicon glyphicon-transfer"></span></button><br>
-            {{'LOGIN.PASSWORD' | translate }}: {{sipinfo.sipPass}} <button type="button" class="btn btn-default btn-xs" clip-copy="sipinfo.sipPass"><span class="glyphicon glyphicon-transfer"></span></button><br>
+            {{'LOGIN.USERNAME' | translate }}: <input type="text" ng-model="sipinfo.sipId" readonly> <br>
+            {{'LOGIN.PASSWORD' | translate }}: <input type="text" ng-model="sipinfo.sipPass" readonly> <br>
         </p>
         <p translate="SIP_ACCOUNT_RETRIEVAL.FOOTNOTE"></p>
     </div>
