@@ -103,7 +103,6 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
         });
 
         language = window.navigator.userLanguage || window.navigator.language;
-        language = 'en';
         langData = language.split("-");
         $translateProvider.preferredLanguage(langData[0]);
         $translateProvider.fallbackLanguage('en');
