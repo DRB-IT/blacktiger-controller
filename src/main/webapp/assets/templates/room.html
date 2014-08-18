@@ -16,7 +16,7 @@
             <li>{{'PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3' | translate}}</li>
         </ol>
     </div>
-    <h3><span ng-if="(participants|filter:{host:false}).length>0">{{'PARTICIPANTS.PARTICIPANTS' | translate:translationData}}</span>
+    <h3><span ng-if="(participants|filter:{host:false}).length>0" translate="PARTICIPANTS.PARTICIPANTS" translate-values="{noOfParticipants:(participants|filter:{host:false}).length}"></span>
         <small class="pull-right" ng-repeat="participant in participants | filter:{host:true}" ng-animate=" 'animate' ">{{participant.name ? participant.name : 'No name'}} &bull; <a href="#" class="text-danger" ng-click="kickParticipant(participant.channel)" title="{{'PARTICIPANTS.ABORT_TRANSMISSION' | translate}}">{{'PARTICIPANTS.ABORT_TRANSMISSION' | translate}} <span class="glyphicon glyphicon-off"></span></a></small>
     </h3>
     <table class="table table-striped table-hover table-condensed participantsTable">
@@ -60,7 +60,7 @@
     </table>
 
     <!--bt-history></bt-history-->
-    <h3>{{'PARTICIPANTS.COMPLETED_CALLS' | translate:translationData}}
+    <h3><span ng-if="history.length>0" translate="PARTICIPANTS.COMPLETED_CALLS" translate-values="{noOfCompletedCalls:history.length}"}></span>
         <a ng-click="deleteHistory();" class="btn btn-link btn-sm pull-right">{{'REPORT.DELETE' | translate}} <span class="glyphicon glyphicon-trash"></span></a>
     </h3>
     <table class="table table-striped table-hover table-condensed participantsTable">

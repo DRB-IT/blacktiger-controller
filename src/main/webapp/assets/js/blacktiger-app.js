@@ -408,10 +408,6 @@ function RequestPasswordCtrl($scope, $location, $http, blacktiger) {
 function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, ReportSvc, $log, blacktiger) {
     $scope.participants = MeetingSvc.getParticipantList();
     $scope.historyCookieName = 'meetingHistory-' + blacktiger.getInstanceId();
-    $scope.translationData = {
-        noOfParticipants: 0,
-        noOfCompletedCalls: 0
-    };
     $scope.history = [];
     $cookieStore.put($scope.historyCookieName, {});
 
@@ -517,9 +513,6 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
         });
 
         $scope.history = cleansedHistory;
-
-        $scope.translationData.noOfParticipants = participants.length;
-        $scope.translationData.noOfCompletedCalls = $scope.history.length;
     };
 
     $scope.deleteHistory = function() {
