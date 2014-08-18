@@ -7,8 +7,11 @@
         </div>
     </div>
     <div class="col-sm-8">
-        <h3>{{'SETTINGS.GENERAL.TITLE' | translate}}</h3>
-        <p translate="SETTINGS.GENERAL.LOGGED_IN_AS" translate-values='{ name: currentRoom.name}'></b>.</p>
+        <h3>{{'SETTINGS.GENERAL.TITLE' | translate}}&nbsp;</h3>
+        <p>
+            <span translate="SETTINGS.GENERAL.LOGGED_IN_AS" translate-values='{ name: currentRoom.name}'></span>
+            <button class="btn btn-warning btn-xs" ng-click="logout()" translate="GENERAL.LOGOUT"></button>
+        </p>
         <p>
             <span translate="SETTINGS.GENERAL.TECHNICALLY_RESPONSIBLE" translate-values='{ name: currentRoom.contact.name}'></span>
             (<a translate="SETTINGS.GENERAL.CONTACT_LINK" translate-values='{ name: currentRoom.contact.name}' href="#/settings/contact" style="cursor: pointer;"></a>).

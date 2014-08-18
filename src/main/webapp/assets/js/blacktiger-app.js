@@ -313,11 +313,6 @@ function MenuCtrl($scope, $location, LoginSvc, $rootScope, $translate, blacktige
     ];
     $scope.languages = [{locale:'da', 'localizedLanguage':'Dansk'}];
 
-    $scope.logout = function() {
-        MeetingSvc.clear();
-        LoginSvc.deauthenticate();
-    };
-
     $scope.$watch('language', function() {
         if($scope.language !== undefined && $scope.language !== $translate.use()) {
             $translate.use($scope.language);
@@ -661,9 +656,12 @@ function ContactCtrl($scope, SipUserSvc, RoomSvc, blacktiger) {
     };
 }
 
-function SettingsCtrl($scope, SipUserSvc, RoomSvc, blacktiger) {
+function SettingsCtrl($scope, SipUserSvc, RoomSvc, MeetingSvc, LoginSvc, blacktiger) {
 
-
+    $scope.logout = function() {
+        MeetingSvc.clear();
+        LoginSvc.deauthenticate();
+    };
 }
 
 function RealtimeCtrl($scope, SystemSvc, RealtimeSvc, $timeout) {
