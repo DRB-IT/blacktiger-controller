@@ -1,6 +1,8 @@
+/*jslint browser: true*/
+/*global angular, BLACKTIGER_VERSION*/
 /*************************************** MODULE ********************************************/
 
-var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.translate', 'ui.bootstrap', 'blacktiger-service', 'blacktiger-ui', 'teljs'])
+angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.translate', 'ui.bootstrap', 'blacktiger-service', 'blacktiger-ui', 'teljs'])
     .config(function ($locationProvider, $routeProvider, $httpProvider, $translateProvider, blacktigerProvider) {
         var mode = "normal", token, params = [], search, list, url, elements, language, langData;
 
@@ -29,17 +31,17 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
             });
         }
 
-        if(angular.isDefined(params['server'])) {
-            url = params['server'];
+        if(angular.isDefined(params.server)) {
+            url = params.server;
             if(url.charAt(url.length-1) !== '/') {
                 url = url + '/';
             }
             blacktigerProvider.setServiceUrl(url);
         }
 
-        if (angular.isDefined(params['token'])) {
+        if (angular.isDefined(params.token)) {
             mode = "token";
-            token = params['token'];
+            token = params.token;
         }
 
         if(mode === 'normal') {
@@ -97,9 +99,10 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
             });
         }
 
+        // REMARK: If BLACKTIGER_VERSION has been set, we will load from a yui-compressed file
         $translateProvider.useStaticFilesLoader({
             prefix: 'assets/js/i18n/blacktiger-locale-',
-            suffix: '.json'
+            suffix: BLACKTIGER_VERSION ? '-' + BLACKTIGER_VERSION + '.json' : '.json'
         });
 
         language = window.navigator.userLanguage || window.navigator.language;
@@ -112,7 +115,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
             $location.path('login');
         });
 
-        $rootScope.$on("logout", function(user) {
+        $rootScope.$on("logout", function() {
             $location.path('login');
         });
     })
@@ -225,7 +228,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
                 };
 
                 $scope.toggleRandom = function () {
-                    random = !random;
+                    $scope.random = !$scope.random;
                 };
 
                 $scope.$watch('currentSong', function () {
@@ -276,7 +279,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
 
 /*************************************** CONTROLLERS ********************************************/
 
-function MenuCtrl($scope, $location, LoginSvc, $rootScope, $translate, blacktiger, MeetingSvc) {
+function MenuCtrl($scope, $location, LoginSvc, $rootScope, $translate, blacktiger) {
     $scope.location = $location;
     $scope.links = [
         {
@@ -368,7 +371,7 @@ function LoginCtrl($scope, $location, LoginSvc) {
                 $location.path('/admin/realtime');
             }
         }, function (reason) {
-            $scope.status = "invalid";
+            $scope.status = "invalid (reason: " + reason + ")";
         });
     };
     
@@ -615,7 +618,7 @@ function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger, $translate) {
             $scope.status = 'success';
         }, function (reason) {
             $scope.reset();
-            $scope.status = 'error';
+            $scope.status = 'error (reason: ' + reason + ')';
         });
     };
 
@@ -656,7 +659,7 @@ function ContactCtrl($scope, SipUserSvc, RoomSvc, blacktiger) {
     };
 }
 
-function SettingsCtrl($scope, SipUserSvc, RoomSvc, MeetingSvc, LoginSvc, blacktiger) {
+function SettingsCtrl($scope, SipUserSvc, RoomSvc, MeetingSvc, LoginSvc) {
 
     $scope.logout = function() {
         MeetingSvc.clear();
@@ -712,7 +715,7 @@ function RealtimeCtrl($scope, SystemSvc, RealtimeSvc, $timeout) {
         } else {
             return 100 - $scope.getSipPercentage();
         }
-    }
+    };
 
     $scope.getNoOfCommentRequests = function () {
         var count = 0;

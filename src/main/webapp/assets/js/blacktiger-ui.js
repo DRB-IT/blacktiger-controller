@@ -1,3 +1,4 @@
+/*global angular*/
 angular.module('blacktiger-ui',[])
     .directive('btNumberIcon', function () {
         return {
@@ -36,14 +37,23 @@ angular.module('blacktiger-ui',[])
 
                     angular.forEach($scope.room.participants, function(p) {
                         if(!p.host) {
-                            if(!p.muted) $scope.noOfOpenMicrophones++;
-                            if(p.commentRequested) $scope.noOfCommentRequests++;
+                            if(!p.muted) {
+                                $scope.noOfOpenMicrophones++;
+                            }
+                            
+                            if(p.commentRequested) {
+                                $scope.noOfCommentRequests++;
+                            }
+                            
                             if(p.phoneNumber.indexOf('#') === 0) {
                                 $scope.noOfSipPhones++;
                             } else {
                                 $scope.noOfRegularPhones++;
                             }
-                            if(p.name === null || p.name === '') $scope.noOfMissingNames++;
+                            
+                            if(p.name === null || p.name === '') {
+                                $scope.noOfMissingNames++;
+                            }
                         }
 
                     });
@@ -94,13 +104,13 @@ angular.module('blacktiger-ui',[])
             // Makes sure that if the first input field of the modal is focused - if it has any.
             var em = element.find('input');
             if(em.length > 0) {
-                setTimeout(function() {
+                $timeout(function() {
                     em[0].focus();
                     em[0].select();
                 }, 100);
             }
         }
-    }
+    };
   }).filter('timespan', function() {
     return function(input) {
       var out = "";

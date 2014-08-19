@@ -29,6 +29,8 @@
         <script type="text/javascript" src="assets/js/teljs/tel_meta.js"></script>
 
         <script src="assets/js/blacktiger-2.0.8.js"></script>
+        
+        <script>var BLACKTIGER_VERSION = "2.0.8";</script>
     </head>
     <body>
         <div class="container-fluid-header" data-ng-controller="MenuCtrl">
@@ -44,9 +46,7 @@
                         <select ng-model="language" ng-options="locale.locale as (locale.locale === language ? locale.localizedLanguage : locale.localizedLanguage+' ('+locale.language+')') for locale in languages | orderBy:'locale.localizedLanguage'"></select>
                     </span>
                 </li>
-                <li>
-                    <a ng-if="currentUser" ng-click="logout()" title="{{'GENERAL.LOGOUT' | translate}}"><span class="glyphicon glyphicon-remove-sign"></span></a>
-                </li>
+
             </ul>
         </div>
         <div class="container-fluid-content">

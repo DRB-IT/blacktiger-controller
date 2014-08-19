@@ -1,3 +1,4 @@
+/*global angular, SockJS, Stomp*/
 angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageModule'])
     .provider('blacktiger', function () {
         'use strict';
@@ -17,17 +18,10 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             serviceUrl = url;
         };
 
-        this.setForceLongPolling = function(value) {
-            forceLongPolling = value;
-        };
-
         this.$get = function () {
             return {
                 getServiceUrl: function () {
                     return serviceUrl;
-                },
-                isLongPollingForced: function() {
-                    return forceLongPolling;
                 },
                 getE164Pattern: function() {
                   return /^\+[0-9]{5,15}$/;
@@ -109,7 +103,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                         user = response.data;
 
                         $log.info('Authenticatated. Returning user.');
-                        $http.defaults.headers.common['Authorization'] = authHeader;
+                        $http.defaults.headers.common.Authorization = authHeader;
 
                         $log.info('Logged in as ' + user.username);
                         currentUser = user;
@@ -127,7 +121,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                 return currentUser;
             },
             deauthenticate: function() {
-                $http.defaults.headers.common['Authorization'] = undefined;
+                $http.defaults.headers.common.Authorization = undefined;
                 localStorageService.remove('LoginToken');
                 $rootScope.$broadcast("logout", currentUser);
                 currentUser = null;
@@ -135,7 +129,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             }
         };
     }).factory('SystemSvc', function($http, blacktiger) {
-        'use strict'
+        'use strict';
         return {
             getSystemInfo: function() {
                 return $http.get(blacktiger.getServiceUrl() + 'system/information').then(function(response) {
@@ -156,7 +150,6 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                             isArray: true
                         }
                     });
-        var current = null;
         return {
             query: function(mode) {
                 var params;
@@ -319,7 +312,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
         };
 
         var handleEvent = function(event) {
-            var index, participant, promise, channel;
+            var index, promise, channel;
             channel = event.participant ? event.participant.channel : event.channel;
             switch(event.type) {
                 case 'Join':
@@ -373,7 +366,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             }
             
             participants.splice(0);
-        }
+        };
 
         var subscribeToChanges = function() {
             stompClient = StompSvc(blacktiger.getServiceUrl() + 'socket');
@@ -479,7 +472,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
         };
 
         var handleEvent = function(event) {
-            var index, participant, promise, room;
+            var index, promise, room;
             if(event.type === 'ConferenceStart') {
                 rooms.push(event.room);
                 return;
