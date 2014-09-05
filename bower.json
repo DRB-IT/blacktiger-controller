@@ -1,28 +1,28 @@
 {
-    "name": "blacktiger-web",
-    "version": "2.0.8",
-    "homepage": "https://github.com/DRB-IT/blacktiger-web",
-    "dependencies": {
-        "angular": "~1.2.20",
-        "angular-mocks": "~1.2.20",
-        "angular-cookies": "~1.2.20",
-        "angular-route": "~1.2.20",
-        "angular-resource": "~1.2.20",
-        "angular-i18n": "~1.2.20",
-        "angular-translate": "~2.2.0",
-        "angular-local-storage": "~0.0.5",
-        "jquery": "~1.10.2",
-        "sockjs": "~0.3.4",
-        "stomp-websocket": "~2.3.1",
-        "angular-bootstrap": "~0.11.0"
-    },
-    "authors": [
+  "name": "blacktiger-web",
+  "version": "2.0.8",
+  "homepage": "https://github.com/DRB-IT/blacktiger-web",
+  "dependencies": {
+    "angular": "~1.2.20",
+    "angular-mocks": "~1.2.20",
+    "angular-cookies": "~1.2.20",
+    "angular-route": "~1.2.20",
+    "angular-resource": "~1.2.20",
+    "angular-i18n": "~1.2.20",
+    "angular-translate": "~2.2.0",
+    "angular-local-storage": "~0.0.5",
+    "jquery": "~1.10.2",
+    "sockjs": "~0.3.4",
+    "stomp-websocket": "~2.3.1",
+    "angular-bootstrap": "~0.11.0"
+  },
+  "authors": [
     "Michael Krog <mic@apaq.dk>"
   ],
-    "description": "Client for blacktiger",
-    "license": "MIT",
-    "private": true,
-    "ignore": [
+  "description": "Client for blacktiger",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",

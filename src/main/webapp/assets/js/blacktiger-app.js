@@ -2,9 +2,11 @@
 /*global angular, BLACKTIGER_VERSION*/
 /*************************************** MODULE ********************************************/
 
-angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.translate', 'ui.bootstrap', 'blacktiger-service', 'blacktiger-ui', 'teljs'])
+var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.translate', 'ui.bootstrap', 'blacktiger-service', 'blacktiger-ui', 'teljs'])
     .config(function ($locationProvider, $routeProvider, $httpProvider, $translateProvider, blacktigerProvider) {
-        var mode = "normal", token, params = [], search, list, url, elements, language, langData;
+        var mode = "normal",
+            token, params = [],
+            search, list, url, elements, language, langData;
 
         // SECURITY (forward to login if not authorized)
         $httpProvider.interceptors.push(function ($location) {
@@ -18,24 +20,23 @@ angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.translate', 'ui.boots
             };
         });
 
+        //load config
+
         // Find params
         search = window.location.search;
-        if(search.length > 0 && search.charAt(0) === '?') {
+        if (search.length > 0 && search.charAt(0) === '?') {
             search = search.substring(1);
             list = search.split('&');
-            angular.forEach(list, function(entry) {
+            angular.forEach(list, function (entry) {
                 elements = entry.split('=');
-                if(elements.length > 1) {
+                if (elements.length > 1) {
                     params[elements[0]] = elements[1];
                 }
             });
         }
 
-        if(angular.isDefined(params.server)) {
+        if (angular.isDefined(params.server)) {
             url = params.server;
-            if(url.charAt(url.length-1) !== '/') {
-                url = url + '/';
-            }
             blacktigerProvider.setServiceUrl(url);
         }
 
@@ -44,7 +45,7 @@ angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.translate', 'ui.boots
             token = params.token;
         }
 
-        if(mode === 'normal') {
+        if (mode === 'normal') {
             $routeProvider.
             when('/', {
                 controller: RoomCtrl,
@@ -83,13 +84,13 @@ angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.translate', 'ui.boots
             });
         }
 
-        if(mode === 'token') {
+        if (mode === 'token') {
             $routeProvider.
             when('/', {
                 controller: SipAccountRetrievalCtrl,
                 templateUrl: 'assets/templates/sipaccount-retrieve.html',
                 resolve: {
-                    token: function() {
+                    token: function () {
                         return token;
                     }
                 }
@@ -110,175 +111,193 @@ angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.translate', 'ui.boots
         $translateProvider.preferredLanguage(langData[0]);
         $translateProvider.fallbackLanguage('en');
 
-    }).run(function ($location, LoginSvc, $rootScope) {
-        LoginSvc.authenticate().then(angular.noop, function () {
-            $location.path('login');
-        });
+    }).run(ApplicationBoot)
+    .filter('filterByRoles', filterByRoles)
+    .directive('btCommentAlert', btCommentAlert)
+    .directive('btMusicplayer', btMusicPlayer);
 
-        $rootScope.$on("logout", function() {
-            $location.path('login');
-        });
-    })
-    .filter('filterByRoles', function () {
-        return function (input, roles) {
-            var out = [];
-            angular.forEach(input, function (entry) {
-                if (!entry.requiredRole || (roles && roles.indexOf(entry.requiredRole) >= 0)) {
-                    out.push(entry);
-                }
-            });
-            return out;
-        };
-    })
-    .directive('btCommentAlert', function () {
-        return {
-            restrict: 'E',
-            controller: function ($scope, MeetingSvc) {
-                $scope.participants = MeetingSvc.getParticipantList();
-                $scope.forcedHidden = false;
-
-                $scope.isCommentRequested = function () {
-
-                    var commentRequested = false;
-
-                    angular.forEach($scope.participants, function (p) {
-                        if (p.commentRequested) {
-                            commentRequested = true;
-                            return false;
-                        }
-                    });
-                    return commentRequested;
-
-                };
-
-                $scope.$watch('isCommentRequested()', function (value) {
-                    if (value === true) {
-                        $scope.forcedHidden = false;
-                    }
-                });
-            },
-            templateUrl: 'assets/templates/bt-commentalert.html'
-        };
-    }).directive('btMusicplayer', function () {
-        return {
-            restrict: 'E',
-            scope: {
-
-            },
-            controller: function ($rootScope, $q, $scope, RemoteSongSvc, StorageSvc, AudioPlayerSvc) {
-                $scope.currentSong = 0;
-                $scope.progress = 0;
-                $scope.state = AudioPlayerSvc.getState();
-                $scope.maxNumber = RemoteSongSvc.getNumberOfSongs();
-                $scope.downloadState = "Idle";
-                $scope.hasSongsLocally = false;
-                $scope.random = false;
-
-                $scope.downloadFile = function (deferred, number, until) {
-                    RemoteSongSvc.readBlob(number).then(function (blob) {
-                        StorageSvc.writeBlob("song_" + number + ".mp3", blob).then(function () {
-                            if (number < until) {
-                                number++;
-                                $scope.progress = (number / until) * 100;
-                                $scope.downloadFile(deferred, number, until);
-                            } else {
-                                deferred.resolve();
-                            }
-                        });
-
-                    });
-                };
-
-                $scope.startDownload = function () {
-                    StorageSvc.init().then(function () {
-                        var deferred = $q.defer(),
-                            promise = deferred.promise;
-                        $scope.downloadState = "Downloading";
-                        $scope.downloadFile(deferred, 1, RemoteSongSvc.getNumberOfSongs());
-                        promise.then(function () {
-                            $scope.downloadState = "Idle";
-                            $scope.hasSongsLocally = true;
-                            $scope.currentSong = 1;
-                            $scope.progress = 0;
-                        });
-                    });
+/*************************************** BOOT ********************************************/
+function ApplicationBoot(CONFIG, blacktiger, $location, LoginSvc, $rootScope) {
+    if (CONFIG.serviceUrl) {
+        blacktiger.setServiceUrl(CONFIG.serviceUrl);
+    }
 
 
-                };
-
-                $scope.getSongNumbers = function () {
-                    var numbers = [], i;
-                    for (i = 1; i <= RemoteSongSvc.getNumberOfSongs(); i++) {
-                        numbers[numbers.length] = i;
-                    }
-                    return numbers;
-                };
-                $scope.getProgressStyle = function () {
-                    return {
-                        width: $scope.progress + '%'
-                    };
-                };
-
-                $scope.play = function () {
-                    AudioPlayerSvc.play();
-                };
-
-                $scope.stop = function () {
-                    AudioPlayerSvc.stop();
-                };
-
-                $scope.toggleRandom = function () {
-                    $scope.random = !$scope.random;
-                };
-
-                $scope.$watch('currentSong', function () {
-                    if ($scope.hasSongsLocally) {
-                        $scope.stop();
-                        StorageSvc.readBlob("song_" + $scope.currentSong + ".mp3").then(function (blob) {
-                            AudioPlayerSvc.setUrl(URL.createObjectURL(blob));
-                        });
-                    }
-                });
-
-                $scope.updateProgress = function () {
-                    $scope.state = AudioPlayerSvc.getState();
-                    $scope.progress = AudioPlayerSvc.getProgressPercent();
-                    if ($scope.state === 'playing') {
-                        window.setTimeout(function () {
-                            $scope.$apply(function () {
-                                $scope.updateProgress();
-                            });
-
-
-                        }, 100);
-                    }
-                };
-
-                $scope.isSupported = function () {
-                    return AudioPlayerSvc.isSupported();
-                };
-
-                $rootScope.$on('audioplayer.playing', $scope.updateProgress);
-                $rootScope.$on('audioplayer.stopped', $scope.updateProgress);
-
-                StorageSvc.init().then(function () {
-                    var nameArray = [], i;
-                    for (i = 1; i <= RemoteSongSvc.getNumberOfSongs(); i++) {
-                        nameArray[i - 1] = "song_" + i + ".mp3";
-                    }
-                    StorageSvc.hasBlobs(nameArray).then(function () {
-                        $scope.hasSongsLocally = true;
-                        $scope.currentSong = 1;
-                    });
-                }, 100);
-
-            },
-            templateUrl: 'assets/templates/bt-musicplayer.html'
-        };
+    LoginSvc.authenticate().then(angular.noop, function () {
+        $location.path('login');
     });
 
-/*************************************** CONTROLLERS ********************************************/
+    $rootScope.$on("logout", function () {
+        $location.path('login');
+    });
+}
 
+/*************************************** FILTERS ********************************************/
+function filterByRoles() {
+    return function (input, roles) {
+        var out = [];
+        angular.forEach(input, function (entry) {
+            if (!entry.requiredRole || (roles && roles.indexOf(entry.requiredRole) >= 0)) {
+                out.push(entry);
+            }
+        });
+        return out;
+    };
+}
+
+/*************************************** DIRECTIVES ********************************************/
+function btCommentAlert() {
+    return {
+        restrict: 'E',
+        controller: function ($scope, MeetingSvc) {
+            $scope.participants = MeetingSvc.getParticipantList();
+            $scope.forcedHidden = false;
+
+            $scope.isCommentRequested = function () {
+
+                var commentRequested = false;
+
+                angular.forEach($scope.participants, function (p) {
+                    if (p.commentRequested) {
+                        commentRequested = true;
+                        return false;
+                    }
+                });
+                return commentRequested;
+
+            };
+
+            $scope.$watch('isCommentRequested()', function (value) {
+                if (value === true) {
+                    $scope.forcedHidden = false;
+                }
+            });
+        },
+        templateUrl: 'assets/templates/bt-commentalert.html'
+    };
+}
+
+function btMusicPlayer() {
+    return {
+        restrict: 'E',
+        scope: {
+
+        },
+        controller: function ($rootScope, $q, $scope, RemoteSongSvc, StorageSvc, AudioPlayerSvc) {
+            $scope.currentSong = 0;
+            $scope.progress = 0;
+            $scope.state = AudioPlayerSvc.getState();
+            $scope.maxNumber = RemoteSongSvc.getNumberOfSongs();
+            $scope.downloadState = "Idle";
+            $scope.hasSongsLocally = false;
+            $scope.random = false;
+
+            $scope.downloadFile = function (deferred, number, until) {
+                RemoteSongSvc.readBlob(number).then(function (blob) {
+                    StorageSvc.writeBlob("song_" + number + ".mp3", blob).then(function () {
+                        if (number < until) {
+                            number++;
+                            $scope.progress = (number / until) * 100;
+                            $scope.downloadFile(deferred, number, until);
+                        } else {
+                            deferred.resolve();
+                        }
+                    });
+
+                });
+            };
+
+            $scope.startDownload = function () {
+                StorageSvc.init().then(function () {
+                    var deferred = $q.defer(),
+                        promise = deferred.promise;
+                    $scope.downloadState = "Downloading";
+                    $scope.downloadFile(deferred, 1, RemoteSongSvc.getNumberOfSongs());
+                    promise.then(function () {
+                        $scope.downloadState = "Idle";
+                        $scope.hasSongsLocally = true;
+                        $scope.currentSong = 1;
+                        $scope.progress = 0;
+                    });
+                });
+
+
+            };
+
+            $scope.getSongNumbers = function () {
+                var numbers = [],
+                    i;
+                for (i = 1; i <= RemoteSongSvc.getNumberOfSongs(); i++) {
+                    numbers[numbers.length] = i;
+                }
+                return numbers;
+            };
+            $scope.getProgressStyle = function () {
+                return {
+                    width: $scope.progress + '%'
+                };
+            };
+
+            $scope.play = function () {
+                AudioPlayerSvc.play();
+            };
+
+            $scope.stop = function () {
+                AudioPlayerSvc.stop();
+            };
+
+            $scope.toggleRandom = function () {
+                $scope.random = !$scope.random;
+            };
+
+            $scope.$watch('currentSong', function () {
+                if ($scope.hasSongsLocally) {
+                    $scope.stop();
+                    StorageSvc.readBlob("song_" + $scope.currentSong + ".mp3").then(function (blob) {
+                        AudioPlayerSvc.setUrl(URL.createObjectURL(blob));
+                    });
+                }
+            });
+
+            $scope.updateProgress = function () {
+                $scope.state = AudioPlayerSvc.getState();
+                $scope.progress = AudioPlayerSvc.getProgressPercent();
+                if ($scope.state === 'playing') {
+                    window.setTimeout(function () {
+                        $scope.$apply(function () {
+                            $scope.updateProgress();
+                        });
+
+
+                    }, 100);
+                }
+            };
+
+            $scope.isSupported = function () {
+                return AudioPlayerSvc.isSupported();
+            };
+
+            $rootScope.$on('audioplayer.playing', $scope.updateProgress);
+            $rootScope.$on('audioplayer.stopped', $scope.updateProgress);
+
+            StorageSvc.init().then(function () {
+                var nameArray = [],
+                    i;
+                for (i = 1; i <= RemoteSongSvc.getNumberOfSongs(); i++) {
+                    nameArray[i - 1] = "song_" + i + ".mp3";
+                }
+                StorageSvc.hasBlobs(nameArray).then(function () {
+                    $scope.hasSongsLocally = true;
+                    $scope.currentSong = 1;
+                });
+            }, 100);
+
+        },
+        templateUrl: 'assets/templates/bt-musicplayer.html'
+    };
+}
+
+/*************************************** CONTROLLERS ********************************************/
 function MenuCtrl($scope, $location, LoginSvc, $rootScope, $translate, blacktiger) {
     $scope.location = $location;
     $scope.links = [
@@ -314,10 +333,13 @@ function MenuCtrl($scope, $location, LoginSvc, $rootScope, $translate, blacktige
             requiredRole: 'ROLE_ADMIN'
         }
     ];
-    $scope.languages = [{locale:'da', 'localizedLanguage':'Dansk'}];
+    $scope.languages = [{
+        locale: 'da',
+        'localizedLanguage': 'Dansk'
+    }];
 
-    $scope.$watch('language', function() {
-        if($scope.language !== undefined && $scope.language !== $translate.use()) {
+    $scope.$watch('language', function () {
+        if ($scope.language !== undefined && $scope.language !== $translate.use()) {
             $translate.use($scope.language);
         }
     });
@@ -325,11 +347,11 @@ function MenuCtrl($scope, $location, LoginSvc, $rootScope, $translate, blacktige
     $rootScope.$on('$translateChangeSuccess', function () {
         $scope.language = $translate.use();
         $scope.languages = [];
-        angular.forEach(['da', 'en', 'fo', 'kl', 'no', 'sv'], function(entry) {
+        angular.forEach(['da', 'en', 'fo', 'kl', 'no', 'sv'], function (entry) {
             $translate('GENERAL.LANGUAGE.' + entry.toUpperCase()).then(function (translation) {
                 $scope.languages.push({
                     locale: entry,
-                    localizedLanguage : translation,
+                    localizedLanguage: translation,
                     language: blacktiger.getLanguageNames()[entry]
                 });
             });
@@ -374,8 +396,8 @@ function LoginCtrl($scope, $location, LoginSvc) {
             $scope.status = "invalid (reason: " + reason + ")";
         });
     };
-    
-    $scope.requestPassword = function() {
+
+    $scope.requestPassword = function () {
         $location.path('/request_password');
     };
 }
@@ -386,18 +408,18 @@ function RequestPasswordCtrl($scope, $location, $http, blacktiger) {
         phoneNumberOfHall: '+45'
     };
     $scope.status = null;
-    
-    $scope.send = function() {
-        $http.post(blacktiger.getServiceUrl() + 'system/passwordRequests', $scope.request).then(function(response) {
-            if(response.status !== 200) {
+
+    $scope.send = function () {
+        $http.post(blacktiger.getServiceUrl() + 'system/passwordRequests', $scope.request).then(function (response) {
+            if (response.status !== 200) {
                 $scope.status = 'error';
             } else {
                 $scope.status = 'ok';
             }
         });
     };
-    
-    $scope.cancel = function() {
+
+    $scope.cancel = function () {
         $location.path('/login');
     };
 }
@@ -479,8 +501,9 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
         return duration;
     };
 
-    $scope.noOfCallsForCallerId = function(callerId) {
-        var count = 0, history = $cookieStore.get($scope.historyCookieName);
+    $scope.noOfCallsForCallerId = function (callerId) {
+        var count = 0,
+            history = $cookieStore.get($scope.historyCookieName);
         angular.forEach(history, function (entry) {
             if (callerId === entry.callerId) {
                 count = entry.calls.length;
@@ -512,14 +535,14 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
         $scope.history = cleansedHistory;
     };
 
-    $scope.deleteHistory = function() {
+    $scope.deleteHistory = function () {
         $cookieStore.put($scope.historyCookieName, []);
         $scope.updateHistory();
     };
 
     $scope.$on('MeetingSvc.Join', function (event, participant) {
         //Ignore the host. It will not be part of the history.
-        if(participant.host) {
+        if (participant.host) {
             return;
         }
 
@@ -553,7 +576,8 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
 
     $scope.$on('MeetingSvc.Leave', function (event, participant) {
         $log.debug('MeetingSvc.leave event received - updating history.');
-        var history = $cookieStore.get($scope.historyCookieName), entry,
+        var history = $cookieStore.get($scope.historyCookieName),
+            entry,
             key = participant.callerId;
         entry = history[key];
         if (entry) {
@@ -590,9 +614,9 @@ function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger, $translate) {
     $scope.mailText = '';
     $scope.e164Pattern = blacktiger.getE164Pattern();
     $scope.innerMailTextPattern = /.*/;
-    $scope.mailTextPattern = (function() {
+    $scope.mailTextPattern = (function () {
         return {
-            test: function(value) {
+            test: function (value) {
                 var result = $scope.innerMailTextPattern.test(value);
                 return result;
             }
@@ -622,21 +646,21 @@ function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger, $translate) {
         });
     };
 
-    $scope.onPhoneNumberChanged = function() {
+    $scope.onPhoneNumberChanged = function () {
         var number = $scope.user.phoneNumber ? $scope.user.phoneNumber.replace(/[\+\s\-\(\)]/, '') : '',
             noOfCharsToPull = Math.min(4, number.length),
             pattern, i;
 
-        if(noOfCharsToPull === 0) {
+        if (noOfCharsToPull === 0) {
             $scope.innerMailTextPattern = '/.*/';
         } else {
             number = number.substr(number.length - noOfCharsToPull, number.length);
-            pattern = "^((?!("+number.charAt(0)+")";
-            for(i=1;i<number.length;i++) {
-                pattern += "[\\s\\w\\W]{0,1}("+number.charAt(i)+")";
+            pattern = "^((?!(" + number.charAt(0) + ")";
+            for (i = 1; i < number.length; i++) {
+                pattern += "[\\s\\w\\W]{0,1}(" + number.charAt(i) + ")";
             }
             pattern += ").)*$";
-            $scope.innerMailTextPattern = new RegExp(pattern);//'^((?!' + number + ').)*$');
+            $scope.innerMailTextPattern = new RegExp(pattern); //'^((?!' + number + ').)*$');
         }
 
     };
@@ -653,7 +677,7 @@ function ContactCtrl($scope, SipUserSvc, RoomSvc, blacktiger) {
     $scope.updateContact = function () {
         $scope.contact_status = "Saving";
         $scope.currentRoom.contact = angular.copy($scope.contact);
-        RoomSvc.save($scope.currentRoom).$promise.then(function() {
+        RoomSvc.save($scope.currentRoom).$promise.then(function () {
             $scope.contact_status = "Saved";
         });
     };
@@ -661,7 +685,7 @@ function ContactCtrl($scope, SipUserSvc, RoomSvc, blacktiger) {
 
 function SettingsCtrl($scope, SipUserSvc, RoomSvc, MeetingSvc, LoginSvc) {
 
-    $scope.logout = function() {
+    $scope.logout = function () {
         MeetingSvc.clear();
         LoginSvc.deauthenticate();
     };
@@ -669,18 +693,18 @@ function SettingsCtrl($scope, SipUserSvc, RoomSvc, MeetingSvc, LoginSvc) {
 
 function RealtimeCtrl($scope, SystemSvc, RealtimeSvc, $timeout) {
     $scope.system = {};
-    
+
     $scope.rooms = RealtimeSvc.getRoomList();
 
-    $scope.getNoOfParticipantsPerRoom = function() {
+    $scope.getNoOfParticipantsPerRoom = function () {
         var noParticipants = $scope.getNoOfParticipants();
-        if(noParticipants === 0 || $scope.rooms.length === 0) {
+        if (noParticipants === 0 || $scope.rooms.length === 0) {
             return 0;
         } else {
             return $scope.getNoOfParticipants() / $scope.rooms.length;
         }
     };
-    
+
     $scope.getNoOfParticipants = function () {
         var count = 0;
         angular.forEach($scope.rooms, function (room) {
@@ -708,9 +732,9 @@ function RealtimeCtrl($scope, SystemSvc, RealtimeSvc, $timeout) {
             return (count / $scope.getNoOfParticipants()) * 100;
         }
     };
-    
-    $scope.getPhonePercentage = function() {
-        if($scope.getNoOfParticipants() === 0) {
+
+    $scope.getPhonePercentage = function () {
+        if ($scope.getNoOfParticipants() === 0) {
             return 0.0;
         } else {
             return 100 - $scope.getSipPercentage();
@@ -789,18 +813,18 @@ function HistoryCtrl($scope, ReportSvc) {
 
 function SipAccountRetrievalCtrl($scope, SipUserSvc, token) {
 
-    $scope.cleanNumber = function(number) {
+    $scope.cleanNumber = function (number) {
         return number.replace(/[\+\-\/\(\) ]/g, '');
     };
 
-    $scope.getSip = function() {
-        $scope.status="Henter oplysninger.";
+    $scope.getSip = function () {
+        $scope.status = "Henter oplysninger.";
         $scope.sipinfo = null;
-        SipUserSvc.get(token, $scope.cleanNumber($scope.phoneNumber)).then(function(data) {
-            $scope.status=null;
+        SipUserSvc.get(token, $scope.cleanNumber($scope.phoneNumber)).then(function (data) {
+            $scope.status = null;
             $scope.sipinfo = data;
-        }, function(reason) {
-            $scope.status="Vi kender ikke det nummer du tastede, måske tastede du forkert? Eller har du et andet telefonnummer, så prøv det. Kontakt evt. din lokale teknisk ansvarlige og bed ham oprette dig igen med dit korrekte telefonnummer.";
+        }, function (reason) {
+            $scope.status = "Vi kender ikke det nummer du tastede, måske tastede du forkert? Eller har du et andet telefonnummer, så prøv det. Kontakt evt. din lokale teknisk ansvarlige og bed ham oprette dig igen med dit korrekte telefonnummer.";
             $scope.sipinfo = null;
         });
     };
@@ -808,5 +832,14 @@ function SipAccountRetrievalCtrl($scope, SipUserSvc, token) {
 
 /** BOOTSTRAP **/
 angular.element(document).ready(function () {
-    angular.bootstrap(document, ['blacktiger-app']);
+    var initInjector = angular.injector(['ng']);
+    var $http = initInjector.get('$http');
+    $http.get('/config.json').then(
+        function (response) {
+            var config = response.data;
+            blacktigerApp.constant('CONFIG', config);
+            angular.bootstrap(document, ['blacktiger-app']);
+        }
+    );
+
 });
