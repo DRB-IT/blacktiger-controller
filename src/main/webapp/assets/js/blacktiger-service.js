@@ -2,7 +2,7 @@
 angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageModule'])
     .provider('blacktiger', function () {
         'use strict';
-        var serviceUrl = null,
+        var serviceUrl = 'http://b.telesal.org',
             languageNames = {
                 'da': 'Dansk',
                 'en': 'English',
@@ -27,9 +27,6 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
         this.$get = function () {
             return {
                 getServiceUrl: function () {
-                    if(serviceUrl === null) {
-                        throw "Service Url has not been set.";
-                    }
                     return serviceUrl;
                 },
                 setServiceUrl: innerSetServiceUrl,
