@@ -80,7 +80,10 @@
         </tr>
         <tr ng-repeat="entry in history | orderBy:predicate:reverse">
             <td class="participantNumber"><bt-number-icon type="{{entry.type}}"></bt-number-icon> {{entry.phoneNumber | telephone}}</td>
-            <td class="participantName">{{entry.name}}</td>
+            <td class="participantName">
+                <a ng-if="!(entry.name.length>0)" ng-click="changeName(entry.phoneNumber, entry.name)">({{'PARTICIPANTS.ENTER_NAME' | translate}})</a>
+                {{entry.name}}
+            </td>
             <td class="participantHistory">{{entry.firstCall | date:'HH:mm'}}</td>
             <td class="participantHistory">{{entry.calls.length}}</td>
             <td class="participantHistory">{{calculateTotalDuration(entry) / 60000 | number : 0}}</td>

@@ -1,5 +1,5 @@
 /*global angular*/
-angular.module('blacktiger-ui',[])
+angular.module('blacktiger-ui', [])
     .directive('btNumberIcon', function () {
         return {
             restrict: 'E',
@@ -24,34 +24,34 @@ angular.module('blacktiger-ui',[])
                 room: '='
             },
             controller: function ($scope, $element, $attrs) {
-                $element.find('thead').on('click', function() {
+                $element.find('thead').on('click', function () {
                     $element.find('tbody').toggleClass('hidden');
                 });
 
-                $scope.$watch('room', function() {
+                $scope.$watch('room', function () {
                     $scope.noOfOpenMicrophones = 0;
                     $scope.noOfCommentRequests = 0;
                     $scope.noOfSipPhones = 0;
                     $scope.noOfRegularPhones = 0;
                     $scope.noOfMissingNames = 0;
 
-                    angular.forEach($scope.room.participants, function(p) {
-                        if(!p.host) {
-                            if(!p.muted) {
+                    angular.forEach($scope.room.participants, function (p) {
+                        if (!p.host) {
+                            if (!p.muted) {
                                 $scope.noOfOpenMicrophones++;
                             }
-                            
-                            if(p.commentRequested) {
+
+                            if (p.commentRequested) {
                                 $scope.noOfCommentRequests++;
                             }
-                            
-                            if(p.phoneNumber.indexOf('#') === 0) {
+
+                            if (p.phoneNumber.indexOf('#') === 0) {
                                 $scope.noOfSipPhones++;
                             } else {
                                 $scope.noOfRegularPhones++;
                             }
-                            
-                            if(p.name === null || p.name === '') {
+
+                            if (p.name === null || p.name === '') {
                                 $scope.noOfMissingNames++;
                             }
                         }
@@ -76,20 +76,20 @@ angular.module('blacktiger-ui',[])
             scope: {
                 since: '=',
             },
-            controller: function($scope, $interval) {
+            controller: function ($scope, $interval) {
                 $scope.duration = 0;
 
-                if(angular.isNumber($scope.since)) {
+                if (angular.isNumber($scope.since)) {
                     $scope.since = new Date($scope.since);
                 }
 
-                $scope.updateDuration = function() {
+                $scope.updateDuration = function () {
                     $scope.duration = Math.max((new Date().getTime() - $scope.since.getTime()) / 60000, 0);
                 };
 
                 $scope.task = $interval($scope.updateDuration, 5000);
 
-                $scope.$on('$destroy', function() {
+                $scope.$on('$destroy', function () {
                     $interval.cancel($scope.task);
                 });
 
@@ -97,29 +97,31 @@ angular.module('blacktiger-ui',[])
             },
             templateUrl: 'assets/templates/bt-duration.html'
         };
-    }).directive('modalWindow', function(){
-    return {
-        restrict: 'EA',
-        link: function(scope, element, $timeout) {
-            // Makes sure that if the first input field of the modal is focused - if it has any.
-            var em = element.find('input');
-            if(em.length > 0) {
-                $timeout(function() {
-                    em[0].focus();
-                    em[0].select();
+    }).directive('modalWindow', function ($timeout) {
+        return {
+            restrict: 'EA',
+            link: function (scope, element) {
+                // Makes sure that if the first input field of the modal is focused - if it has any.
+                $timeout(function () {
+                    var em = element.find('input');
+                    if (em.length > 0) {
+                        var em1 = em[0];
+                        em1.focus();
+                        em1.select();
+                    }
                 }, 100);
+
             }
-        }
-    };
-  }).filter('timespan', function() {
-    return function(input) {
-      var out = "";
-      if (!isNaN(input)) {
-          var seconds = input / 1000;
-          var hours = Math.floor(seconds / 3600);
-          var minutes = Math.floor((seconds % 3600) / 60);
-          out = hours + ':' + (minutes>9 ? '' : '0') + minutes;
-      }
-      return out;
-    };
-  });
+        };
+    }).filter('timespan', function () {
+        return function (input) {
+            var out = "";
+            if (!isNaN(input)) {
+                var seconds = input / 1000;
+                var hours = Math.floor(seconds / 3600);
+                var minutes = Math.floor((seconds % 3600) / 60);
+                out = hours + ':' + (minutes > 9 ? '' : '0') + minutes;
+            }
+            return out;
+        };
+    });
