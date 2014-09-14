@@ -22,7 +22,7 @@
         "COPYRIGHTHOLDER": "telesal.org"
     },
     "NAVIGATION": {
-        "PARTICIPANTS": "Lyttere",
+        "PARTICIPANTS": "Lyttere lige nu",
         "SETTINGS": "Indstillinger",
         "HELP": "Hjælp",
         "ADMIN": {
@@ -100,7 +100,7 @@
         },
         "CREATE_SIP_ACCOUNT": {
             "TITLE": "Opret computer-lytter",
-            "DESCRIPTION": "<p>Man kan lytte til møderne via internettet fra en computer, tablet eller smartphone ved at installere en app. <b>Lydkvaliteten</b> er meget bedre end gennem telefonnettet, og det koster ikke telefontakst. Men det kan koste datatrafik hvis man betaler internet efter forbrug (ca. 75 MB/time).</p><p>Med formularen herunder skal der oprettes en <b>personlig konto</b> til hver der ønsker at lytte via internettet. Kontoen må <b>ikke</b> deles af flere, fordi den er knyttet til lytterens eget telefonnummer. Lytteren skal gennem app'en ringe til det samme telefonnummer som når man lytter over telefonnettet.</p><p>Hvis lytteren har <b>mistet sine personlige kontooplysninger</b>, skal man oprette kontoen igen herunder. Konti er ikke knyttet til en bestemt rigssal, og slettes automatisk hvis der ikke har været ringet op i et år.</p><p>Computer-lyttere vises med dette computersymbol på status-siden: <span class=\"glyphicon glyphicon-hdd\"></span></p>",
+            "DESCRIPTION": "<p>Man kan lytte til møderne via internettet fra en computer, tablet eller smartphone ved at installere en app. <b>Lydkvaliteten</b> er meget bedre end gennem telefonnettet, og det koster ikke telefontakst. Men det kan koste datatrafik hvis man betaler internet efter forbrug (ca. 75 MB/time).</p><p>Med formularen herunder skal der oprettes en <b>personlig konto</b> til hver der ønsker at lytte via internettet. Kontoen må <b>ikke</b> deles af flere, fordi den er knyttet til lytterens eget telefonnummer. Lytteren skal gennem app'en ringe til det samme telefonnummer som når man lytter over telefonnettet.</p><p>Hvis lytteren har <b>mistet sine personlige kontooplysninger</b>, skal man oprette kontoen igen herunder, og et nyt kodeord vil blive genereret. Konti er ikke knyttet til en bestemt rigssal, og slettes automatisk hvis der ikke har været ringet op i et år.</p><p>Computer-lyttere vises med dette computersymbol på status-siden: <span class=\"glyphicon glyphicon-hdd\"></span></p>",
             "TITLE_NAME": "Navn",
             "PLACEHOLDER_NAME": "Fornavn Efternavn",
             "TITLE_PHONE": "Mobil- eller fastnetnummer",
