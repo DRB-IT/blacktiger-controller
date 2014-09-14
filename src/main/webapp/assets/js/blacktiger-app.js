@@ -818,13 +818,14 @@ function SipAccountRetrievalCtrl($scope, SipUserSvc, token) {
     };
 
     $scope.getSip = function () {
-        $scope.status = "Henter oplysninger.";
+        $scope.status = "Henter oplysninger...";  // EN: "Loading..."
         $scope.sipinfo = null;
         SipUserSvc.get(token, $scope.cleanNumber($scope.phoneNumber)).then(function (data) {
             $scope.status = null;
             $scope.sipinfo = data;
         }, function (reason) {
-            $scope.status = "Vi kender ikke det nummer du tastede, måske tastede du forkert? Eller har du et andet telefonnummer, så prøv det. Kontakt evt. din lokale teknisk ansvarlige og bed ham oprette dig igen med dit korrekte telefonnummer.";
+            $scope.status = "Nummeret blev ikke genkendt, måske tastede du forkert? Hvis du har du et andet telefonnummer, så prøv det. Eller kontakt den der oprettede kontoen til dig, og bed ham oprette den igen med dit korrekte telefonnummer.";
+                    // EN: "The number was not recognized, maybe you entered a wrong number? If you own another number, please try it instead. Or contact the one who created this account for you, and ask to have the account created again with the correct number."
             $scope.sipinfo = null;
         });
     };
