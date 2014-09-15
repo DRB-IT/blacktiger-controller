@@ -1,28 +1,28 @@
 {
     "LOGIN": {
-        "USERNAME": "Username",
+        "USERNAME": "User name",
         "PASSWORD": "Password",
-        "REMEMBER_ME": "Save on this computer",
+        "REMEMBER_ME": "Save the password at this computer",
         "LOG_IN": "Log in",
-        "ALERT": "<strong>Login is required</strong> in order to see the transmission.",
-        "INVALID_CREDENTIALS": "Username or password is invalid.",
-        "FORGOT_PASSWORD": "Forgot Password"
+        "ALERT": "<strong>This is a private system.</strong> Do not try to log in unless you have a permission to do so.",
+        "INVALID_CREDENTIALS": "The user name or password is wrong.",
+        "FORGOT_PASSWORD": "Forgot password"
     },
     "REQUEST_PASSWORD": {
-        "NAME": "Name",
-        "PHONENUMBER": "Phone Number",
-        "EMAIL": "Email Address",
-        "CITY_OF_HALL": "City of Kingdom Hall",
-        "PHONENUMBER_OF_HALL": "Phone Number for Kingdom Hall",
-        "ERROR": "Could not find a hall matching the input. Please try again.",
-        "SUCCESS": "The hall has been found in telesal and a mail has been to you with further information about username and password for the hall."
+        "NAME": "Your full name:",
+        "PHONENUMBER": "Your mobile phone number:",
+        "EMAIL": "Your e-mail address:",
+        "CITY_OF_HALL": "The city where the hall is located:",
+        "PHONENUMBER_OF_HALL": "The Telesal phone number for the hall:",
+        "ERROR": "We did not find any match for this information. You may edit the information and try again.",
+        "SUCCESS": "There has been sent an e-mail to you. You may need to check your junk mail folder also."
     },
     "SYSTEM": {
         "NAME": "Telesal",
         "COPYRIGHTHOLDER": "telesal.org"
     },
     "NAVIGATION": {
-        "PARTICIPANTS": "Current Listeners",
+        "PARTICIPANTS": "Current listeners",
         "SETTINGS": "Settings",
         "REPORT": "Listener Report",
         "HELP": "Help",
@@ -33,43 +33,43 @@
     },
     "PARTICIPANTS": {
         "WARNINGS": {
-            "NO_PARTICIPANTS_AND_TRANSMITTERS": "There is currently no transmission to, or participants in the conference.",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "No sound is being transmitted to the participants!",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "Check that X-Lite is started",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "In X-lite call {{phoneNumber | telephone}}",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Call the same number from another phone and check the volume and quality."
+            "NO_PARTICIPANTS_AND_TRANSMITTERS": "There is no transmission now, and no listeners are online.",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "No sound is beeing sent to the listeners!",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "Please check that X-Lite has been startet",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "Dial {{phoneNumber | telephone}} from X-Lite",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Then dial the same number form another phone and check the sound quality, and if nessesary adjust the volume"
         },
         "INFO": {
-            "NO_PARTICIPANTS": "There are currently no listeners.",
-            "UNMUTED": "Microphone is open",
-            "NO_HOST": "There is currently no transmission from the Kingdom Hall."
+            "NO_PARTICIPANTS": "There is  no listeners at the moment.",
+            "UNMUTED": "The comment-microphone is open!",
+            "NO_HOST": "There is no transmission from the hall now."
         },
-        "UNMUTE": "Unmute Microphone",
-        "MUTE": "Mute Microphone",
-        "KICK": "Disconnect Listener",
-        "EDIT": "Edit",
+        "UNMUTE": "Unmute comment microphone",
+        "MUTE": "Mute comment microphone",
+        "KICK": "Hang up",
+        "EDIT": "Edit name",
         "UNKNOWN": "Unknown",
         "KINGDOM_HALL": "Kingdom Hall",
-        "PARTICIPANTS": "{{noOfParticipants}} Listener(s)",
-        "ABORT_TRANSMISSION": "Abort Transmission",
-        "COMPLETED_CALLS": "{{noOfCompletedCalls}} completed call(s)",
-        "WANTS_TO_COMMENT": "Wants to comment",
-        "ENTER_NAME": "Enter Name"
+        "PARTICIPANTS": "{{noOfParticipants}} listeners",
+        "ABORT_TRANSMISSION": "Abort transmission",
+        "COMPLETED_CALLS": "{{noOfCompletedCalls}} completed calls",
+        "WANTS_TO_COMMENT": "I would like to comment!",
+        "ENTER_NAME": "Who is this? Call and ask, write name here!"
     },
     "REPORT": {
-        "NUMBER": "Number",
+        "NUMBER": "Phone number",
         "NAME": "Name",
-        "FIRST_CALL": "First Call",
+        "FIRST_CALL": "First call",
         "CALLS": "Calls",
         "MINUTES": "Minutes",
         "TOTAL": "Total",
-        "TITLE": "Listener Report",
-        "CALL_COMMENCED": "Call Started",
+        "TITLE": "Report over listeners",
+        "CALL_COMMENCED": "Call started",
         "AFTER_TIME": "After",
         "BEFORE_TIME": "Before",
         "MINIMUM_DURATION": "Min. duration",
-        "DELETE": "Delete History",
-        "NO_ENTRIES": "No history has been recorded for today."
+        "DELETE": "Delete history",
+        "NO_ENTRIES": "There is no history. The list is deleted when the browser is closed."
     },
     "GENERAL": {
         "LANGUAGE": {
@@ -82,64 +82,64 @@
         },
         "OK": "Ok",
         "CANCEL": "Cancel",
-        "TECHNICALLY_RESPONSIBLE": "Technically Responsible",
+        "TECHNICALLY_RESPONSIBLE": "Technically responsible",
         "HALL": "hall",
         "LOGOUT": "Log out",
         "YES": "Yes",
         "NO": "No",
-        "PHONENUMBER": "Phone Number",
-        "EMAIL": "Email Address" 
+        "PHONENUMBER": "Phone number",
+        "EMAIL": "E-mail address" 
     },
     "SETTINGS": {
         "GENERAL" : {
-            "TITLE": "Settings",
-            "LOGGED_IN_AS": "You are logged in as <b>{{name}}</b>",
-            "TECHNICALLY_RESPONSIBLE": "The technically responsible for this hall is <b>{{name}}</b>",
-            "CONTACT_LINK": "See contact information",
-            "FIND_HELP": "Find Help",
-            "FIND_HELP_DESC": "Click <span class=\"glyphicon glyphicon-question-sign\"></span> at the top of the page if you need help."
+            "TITLE": "This hall",
+            "LOGGED_IN_AS": "You are logged in as the Kingdom Hall in <b>{{name}}</b>",
+            "TECHNICALLY_RESPONSIBLE": "The technically responsible for this Kingdom Hall is <b>{{name}}</b>",
+            "CONTACT_LINK": "More information",
+            "FIND_HELP": "Get help",
+            "FIND_HELP_DESC": "Click at <span class=\"glyphicon glyphicon-question-sign\"></span> near the top of this page if you need help, or contact the technical responsible."
         },
         "CREATE_SIP_ACCOUNT": {
-            "TITLE": "Create Computer Listener",
-            "DESCRIPTION": "If one wants to listen to meetings via a computer, a computer account attached to the listener's mobile or telephone number is needed. Computer listeners are displayed with <span class=\"glyphicon glyphicon-hdd\"></span> on the status page. Computer accounts that have not made any calls for a year, will be automatically deleted. If the listener has lost the password for the computer account, the listener is created again by filling in the fields below.",
+            "TITLE": "Create computer listener",
+            "DESCRIPTION": "<p>You can listen to the meetings via the Internet from a computer, tablet or smartphone by installing an app. The <b>sound quality</b> is much better than through the phone network, and there is no phone charges. But it may cost data traffic if you pay for Internet according to consumption (about 75 MB/hour).</p><p>Using the form below, create a  <b>personal account</b> for each wanting to listen via the Internet. The account <b>must not</b> be shared, because it is linked to the listener's own phone number. The listener needs to call the same phone number with the app, as those listening over the phone network do.</p><p>If the listener has <b>lost his personal account</b> information, you must set up the account again below, and a new password will be generated. Accounts are not linked to a particular Kingdom Hall, and are automatically deleted if there has been no calls for a year.</p><p>Computer listeners are displayed with a computer icon in the status page: <span class=\"glyphicon glyphicon-hdd\"></span></p>",
             "TITLE_NAME": "Name",
             "PLACEHOLDER_NAME": "Name Surname",
-            "TITLE_PHONE": "Cell Phone or Landline Number",
-            "DESCRIPTION_PHONE": "The number is displayed at the Kingdom Hall when the listener calling from his computer.",
-            "TITLE_EMAIL": "Send Account Information to",
-            "PLACEHOLDER_EMAIL": "E-mail Address",
-            "DESCRIPTION_EMAIL": "Necessary information is sent to this email address. E-mail address is not stored in TeleSal.",
+            "TITLE_PHONE": "Mobile or fixed-line number",
+            "DESCRIPTION_PHONE": "This number is displayed at the PC in the Kingdom Hall when the listener calls from his computer.",
+            "TITLE_EMAIL": "Send account information to",
+            "PLACEHOLDER_EMAIL": "E-mail address",
+            "DESCRIPTION_EMAIL": "Account information is sent here. Ask the reciever to check his junk mail folder.",
             "SAVED": "Saved",
-            "ALERT_SUCCESS": "<b>Success!</b> The account was created with the following information and an e-mail was sent to the specified e-mail address with details:<br>Name: {{name}}<br>Phonenumber: {{phoneNumber}}<br>Email: {{email}}",
-            "ALERT_ERROR": "<b>System Error!</b> The account was not created. Please try again shortly.",
+            "ALERT_SUCCESS": "The account has now been created with this information:<br>Name: <b>{{name}}</b>, phone: <b>{{phoneNumber}}</b>.<br>A link to the account information has been e-mailed to <b>{{email}}</b>.<br>Did you type something wrong? Then just create the account once more below.",
+            "ALERT_ERROR": "<b>System error!</b> The account was not created. Please try again later.",
             "ALERT_EXISTS": "A computer account using this phone number is already created. However, you can delete the old password and have a new password send for this account - do you want to do that?",
-            "DESCRIPTION_MAILTEXT": "This message is sent in the mail. Do not write the recipient's phone number in this field.",
-            "TITLE_MAILTEXT": "Message for the user",
-            "DEFAULT_MAILTEXT": "Here is the information you need in order to listen to the meetings from your computer. Contact the technical manager if there is anything you are unsure about. Click on the link below."
+            "DESCRIPTION_MAILTEXT": "Here you may enter a message, but do not enter the receivers phone number here.",
+            "TITLE_MAILTEXT": "Text which is sent to the reciever",
+            "DEFAULT_MAILTEXT": "Here are the information you need to listen to the meetings from your computer. If you need help, please contact the technically responsible. Please click the link below."
         },
         "CONTACT": {
-            "TITLE": "Technical Contact",
-            "SUBTITLE": "The Halls Technical Manager",
-            "DESCRIPTION": "There is only one technical manager for each conference room, no matter how many congregations are using it. The technical contact person is appointed by the Kingdom Hall Committee.",
+            "TITLE": "Technically responsible",
+            "SUBTITLE": "The technically responsible for the Kingdom Hall",
+            "DESCRIPTION": "<p><b>IMPORTANT!</b> Please check that the information below is correct!</p><p>There is <b>only one technically responsible for every Kingdom Hall</b>, no matter how many congregations are using it. He must belong to one of the congreations attending meetings in this Kingdom Hall. If more congregations are using the same Kingdom Hall, they must agree who to assign as technically responsible.</p><p>The technically responsible <b>ensures that the Telesal system works reliably locally</b>, and it is him you should contact is case of technical issues locally.</p><p>It is <b>important that the information below is correct</b>, so those responsible for the central Telesal system can contact the technical responsible in each Kingdom Hall when nessesary.",
             "TITLE_NAME": "Name",
             "PLACEHOLDER_NAME": "Name Surname",
-            "TITLE_PHONE": "Cell Phone Number",
-            "TITLE_EMAIL": "E-mail Address",
-            "PLACEHOLDER_EMAIL": "exampel@mail.com",
+            "TITLE_PHONE": "Mobile phone number",
+            "TITLE_EMAIL": "E-mail address",
+            "PLACEHOLDER_EMAIL": "example@mail.com",
             "TITLE_COMMENT": "Comment",
             "SAVED": "Saved",
             "ALERT_SUCCESS": "<b>Success!</b> Changes have been saved.",
-            "ALERT_ERROR": "<b>Fejl!</b> Changes were not saved. Please try again shortly.",
+            "ALERT_ERROR": "<b>Error!</b> The changes were not saved. Please try again later.",
             "ALERT_WARNING": "There is only one technical manager for each conference room, no matter how many congregations are using it. Is this the correct name, phone number and email address of the person whom the Kingdom Hall Committee has appointed as technical manager for Telesal in this Kingdom Hall?"
 
         }
     },
     "SIP_ACCOUNT_RETRIEVAL": {
-        "DESCRIPTION": "<b>Make sure that this is your name and phone number:</b><br>{{name}}, {{phoneNumber}}<br>If there is any mistake in these informations, please contact the technical manager of your Kingdom Hall.<br><br>You need the following informations in order to listen to the meetings from your computer. You can use the same information from several devices, fx. a PC and a tablet. <br>REMARK! You are NOT allowed to distribute these informations to others as they are bound to your name and phone number!",
-        "FOOTNOTE": "Follow the guide available at <a>this link</a>",
-        "RETRIEVE_INFORMATION": "Retrieve my information",
-        "TITLE": "Your Personal Information",
-        "ENTER_PHONE": "Enter Phone Number"
+        "DESCRIPTION": "<p>Dear <b>{{name}}</b>, here you find your personal code. You need it to listen to the meetings via the Internet. Your code is tied to your own phone number <b>{{phoneNumber}}</b>, so you must <b>never give your code to somebody else</b>.</p><p><b>Do not make a note of the code</b>, but copy it directly from this page to the app you will use to listen to the meetings. On the other hand, it is ok to <b>save the link from the e-mail</b> which sent you to this page, this way you may always find your personal code again.</p><p>If you later change your phone number or you loose the link from the e-mail, then just ask to have a new account made for you.</p>",
+        "FOOTNOTE": "To know how to install and use the app, please <a href='http://help.telesal.org/en/homesetup' target='_blank'>click here</a>.",
+        "RETRIEVE_INFORMATION": "OK",
+        "TITLE": "Your Telesal account",
+        "ENTER_PHONE": "Type in you phone number here, then click OK"
     }
 
 }
