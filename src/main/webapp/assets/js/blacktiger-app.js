@@ -359,7 +359,7 @@ function MenuCtrl($scope, $location, LoginSvc, $rootScope, $translate, blacktige
     $rootScope.$on('$translateChangeSuccess', function () {
         $scope.language = $translate.use();
         $scope.languages = [];
-        angular.forEach(['da', 'en', 'fo', 'kl', 'no', 'sv'], function (entry) {
+        angular.forEach(['da', 'en', 'fo', 'kl', 'no', 'sv', 'is'], function (entry) {
             $translate('GENERAL.LANGUAGE.' + entry.toUpperCase()).then(function (translation) {
                 $scope.languages.push({
                     locale: entry,
