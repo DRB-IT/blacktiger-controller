@@ -41,15 +41,12 @@
         },
         "INFO": {
             "NO_PARTICIPANTS": "Maannakkut tusarnaartoqanngilaq",
-            "UNMUTED": "Akinermut mikrofoni ammavoq",
-            "NO_HOST": "Maannakkut rigssalimiik aallakaatitsisoqanngilaq"
+            "UNMUTED": "Akinermut mikrofoni ammavoq"
         },
         "UNMUTE": "Akinermut mikrofoni ammaruk",
         "MUTE": "Akinermut mikrofoni matuguk",
         "KICK": "Tusarnaartoq unitsiguk",
         "EDIT": "Aaqqissoruk",
-        "UNKNOWN": "Ilisimaneqanngilaq",
-        "KINGDOM_HALL": "Rigssali",
         "PARTICIPANTS": "Tusarnaartut",
         "ABORT_TRANSMISSION": "Aallakaatitsineq unitsiguk",
         "COMPLETED_CALLS": "{{noOfCompletedCalls}} afsluttede opkald",
@@ -62,12 +59,6 @@
         "FIRST_CALL": "Sianerneq siulleq",
         "CALLS": "Sianerneq",
         "MINUTES": "Minutsit",
-        "TOTAL": "Katillugu",
-        "TITLE": "Tusarnaartunik nalunaarusiaq",
-        "CALL_COMMENCED": "Sianerpoq",
-        "AFTER_TIME": "Nalunaaqutaq xx-nngoreerpat",
-        "BEFORE_TIME": "Nalunaaqutaq xx-nngunngitsoq",
-        "MINIMUM_DURATION": "Min. sivisussusaa",
         "DELETE": "Slet historik",
         "NO_ENTRIES": "Der er ingen historik gemt for idag."
     },
@@ -113,7 +104,6 @@
             "SAVED": "Gemt",
             "ALERT_SUCCESS": "<b>Success!</b> Kontoen blev oprettet med følgende informationer og der sendt en e-mail til den angivne e-mail-adresse oplysninger:<br>Navn: {{name}}<br>Telefon: {{phoneNumber}}<br>Email: {{email}}",
             "ALERT_ERROR": "<b>Systemfejl!</b> Kontoen blev ikke oprettet. Prøv igen om lidt.",
-            "ALERT_EXISTS": "Der er tidligere oprettet en computer-konto med dette telefonnummer. Men du kan slette det gamle kodeord og få tilsendt et nyt kodeord for denne konto - vil du det?",
             "DESCRIPTION_MAILTEXT": "Denne besked sendes i e-mailen. Du må ikke skrive modtagerens telefonnummer i dette felt.",
             "TITLE_MAILTEXT": "Tekst til brugeren",
             "DEFAULT_MAILTEXT": "Her er de oplysninger du skal bruge for at kunne lytte til møderne fra din computer. Kontakt den teknisk ansvarlige hvis der er noget du er i tvivl om. Klik på linket nedenfor."
@@ -131,10 +121,7 @@
             "PLACEHOLDER_EMAIL": "eksempel@mail.dk",
             "TITLE_COMMENT": "Kommentar",
             "SAVED": "Gemt",
-            "ALERT_SUCCESS": "<b>Success!</b> Ændringerne blev gemt.",
-            "ALERT_ERROR": "<b>Fejl!</b> Ændringerne blev ikke gemt. Prøv igen om lidt.",
-            "ALERT_WARNING": "Der er kun én teknisk ansvarlig for Telesal, uanset hvor mange menigheder der benytter denne mødesal. Er dette det korrekte navn, mobiltelefonnummer og e-mail-adresse på den som rigssalsudvalget har udnævnt som teknisk ansvarlig for Telesal i denne mødesal?"
-
+            "ALERT_ERROR": "<b>Fejl!</b> Ændringerne blev ikke gemt. Prøv igen om lidt."
         }
     },
     "SIP_ACCOUNT_RETRIEVAL": {
