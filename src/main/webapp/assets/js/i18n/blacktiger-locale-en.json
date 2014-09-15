@@ -1,6 +1,6 @@
 {
     "LOGIN": {
-        "USERNAME": "User name",
+        "USERNAME": "Username",
         "PASSWORD": "Password",
         "REMEMBER_ME": "Save the password at this computer",
         "LOG_IN": "Log in",
