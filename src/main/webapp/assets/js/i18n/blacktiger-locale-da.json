@@ -40,15 +40,12 @@
         },
         "INFO": {
             "NO_PARTICIPANTS": "Der er ingen der lytter med nu.",
-            "UNMUTED": "Svar-mikrofonen er åben!",
-            "NO_HOST": "Der er ingen transmission fra mødesalen nu."
+            "UNMUTED": "Svar-mikrofonen er åben!"
         },
         "UNMUTE": "Åbn svar-mikrofon",
         "MUTE": "Luk svar-mikrofon",
         "KICK": "Afbryd lytter",
         "EDIT": "Rediger navn",
-        "UNKNOWN": "Ukendt",
-        "KINGDOM_HALL": "Rigssal",
         "PARTICIPANTS": "{{noOfParticipants}} lyttere",
         "ABORT_TRANSMISSION": "Afbryd transmission",
         "COMPLETED_CALLS": "{{noOfCompletedCalls}} afsluttede opkald",
@@ -61,12 +58,6 @@
         "FIRST_CALL": "Første opkald",
         "CALLS": "Opkald",
         "MINUTES": "Minutter",
-        "TOTAL": "I alt",
-        "TITLE": "Rapport over lyttere",
-        "CALL_COMMENCED": "Opkald påbegyndt",
-        "AFTER_TIME": "Efter kl.",
-        "BEFORE_TIME": "Før kl.",
-        "MINIMUM_DURATION": "Min. varighed",
         "DELETE": "Slet historik",
         "NO_ENTRIES": "Der er ingen historik. Listen slettes når browseren lukkes."
     },
@@ -112,7 +103,6 @@
             "SAVED": "Gemt",
             "ALERT_SUCCESS": "Kontoen er nu oprettet med disse informationer:<br>Navn: <b>{{name}}</b>, telefon: <b>{{phoneNumber}}</b>.<br>Der er sendt en e-mail til <b>{{email}}</b> med et link til kontooplysningerne.<br>Har du tastet forkert? Så skal du bare oprette kontoen forfra herunder.",
             "ALERT_ERROR": "<b>Systemfejl!</b> Kontoen blev ikke oprettet. Prøv igen om lidt.",
-            "ALERT_EXISTS": "Der er tidligere oprettet en computer-konto med dette telefonnummer. Men du kan slette det gamle kodeord og få tilsendt et nyt kodeord for denne konto - vil du det?",
             "DESCRIPTION_MAILTEXT": "Her kan du skrive en besked, men skriv ikke modtagerens telefonnummer her.",
             "TITLE_MAILTEXT": "Tekst der sendes til modtageren",
             "DEFAULT_MAILTEXT": "Her er de oplysninger du skal bruge for at kunne lytte til møderne fra din computer. Hvis der er noget du er i tvivl om, så kontakt den teknisk ansvarlige. Klik på linket nedenfor."
@@ -129,9 +119,7 @@
             "PLACEHOLDER_EMAIL": "eksempel@mail.dk",
             "TITLE_COMMENT": "Kommentar",
             "SAVED": "Gemt",
-            "ALERT_SUCCESS": "<b>Success!</b> Ændringerne blev gemt.",
-            "ALERT_ERROR": "<b>Fejl!</b> Ændringerne blev ikke gemt. Prøv igen om lidt.",
-            "ALERT_WARNING": "Der er kun én teknisk ansvarlig for Telesal, uanset hvor mange menigheder der benytter denne mødesal. Er dette det korrekte navn, mobiltelefonnummer og e-mail-adresse på den som rigssalsudvalget har udnævnt som teknisk ansvarlig for Telesal i denne mødesal?"
+            "ALERT_ERROR": "<b>Fejl!</b> Ændringerne blev ikke gemt. Prøv igen om lidt."
 
         }
     },
