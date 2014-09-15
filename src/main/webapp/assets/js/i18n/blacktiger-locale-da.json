@@ -13,7 +13,7 @@
         "PHONENUMBER": "Dit mobilnummer:",
         "EMAIL": "Din e-mailadresse:",
         "CITY_OF_HALL": "Byen hvor mødesalen er:",
-        "PHONENUMBER_OF_HALL": "Telesal-telefonnummeret til salen:",
+        "PHONENUMBER_OF_HALL": "Telesal-telefonnr. til salen, inkl. landekode:",
         "ERROR": "Vi fandt intet der passer på disse oplysninger. Du kan rette oplysningerne og prøve igen.",
         "SUCCESS": "Der er sendt en mail til dig. Tjek evt. også din mail-folder til uønsket post."
     },
