@@ -13,7 +13,7 @@
         "PHONENUMBER": "Your mobile phone number:",
         "EMAIL": "Your e-mail address:",
         "CITY_OF_HALL": "The city where the hall is located:",
-        "PHONENUMBER_OF_HALL": "The Telesal phone number for the hall:",
+        "PHONENUMBER_OF_HALL": "The Telesal phone no. for the hall, with country code:",
         "ERROR": "We did not find any match for this information. You may edit the information and try again.",
         "SUCCESS": "There has been sent an e-mail to you. You may need to check your junk mail folder also."
     },
