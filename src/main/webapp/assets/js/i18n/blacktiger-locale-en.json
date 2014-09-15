@@ -41,15 +41,12 @@
         },
         "INFO": {
             "NO_PARTICIPANTS": "There is  no listeners at the moment.",
-            "UNMUTED": "The comment-microphone is open!",
-            "NO_HOST": "There is no transmission from the hall now."
+            "UNMUTED": "The comment microphone is open!"
         },
         "UNMUTE": "Unmute comment microphone",
         "MUTE": "Mute comment microphone",
         "KICK": "Hang up",
         "EDIT": "Edit name",
-        "UNKNOWN": "Unknown",
-        "KINGDOM_HALL": "Kingdom Hall",
         "PARTICIPANTS": "{{noOfParticipants}} listeners",
         "ABORT_TRANSMISSION": "Abort transmission",
         "COMPLETED_CALLS": "{{noOfCompletedCalls}} completed calls",
@@ -62,12 +59,6 @@
         "FIRST_CALL": "First call",
         "CALLS": "Calls",
         "MINUTES": "Minutes",
-        "TOTAL": "Total",
-        "TITLE": "Report over listeners",
-        "CALL_COMMENCED": "Call started",
-        "AFTER_TIME": "After",
-        "BEFORE_TIME": "Before",
-        "MINIMUM_DURATION": "Min. duration",
         "DELETE": "Delete history",
         "NO_ENTRIES": "There is no history. The list is deleted when the browser is closed."
     },
@@ -112,7 +103,6 @@
             "SAVED": "Saved",
             "ALERT_SUCCESS": "The account has now been created with this information:<br>Name: <b>{{name}}</b>, phone: <b>{{phoneNumber}}</b>.<br>A link to the account information has been e-mailed to <b>{{email}}</b>.<br>Did you type something wrong? Then just create the account once more below.",
             "ALERT_ERROR": "<b>System error!</b> The account was not created. Please try again later.",
-            "ALERT_EXISTS": "A computer account using this phone number is already created. However, you can delete the old password and have a new password send for this account - do you want to do that?",
             "DESCRIPTION_MAILTEXT": "Here you may enter a message, but do not enter the receivers phone number here.",
             "TITLE_MAILTEXT": "Text which is sent to the reciever",
             "DEFAULT_MAILTEXT": "Here are the information you need to listen to the meetings from your computer. If you need help, please contact the technically responsible. Please click the link below."
@@ -128,10 +118,7 @@
             "PLACEHOLDER_EMAIL": "example@mail.com",
             "TITLE_COMMENT": "Comment",
             "SAVED": "Saved",
-            "ALERT_SUCCESS": "<b>Success!</b> Changes have been saved.",
-            "ALERT_ERROR": "<b>Error!</b> The changes were not saved. Please try again later.",
-            "ALERT_WARNING": "There is only one technical manager for each conference room, no matter how many congregations are using it. Is this the correct name, phone number and email address of the person whom the Kingdom Hall Committee has appointed as technical manager for Telesal in this Kingdom Hall?"
-
+            "ALERT_ERROR": "<b>Error!</b> The changes were not saved. Please try again later."
         }
     },
     "SIP_ACCOUNT_RETRIEVAL": {
@@ -139,7 +126,7 @@
         "FOOTNOTE": "To know how to install and use the app, please <a href='http://help.telesal.org/en/homesetup' target='_blank'>click here</a>.",
         "RETRIEVE_INFORMATION": "OK",
         "TITLE": "Your Telesal account",
-        "ENTER_PHONE": "Type in you phone number here, then click OK"
+        "ENTER_PHONE": "Type in your phone number here, then click OK"
     }
 
 }
