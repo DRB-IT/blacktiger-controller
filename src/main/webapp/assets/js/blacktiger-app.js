@@ -368,12 +368,19 @@ function RoomDisplayCtrl($scope, RoomSvc, LoginSvc, $rootScope, MeetingSvc) {
             $scope.rooms !== null && $scope.rooms.length > 0) {
             $rootScope.currentRoom = $scope.rooms[0];
             MeetingSvc.setRoom($rootScope.currentRoom);
+        } else {
+            $rootScope.currentRoom = null;
         }
     };
 
     $scope.$on("login", function () {
         $scope.rooms = RoomSvc.query();
         $scope.rooms.$promise.then($scope.updateCurrentRoom);
+    });
+    
+    $scope.$on("afterLogout", function () {
+        $scope.rooms = null;
+        $scope.updateCurrentRoom();
     });
 
 }

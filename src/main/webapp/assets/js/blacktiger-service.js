@@ -148,6 +148,8 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             $rootScope.$broadcast("logout", currentUser);
             currentUser = null;
             $rootScope.currentUser = null;
+            $rootScope.$broadcast("afterLogout", currentUser);
+            
         }
     };
 }).factory('SystemSvc', function ($http, blacktiger) {
@@ -460,6 +462,8 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
         },
         clear: function () {
             clear();
+            currentRoom = null;
+            $rootScope.$broadcast('MeetingSvc.RoomChanged', null);
         }
 
     };
