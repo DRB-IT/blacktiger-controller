@@ -131,7 +131,7 @@
             "PLACEHOLDER_EMAIL": "eksempel@mail.dk",
             "TITLE_COMMENT": "Kommentar",
             "SAVED": "Gemt",
-            "ALERT_ERROR": "<b>Fejl!</b> Ændringerne blev ikke gemt. Prøv igen om lidt.",
+            "ALERT_ERROR": "<b>Fejl!</b> Ændringerne blev ikke gemt. Prøv igen om lidt."
         }
     },
     "SIP_ACCOUNT_RETRIEVAL": {
