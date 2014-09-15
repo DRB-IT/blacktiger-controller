@@ -35,7 +35,9 @@
         </tr>
         <tr ng-repeat="participant in participants | filter:{host:false}">
             <td class="participantNumber" data-type="participant-number" data-id="{{participant.channel}}" data-number="{{participant.phoneNumber}}">
-                <bt-number-icon type="{{participant.type}}"></bt-number-icon> {{participant.phoneNumber | telephone}}
+                <bt-number-icon type="{{participant.type}}"></bt-number-icon> 
+                <span ng-if="participant.type!=='Unknown'">{{participant.phoneNumber | telephone}}</span>
+                <span ng-if="participant.type==='Unknown'">{{participant.phoneNumber}}</span>
             </td>
             <td class="participantName">
                 <a ng-if="!(participant.name.length>0)" ng-click="changeName(participant.phoneNumber, participant.name)">({{'PARTICIPANTS.ENTER_NAME' | translate}})</a>
@@ -79,7 +81,10 @@
             <td colspan="6">{{'REPORT.NO_ENTRIES' | translate}}</td>
         </tr>
         <tr ng-repeat="entry in history | orderBy:predicate:reverse">
-            <td class="participantNumber"><bt-number-icon type="{{entry.type}}"></bt-number-icon> {{entry.phoneNumber | telephone}}</td>
+            <td class="participantNumber"><bt-number-icon type="{{entry.type}}"></bt-number-icon> 
+                <span ng-if="entry.type!=='Unknown'">{{entry.phoneNumber | telephone}}</span>
+                <span ng-if="entry.type==='Unknown'">{{entry.phoneNumber}}</span>
+            </td>
             <td class="participantName">
                 <a ng-if="!(entry.name.length>0)" ng-click="changeName(entry.phoneNumber, entry.name)">({{'PARTICIPANTS.ENTER_NAME' | translate}})</a>
                 {{entry.name}}

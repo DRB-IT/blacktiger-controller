@@ -9,10 +9,10 @@ angular.module('blacktiger-ui', [])
             controller: function ($scope, $element, $attrs) {
                 if ($scope.type === 'Sip') {
                     $scope.iconclass = 'hdd';
-                    $scope.cleannumber = $scope.number;
-                } else {
+                } else if ($scope.type === 'Phone'){
                     $scope.iconclass = 'earphone';
-                    $scope.cleannumber = $scope.number;
+                } else {
+                    $scope.iconclass = 'flash';
                 }
             },
             template: '<span class="glyphicon glyphicon-{{iconclass}}" ></span>'
