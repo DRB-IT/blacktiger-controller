@@ -549,10 +549,14 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
             $scope.historyCookieName = 'meetingHistory-' + MeetingSvc.getRoom().id + '-' + blacktiger.getInstanceId();
             $scope.history = $cookieStore.get($scope.historyCookieName);
             if(!$scope.history) {
-                $scope.history = [];
+                $scope.history = {};
                 $cookieStore.put($scope.historyCookieName, {});
             }
         }
+    };
+    
+    $scope.noOfHistoryEntries = function() {
+        return Object.keys($scope.history).length;
     };
 
     $scope.$on('MeetingSvc.Join', function (event, participant) {
