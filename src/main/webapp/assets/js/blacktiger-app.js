@@ -426,10 +426,7 @@ function RequestPasswordCtrl($scope, $location, $http, blacktiger) {
 
 function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, ReportSvc, $log, blacktiger) {
     $scope.participants = MeetingSvc.getParticipantList();
-    $scope.historyCookieName = 'meetingHistory-' + blacktiger.getInstanceId();
-    $scope.history = [];
-    $cookieStore.put($scope.historyCookieName, {});
-
+    
     $scope.isHostInConference = function () {
         var value = false;
         angular.forEach($scope.participants, function (p) {
@@ -539,6 +536,17 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
         $cookieStore.put($scope.historyCookieName, []);
         $scope.updateHistory();
     };
+    
+    $scope.initHistory = function() {
+        if(MeetingSvc.getRoom() !== null) {
+            $scope.historyCookieName = 'meetingHistory-' + MeetingSvc.getRoom().id + '-' + blacktiger.getInstanceId();
+            $scope.history = $cookieStore.get($scope.historyCookieName);
+            if(!$scope.history) {
+                $scope.history = [];
+                $cookieStore.put($scope.historyCookieName, {});
+            }
+        }
+    };
 
     $scope.$on('MeetingSvc.Join', function (event, participant) {
         //Ignore the host. It will not be part of the history.
@@ -591,6 +599,9 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
         }
         $scope.updateHistory();
     });
+
+    $scope.$on('MeetingSvc.RoomChanged', $scope.initHistory);
+    $scope.initHistory();
 
 }
 

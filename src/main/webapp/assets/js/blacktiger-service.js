@@ -12,7 +12,12 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                 'no': 'Norsk'
             };
 
-        var instanceId = new Date().getTime;
+        var instanceId = window.name;
+        if(!instanceId || "" === instanceId) {
+            window.name = new Date().getTime();
+            instanceId = window.name;
+        }
+            
 
         var innerSetServiceUrl = function(url) {
             if (url.charAt(url.length - 1) !== '/') {
@@ -422,6 +427,9 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
         getParticipantList: function () {
             return participants;
         },
+        getRoom: function() {
+            return currentRoom;
+        },
         setRoom: function (newRoom) {
             clear();
 
@@ -430,6 +438,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             }
 
             currentRoom = newRoom;
+            $rootScope.$broadcast('MeetingSvc.RoomChanged', currentRoom);
             $log.info('Room changed.');
 
             ParticipantSvc.query(currentRoom.id).$promise.then(function (data) {
