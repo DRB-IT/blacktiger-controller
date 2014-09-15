@@ -314,7 +314,10 @@ function MenuCtrl($scope, $location, LoginSvc, $rootScope, $translate, blacktige
             requiredRole: 'ROLE_HOST'
         },
         {
-            url: "http://telesal.dk/wiki",
+            url: function() {
+                var url = "http://help.telesal.org/" + $scope.language.toUpperCase();
+                return url;
+            },
             name: 'NAVIGATION.HELP',
             icon: 'question-sign',
             requiredRole: 'ROLE_HOST',
@@ -333,6 +336,15 @@ function MenuCtrl($scope, $location, LoginSvc, $rootScope, $translate, blacktige
             requiredRole: 'ROLE_ADMIN'
         }
     ];
+    
+    $scope.getUrl = function(link) {
+        if(angular.isFunction(link.url)) {
+            return link.url();
+        } else {
+            return link.url;
+        }
+    };
+    
     $scope.languages = [{
         locale: 'da',
         'localizedLanguage': 'Dansk'
