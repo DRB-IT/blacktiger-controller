@@ -660,7 +660,7 @@ function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger, $translate) {
 
     $scope.reset = function () {
         $scope.user.name = '';
-        $scope.user.phoneNumber = '+' + $scope.currentRoom.countryCallingCode;
+        $scope.user.phoneNumber = '';
         $scope.user.email = '';
         $scope.mailText = $translate.instant('SETTINGS.CREATE_SIP_ACCOUNT.DEFAULT_MAILTEXT');
     };
