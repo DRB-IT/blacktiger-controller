@@ -412,7 +412,7 @@ function LoginCtrl($scope, $location, LoginSvc) {
                 $location.path('/admin/realtime');
             }
         }, function (reason) {
-            $scope.status = "invalid (reason: " + reason + ")";
+            $scope.status = "invalid";
         });
     };
 
