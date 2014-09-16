@@ -85,7 +85,7 @@
     "SETTINGS": {
         "GENERAL" : {
             "TITLE": "This hall",
-            "LOGGED_IN_AS": "You are logged in as the Kingdom Hall in <b>{{name}}</b>",
+            "LOGGED_IN_AS": "You are logged in as the Kingdom Hall in <b>{{postalCode}} {{city}}</b>",
             "TECHNICALLY_RESPONSIBLE": "The technically responsible for this Kingdom Hall is <b>{{name}}</b>",
             "CONTACT_LINK": "More information",
             "FIND_HELP": "Get help",

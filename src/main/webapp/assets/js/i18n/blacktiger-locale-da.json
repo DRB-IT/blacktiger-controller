@@ -84,7 +84,7 @@
     "SETTINGS": {
         "GENERAL" : {
             "TITLE": "Denne mødesal",
-            "LOGGED_IN_AS": "Du er logget ind som rigssalen i <b>{{name}}</b>",
+            "LOGGED_IN_AS": "Du er logget ind som rigssalen i <b>{{postalCode}} {{city}}</b>",
             "TECHNICALLY_RESPONSIBLE": "Den teknisk ansvarlige for denne rigsssal er <b>{{name}}</b>",
             "CONTACT_LINK": "Mere information",
             "FIND_HELP": "Få hjælp",
