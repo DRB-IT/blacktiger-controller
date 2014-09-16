@@ -41,15 +41,12 @@
         },
         "INFO": {
             "NO_PARTICIPANTS": "Der er pt. ingen lyttere",
-            "UNMUTED": "Svarmikrofonen er åben",
-            "NO_HOST": "Der er pt. ingen transmission fra rigssalen."
+            "UNMUTED": "Svarmikrofonen er åben"
         },
         "UNMUTE": "Åben svarmikrofon",
         "MUTE": "Luk svarmikrofon",
         "KICK": "Afbryd lytter",
         "EDIT": "Ritstjórna",
-        "UNKNOWN": "Ukendt",
-        "KINGDOM_HALL": "Rigssal",
         "PARTICIPANTS": "Lyttere",
         "ABORT_TRANSMISSION": "Afbryd transmissionen",
         "COMPLETED_CALLS": "{{noOfCompletedCalls}} afsluttede opkald",
@@ -62,12 +59,6 @@
         "FIRST_CALL": "Første opkald",
         "CALLS": "Opkald",
         "MINUTES": "Minutter",
-        "TOTAL": "I alt",
-        "TITLE": "Lytterrapport",
-        "CALL_COMMENCED": "Opkald påbegyndt",
-        "AFTER_TIME": "Efter kl.",
-        "BEFORE_TIME": "Før kl.",
-        "MINIMUM_DURATION": "Min. varighed",
         "DELETE": "Slet historik",
         "NO_ENTRIES": "Der er ingen historik gemt for idag."
     },
@@ -123,7 +114,6 @@
             "SAVED": "Gemt",
             "ALERT_SUCCESS": "<b>Success!</b> Kontoen blev oprettet med følgende informationer og der sendt en e-mail til den angivne e-mail-adresse oplysninger:<br>Navn: {{name}}<br>Telefon: {{phoneNumber}}<br>Email: {{email}}",
             "ALERT_ERROR": "<b>Systemfejl!</b> Kontoen blev ikke oprettet. Prøv igen om lidt.",
-            "ALERT_EXISTS": "Der er tidligere oprettet en computer-konto med dette telefonnummer. Men du kan slette det gamle kodeord og få tilsendt et nyt kodeord for denne konto - vil du det?",
             "DESCRIPTION_MAILTEXT": "Denne besked sendes i e-mailen. Du må ikke skrive modtagerens telefonnummer i dette felt.",
             "TITLE_MAILTEXT": "Tekst til brugeren",
             "DEFAULT_MAILTEXT": "Her er de oplysninger du skal bruge for at kunne lytte til møderne fra din computer. Kontakt den teknisk ansvarlige hvis der er noget du er i tvivl om. Klik på linket nedenfor."
@@ -141,10 +131,7 @@
             "PLACEHOLDER_EMAIL": "eksempel@mail.dk",
             "TITLE_COMMENT": "Kommentar",
             "SAVED": "Gemt",
-            "ALERT_SUCCESS": "<b>Success!</b> Ændringerne blev gemt.",
-            "ALERT_ERROR": "<b>Fejl!</b> Ændringerne blev ikke gemt. Prøv igen om lidt.",
-            "ALERT_WARNING": "Der er kun én teknisk ansvarlig for Telesal, uanset hvor mange menigheder der benytter denne mødesal. Er dette det korrekte navn, mobiltelefonnummer og e-mail-adresse på den som rigssalsudvalget har udnævnt som teknisk ansvarlig for Telesal i denne mødesal?"
-
+            "ALERT_ERROR": "<b>Fejl!</b> Ændringerne blev ikke gemt. Prøv igen om lidt."
         }
     },
     "SIP_ACCOUNT_RETRIEVAL": {

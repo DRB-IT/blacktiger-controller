@@ -41,15 +41,12 @@
         },
         "INFO": {
             "NO_PARTICIPANTS": "Det er for øyeblikket ingen lyttere.",
-            "UNMUTED": "Svarmikrofonen er åpen",
-            "NO_HOST": "Det er for øyeblikket ingen transmisjon fra salen."
+            "UNMUTED": "Svarmikrofonen er åpen"
         },
         "UNMUTE": "Åpne svarmikrofon",
         "MUTE": "Lukk svarmikrofon",
         "KICK": "Avbryt lytter",
         "EDIT": "Rediger",
-        "UNKNOWN": "Ukjent",
-        "KINGDOM_HALL": "Rikets sal",
         "PARTICIPANTS": "Lyttere",
         "ABORT_TRANSMISSION": "Avbryt transmisjonen",
         "COMPLETED_CALLS": "{{noOfCompletedCalls}} completed call(s)",
@@ -62,12 +59,6 @@
         "FIRST_CALL": "Første oppkall",
         "CALLS": "Oppkall",
         "MINUTES": "Minutter",
-        "TOTAL": "I alt",
-        "TITLE": "Lytterrapport",
-        "CALL_COMMENCED": "Oppkall påbegynt",
-        "AFTER_TIME": "Etter kl.",
-        "BEFORE_TIME": "Før kl.",
-        "MINIMUM_DURATION": "Min. varighet",
         "DELETE": "Delete History",
         "NO_ENTRIES": "No history has been recorded for today."
     },
@@ -113,7 +104,6 @@
             "SAVED": "Saved",
             "ALERT_SUCCESS": "<b>Success!</b> The account was created with the following information and an e-mail was sent to the specified e-mail address with details:<br>Name: {{name}}<br>Phonenumber: {{phoneNumber}}<br>Email: {{email}}",
             "ALERT_ERROR": "<b>System Error!</b> The account was not created. Please try again shortly.",
-            "ALERT_EXISTS": "A computer account using this phone number is already created. However, you can delete the old password and have a new password send for this account - do you want to do that?",
             "DESCRIPTION_MAILTEXT": "This message is sent in the mail. Do not write the recipient's phone number in this field.",
             "TITLE_MAILTEXT": "Message for the user",
             "DEFAULT_MAILTEXT": "Here is the information you need in order to listen to the meetings from your computer. Contact the technical manager if there is anything you are unsure about. Click on the link below."
@@ -130,10 +120,7 @@
             "PLACEHOLDER_EMAIL": "exampel@mail.com",
             "TITLE_COMMENT": "Comment",
             "SAVED": "Saved",
-            "ALERT_SUCCESS": "<b>Success!</b> Changes have been saved.",
-            "ALERT_ERROR": "<b>Fejl!</b> Changes were not saved. Please try again shortly.",
-            "ALERT_WARNING": "There is only one technical manager for each conference room, no matter how many congregations are using it. Is this the correct name, phone number and email address of the person whom the Kingdom Hall Committee has appointed as technical manager for Telesal in this Kingdom Hall?"
-
+            "ALERT_ERROR": "<b>Fejl!</b> Changes were not saved. Please try again shortly."
         }
     },
     "SIP_ACCOUNT_RETRIEVAL": {
