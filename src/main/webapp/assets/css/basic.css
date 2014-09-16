@@ -32,6 +32,7 @@ body {background-color: #f3f3f3;}
 .participantsTable{}
 .participantNumber{width: 140px;}
 .participantName { font-weight: bold; }
+.participantName a { cursor:pointer; }
 .participantHistory { width: 85px; }
 .participantOptions { text-align: right; }
     .participantOptions button {background: none; border: 0; margin: 0 1px; padding: 0 3px; color: #4c4c4c;}
