@@ -417,7 +417,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                 handleEvent(e);
             });
         }, function () {
-            alert('Lost connection');
+            $rootScope.$broadcast('MeetingSvc.Lost_Connection');
         }, '/');
     };
 

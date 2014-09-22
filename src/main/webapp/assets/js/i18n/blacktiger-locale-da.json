@@ -80,7 +80,8 @@
         "NO": "Nej",
         "PHONENUMBER": "Telefonnummer",
         "EMAIL": "E-mailadresse",
-        "LOADING": "Indlæser"
+        "LOADING": "Indlæser",
+        "LOST_CONNECTION": "Applikationen mistede forbindelsen til serveren. Tjek evt. din internet forbindelse og prøv at genindlæse siden."
     },
     "SETTINGS": {
         "GENERAL" : {

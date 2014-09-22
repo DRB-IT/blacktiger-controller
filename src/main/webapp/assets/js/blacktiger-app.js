@@ -298,7 +298,7 @@ function btMusicPlayer() {
 }
 
 /*************************************** CONTROLLERS ********************************************/
-function MenuCtrl(CONFIG, $scope, $location, LoginSvc, $rootScope, $translate, blacktiger) {
+function MenuCtrl(CONFIG, $scope, $location, LoginSvc, $rootScope, $translate, blacktiger, $filter) {
     $scope.location = $location;
     $scope.links = [
         {
@@ -370,6 +370,10 @@ function MenuCtrl(CONFIG, $scope, $location, LoginSvc, $rootScope, $translate, b
             });
         });
 
+    });
+    
+    $rootScope.$on('MeetingSvc.Lost_Connection', function () {
+        alert($filter('translate')('GENERAL.LOST_CONNECTION'));
     });
 }
 
