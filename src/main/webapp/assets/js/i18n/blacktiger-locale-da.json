@@ -125,7 +125,7 @@
     },
     "SIP_ACCOUNT_RETRIEVAL": {
         "DESCRIPTION": "<p>Kære <b>{{name}}</b>, her er din personlige kode. Den skal du bruge for at kunne lytte til møderne via internettet. Koden er knyttet til dit eget telefonnummer <b>{{phoneNumber}}</b>, derfor må du <b>aldrig give koden til andre</b>.</p><p><b>Skriv ikke koden ned</b>, men kopier den direkte fra denne side til app'en som du skal bruge for at lytte til møderne. Du må derimod gerne <b>gemme linket fra e-mailen</b> der førte dig til denne side, så kan du altid finde din personlige kode igen.</p><p>Hvis du senere skifter telefonnummer eller mister linket fra e-mailen, så bed om at der bliver oprettet en ny konto til dig.</p>",
-        "FOOTNOTE": "For at læse hvordan du installerer og bruger app'en, <a href='http://help.telesal.org/da/homesetup' target='_blank'>klik her</a>.",
+        "FOOTNOTE": "For at læse hvordan du installerer og bruger app'en, <a href='{{url}}' target='_blank'>klik her</a>.",
         "RETRIEVE_INFORMATION": "OK",
         "TITLE": "Din Telesal-konto",
         "ENTER_PHONE": "Skriv dit telefonnummer herunder, tryk så på OK"
