@@ -298,7 +298,7 @@ function btMusicPlayer() {
 }
 
 /*************************************** CONTROLLERS ********************************************/
-function MenuCtrl($scope, $location, LoginSvc, $rootScope, $translate, blacktiger) {
+function MenuCtrl(CONFIG, $scope, $location, LoginSvc, $rootScope, $translate, blacktiger) {
     $scope.location = $location;
     $scope.links = [
         {
@@ -315,7 +315,8 @@ function MenuCtrl($scope, $location, LoginSvc, $rootScope, $translate, blacktige
         },
         {
             url: function() {
-                var url = "http://help.telesal.org/" + $scope.language.toUpperCase();
+                var url = CONFIG.RootHelp;
+                url = url.replace("{%1}", $scope.language);
                 return url;
             },
             name: 'NAVIGATION.HELP',
@@ -845,7 +846,7 @@ function HistoryCtrl($scope, ReportSvc) {
     };
 }
 
-function SipAccountRetrievalCtrl($scope, SipUserSvc, token) {
+function SipAccountRetrievalCtrl(CONFIG, $scope, SipUserSvc, token, $rootScope, $translate) {
 
     $scope.cleanNumber = function (number) {
         return number.replace(/[\+\-\/\(\) ]/g, '');
@@ -863,6 +864,14 @@ function SipAccountRetrievalCtrl($scope, SipUserSvc, token) {
             $scope.sipinfo = null;
         });
     };
+    
+    $scope.getSipHelpURL = function() {
+        var url = CONFIG.SIPHelp;
+        url = url.replace("{%1}", $scope.language);
+        return url;
+    };
+    
+    $scope.language = $translate.use();
 }
 
 /** BOOTSTRAP **/

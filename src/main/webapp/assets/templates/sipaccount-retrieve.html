@@ -9,7 +9,7 @@
             {{'LOGIN.USERNAME' | translate }}: <input type="text" ng-model="sipinfo.sipId" readonly> <br>
             {{'LOGIN.PASSWORD' | translate }}: <input type="text" ng-model="sipinfo.sipPass" readonly> <br>
         </p>
-        <p translate="SIP_ACCOUNT_RETRIEVAL.FOOTNOTE"></p>
+        <p translate="SIP_ACCOUNT_RETRIEVAL.FOOTNOTE" translate-values="{url: getSipHelpURL()}"></p>
     </div>
     <form id="getsipform">
         <div class="form-group">

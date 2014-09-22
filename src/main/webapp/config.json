@@ -1,3 +1,5 @@
 {
-    "serviceUrl": "http://b.dev1.telesal.org"
+    "serviceUrl": "http://localhost:8084/blacktiger",
+    "RootHelp": "http://help.txxxxx.org/{%1}",
+    "SIPHelp": "http://help.txxxxx.org/{%1}/homesetup"
 }
