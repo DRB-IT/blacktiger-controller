@@ -42,7 +42,7 @@
             <td class="participantName">
                 <a ng-if="!(participant.name.length>0)" ng-click="changeName(participant.phoneNumber, participant.name)">({{'PARTICIPANTS.ENTER_NAME' | translate}})</a>
                 {{participant.name}}
-                <span ng-hide="participant.muted" class="label label-warning" translate="PARTICIPANTS.INFO.UNMUTED"></span>
+                <a ng-hide="participant.muted" ng-click="muteParticipant(participant.channel, true)" class="label label-warning" translate="PARTICIPANTS.INFO.UNMUTED"></a>
                 <a ng-show="participant.commentRequested" ng-click="muteParticipant(participant.channel, false)" class="label label-primary shake" translate="PARTICIPANTS.WANTS_TO_COMMENT"></a>
             </td>
             <td class="participantHistory">
