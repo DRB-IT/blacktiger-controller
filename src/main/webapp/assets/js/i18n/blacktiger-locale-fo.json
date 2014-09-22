@@ -80,7 +80,8 @@
         "YES": "Ja",
         "NO": "Nej",
         "PHONENUMBER": "Telefonnummer",
-        "EMAIL": "Email-adresse" 
+        "EMAIL": "Email-adresse",
+        "LOADING": "Indlæser"
     },
     "SETTINGS": {
         "GENERAL" : {
@@ -139,6 +140,7 @@
         "FOOTNOTE": "For at læse hvordan du installerer og bruger app'en, <a href='{{url}}' target='_blank'>klik her</a>.",
         "RETRIEVE_INFORMATION": "Hent mine oplysninger",
         "TITLE": "Dine personlige oplysninger",
-        "ENTER_PHONE": "Indtast telefonnummer"
+        "ENTER_PHONE": "Indtast telefonnummer",
+        "ERROR_MESSAGE": "Nummeret blev ikke genkendt, måske tastede du forkert? Hvis du har du et andet telefonnummer, så prøv det. Eller kontakt den der oprettede kontoen til dig, og bed ham oprette den igen med dit korrekte telefonnummer."
     }
 }

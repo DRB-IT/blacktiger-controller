@@ -80,7 +80,8 @@
         "YES": "Yes",
         "NO": "No",
         "PHONENUMBER": "Phone Number",
-        "EMAIL": "Email Address" 
+        "EMAIL": "Email Address",
+        "LOADING": "Loading"
     },
     "SETTINGS": {
         "GENERAL" : {
@@ -129,7 +130,8 @@
         "FOOTNOTE": "To know how to install and use the app, please <a href='{{url}}' target='_blank'>click here</a>.",
         "RETRIEVE_INFORMATION": "Retrieve my information",
         "TITLE": "Your Personal Information",
-        "ENTER_PHONE": "Enter Phone Number"
+        "ENTER_PHONE": "Enter Phone Number",
+        "ERROR_MESSAGE": "The number was not recognized, maybe you entered a wrong number? If you own another number, please try it instead. Or contact the one who created this account for you, and ask to have the account created again with the correct number."
     }
 
 }

@@ -1,9 +1,8 @@
 <div class="col-md-6 col-md-offset-3">
     <h1 translate="SIP_ACCOUNT_RETRIEVAL.TITLE"></h1>
-    <div class="alert alert-danger" ng-class="{hidden:!status}">
-        {{status}}
-    </div>
-    <div class="alert alert-success" ng-class="{hidden:!sipinfo}">
+    <div class="alert alert-info" ng-if="status==='loading'">{{statusMessage}}</div>
+    <div class="alert alert-danger" ng-if="status==='error'">{{statusMessage}}</div>
+    <div class="alert alert-success" ng-if="sipinfo">
         <p translate="SIP_ACCOUNT_RETRIEVAL.DESCRIPTION" translate-values="{name:sipinfo.name,phoneNumber:sipinfo.phoneNumber}"></p>
         <p>
             {{'LOGIN.USERNAME' | translate }}: <input type="text" ng-model="sipinfo.sipId" readonly> <br>

@@ -846,21 +846,22 @@ function HistoryCtrl($scope, ReportSvc) {
     };
 }
 
-function SipAccountRetrievalCtrl(CONFIG, $scope, SipUserSvc, token, $rootScope, $translate) {
+function SipAccountRetrievalCtrl(CONFIG, $scope, SipUserSvc, token, $rootScope, $translate, $filter) {
 
     $scope.cleanNumber = function (number) {
         return number.replace(/[\+\-\/\(\) ]/g, '');
     };
 
     $scope.getSip = function () {
-        $scope.status = "Henter oplysninger...";  // EN: "Loading..."
+        $scope.status = 'loading';
+        $scope.statusMessage = $filter('translate')('GENERAL.LOADING') + '...';
         $scope.sipinfo = null;
         SipUserSvc.get(token, $scope.cleanNumber($scope.phoneNumber)).then(function (data) {
             $scope.status = null;
             $scope.sipinfo = data;
         }, function (reason) {
-            $scope.status = "Nummeret blev ikke genkendt, måske tastede du forkert? Hvis du har du et andet telefonnummer, så prøv det. Eller kontakt den der oprettede kontoen til dig, og bed ham oprette den igen med dit korrekte telefonnummer.";
-                    // EN: "The number was not recognized, maybe you entered a wrong number? If you own another number, please try it instead. Or contact the one who created this account for you, and ask to have the account created again with the correct number."
+            $scope.status = 'error';
+            $scope.statusMessage = $filter('translate')('SIP_ACCOUNT_RETRIEVAL.ERROR_MESSAGE');
             $scope.sipinfo = null;
         });
     };

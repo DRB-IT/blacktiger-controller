@@ -80,7 +80,8 @@
         "YES": "Yes",
         "NO": "No",
         "PHONENUMBER": "Phone number",
-        "EMAIL": "E-mail address" 
+        "EMAIL": "E-mail address" ,
+        "LOADING": "Loading"
     },
     "SETTINGS": {
         "GENERAL" : {
@@ -127,7 +128,8 @@
         "FOOTNOTE": "To know how to install and use the app, please <a href='{{url}}' target='_blank'>click here</a>.",
         "RETRIEVE_INFORMATION": "OK",
         "TITLE": "Your Telesal account",
-        "ENTER_PHONE": "Type in your phone number here, then click OK"
+        "ENTER_PHONE": "Type in your phone number here, then click OK",
+        "ERROR_MESSAGE": "The number was not recognized, maybe you entered a wrong number? If you own another number, please try it instead. Or contact the one who created this account for you, and ask to have the account created again with the correct number."
     }
 
 }

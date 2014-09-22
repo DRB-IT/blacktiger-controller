@@ -79,7 +79,8 @@
         "YES": "Ja",
         "NO": "Nej",
         "PHONENUMBER": "Telefonnummer",
-        "EMAIL": "E-mailadresse"        
+        "EMAIL": "E-mailadresse",
+        "LOADING": "Indlæser"
     },
     "SETTINGS": {
         "GENERAL" : {
@@ -128,7 +129,8 @@
         "FOOTNOTE": "For at læse hvordan du installerer og bruger app'en, <a href='{{url}}' target='_blank'>klik her</a>.",
         "RETRIEVE_INFORMATION": "OK",
         "TITLE": "Din Telesal-konto",
-        "ENTER_PHONE": "Skriv dit telefonnummer herunder, tryk så på OK"
+        "ENTER_PHONE": "Skriv dit telefonnummer herunder, tryk så på OK",
+        "ERROR_MESSAGE": "Nummeret blev ikke genkendt, måske tastede du forkert? Hvis du har du et andet telefonnummer, så prøv det. Eller kontakt den der oprettede kontoen til dig, og bed ham oprette den igen med dit korrekte telefonnummer."
     }
 
 }
