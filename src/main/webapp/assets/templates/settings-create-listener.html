@@ -2,9 +2,7 @@
     <div class="col-sm-4">
         <div class="list-group">
             <a class="list-group-item" href="#/settings" translate="SETTINGS.GENERAL.TITLE"></a>
-            <!--<a class="list-group-item" href="/settings-hall.html">Salen</a>-->
             <a class="list-group-item active" href="#/settings/create-listener" translate="SETTINGS.CREATE_SIP_ACCOUNT.TITLE"></a>
-            <!--<a class="list-group-item" href="/settings-edit.html">Rediger lytter</a>-->
             <a class="list-group-item" href="#/settings/contact" translate="SETTINGS.CONTACT.TITLE"></a>
         </div>
     </div>
@@ -16,9 +14,6 @@
 
         <div class="alert alert-success" ng-show="status==='success'" translate="SETTINGS.CREATE_SIP_ACCOUNT.ALERT_SUCCESS" translate-values="{name:created.account.name, phoneNumber:created.account.phoneNumber, email: created.account.email}"></div>
         <div class="alert alert-danger" ng-show="status==='error'" translate="SETTINGS.CREATE_SIP_ACCOUNT.ALERT_ERROR"></div>
-        <!--div class="alert alert-danger" ng-show="status==='invalid'">
-            Feltet [input name] er ikke udfyldt korrekt. Tjek oplysningerne og prøv igen.
-        </div-->
 
         <form role="form" novalidate name="createForm">
             <div class="form-group" ng-class="{'has-error':!createForm.name.$valid}">

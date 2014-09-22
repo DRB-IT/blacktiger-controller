@@ -17,7 +17,7 @@
         <td class="participantHistory">{{entry.firstCallTimestamp | date:'short'}}</td>
         <td class="participantHistory">{{entry.numberOfCalls}}</td>
         <td class="participantHistory">{{entry.totalDuration/60 | number:2 }}</td>
-        <td class="participantOptions"><button ng-click="changeName(entry)" title="Rediger lytterens navn"><span class="glyphicon glyphicon-pencil"></span></button></td>
+        <td class="participantOptions"><button ng-click="changeName(entry)" title="{{'PARTICIPANTS.EDIT' | translate}}"><span class="glyphicon glyphicon-pencil"></span></button></td>
                                                                                 <!-- EN: Edit listeners name-->        
     </tr>
     </tbody>
