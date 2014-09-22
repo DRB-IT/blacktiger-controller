@@ -4,15 +4,23 @@
     <div class="alert alert-danger" ng-if="status==='error'">{{statusMessage}}</div>
     <div class="alert alert-success" ng-if="sipinfo">
         <p translate="SIP_ACCOUNT_RETRIEVAL.DESCRIPTION" translate-values="{name:sipinfo.name,phoneNumber:sipinfo.phoneNumber}"></p>
-        <p>
-            {{'LOGIN.USERNAME' | translate }}: <input type="text" ng-model="sipinfo.sipId" readonly> <br>
-            {{'LOGIN.PASSWORD' | translate }}: <input type="text" ng-model="sipinfo.sipPass" readonly> <br>
-        </p>
+        <form role="form">
+            <div class="form-group">
+                <label for="sipid" class="no-selection">{{'LOGIN.USERNAME' | translate }}</label>
+                <div class="form-control" id="sipid">{{sipinfo.sipId}}</div>
+            </div>
+            <div class="form-group">
+                <label for="sippass" class="no-selection">{{'LOGIN.PASSWORD' | translate }}</label>
+                <div class="form-control" id="sippass">{{sipinfo.sipPass}}</div>
+            </div>
+
+        </form>
+
         <p translate="SIP_ACCOUNT_RETRIEVAL.FOOTNOTE" translate-values="{url: getSipHelpURL()}"></p>
     </div>
     <form id="getsipform">
         <div class="form-group">
-            <label for="getsip-inputphone"  translate="SIP_ACCOUNT_RETRIEVAL.ENTER_PHONE"></label>
+            <label for="getsip-inputphone" translate="SIP_ACCOUNT_RETRIEVAL.ENTER_PHONE"></label>
             <div class="row">
                 <div class="col-sm-12 col-xs-10">
                     <input type="text" class="form-control input-lg" ng-model="phoneNumber" title="{{'GENERAL.PHONENUMBER' | translate}}" placeholder="{{'GENERAL.PHONENUMBER' | translate}}" autofocus="true" ng-pattern="/^[0-9+\-\/\(\) ]+$/" ng-required>
