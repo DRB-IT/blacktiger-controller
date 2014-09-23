@@ -426,16 +426,39 @@ function LoginCtrl($scope, $location, LoginSvc) {
     };
 }
 
-function RequestPasswordCtrl($scope, $location, $http, blacktiger, $filter) {
+function RequestPasswordCtrl($scope, $location, $http, blacktiger, $filter, $log) {
     $scope.request = {
-        phoneNumber: '+45',
-        phoneNumberOfHall: '+45',
+        phoneNumber: '',
+        phoneNumberOfHall: '',
         emailTextUser: $filter('translate')('REQUEST_PASSWORD.EMAIL_TEXT_USER'),
         emailSubject:  $filter('translate')('REQUEST_PASSWORD.EMAIL_SUBJECT'),
         emailTextManager:  $filter('translate')('REQUEST_PASSWORD.EMAIL_TEXT_MANAGER')
     };
     $scope.status = null;
-
+    
+    $scope._resolveCountryCode = function() {
+        var host, hostData, isoCountryCode, map = {
+            'dk': '45',
+            'sv': '46',
+            'no': '47',
+            'fo': '298',
+            'gl': '299',
+            'is': '354'
+        };
+        
+        host = location.host;
+        hostData = host.split('.');
+        
+        if(hostData.length < 3 || !map[hostData[hostData.length - 3]]) {
+            $log.debug("Unable to resolve countrycode from url. Falling back to 'DK'");
+            isoCountryCode = 'dk';
+        } else {
+            isoCountryCode = hostData[hostData.length - 3];
+        }
+        $scope.countryCode = map[isoCountryCode.toLowerCase()];
+        
+    };
+    
     $scope.send = function () {
         $http.post(blacktiger.getServiceUrl() + 'system/passwordRequests', $scope.request).then(function (response) {
             if (response.status !== 200) {
@@ -449,6 +472,8 @@ function RequestPasswordCtrl($scope, $location, $http, blacktiger, $filter) {
     $scope.cancel = function () {
         $location.path('/login');
     };
+    
+    $scope._resolveCountryCode();
 }
 
 function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, ReportSvc, $log, blacktiger) {
