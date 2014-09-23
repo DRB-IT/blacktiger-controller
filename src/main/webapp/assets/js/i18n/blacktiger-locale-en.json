@@ -13,7 +13,7 @@
         "PHONENUMBER": "Your mobile phone number:",
         "EMAIL": "Your e-mail address:",
         "CITY_OF_HALL": "The city where the hall is located:",
-        "PHONENUMBER_OF_HALL": "The Telesal phone no. for the hall, with country code:",
+        "PHONENUMBER_OF_HALL": "The Telesal phone number for the hall:",
         "ERROR": "We did not find any match for this information. You may edit the information and try again.",
         "SUCCESS": "There has been sent an e-mail to you. You may need to check your junk mail folder also.",
         "EMAIL_TEXT_USER": "You have activated 'forgot password' for the hall using phone number {%1}. The password has been sent to {%5}, which is the e-mail address which was entered earlier for the technical responsible for this hall. His name is {%3} and his phone number is {%4}.\n\nThe user ID which must be used together with the password is {%2}.",
