@@ -1,140 +1,140 @@
 {
     "LOGIN": {
-        "USERNAME": "Username",
-        "PASSWORD": "Password",
-        "REMEMBER_ME": "Save on this computer",
-        "LOG_IN": "Log in",
-        "ALERT": "<strong>Login is required</strong> in order to see the transmission.",
-        "INVALID_CREDENTIALS": "Username or password is invalid.",
-        "FORGOT_PASSWORD": "Forgot Password"
+        "USERNAME": "Brukernavn",
+        "PASSWORD": "Passord",
+        "REMEMBER_ME": "Husk passordet på denne maskinen",
+        "LOG_IN": "Logg inn",
+        "ALERT": "<strong>Dette er et privat system.</strong> Forsøk ikke å logge inn uten at du har tillatelse til det.",
+        "INVALID_CREDENTIALS": "Feil brukernavn eller passord.",
+        "FORGOT_PASSWORD": "Glemt passord"
     },
     "REQUEST_PASSWORD": {
-        "NAME": "Name",
-        "PHONENUMBER": "Phone Number",
-        "EMAIL": "Email Address",
-        "CITY_OF_HALL": "City of Kingdom Hall",
-        "PHONENUMBER_OF_HALL": "Phone Number for Kingdom Hall",
-        "ERROR": "Could not find a hall matching the input. Please try again.",
-        "SUCCESS": "The hall has been found in telesal and a mail has been to you with further information about username and password for the hall.",
-        "EMAIL_TEXT_USER": "You have activated 'forgot password' for the hall using phone number {%1}. The password has been sent to {%5}, which is the e-mail address which was entered earlier for the technical responsible for this hall. His name is {%3} and his phone number is {%4}.\n\nThe user ID which must be used together with the password is {%2}.",
-        "EMAIL_TEXT_MANAGER": "{%1} has activated 'forgot password' for the hall using phone number {%4}, which you are technically responsible for. He has mobile phone number is {%2} and his e-mail is {%3}. For security reasons, the password been sent to you only, not to him. You must contact him to check if he should have the password from you.\n\nThe password is: {%5}\n",
-        "EMAIL_SUBJECT": "Telesal in {%1}"
+        "NAME": "Ditt fulle navn:",
+        "PHONENUMBER": "Ditt mobilnummer:",
+        "EMAIL": "Din e-postadresse:",
+        "CITY_OF_HALL": "Byen der salen ligger:",
+        "PHONENUMBER_OF_HALL": "Telesal-telefonnummer til salen:",
+        "ERROR": "Disse opplysningene gav ingen treff. Kontroller opplysningene og prøv på nytt.",
+        "SUCCESS": "Det er blitt sendt en e-post til deg. Du må kanskje se i mappen for søppelpost.",
+        "EMAIL_TEXT_USER": "Du har aktivert 'glemt passord' for den salen som bruker telefonnummer {%1}. Passordet er blitt sendt til {%5}, som er e-postadressen til den som er teknisk ansvarlig for denne salen. Navnet hans er {%3}, og telefonnummeret hans er {%4}.\\n\\nBrukernavnet som skal brukes sammen med passordet, er {%2}.",
+        "EMAIL_TEXT_MANAGER": "{%1} har aktivert 'glemt passord' for den salen som bruker telefonnummer {%4}, som du er teknisk ansvarlig for. Hans telefonnummer er {%2}, og e-posten hans er {%3}. Av sikkerhetsgrunner blir passordet sendt kun til deg, og ikke til ham. Du må ta kontakt med ham for å finne ut om du skal gi ham passordet.\\n\\nPassordet er: {%5}\\n",
+        "EMAIL_SUBJECT": "Telesal i {%1}
     },
     "SYSTEM": {
         "NAME": "Telesal",
         "COPYRIGHTHOLDER": "telesal.org"
     },
     "NAVIGATION": {
-        "PARTICIPANTS": "Lyttere nå",
-        "SETTINGS": "Settings",
+        "PARTICIPANTS": "Disse lytter nå",
+        "SETTINGS": "Innstillinger",
         "REPORT": "Lytterrapport",
         "HELP": "Hjelp",
         "ADMIN": {
-            "REALTIME": "Realtid",
-            "HISTORY": "Historik"
+            "REALTIME": "Nåtid",
+            "HISTORY": "Historikk"
         }
     },
     "PARTICIPANTS": {
         "WARNINGS": {
-            "NO_PARTICIPANTS_AND_TRANSMITTERS": "Det er for øyeblikket hverken transmisjon til, eller deltagere i, telefonmøtet.",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "Det blir ikke sendt lyd til lytterne!",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "Check that X-Lite is started",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "In X-lite call {{phoneNumber | telephone}}",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Call the same number from another phone and check the volume and quality."
+            "NO_PARTICIPANTS_AND_TRANSMITTERS": "Det er ingen overføring for øyeblikket, og det er ingen lyttere.",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "Det blir ikke sendt ut lyd til lytterne!",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "Kontroller at X-Lite er startet",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "Ring opp {{phoneNumber | telephone}} fra X-Lite",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Ring deretter til det samme nummeret fra en annen telefon og sjekk lydkvaliteten. Juster lydstyrken om nødvendig."
         },
         "INFO": {
             "NO_PARTICIPANTS": "Det er for øyeblikket ingen lyttere.",
-            "UNMUTED": "Svarmikrofonen er åpen"
+            "UNMUTED": "Svar-mikrofonen er åpen!"
         },
-        "UNMUTE": "Åpne svarmikrofon",
-        "MUTE": "Lukk svarmikrofon",
-        "KICK": "Avbryt lytter",
-        "EDIT": "Rediger",
-        "PARTICIPANTS": "Lyttere",
-        "ABORT_TRANSMISSION": "Avbryt transmisjonen",
-        "COMPLETED_CALLS": "{{noOfCompletedCalls}} completed call(s)",
-        "WANTS_TO_COMMENT": "Wants to comment",
-        "ENTER_NAME": "Enter Name"
+        "UNMUTE": "Åpne svar-mikrofonen",
+        "MUTE": "Lukk svar-mikrofonen",
+        "KICK": "Legg på",
+        "EDIT": "Rediger navn",
+        "PARTICIPANTS": "{{noOfParticipants}} lyttere",
+        "ABORT_TRANSMISSION": "Avbryt overføringen",
+        "COMPLETED_CALLS": "{{noOfCompletedCalls}} avsluttede oppringninger",
+        "WANTS_TO_COMMENT": "Jeg vil gjerne svare!",
+        "ENTER_NAME": "Hvem er det? Ring og spør, skriv navnet her!"
     },
     "REPORT": {
-        "NUMBER": "Nummer",
+        "NUMBER": "Telefonnummer",
         "NAME": "Navn",
-        "FIRST_CALL": "Første oppkall",
-        "CALLS": "Oppkall",
+        "FIRST_CALL": "Første oppringning",
+        "CALLS": "Oppringninger",
         "MINUTES": "Minutter",
-        "DELETE": "Delete History",
-        "NO_ENTRIES": "No history has been recorded for today."
+        "DELETE": "Slett historikk",
+        "NO_ENTRIES": "Det er ingen historikk. Listen slettes når nettleseren lukkes."
     },
     "GENERAL": {
         "LANGUAGE": {
-            "DA": "Danish",
-            "EN": "English",
-            "FO": "Faroese",
-            "KL": "Greenlandic",
-            "NO": "Norwegian",
-            "SV": "Swedish",
+            "DA": "Dansk",
+            "EN": "Engelsk",
+            "FO": "Færøysk",
+            "KL": "Grønlandsk",
+            "NO": "Norsk",
+            "SV": "Svensk",
             "IS": "Islandsk"
         },
         "OK": "Ok",
-        "CANCEL": "Cancel",
+        "CANCEL": "Avbryt",
         "TECHNICALLY_RESPONSIBLE": "Teknisk ansvarlig",
-        "HALL": "hall",
-        "LOGOUT": "Log out",
-        "YES": "Yes",
-        "NO": "No",
-        "PHONENUMBER": "Phone Number",
-        "EMAIL": "Email Address",
-        "LOADING": "Indlæser",
-        "LOST_CONNECTION": "The application lost connection to the server. Check your Internet connection and reload the page."
+        "HALL": "sal",
+        "LOGOUT": "Logg ut",
+        "YES": "Ja",
+        "NO": "Nei",
+        "PHONENUMBER": "Telefonnummer",
+        "EMAIL": "E-postadresse",
+        "LOADING": "Laster inn...",
+        "LOST_CONNECTION": "Forbindelsen til serveren ble brutt. Sjekk internettforbindelsen, og oppdater siden (trykk F5)"
     },
     "SETTINGS": {
         "GENERAL" : {
-            "TITLE": "Settings",
-            "LOGGED_IN_AS": "You are logged in as <b>{{postalCode}} {{city}}</b>",
-            "TECHNICALLY_RESPONSIBLE": "The technically responsible for this hall is <b>{{name}}</b>",
-            "CONTACT_LINK": "See contact information",
-            "FIND_HELP": "Find Help",
-            "FIND_HELP_DESC": "Click <span class=\"glyphicon glyphicon-question-sign\"></span> at the top of the page if you need help."
+            "TITLE": "Denne salen",
+            "LOGGED_IN_AS": "Du er logget inn som Rikets sal i <b>{{name}}</b>",
+            "TECHNICALLY_RESPONSIBLE": "Teknisk ansvarlig for denne Rikets salen er <b>{{name}}</b>",
+            "CONTACT_LINK": "Mer informasjon",
+            "FIND_HELP": "Få hjelp",
+            "FIND_HELP_DESC": "Klikk på <span class=\"glyphicon glyphicon-question-sign\"></span> på toppen av siden hvis du trenger hjelp, eller ta kontakt med teknisk ansvarlig."
         },
         "CREATE_SIP_ACCOUNT": {
-            "TITLE": "Create Computer Listener",
-            "DESCRIPTION": "If one wants to listen to meetings via a computer, a computer account attached to the listener's mobile or telephone number is needed. Computer listeners are displayed with <span class=\"glyphicon glyphicon-hdd\"></span> on the status page. Computer accounts that have not made any calls for a year, will be automatically deleted. If the listener has lost the password for the computer account, the listener is created again by filling in the fields below.",
-            "TITLE_NAME": "Name",
-            "PLACEHOLDER_NAME": "Name Surname",
-            "TITLE_PHONE": "Cell Phone or Landline Number",
-            "DESCRIPTION_PHONE": "The number is displayed at the Kingdom Hall when the listener calling from his computer.",
-            "TITLE_EMAIL": "Send Account Information to",
-            "PLACEHOLDER_EMAIL": "E-mail Address",
-            "DESCRIPTION_EMAIL": "Necessary information is sent to this email address. E-mail address is not stored in TeleSal.",
-            "SAVED": "Saved",
-            "ALERT_SUCCESS": "<b>Success!</b> The account was created with the following information and an e-mail was sent to the specified e-mail address with details:<br>Name: {{name}}<br>Phonenumber: {{phoneNumber}}<br>Email: {{email}}",
-            "ALERT_ERROR": "<b>System Error!</b> The account was not created. Please try again shortly.",
-            "DESCRIPTION_MAILTEXT": "This message is sent in the mail. Do not write the recipient's phone number in this field.",
-            "TITLE_MAILTEXT": "Message for the user",
-            "DEFAULT_MAILTEXT": "Here is the information you need in order to listen to the meetings from your computer. Contact the technical manager if there is anything you are unsure about. Click on the link below."
+            "TITLE": "Opprett datatilkoblet lytter",
+            "DESCRIPTION": "<p>Man kan lytte til møtene via Internett fra en datamaskin, et nettbrett eller en smarttelefon ved å installere en app. <b>Lydkvaliteten</b> er mye bedre enn over telenettet, og man slipper å bruke tellerskritt. Denne løsningen krever imidlertid internettilkobling og datatrafikk (cirka 75 MB/time). Dette kan koste penger avhengig av abonnement og type internettilkobling.</p><p>Bruk framgangsmåten nedenfor for å opprette en <b>personlig brukerkonto</b> for hver av dem som ønsker å lytte via Internett. Kontoen <b>må ikke</b> deles med andre, ettersom den er knyttet til lytterens private telefonnummer. Lyttere som bruker en app, må ringe til det samme telefonnummeret som de som lytter over telenettet.</p><p>Hvis lytteren har<b>mistet opplysningene til sin personlige brukerkonto</b>, må man gjenopprette kontoen nedenfor, og det vil bli generert et nytt passord. Kontoen er ikke knyttet til en spesiell Rikets sal, og den blir slettet automatisk hvis den ikke blir brukt på et år.</p><p>De som lytter over internett, vises med et datamaskinsymbol på statussiden: <span class=\"glyphicon glyphicon-hdd\"></span></p>",
+            "TITLE_NAME": "Navn",
+            "PLACEHOLDER_NAME": "Fornavn Etternavn",
+            "TITLE_PHONE": "Mobil- eller fasttelefonnummer",
+            "DESCRIPTION_PHONE": "Dette nummeret vises på datamaskinen i Rikets sal når lytteren ringer fra sin datamaskin.",
+            "TITLE_EMAIL": "Send opplysningene om brukerkontoen til",
+            "PLACEHOLDER_EMAIL": "E-postadresse",
+            "DESCRIPTION_EMAIL": "Opplysningene om brukerkontoen sendes hit. Be mottakeren om også å sjekke søppelpostmappen.",
+            "SAVED": "Lagret",
+            "ALERT_SUCCESS": "Brukerkontoen er nå opprettet med disse opplysningene:<br>Navn: <b>{{name}}</b>, telefon: <b>{{phoneNumber}}</b>.<br>Det er blitt sendt en e-post til <b>{{email}}</b> med en lenke til kontoopplysningene.<br>Tastet du inn noe feil? Opprett da kontoen på nytt nedenfor.",
+            "ALERT_ERROR": "<b>Systemfeil!</b>Kontoen ble ikke opprettet. Vennligst prøv igjen senere.",
+            "DESCRIPTION_MAILTEXT": "Her kan du skrive en beskjed, men ikke skriv inn mottakerens telefonnummer her.",
+            "TITLE_MAILTEXT": "Tekst som blir sendt til mottakeren",
+            "DEFAULT_MAILTEXT": "Her er de opplysningene du trenger for å kunne lytte til møtene via din datamaskin. Hvis du trenger hjelp, kan du kontakte teknisk ansvarlig. Klikk på lenken nedenfor."
 
         },
         "CONTACT": {
-            "TITLE": "Technical Contact",
-            "SUBTITLE": "The Halls Technical Manager",
-            "DESCRIPTION": "There is only one technical manager for each conference room, no matter how many congregations are using it. The technical contact person is appointed by the Kingdom Hall Committee.",
-            "TITLE_NAME": "Name",
-            "PLACEHOLDER_NAME": "Name Surname",
-            "TITLE_PHONE": "Cell Phone Number",
+            "TITLE": "Teknisk ansvarlig",
+            "SUBTITLE": "Teknisk ansvarlig for Rikets sal",
+            "DESCRIPTION": "<p><b>VIKTIG!</b> Vennligst kontroller at opplysningene nedenfor er riktige!</p><p>Det er <b>bare én teknisk ansvarlig for hver Rikets sal</b>, uansett hvor mange menigheter som benytter salen. Han må tilhøre en av de menighetene som benytter denne Rikets salen. Hvis det er flere menigheter som bruker den samme Rikets salen, må de bli enige om hvem som skal utnevnes til teknisk ansvarlig.</p><p>Teknisk ansvarlig <b>har ansvar for at Telesal-systemet fungerer lokalt</b>, og det er ham du skal henvende deg til dersom det oppstår tekniske problemer lokalt.</p><p>Det er <b>viktig at informasjonen nedenfor er riktig</b>, slik at de som er ansvarlige for Telesal-systemet sentralt, kan ta kontakt med teknisk ansvarlig for hver Rikets sal når det er nødvendig.",
+            "TITLE_NAME": "Navn",
+            "PLACEHOLDER_NAME": "Fornavn Etternavn",
+            "TITLE_PHONE": "Mobilnummer",
             "TITLE_EMAIL": "E-mail Address",
-            "PLACEHOLDER_EMAIL": "exampel@mail.com",
-            "TITLE_COMMENT": "Comment",
-            "SAVED": "Saved",
-            "ALERT_ERROR": "<b>Fejl!</b> Changes were not saved. Please try again shortly."
+            "PLACEHOLDER_EMAIL": "eksempel@mail.no",
+            "TITLE_COMMENT": "Kommentar",
+            "SAVED": "Lagret",
+            "ALERT_ERROR": "<b>Feil!</b> Endringene ble ikke lagret. Vennligst prøv igjen senere."
         }
     },
     "SIP_ACCOUNT_RETRIEVAL": {
-        "DESCRIPTION": "<b>Make sure that this is your name and phone number:</b><br>{{name}}, {{phoneNumber}}<br>If there is any mistake in these informations, please contact the technical manager of your Kingdom Hall.<br><br>You need the following informations in order to listen to the meetings from your computer. You can use the same information from several devices, fx. a PC and a tablet. <br>REMARK! You are NOT allowed to distribute these informations to others as they are bound to your name and phone number!",
-        "FOOTNOTE": "To know how to install and use the app, please <a href='{{url}}' target='_blank'>click here</a>.",
-        "RETRIEVE_INFORMATION": "Retrieve my information",
-        "TITLE": "Your Personal Information",
-        "ENTER_PHONE": "Enter Phone Number",
-        "ERROR_MESSAGE": "The number was not recognized, maybe you entered a wrong number? If you own another number, please try it instead. Or contact the one who created this account for you, and ask to have the account created again with the correct number."
+        "DESCRIPTION": "<p>Kjære <b>{{name}}</b>, her er din personlige kode. Du trenger den for å kunne lytte til møtene via Internett. Denne koden er knyttet til ditt telefonnummer <b>{{phoneNumber}}</b>, og du må derfor <b>aldri oppgi koden din til noen andre</b>.</p><p><b>>Ikke skriv ned koden</b>, men kopier den i stedet direkte fra denne siden inn i applikasjonen du skal bruke for å lytte til møtene. Men du må gjerne <b>lagre den lenken som står i e-posten</b>, som tar deg til denne siden, slik at du alltid har mulighet til å finne din personlige kode.</p><p>Hvis du på et senere tidspunkt bytter telefonnummer eller mister lenken fra e-posten, ber du bare om at det blir opprettet en ny brukerkonto til deg.</p>",
+        "FOOTNOTE": "For å lese om hvordan du installerer og bruker applikasjonen, <a href='http://help.telesal.org/no/homesetup' target='_blank'>klikk her</a>.",
+        "RETRIEVE_INFORMATION": "OK",
+        "TITLE": "Din Telesal-konto",
+        "ENTER_PHONE": "Skriv inn telefonnummeret ditt her, og trykk OK",
+        "ERROR_MESSAGE": "Ukjent nummer. Har du tastet inn feil nummer? Hvis du har et annet telefonnummer, så prøv det. Eller ta kontakt med den som opprettet denne kontoen til deg, og be vedkommende om å opprette en ny konto med det riktige nummeret."
     }
 
 }
