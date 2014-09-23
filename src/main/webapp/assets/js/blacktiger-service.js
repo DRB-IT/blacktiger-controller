@@ -10,7 +10,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                 'kl': 'Kalaallisut',
                 'sv': 'Svenska',
                 'no': 'Norsk',
-                'is': 'Ìslenska'
+                'is': 'Íslenska'
             };
 
         var instanceId = window.name;
