@@ -15,7 +15,10 @@
         "CITY_OF_HALL": "By rigssalen ligger i",
         "PHONENUMBER_OF_HALL": "Telefonnummer til rigssalen",
         "ERROR": "Kunne ikke finde en sal der matchede de indtastede oplysninger. Prøv igen",
-        "SUCCESS": "Salen blev fundet i telesal og der er nu sendt en mail til dig med oplysninger om brugernavnet og password for salen."
+        "SUCCESS": "Salen blev fundet i telesal og der er nu sendt en mail til dig med oplysninger om brugernavnet og password for salen.",
+        "EMAIL_TEXT_USER": "Du har aktiveret 'glemt kodeord' for salen med nummer {%1}. Koden er nu sendt til {%5}, som er den e-mailadresse der tidligere er oplyst for den teknisk ansvarlige for denne sal. Han hedder {%3} og har telefon {%4}.\n\nBrugernavnet der skal bruges sammen med koden er {%2}.",
+        "EMAIL_TEXT_MANAGER": "{%1} har aktiveret 'glemt kodeord' for salen med nummer {%4}, som du er teknisk ansvarlig for. Hans mobilnummer er {%2} og hans e-mail er {%3}. Af sikkerhedshensyn er kodeordet kun sendt til dig, ikke til ham. Du skal kontakte ham for at finde ud af om han skal have udleveret kodeordet af dig.\n\nDet glemte kodeord er: {%5}\n",
+        "EMAIL_SUBJECT": "Telesal i {%1}"
     },
     "SYSTEM": {
         "NAME": "Telesal",

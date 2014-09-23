@@ -15,7 +15,10 @@
         "CITY_OF_HALL": "Byen hvor mødesalen er:",
         "PHONENUMBER_OF_HALL": "Telesal-telefonnr. til salen, inkl. landekode:",
         "ERROR": "Vi fandt intet der passer på disse oplysninger. Du kan rette oplysningerne og prøve igen.",
-        "SUCCESS": "Der er sendt en mail til dig. Tjek evt. også din mail-folder til uønsket post."
+        "SUCCESS": "Der er sendt en mail til dig. Tjek evt. også din mail-folder til uønsket post.",
+        "EMAIL_TEXT_USER": "Du har aktiveret 'glemt kodeord' for salen med nummer {%1}. Koden er nu sendt til {%5}, som er den e-mailadresse der tidligere er oplyst for den teknisk ansvarlige for denne sal. Han hedder {%3} og har telefon {%4}.\n\nBrugernavnet der skal bruges sammen med koden er {%2}.",
+        "EMAIL_TEXT_MANAGER": "{%1} har aktiveret 'glemt kodeord' for salen med nummer {%4}, som du er teknisk ansvarlig for. Hans mobilnummer er {%2} og hans e-mail er {%3}. Af sikkerhedshensyn er kodeordet kun sendt til dig, ikke til ham. Du skal kontakte ham for at finde ud af om han skal have udleveret kodeordet af dig.\n\nDet glemte kodeord er: {%5}\n",
+        "EMAIL_SUBJECT": "Telesal i {%1}"
     },
     "SYSTEM": {
         "NAME": "Telesal",

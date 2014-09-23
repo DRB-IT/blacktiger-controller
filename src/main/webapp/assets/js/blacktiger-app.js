@@ -426,10 +426,13 @@ function LoginCtrl($scope, $location, LoginSvc) {
     };
 }
 
-function RequestPasswordCtrl($scope, $location, $http, blacktiger) {
+function RequestPasswordCtrl($scope, $location, $http, blacktiger, $filter) {
     $scope.request = {
         phoneNumber: '+45',
-        phoneNumberOfHall: '+45'
+        phoneNumberOfHall: '+45',
+        emailTextUser: $filter('translate')('REQUEST_PASSWORD.EMAIL_TEXT_USER'),
+        emailSubject:  $filter('translate')('REQUEST_PASSWORD.EMAIL_SUBJECT'),
+        emailTextManager:  $filter('translate')('REQUEST_PASSWORD.EMAIL_TEXT_MANAGER')
     };
     $scope.status = null;
 
