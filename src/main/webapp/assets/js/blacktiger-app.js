@@ -130,6 +130,24 @@ function ApplicationBoot(CONFIG, blacktiger, $location, LoginSvc, $rootScope) {
     $rootScope.$on("logout", function () {
         $location.path('login');
     });
+    
+    $rootScope.$on("login", function (event, user) {
+        if (user.roles.indexOf('ROLE_HOST') >= 0) {
+            
+            $location.path('');
+        } else if (user.roles.indexOf('ROLE_ADMIN') >= 0) {
+            $location.path('/admin/realtime');
+        }
+    });
+    
+    $rootScope.$watch('currentRoom', function(room) {
+        if(room && (
+            !room.contact.name || room.contact.name === '' || 
+            !room.contact.email || room.contact.email === '' ||
+            !room.contact.phoneNumber || room.contact.phoneNumber === '')) {
+            $location.path('/settings');
+        }
+    });
 }
 
 /*************************************** FILTERS ********************************************/
@@ -409,13 +427,8 @@ function LoginCtrl($scope, $location, LoginSvc) {
     $scope.status = null;
 
     $scope.login = function () {
-        LoginSvc.authenticate($scope.username, $scope.password, $scope.rememberMe).then(function (user) {
+        LoginSvc.authenticate($scope.username, $scope.password, $scope.rememberMe).then(function () {
             $scope.status = 'success';
-            if (user.roles.indexOf('ROLE_HOST') >= 0) {
-                $location.path('');
-            } else if (user.roles.indexOf('ROLE_ADMIN') >= 0) {
-                $location.path('/admin/realtime');
-            }
         }, function (reason) {
             $scope.status = "invalid";
         });
