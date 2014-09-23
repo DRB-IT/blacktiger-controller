@@ -6,7 +6,7 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             languageNames = {
                 'da': 'Dansk',
                 'en': 'English',
-                'fo': 'Føroysk',
+                'fo': 'Føroyskt',
                 'kl': 'Kalaallisut',
                 'sv': 'Svenska',
                 'no': 'Norsk',
