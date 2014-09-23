@@ -436,26 +436,28 @@ function RequestPasswordCtrl($scope, $location, $http, blacktiger, $filter, $log
     };
     $scope.status = null;
     
+    $scope._countryCodeToAreaCode = function(countryCode) {
+        var data = i18n.phonenumbers.metadata.countryToMetadata[countryCode.toUpperCase()];
+        if(!data) {
+            return null;
+        } else {
+            return data[10];
+        }
+    };
+    
     $scope._resolveCountryCode = function() {
-        var host, hostData, isoCountryCode, map = {
-            'dk': '45',
-            'sv': '46',
-            'no': '47',
-            'fo': '298',
-            'gl': '299',
-            'is': '354'
-        };
+        var host, hostData, isoCountryCode;
         
         host = location.host;
         hostData = host.split('.');
         
-        if(hostData.length < 3 || !map[hostData[hostData.length - 3]]) {
+        if(hostData.length < 3 || !$scope._countryCodeToAreaCode(hostData[hostData.length - 3])) {
             $log.debug("Unable to resolve countrycode from url. Falling back to 'DK'");
             isoCountryCode = 'dk';
         } else {
             isoCountryCode = hostData[hostData.length - 3];
         }
-        $scope.countryCode = map[isoCountryCode.toLowerCase()];
+        $scope.countryCode = $scope._countryCodeToAreaCode(isoCountryCode);
         
     };
     
