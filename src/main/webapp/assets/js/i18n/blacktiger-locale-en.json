@@ -84,8 +84,8 @@
         "NO": "No",
         "PHONENUMBER": "Phone number",
         "EMAIL": "E-mail address" ,
-        "LOADING": "Loading",
-        "LOST_CONNECTION": "The application lost connection to the server. Check your Internet connection and reload the page."
+        "LOADING": "Loading...",
+        "LOST_CONNECTION": "Lost connection to the server. Please check the internet connection , then refresh the page (press F5)"
     },
     "SETTINGS": {
         "GENERAL" : {
