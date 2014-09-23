@@ -16,8 +16,8 @@
         "PHONENUMBER_OF_HALL": "Telesal-telefonnummer til salen:",
         "ERROR": "Disse opplysningene gav ingen treff. Kontroller opplysningene og prøv på nytt.",
         "SUCCESS": "Det er blitt sendt en e-post til deg. Du må kanskje se i mappen for søppelpost.",
-        "EMAIL_TEXT_USER": "Du har aktivert 'glemt passord' for den salen som bruker telefonnummer {%1}. Passordet er blitt sendt til {%5}, som er e-postadressen til den som er teknisk ansvarlig for denne salen. Navnet hans er {%3}, og telefonnummeret hans er {%4}.\\n\\nBrukernavnet som skal brukes sammen med passordet, er {%2}.",
-        "EMAIL_TEXT_MANAGER": "{%1} har aktivert 'glemt passord' for den salen som bruker telefonnummer {%4}, som du er teknisk ansvarlig for. Hans telefonnummer er {%2}, og e-posten hans er {%3}. Av sikkerhetsgrunner blir passordet sendt kun til deg, og ikke til ham. Du må ta kontakt med ham for å finne ut om du skal gi ham passordet.\\n\\nPassordet er: {%5}\\n",
+        "EMAIL_TEXT_USER": "Du har aktivert 'glemt passord' for den salen som bruker telefonnummer {%1}. Passordet er blitt sendt til {%5}, som er e-postadressen til den som er teknisk ansvarlig for denne salen. Navnet hans er {%3}, og telefonnummeret hans er {%4}.\n\nBrukernavnet som skal brukes sammen med passordet, er {%2}.",
+        "EMAIL_TEXT_MANAGER": "{%1} har aktivert 'glemt passord' for den salen som bruker telefonnummer {%4}, som du er teknisk ansvarlig for. Hans telefonnummer er {%2}, og e-posten hans er {%3}. Av sikkerhetsgrunner blir passordet sendt kun til deg, og ikke til ham. Du må ta kontakt med ham for å finne ut om du skal gi ham passordet.\n\nPassordet er: {%5}\n",
         "EMAIL_SUBJECT": "Telesal i {%1}"
     },
     "SYSTEM": {
