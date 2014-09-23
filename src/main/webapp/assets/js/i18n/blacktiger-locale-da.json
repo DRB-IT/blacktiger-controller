@@ -83,8 +83,8 @@
         "NO": "Nej",
         "PHONENUMBER": "Telefonnummer",
         "EMAIL": "E-mailadresse",
-        "LOADING": "Indlæser",
-        "LOST_CONNECTION": "Applikationen mistede forbindelsen til serveren. Tjek evt. din internet forbindelse og prøv at genindlæse siden."
+        "LOADING": "Henter oplysninger...",
+        "LOST_CONNECTION": "Forbindelsen til serveren blev afbrudt. Tjek internetforbindelsen og genindlæs siden (tryk F5)"
     },
     "SETTINGS": {
         "GENERAL" : {
