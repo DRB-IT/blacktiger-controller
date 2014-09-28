@@ -145,7 +145,7 @@ function ApplicationBoot(CONFIG, blacktiger, $location, LoginSvc, $rootScope) {
             !room.contact.name || room.contact.name === '' || 
             !room.contact.email || room.contact.email === '' ||
             !room.contact.phoneNumber || room.contact.phoneNumber === '')) {
-            $location.path('/settings');
+            $location.path('/settings/contact');
         }
     });
 }
