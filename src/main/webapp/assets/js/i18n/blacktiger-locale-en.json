@@ -107,7 +107,7 @@
             "PLACEHOLDER_EMAIL": "E-mail address",
             "DESCRIPTION_EMAIL": "Account information is sent here. Ask the reciever to check his junk mail folder.",
             "SAVED": "Saved",
-            "ALERT_SUCCESS": "The account has now been created with this information:<br>Name: <b>{{name}}</b>, phone: <b>{{phoneNumber}}</b>.<br>A link to the account information has been e-mailed to <b>{{email}}</b>.<br>Did you type something wrong? Then just create the account once more below.",
+            "ALERT_SUCCESS": "The account has now been created with this information:<br>Name: <b>{{name}}</b>, phone: <b>{{phoneNumber}}</b>.<br>A link to the account information has been e-mailed to <b>{{email}}</b>.<br>Ask the reciever to check his junk mail folder.<br>Did you type something wrong? Then just create the account once more below.",
             "ALERT_ERROR": "<b>System error!</b> The account was not created. Please try again later.",
             "DESCRIPTION_MAILTEXT": "Here you may enter a message, but do not enter the receivers phone number here.",
             "TITLE_MAILTEXT": "Text which is sent to the reciever",
