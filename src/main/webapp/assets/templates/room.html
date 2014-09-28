@@ -6,14 +6,14 @@
 
 <div ng-if="currentRoom">
 
-    <div class="alert alert-info" ng-show="participants.length==0">{{'PARTICIPANTS.WARNINGS.NO_PARTICIPANTS_AND_TRANSMITTERS' | translate}}</div>
+    <div class="alert alert-info" ng-show="participants.length==0" translate="PARTICIPANTS.WARNINGS.NO_PARTICIPANTS_AND_TRANSMITTERS"></div>
 
     <div class="alert alert-danger" ng-show="!isHostInConference() && (participants|filter:{host:false}).length>0">
-        <b>{{'PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE' | translate}}</b>
+        <b translate="PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE"></b>
         <ol>
-            <li>{{'PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1' | translate}}</li>
-            <li>{{'PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2' | translate:currentRoom}}</li>
-            <li>{{'PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3' | translate}}</li>
+            <li translate="PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1"></li>
+            <li translate="PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2" translate-values="{phoneNumber:'{{currentRoom.phoneNumber}}'}"></li>
+            <li translate="PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3"></li>
         </ol>
     </div>
     <h3><span ng-if="(participants|filter:{host:false}).length>0" translate="PARTICIPANTS.PARTICIPANTS" translate-values="{noOfParticipants:(participants|filter:{host:false}).length}"></span>

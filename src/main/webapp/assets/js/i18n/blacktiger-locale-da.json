@@ -38,7 +38,7 @@
             "NO_PARTICIPANTS_AND_TRANSMITTERS": "Der er ingen transmission nu, og der er heller ingen der har ringet op nu for at lytte med.",
             "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "Der sendes ingen lyd ud til lytterne!",
             "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "Kontroller at X-Lite er startet",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "Ring op til {{phoneNumber | telephone}} fra X-Lite",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "Ring op til <a href=\"tel:{{phoneNumber}}\">{{phoneNumber | telephone}}</a> fra X-Lite",
             "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Ring derefter op til samme nummer fra en anden telefon og kontroller kvaliteten og juster eventuelt lydstyrken"
         },
         "INFO": {
