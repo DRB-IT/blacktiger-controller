@@ -107,7 +107,7 @@
             "PLACEHOLDER_EMAIL": "E-mailadresse",
             "DESCRIPTION_EMAIL": "Kontooplysninger sendes hertil. Bed modtageren tjekke sin mail folder til uønsket post.",
             "SAVED": "Gemt",
-            "ALERT_SUCCESS": "Kontoen er nu oprettet med disse informationer:<br>Navn: <b>{{name}}</b>, telefon: <b>{{phoneNumber}}</b>.<br>Der er sendt en e-mail til <b>{{email}}</b> med et link til kontooplysningerne.<br>Har du tastet forkert? Så skal du bare oprette kontoen forfra herunder.",
+            "ALERT_SUCCESS": "Kontoen er nu oprettet med disse informationer:<br>Navn: <b>{{name}}</b>, telefon: <b>{{phoneNumber}}</b>.<br>Der er sendt en e-mail til <b>{{email}}</b> med et link til kontooplysningerne.<br>Bed modtageren tjekke sin mail folder til uønsket post.<br>Har du tastet forkert? Så skal du bare oprette kontoen forfra herunder.",
             "ALERT_ERROR": "<b>Systemfejl!</b> Kontoen blev ikke oprettet. Prøv igen om lidt.",
             "DESCRIPTION_MAILTEXT": "Her kan du skrive en besked, men skriv ikke modtagerens telefonnummer her.",
             "TITLE_MAILTEXT": "Tekst der sendes til modtageren",

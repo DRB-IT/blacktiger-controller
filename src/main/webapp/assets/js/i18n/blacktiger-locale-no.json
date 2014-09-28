@@ -108,7 +108,7 @@
             "PLACEHOLDER_EMAIL": "E-postadresse",
             "DESCRIPTION_EMAIL": "Opplysningene om brukerkontoen sendes hit. Be mottakeren om også å sjekke søppelpostmappen.",
             "SAVED": "Lagret",
-            "ALERT_SUCCESS": "Brukerkontoen er nå opprettet med disse opplysningene:<br>Navn: <b>{{name}}</b>, telefon: <b>{{phoneNumber}}</b>.<br>Det er blitt sendt en e-post til <b>{{email}}</b> med en lenke til kontoopplysningene.<br>Tastet du inn noe feil? Opprett da kontoen på nytt nedenfor.",
+            "ALERT_SUCCESS": "Brukerkontoen er nå opprettet med disse opplysningene:<br>Navn: <b>{{name}}</b>, telefon: <b>{{phoneNumber}}</b>.<br>Det er blitt sendt en e-post til <b>{{email}}</b> med en lenke til kontoopplysningene.<br>Be mottakeren om også å sjekke søppelpostmappen.<br>Tastet du inn noe feil? Opprett da kontoen på nytt nedenfor.",
             "ALERT_ERROR": "<b>Systemfeil!</b>Kontoen ble ikke opprettet. Vennligst prøv igjen senere.",
             "DESCRIPTION_MAILTEXT": "Her kan du skrive en beskjed, men ikke skriv inn mottakerens telefonnummer her.",
             "TITLE_MAILTEXT": "Tekst som blir sendt til mottakeren",
