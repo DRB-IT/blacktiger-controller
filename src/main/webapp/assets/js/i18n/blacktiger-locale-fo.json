@@ -85,7 +85,8 @@
         "PHONENUMBER": "Telefonnummer",
         "EMAIL": "Email-adresse",
         "LOADING": "Indlæser",
-        "LOST_CONNECTION": "Applikationen mistede forbindelsen til serveren. Tjek evt. din internet forbindelse og prøv at genindlæse siden."
+        "LOST_CONNECTION": "Applikationen mistede forbindelsen til serveren. Tjek evt. din internet forbindelse og prøv at genindlæse siden.",
+        "COMMENT_REQUEST": "Somebody would like to comment"
     },
     "SETTINGS": {
         "GENERAL" : {

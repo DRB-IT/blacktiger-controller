@@ -85,7 +85,8 @@
         "PHONENUMBER": "Phone Number",
         "EMAIL": "Email Address",
         "LOADING": "Loading",
-        "LOST_CONNECTION": "The application lost connection to the server. Check your Internet connection and reload the page."
+        "LOST_CONNECTION": "The application lost connection to the server. Check your Internet connection and reload the page.",
+        "COMMENT_REQUEST": "Somebody would like to comment"
     },
     "SETTINGS": {
         "GENERAL" : {

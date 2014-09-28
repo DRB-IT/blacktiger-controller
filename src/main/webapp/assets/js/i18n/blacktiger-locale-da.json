@@ -84,7 +84,8 @@
         "PHONENUMBER": "Telefonnummer",
         "EMAIL": "E-mailadresse",
         "LOADING": "Henter oplysninger...",
-        "LOST_CONNECTION": "Forbindelsen til serveren blev afbrudt. Tjek internetforbindelsen og genindlæs siden (tryk F5)"
+        "LOST_CONNECTION": "Forbindelsen til serveren blev afbrudt. Tjek internetforbindelsen og genindlæs siden (tryk F5)",
+        "COMMENT_REQUEST": "Nogen ønsker at svare"
     },
     "SETTINGS": {
         "GENERAL" : {

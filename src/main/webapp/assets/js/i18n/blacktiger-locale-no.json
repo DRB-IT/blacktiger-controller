@@ -85,7 +85,8 @@
         "PHONENUMBER": "Telefonnummer",
         "EMAIL": "E-postadresse",
         "LOADING": "Laster inn...",
-        "LOST_CONNECTION": "Forbindelsen til serveren ble brutt. Sjekk internettforbindelsen, og oppdater siden (trykk F5)"
+        "LOST_CONNECTION": "Forbindelsen til serveren ble brutt. Sjekk internettforbindelsen, og oppdater siden (trykk F5)",
+        "COMMENT_REQUEST": "Somebody would like to comment"
     },
     "SETTINGS": {
         "GENERAL" : {
