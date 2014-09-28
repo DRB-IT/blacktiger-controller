@@ -740,7 +740,7 @@ function ModalEditNameCtrl($scope, $modalInstance, phoneNumber, currentName) {
     };
 }
 
-function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger, $translate) {
+function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger, $translate, $rootScope) {
     $scope.user = {};
     $scope.mailText = '';
     $scope.e164Pattern = blacktiger.getE164Pattern();
@@ -754,13 +754,14 @@ function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger, $translate) {
         };
     })();
 
-
     $scope.reset = function () {
         $scope.user.name = '';
         $scope.user.phoneNumber = '';
         $scope.user.email = '';
         $scope.mailText = $translate.instant('SETTINGS.CREATE_SIP_ACCOUNT.DEFAULT_MAILTEXT');
     };
+    
+    $rootScope.$on('$translateChangeSuccess', $scope.reset);
 
     $scope.createUser = function () {
         var data = {
