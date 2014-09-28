@@ -73,8 +73,8 @@ span.sorting:after { content: "↕"; margin-left: 3px; }
     -webkit-animation-name: shake;
     animation-duration: 0.7s;
     -webkit-animation-duration: 0.7s;
-    animation-iteration-count:21;
-    -webkit-animation-iteration-count:21;
+    animation-iteration-count:infinite;
+    -webkit-animation-iteration-count:infinite;
 }
 a.label {
     cursor:default !important;

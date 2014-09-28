@@ -114,7 +114,8 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
     }).run(ApplicationBoot)
     .filter('filterByRoles', filterByRoles)
     .directive('btCommentAlert', btCommentAlert)
-    .directive('btMusicplayer', btMusicPlayer);
+    .directive('btMusicplayer', btMusicPlayer)
+    .directive('btCommentRequestHighlight', btCommentRequestHighlighter);
 
 /*************************************** BOOT ********************************************/
 function ApplicationBoot(CONFIG, blacktiger, $location, LoginSvc, $rootScope) {
@@ -315,6 +316,27 @@ function btMusicPlayer() {
     };
 }
 
+function btCommentRequestHighlighter(CONFIG, $timeout) {
+    return {
+        restrict: 'A',
+        scope: {
+            participant: '='
+        },
+        link: function (scope, element, attrs) {
+            scope.$watch('participant.commentRequested', function(value) {
+                if(value === true) {
+                    element.addClass('shake');
+                    $timeout(function() {
+                        element.removeClass('shake');
+                    }, CONFIG.hightlightTimeout);
+                } else {
+                    element.removeClass('shake');
+                }
+            });
+        }
+    };
+}
+
 /*************************************** CONTROLLERS ********************************************/
 function MenuCtrl(CONFIG, $scope, $location, LoginSvc, $rootScope, $translate, blacktiger, $filter) {
     $scope.location = $location;
@@ -491,8 +513,26 @@ function RequestPasswordCtrl($scope, $location, $http, blacktiger, $filter, $log
     $scope._resolveCountryCode();
 }
 
-function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, ReportSvc, $log, blacktiger) {
+function RoomCtrl(CONFIG, $timeout, $scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, ReportSvc, $log, blacktiger) {
     $scope.participants = MeetingSvc.getParticipantList();
+    $scope._highlighted = [];
+    
+    $scope.isHightlighted = function(participant) {
+        return $scope._highlighted.indexOf(participant.callerId) >= 0;
+    };
+    
+    $scope.setHightlighted = function(participant, value) {
+        var index = $scope._highlighted.indexOf(participant.callerId);
+        if(value === true) {
+            if(index < 0) {
+                $scope._highlighted.push(participant.callerId);
+            }
+        } else {
+            if(index >= 0) {
+                $scope._highlighted.splice(index, 1);
+            }
+        }
+    };
     
     $scope.isHostInConference = function () {
         var value = false;
@@ -618,12 +658,20 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
     $scope.noOfHistoryEntries = function() {
         return Object.keys($scope.history).length;
     };
+    
+    
 
     $scope.$on('MeetingSvc.Join', function (event, participant) {
         //Ignore the host. It will not be part of the history.
         if (participant.host) {
             return;
         }
+        
+        // Add to highlight array
+        $scope.setHightlighted(participant, true);
+        $timeout(function() {
+            $scope.setHightlighted(participant, false);
+        }, CONFIG.highlighTimeout);
 
         $log.debug('New participants - adding to history.');
         var entry, call, history = $cookieStore.get($scope.historyCookieName),
@@ -654,6 +702,7 @@ function RoomCtrl($scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, Report
     });
 
     $scope.$on('MeetingSvc.Leave', function (event, participant) {
+        $scope.setHightlighted(participant, false);
         $log.debug('MeetingSvc.leave event received - updating history.');
         var history = $cookieStore.get($scope.historyCookieName),
             entry,

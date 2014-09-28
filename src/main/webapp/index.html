@@ -25,25 +25,25 @@
         <script type="text/javascript" src="assets/js/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
         <script type="text/javascript" src="assets/js/angular-translate/angular-translate.min.js"></script>
         <script type="text/javascript" src="assets/js/angular-translate-2.1.0/angular-translate-loader-static-files.min.js"></script>
-        <script type="text/javascript" src="assets/js/teljs/tel.js"></script>
-        <script type="text/javascript" src="assets/js/teljs/tel_meta.js"></script>
+        <script type="text/javascript" src="assets/js/teljs/src/tel.js"></script>
+        <script type="text/javascript" src="assets/js/teljs/src/metadatalite.js"></script>
 
-        <script src="assets/js/blacktiger-2.0.9.js"></script>
+        <script src="assets/js/blacktiger-2.0.10.js"></script>
         
-        <script>var BLACKTIGER_VERSION = "2.0.9";</script>
+        <script>var BLACKTIGER_VERSION = "2.0.10";</script>
     </head>
     <body ng-cloak>
         <div class="container-fluid-header" data-ng-controller="MenuCtrl">
             <span class="brand"><img src="assets/img/tslogo50.png" alt="{{'SYSTEM.NAME' | translate }} logo" /><span>{{'SYSTEM.NAME' | translate }}</span></span>
             <ul class="menu-bar">
                 <li data-ng-repeat="link in links | filterByRoles:currentUser.roles" data-ng-class="(link.url.substring(1) == location.path() && 'active')">
-                    <a href="{{ link.url }}" title="{{ link.name | translate }}" target="{{link.target ? link.target : '_self'}}"><span class="glyphicon glyphicon-{{link.icon}}"></span></a>
+                    <a href="{{ getUrl(link) }}" title="{{ link.name | translate }}" target="{{link.target ? link.target : '_self'}}"><span class="glyphicon glyphicon-{{link.icon}}"></span></a>
                 </li>
             </ul>
             <ul class="menu-bar pull-right">
                 <li>
                     <span>
-                        <select ng-model="language" ng-options="locale.locale as (locale.locale === language ? locale.localizedLanguage : locale.localizedLanguage+' ('+locale.language+')') for locale in languages | orderBy:'locale.localizedLanguage'"></select>
+                        <select ng-model="language" ng-options="locale.locale as (locale.locale === language ? locale.localizedLanguage : locale.language+' ('+locale.localizedLanguage+')') for locale in languages | orderBy:'locale.localizedLanguage'"></select>
                     </span>
                 </li>
 

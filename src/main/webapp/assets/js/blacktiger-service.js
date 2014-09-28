@@ -299,13 +299,13 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
     return function (url) {
         return new NGStomp(url);
     };
-}).factory('MeetingSvc', function ($rootScope, $timeout, ParticipantSvc, blacktiger, StompSvc, $log) {
+}).factory('MeetingSvc', function (CONFIG, $rootScope, $timeout, ParticipantSvc, blacktiger, StompSvc, $log) {
     'use strict';
     var participants = [],
         currentRoom = null,
         commentCancelPromiseArray = [],
         stompClient,
-        commentRequestTimeout = 60000,
+        commentRequestTimeout = CONFIG.commentRequestTimeout,
         eventSubscription = null;
 
     var indexByChannel = function (channel) {
