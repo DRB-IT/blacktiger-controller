@@ -461,15 +461,18 @@ function LoginCtrl($scope, $location, LoginSvc) {
     };
 }
 
-function RequestPasswordCtrl($scope, $location, $http, blacktiger, $filter, $log) {
-    $scope.request = {
-        phoneNumber: '',
-        phoneNumberOfHall: '',
-        emailTextUser: $filter('translate')('REQUEST_PASSWORD.EMAIL_TEXT_USER'),
-        emailSubject:  $filter('translate')('REQUEST_PASSWORD.EMAIL_SUBJECT'),
-        emailTextManager:  $filter('translate')('REQUEST_PASSWORD.EMAIL_TEXT_MANAGER')
+function RequestPasswordCtrl($scope, $location, $http, blacktiger, $filter, $log, $rootScope) {
+    $scope.reset = function() {
+        $scope.request = {
+            phoneNumber: '',
+            phoneNumberOfHall: '',
+            emailTextUser: $filter('translate')('REQUEST_PASSWORD.EMAIL_TEXT_USER'),
+            emailSubject:  $filter('translate')('REQUEST_PASSWORD.EMAIL_SUBJECT'),
+            emailTextManager:  $filter('translate')('REQUEST_PASSWORD.EMAIL_TEXT_MANAGER')
+        };
+        $scope.status = null;
     };
-    $scope.status = null;
+    
     
     $scope._countryCodeToAreaCode = function(countryCode) {
         var data = i18n.phonenumbers.metadata.countryToMetadata[countryCode.toUpperCase()];
@@ -510,6 +513,8 @@ function RequestPasswordCtrl($scope, $location, $http, blacktiger, $filter, $log
         $location.path('/login');
     };
     
+    $scope.reset();
+    $rootScope.$on('$translateChangeSuccess', $scope.reset);
     $scope._resolveCountryCode();
 }
 
