@@ -1,5 +1,15 @@
 /*jslint browser: true*/
-/*global angular, BLACKTIGER_VERSION*/
+/*global angular, BLACKTIGER_VERSION, $*/
+
+/*************************************** HACKS  ********************************************/
+// IE does not support History API very well. We need to force a location reload to make sure that the url change is accepted by AngularJS.
+// https://github.com/angular/angular.js/issues/8869
+if(window.navigator.userAgent.indexOf('MSIE ') >= 0) {
+    $('[hacked-for-ie]').on('click', 'a', function() {
+		window.location.href = $(this).attr('href');
+	});
+}
+
 /*************************************** MODULE ********************************************/
 
 var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.translate', 'ui.bootstrap', 'blacktiger-service', 'blacktiger-ui', 'teljs'])
@@ -7,6 +17,9 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
         var mode = "normal",
             token, params = [],
             search, list, url, elements, language, langData;
+        
+        $locationProvider.html5Mode(false);
+        $locationProvider.hashPrefix('!');
 
         // SECURITY (forward to login if not authorized)
         $httpProvider.interceptors.push(function ($location) {
@@ -338,17 +351,16 @@ function btCommentRequestHighlighter(CONFIG, $timeout) {
 }
 
 /*************************************** CONTROLLERS ********************************************/
-function MenuCtrl(CONFIG, $scope, $location, LoginSvc, $rootScope, $translate, blacktiger, $filter) {
-    $scope.location = $location;
+function MenuCtrl(CONFIG, $scope, LoginSvc, $rootScope, $translate, blacktiger, $filter) {
     $scope.links = [
         {
-            url: "#/",
+            url: "#!/",
             name: 'NAVIGATION.PARTICIPANTS',
             icon: 'user',
             requiredRole: 'ROLE_HOST'
         },
         {
-            url: "#/settings",
+            url: "#!/settings",
             name: 'NAVIGATION.SETTINGS',
             icon: 'cog',
             requiredRole: 'ROLE_HOST'
@@ -365,13 +377,13 @@ function MenuCtrl(CONFIG, $scope, $location, LoginSvc, $rootScope, $translate, b
             target: '_blank'
         },
         {
-            url: "#/admin/realtime",
+            url: "#!/admin/realtime",
             name: 'NAVIGATION.ADMIN.REALTIME',
             icon: 'transfer',
             requiredRole: 'ROLE_ADMIN'
         },
         {
-            url: "#/admin/history",
+            url: "#!/admin/history",
             name: 'NAVIGATION.ADMIN.HISTORY',
             icon: 'calendar',
             requiredRole: 'ROLE_ADMIN'
@@ -442,7 +454,7 @@ function RoomDisplayCtrl($scope, RoomSvc, LoginSvc, $rootScope, MeetingSvc) {
 
 }
 
-function LoginCtrl($scope, $location, LoginSvc) {
+function LoginCtrl($scope, LoginSvc) {
     $scope.username = "";
     $scope.password = "";
     $scope.rememberMe = false;
@@ -457,11 +469,12 @@ function LoginCtrl($scope, $location, LoginSvc) {
     };
 
     $scope.requestPassword = function () {
-        $location.path('/request_password');
+        window.location.hash = '/request_password';
+        //$location.path('/request_password');
     };
 }
 
-function RequestPasswordCtrl($scope, $location, $http, blacktiger, $filter, $log, $rootScope) {
+function RequestPasswordCtrl($scope, $http, blacktiger, $filter, $log, $rootScope) {
     $scope.reset = function() {
         $scope.request = {
             phoneNumber: '',
@@ -510,7 +523,8 @@ function RequestPasswordCtrl($scope, $location, $http, blacktiger, $filter, $log
     };
 
     $scope.cancel = function () {
-        $location.path('/login');
+        window.location.hash = '/login';
+        //$location.path('/login');
     };
     
     $scope.reset();
