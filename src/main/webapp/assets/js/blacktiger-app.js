@@ -5,9 +5,19 @@
 // IE does not support History API very well. We need to force a location reload to make sure that the url change is accepted by AngularJS.
 // https://github.com/angular/angular.js/issues/8869
 if (window.navigator.userAgent.indexOf('MSIE ') >= 0 || window.navigator.userAgent.indexOf('Trident/') >= 0) {
-    $('[hacked-for-ie]').on('click', 'a', function () {
-        window.location.href = $(this).attr('href');
-    });
+    if(window.location.hash !== '' && window.location.hash !== '#!/') {
+        alert(window.location.hash);
+        window.location.hash = '#!/';
+        window.location.reload();
+    } else {
+        $('[hacked-for-ie]').on('click', 'a', function () {
+            var href = $(this).attr('href');
+            var target = $(this).attr('target');
+            if(href && (!target || target === '_self')) {
+                window.location.href = href;
+            }
+        });
+    }
 }
 
 /*************************************** MODULE ********************************************/
@@ -32,6 +42,8 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
                 }
             };
         });
+        
+        $httpProvider.defaults.headers.get = {'Cache-Control': 'no-cache', 'Pragma': 'no-cache'}; 
 
         //load config
 
@@ -560,25 +572,7 @@ function RequestPasswordCtrl($scope, $http, blacktiger, $filter, $log, $rootScop
 
 function RoomCtrl(CONFIG, $timeout, $scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, ReportSvc, $log, blacktiger) {
     $scope.participants = MeetingSvc.getParticipantList();
-    $scope._highlighted = [];
-
-    $scope.isHightlighted = function (participant) {
-        return $scope._highlighted.indexOf(participant.callerId) >= 0;
-    };
-
-    $scope.setHightlighted = function (participant, value) {
-        var index = $scope._highlighted.indexOf(participant.callerId);
-        if (value === true) {
-            if (index < 0) {
-                $scope._highlighted.push(participant.callerId);
-            }
-        } else {
-            if (index >= 0) {
-                $scope._highlighted.splice(index, 1);
-            }
-        }
-    };
-
+    
     $scope.isHostInConference = function () {
         var value = false;
         angular.forEach($scope.participants, function (p) {
@@ -665,7 +659,7 @@ function RoomCtrl(CONFIG, $timeout, $scope, $cookieStore, $modal, MeetingSvc, Ph
     $scope.updateHistory = function () {
         var history = $cookieStore.get($scope.historyCookieName),
             participants = MeetingSvc.getParticipantList(),
-            cleansedHistory = [];
+            cleansedHistory = {};
 
         angular.forEach(history, function (entry) {
             var stillParticipating = false;
@@ -677,7 +671,7 @@ function RoomCtrl(CONFIG, $timeout, $scope, $cookieStore, $modal, MeetingSvc, Ph
             });
 
             if (!stillParticipating && !entry.host) {
-                cleansedHistory.push(entry);
+                cleansedHistory[entry.callerId] = entry;
             }
         });
 
@@ -693,7 +687,7 @@ function RoomCtrl(CONFIG, $timeout, $scope, $cookieStore, $modal, MeetingSvc, Ph
         if (MeetingSvc.getRoom() !== null) {
             $scope.historyCookieName = 'meetingHistory-' + MeetingSvc.getRoom().id + '-' + blacktiger.getInstanceId();
             $scope.history = $cookieStore.get($scope.historyCookieName);
-            if (!$scope.history) {
+            if (!$scope.history || angular.isArray($scope.history)) {
                 $scope.history = {};
                 $cookieStore.put($scope.historyCookieName, {});
             }
@@ -711,12 +705,6 @@ function RoomCtrl(CONFIG, $timeout, $scope, $cookieStore, $modal, MeetingSvc, Ph
         if (participant.host) {
             return;
         }
-
-        // Add to highlight array
-        $scope.setHightlighted(participant, true);
-        $timeout(function () {
-            $scope.setHightlighted(participant, false);
-        }, CONFIG.highlighTimeout);
 
         $log.debug('New participants - adding to history.');
         var entry, call, history = $cookieStore.get($scope.historyCookieName),
@@ -747,7 +735,6 @@ function RoomCtrl(CONFIG, $timeout, $scope, $cookieStore, $modal, MeetingSvc, Ph
     });
 
     $scope.$on('MeetingSvc.Leave', function (event, participant) {
-        $scope.setHightlighted(participant, false);
         $log.debug('MeetingSvc.leave event received - updating history.');
         var history = $cookieStore.get($scope.historyCookieName),
             entry,

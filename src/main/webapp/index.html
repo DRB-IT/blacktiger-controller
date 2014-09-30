@@ -28,15 +28,15 @@
         <script type="text/javascript" src="assets/js/teljs/src/tel.js"></script>
         <script type="text/javascript" src="assets/js/teljs/src/metadatalite.js"></script>
 
-        <script src="assets/js/blacktiger-2.0.11.js"></script>
+        <script src="assets/js/blacktiger-2.0.12.js"></script>
         
-        <script>var BLACKTIGER_VERSION = "2.0.11";</script>
+        <script>var BLACKTIGER_VERSION = "2.0.12";</script>
     </head>
     <body ng-cloak>
         <div class="container-fluid-header" data-ng-controller="MenuCtrl">
             <span class="brand"><img src="assets/img/tslogo50.png" alt="{{'SYSTEM.NAME' | translate }} logo" /><span>{{'SYSTEM.NAME' | translate }}</span></span>
             <ul class="menu-bar">
-                <li data-ng-repeat="link in links | filterByRoles:currentUser.roles" data-ng-class="(link.url.substring(1) == location.path() && 'active')">
+                <li data-ng-repeat="link in links | filterByRoles:currentUser.roles" data-ng-class="(isActiveLink(link) && 'active')">
                     <a href="{{ getUrl(link) }}" title="{{ link.name | translate }}" target="{{link.target ? link.target : '_self'}}"><span class="glyphicon glyphicon-{{link.icon}}"></span></a>
                 </li>
             </ul>
