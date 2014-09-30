@@ -4,10 +4,10 @@
 /*************************************** HACKS  ********************************************/
 // IE does not support History API very well. We need to force a location reload to make sure that the url change is accepted by AngularJS.
 // https://github.com/angular/angular.js/issues/8869
-if(window.navigator.userAgent.indexOf('MSIE ') >= 0) {
-    $('[hacked-for-ie]').on('click', 'a', function() {
-		window.location.href = $(this).attr('href');
-	});
+if (window.navigator.userAgent.indexOf('MSIE ') >= 0 || window.navigator.userAgent.indexOf('Trident/') >= 0) {
+    $('[hacked-for-ie]').on('click', 'a', function () {
+        window.location.href = $(this).attr('href');
+    });
 }
 
 /*************************************** MODULE ********************************************/
@@ -17,7 +17,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
         var mode = "normal",
             token, params = [],
             search, list, url, elements, language, langData;
-        
+
         $locationProvider.html5Mode(false);
         $locationProvider.hashPrefix('!');
 
@@ -144,23 +144,29 @@ function ApplicationBoot(CONFIG, blacktiger, $location, LoginSvc, $rootScope) {
     $rootScope.$on("logout", function () {
         $location.path('login');
     });
-    
+
     $rootScope.$on("login", function (event, user) {
         if (user.roles.indexOf('ROLE_HOST') >= 0) {
-            
+
             $location.path('');
         } else if (user.roles.indexOf('ROLE_ADMIN') >= 0) {
             $location.path('/admin/realtime');
         }
     });
-    
-    $rootScope.$watch('currentRoom', function(room) {
-        if(room && (
-            !room.contact.name || room.contact.name === '' || 
+
+    $rootScope.$watch('currentRoom', function (room) {
+        if (room && (!room.contact.name || room.contact.name === '' ||
             !room.contact.email || room.contact.email === '' ||
             !room.contact.phoneNumber || room.contact.phoneNumber === '')) {
             $location.path('/settings/contact');
         }
+    });
+
+    $rootScope.$on('$locationChangeStart', function () {
+        console.log('location change started', $location.url());
+    });
+    $rootScope.$on('$locationChangeSuccess', function () {
+        console.log('location change ended', $location.url());
     });
 }
 
@@ -336,10 +342,10 @@ function btCommentRequestHighlighter(CONFIG, $timeout) {
             participant: '='
         },
         link: function (scope, element, attrs) {
-            scope.$watch('participant.commentRequested', function(value) {
-                if(value === true) {
+            scope.$watch('participant.commentRequested', function (value) {
+                if (value === true) {
                     element.addClass('shake');
-                    $timeout(function() {
+                    $timeout(function () {
                         element.removeClass('shake');
                     }, CONFIG.hightlightTimeout);
                 } else {
@@ -351,7 +357,7 @@ function btCommentRequestHighlighter(CONFIG, $timeout) {
 }
 
 /*************************************** CONTROLLERS ********************************************/
-function MenuCtrl(CONFIG, $scope, LoginSvc, $rootScope, $translate, blacktiger, $filter) {
+function MenuCtrl(CONFIG, $scope, LoginSvc, $rootScope, $translate, blacktiger, $filter, $location) {
     $scope.links = [
         {
             url: "#!/",
@@ -366,7 +372,7 @@ function MenuCtrl(CONFIG, $scope, LoginSvc, $rootScope, $translate, blacktiger, 
             requiredRole: 'ROLE_HOST'
         },
         {
-            url: function() {
+            url: function () {
                 var url = CONFIG.RootHelp;
                 url = url.replace("{%1}", $scope.language);
                 return url;
@@ -389,15 +395,29 @@ function MenuCtrl(CONFIG, $scope, LoginSvc, $rootScope, $translate, blacktiger, 
             requiredRole: 'ROLE_ADMIN'
         }
     ];
-    
-    $scope.getUrl = function(link) {
-        if(angular.isFunction(link.url)) {
+
+    $scope.getUrl = function (link) {
+        if (angular.isFunction(link.url)) {
             return link.url();
         } else {
             return link.url;
         }
     };
     
+    $scope.isActiveLink = function(link) {
+        var url = $scope.getUrl(link);
+        var linkPath = url.substring(2);
+        var currentPath = $location.path();
+        
+        if("/" === currentPath && "/" === linkPath) {
+            return true; 
+        } else if("/" !== linkPath){
+            return linkPath === (currentPath.length > linkPath.length ? currentPath.substring(0, linkPath.length) : currentPath);
+        } else {
+            return false;
+        }
+    };
+
     $scope.languages = [{
         locale: 'da',
         'localizedLanguage': 'Dansk'
@@ -423,14 +443,20 @@ function MenuCtrl(CONFIG, $scope, LoginSvc, $rootScope, $translate, blacktiger, 
         });
 
     });
-    
+
     $rootScope.$on('MeetingSvc.Lost_Connection', function () {
         alert($filter('translate')('GENERAL.LOST_CONNECTION'));
     });
 }
 
-function RoomDisplayCtrl($scope, RoomSvc, LoginSvc, $rootScope, MeetingSvc) {
+function RoomDisplayCtrl($scope, RoomSvc, LoginSvc, $rootScope, MeetingSvc, $location) {
     $scope.rooms = null;
+
+    $scope.goToTechContact = function () {
+        // We have to use a method to direct to Contact because IE has some serious issues regarding History API when it comes to following some links.
+        //This was apparantly one of them.
+        $location.path("/settings/contact");
+    };
 
     $scope.updateCurrentRoom = function () {
         if ($scope.currentUser && $scope.currentUser.roles.indexOf('ROLE_HOST') >= 0 &&
@@ -446,7 +472,7 @@ function RoomDisplayCtrl($scope, RoomSvc, LoginSvc, $rootScope, MeetingSvc) {
         $scope.rooms = RoomSvc.query();
         $scope.rooms.$promise.then($scope.updateCurrentRoom);
     });
-    
+
     $scope.$on("afterLogout", function () {
         $scope.rooms = null;
         $scope.updateCurrentRoom();
@@ -475,43 +501,43 @@ function LoginCtrl($scope, LoginSvc) {
 }
 
 function RequestPasswordCtrl($scope, $http, blacktiger, $filter, $log, $rootScope) {
-    $scope.reset = function() {
+    $scope.reset = function () {
         $scope.request = {
             phoneNumber: '',
             phoneNumberOfHall: '',
             emailTextUser: $filter('translate')('REQUEST_PASSWORD.EMAIL_TEXT_USER'),
-            emailSubject:  $filter('translate')('REQUEST_PASSWORD.EMAIL_SUBJECT'),
-            emailTextManager:  $filter('translate')('REQUEST_PASSWORD.EMAIL_TEXT_MANAGER')
+            emailSubject: $filter('translate')('REQUEST_PASSWORD.EMAIL_SUBJECT'),
+            emailTextManager: $filter('translate')('REQUEST_PASSWORD.EMAIL_TEXT_MANAGER')
         };
         $scope.status = null;
     };
-    
-    
-    $scope._countryCodeToAreaCode = function(countryCode) {
+
+
+    $scope._countryCodeToAreaCode = function (countryCode) {
         var data = i18n.phonenumbers.metadata.countryToMetadata[countryCode.toUpperCase()];
-        if(!data) {
+        if (!data) {
             return null;
         } else {
             return data[10];
         }
     };
-    
-    $scope._resolveCountryCode = function() {
+
+    $scope._resolveCountryCode = function () {
         var host, hostData, isoCountryCode;
-        
+
         host = location.host;
         hostData = host.split('.');
-        
-        if(hostData.length < 3 || !$scope._countryCodeToAreaCode(hostData[hostData.length - 3])) {
+
+        if (hostData.length < 3 || !$scope._countryCodeToAreaCode(hostData[hostData.length - 3])) {
             $log.debug("Unable to resolve countrycode from url. Falling back to 'DK'");
             isoCountryCode = 'dk';
         } else {
             isoCountryCode = hostData[hostData.length - 3];
         }
         $scope.countryCode = $scope._countryCodeToAreaCode(isoCountryCode);
-        
+
     };
-    
+
     $scope.send = function () {
         $http.post(blacktiger.getServiceUrl() + 'system/passwordRequests', $scope.request).then(function (response) {
             if (response.status !== 200) {
@@ -526,7 +552,7 @@ function RequestPasswordCtrl($scope, $http, blacktiger, $filter, $log, $rootScop
         window.location.hash = '/login';
         //$location.path('/login');
     };
-    
+
     $scope.reset();
     $rootScope.$on('$translateChangeSuccess', $scope.reset);
     $scope._resolveCountryCode();
@@ -535,24 +561,24 @@ function RequestPasswordCtrl($scope, $http, blacktiger, $filter, $log, $rootScop
 function RoomCtrl(CONFIG, $timeout, $scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, ReportSvc, $log, blacktiger) {
     $scope.participants = MeetingSvc.getParticipantList();
     $scope._highlighted = [];
-    
-    $scope.isHightlighted = function(participant) {
+
+    $scope.isHightlighted = function (participant) {
         return $scope._highlighted.indexOf(participant.callerId) >= 0;
     };
-    
-    $scope.setHightlighted = function(participant, value) {
+
+    $scope.setHightlighted = function (participant, value) {
         var index = $scope._highlighted.indexOf(participant.callerId);
-        if(value === true) {
-            if(index < 0) {
+        if (value === true) {
+            if (index < 0) {
                 $scope._highlighted.push(participant.callerId);
             }
         } else {
-            if(index >= 0) {
+            if (index >= 0) {
                 $scope._highlighted.splice(index, 1);
             }
         }
     };
-    
+
     $scope.isHostInConference = function () {
         var value = false;
         angular.forEach($scope.participants, function (p) {
@@ -662,33 +688,33 @@ function RoomCtrl(CONFIG, $timeout, $scope, $cookieStore, $modal, MeetingSvc, Ph
         $cookieStore.put($scope.historyCookieName, []);
         $scope.updateHistory();
     };
-    
-    $scope.initHistory = function() {
-        if(MeetingSvc.getRoom() !== null) {
+
+    $scope.initHistory = function () {
+        if (MeetingSvc.getRoom() !== null) {
             $scope.historyCookieName = 'meetingHistory-' + MeetingSvc.getRoom().id + '-' + blacktiger.getInstanceId();
             $scope.history = $cookieStore.get($scope.historyCookieName);
-            if(!$scope.history) {
+            if (!$scope.history) {
                 $scope.history = {};
                 $cookieStore.put($scope.historyCookieName, {});
             }
         }
     };
-    
-    $scope.noOfHistoryEntries = function() {
+
+    $scope.noOfHistoryEntries = function () {
         return Object.keys($scope.history).length;
     };
-    
-    
+
+
 
     $scope.$on('MeetingSvc.Join', function (event, participant) {
         //Ignore the host. It will not be part of the history.
         if (participant.host) {
             return;
         }
-        
+
         // Add to highlight array
         $scope.setHightlighted(participant, true);
-        $timeout(function() {
+        $timeout(function () {
             $scope.setHightlighted(participant, false);
         }, CONFIG.highlighTimeout);
 
@@ -779,7 +805,7 @@ function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger, $translate, $rootS
         $scope.user.email = '';
         $scope.mailText = $translate.instant('SETTINGS.CREATE_SIP_ACCOUNT.DEFAULT_MAILTEXT');
     };
-    
+
     $rootScope.$on('$translateChangeSuccess', $scope.reset);
 
     $scope.createUser = function () {
@@ -981,13 +1007,13 @@ function SipAccountRetrievalCtrl(CONFIG, $scope, SipUserSvc, token, $rootScope, 
             $scope.sipinfo = null;
         });
     };
-    
-    $scope.getSipHelpURL = function() {
+
+    $scope.getSipHelpURL = function () {
         var url = CONFIG.SIPHelp;
         url = url.replace("{%1}", $scope.language);
         return url;
     };
-    
+
     $scope.language = $translate.use();
 }
 
