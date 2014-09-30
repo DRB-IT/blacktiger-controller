@@ -1,6 +1,6 @@
 {
   "name": "blacktiger-web",
-  "version": "2.0.12",
+  "version": "2.0.13",
   "homepage": "https://github.com/DRB-IT/blacktiger-web",
   "dependencies": {
     "angular": "~1.2.20",
