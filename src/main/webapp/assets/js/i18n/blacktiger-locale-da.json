@@ -48,7 +48,7 @@
         "UNMUTE": "Åbn svar-mikrofon",
         "MUTE": "Luk svar-mikrofon",
         "KICK": "Afbryd lytter",
-        "EDIT": "Rediger navn",
+        "EDIT": "Rediger lytterens navn",
         "PARTICIPANTS": "{{noOfParticipants}} lyttere",
         "ABORT_TRANSMISSION": "Afbryd transmission",
         "COMPLETED_CALLS": "{{noOfCompletedCalls}} afsluttede opkald",
