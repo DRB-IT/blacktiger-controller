@@ -43,10 +43,6 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
             };
         });
         
-        $httpProvider.defaults.headers.get = {'Cache-Control': 'no-cache', 'Pragma': 'no-cache'}; 
-
-        //load config
-
         // Find params
         search = window.location.search;
         if (search.length > 0 && search.charAt(0) === '?') {
