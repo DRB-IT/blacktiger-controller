@@ -37,10 +37,10 @@
     "PARTICIPANTS": {
         "WARNINGS": {
             "NO_PARTICIPANTS_AND_TRANSMITTERS": "There is no transmission now, and no listeners are online.",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "No sound is beeing sent to the listeners!",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "Please check that X-Lite has been startet",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "No sound is being sent to the listeners!",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "Please check that X-Lite has been started",
             "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "Dial {{phoneNumber | telephone}} from X-Lite",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Then dial the same number form another phone and check the sound quality, and if nessesary adjust the volume"
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Then dial the same number from another phone and check the sound quality, and if nessesary adjust the volume"
         },
         "INFO": {
             "NO_PARTICIPANTS": "There is  no listeners at the moment.",
@@ -49,7 +49,7 @@
         "UNMUTE": "Unmute comment microphone",
         "MUTE": "Mute comment microphone",
         "KICK": "Hang up",
-        "EDIT": "Edit name",
+        "EDIT": "Edit listener's name",
         "PARTICIPANTS": "{{noOfParticipants}} listeners",
         "ABORT_TRANSMISSION": "Abort transmission",
         "COMPLETED_CALLS": "{{noOfCompletedCalls}} completed calls",
