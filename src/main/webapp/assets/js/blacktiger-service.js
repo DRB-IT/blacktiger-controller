@@ -587,17 +587,6 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                     handleEvent(e);
                 });
             });
-            /*stompClient.subscribe("/rooms/*", function(data) {
-                    var events = angular.fromJson(data.body);
-                    for(var i=0;i<events.length;i++) {
-                        handleEvent(events[i]);
-                    }
-
-                    stompClient.subscribe("/queue/events/*", function(message) {
-                        var e = angular.fromJson(message.body);
-                        handleEvent(e);
-                    });
-                });*/
 
         }, function () {
             alert("Unable to connecto to socket");

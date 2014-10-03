@@ -5,8 +5,8 @@
 </div>
 
 <div ng-if="currentRoom">
-
-    <div class="alert alert-info" ng-show="participants.length==0" translate="PARTICIPANTS.WARNINGS.NO_PARTICIPANTS_AND_TRANSMITTERS"></div>
+    <bt-meeting-room></bt-meeting-room>
+    <!--div class="alert alert-info" ng-show="participants.length==0" translate="PARTICIPANTS.WARNINGS.NO_PARTICIPANTS_AND_TRANSMITTERS"></div>
 
     <div class="alert alert-danger" ng-show="!isHostInConference() && (participants|filter:{host:false}).length>0">
         <b translate="PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE"></b>
@@ -16,7 +16,7 @@
             <li translate="PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3"></li>
         </ol>
     </div>
-    <h3><span ng-if="(participants|filter:{host:false}).length>0" translate="PARTICIPANTS.PARTICIPANTS" translate-values="{noOfParticipants:(participants|filter:{host:false}).length}"></span>
+    <h3><span translate="PARTICIPANTS.PARTICIPANTS" translate-values="{noOfParticipants:(participants|filter:{host:false}).length}"></span>
         <small class="pull-right" ng-repeat="participant in participants | filter:{host:true}" ng-animate=" 'animate' ">{{participant.name ? participant.name : 'No name'}} &bull; <a href="#" class="text-danger" ng-click="kickParticipant(participant.channel)" title="{{'PARTICIPANTS.ABORT_TRANSMISSION' | translate}}">{{'PARTICIPANTS.ABORT_TRANSMISSION' | translate}} <span class="glyphicon glyphicon-off"></span></a></small>
     </h3>
     <table class="table table-striped table-hover table-condensed participantsTable">
@@ -59,10 +59,10 @@
             </td>
         </tr>
         </tbody>
-    </table>
+    </table-->
 
-    <!--bt-history></bt-history-->
-    <h3><span ng-if="history.length>0" translate="PARTICIPANTS.COMPLETED_CALLS" translate-values="{noOfCompletedCalls:history.length}"}></span>
+    <bt-history></bt-history>
+    <!--h3><span ng-if="history.length>0" translate="PARTICIPANTS.COMPLETED_CALLS" translate-values="{noOfCompletedCalls:history.length}"}></span>
         <a ng-click="deleteHistory();" class="btn btn-link btn-sm pull-right">{{'REPORT.DELETE' | translate}} <span class="glyphicon glyphicon-trash"></span></a>
     </h3>
     <table class="table table-striped table-hover table-condensed participantsTable">
@@ -97,6 +97,6 @@
             </td>
         </tr>
         </tbody>
-    </table>
+    </table-->
 
 </div>

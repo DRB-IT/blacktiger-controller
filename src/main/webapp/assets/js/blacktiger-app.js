@@ -566,7 +566,7 @@ function RequestPasswordCtrl($scope, $http, blacktiger, $filter, $log, $rootScop
     $scope._resolveCountryCode();
 }
 
-function RoomCtrl(CONFIG, $timeout, $scope, $cookieStore, $modal, MeetingSvc, PhoneBookSvc, ReportSvc, $log, blacktiger) {
+function RoomCtrl($scope, $modal, MeetingSvc, PhoneBookSvc) {
     $scope.participants = MeetingSvc.getParticipantList();
     
     $scope.isHostInConference = function () {
@@ -595,7 +595,7 @@ function RoomCtrl(CONFIG, $timeout, $scope, $cookieStore, $modal, MeetingSvc, Ph
     $scope.changeName = function (phoneNumber, currentName) {
         var modalInstance = $modal.open({
             templateUrl: 'assets/templates/modal-edit-name.html',
-            controller: ModalEditNameCtrl,
+            controller: 'ModalEditNameCtrl',
             resolve: {
                 phoneNumber: function () {
                     return phoneNumber;
@@ -618,155 +618,11 @@ function RoomCtrl(CONFIG, $timeout, $scope, $cookieStore, $modal, MeetingSvc, Ph
                 p.name = name;
             }
         });
-
-        // Make sure names in historydata in cookie is updated and update history display.
-        var history = $cookieStore.get($scope.historyCookieName);
-        angular.forEach(history, function (entry) {
-            if (phone === entry.phoneNumber) {
-                entry.name = name;
-            }
-        });
-        $cookieStore.put($scope.historyCookieName, history);
-        $scope.updateHistory();
     });
-
-    $scope.calculateTotalDuration = function (entry) {
-        var duration = 0;
-        angular.forEach(entry.calls, function (call) {
-            if (call.end !== null) {
-                duration += call.end - call.start;
-            }
-        });
-        return duration;
-    };
-
-    $scope.noOfCallsForCallerId = function (callerId) {
-        var count = 0,
-            history = $cookieStore.get($scope.historyCookieName);
-        angular.forEach(history, function (entry) {
-            if (callerId === entry.callerId) {
-                count = entry.calls.length;
-            }
-        });
-
-        return count;
-    };
-
-    $scope.updateHistory = function () {
-        var history = $cookieStore.get($scope.historyCookieName),
-            participants = MeetingSvc.getParticipantList(),
-            cleansedHistory = {};
-
-        angular.forEach(history, function (entry) {
-            var stillParticipating = false;
-            angular.forEach(participants, function (participant) {
-                if (participant.callerId === entry.callerId) {
-                    stillParticipating = true;
-                    return false;
-                }
-            });
-
-            if (!stillParticipating && !entry.host) {
-                cleansedHistory[entry.callerId] = entry;
-            }
-        });
-
-        $scope.history = cleansedHistory;
-    };
-
-    $scope.deleteHistory = function () {
-        $cookieStore.put($scope.historyCookieName, []);
-        $scope.updateHistory();
-    };
-
-    $scope.initHistory = function () {
-        if (MeetingSvc.getRoom() !== null) {
-            $scope.historyCookieName = 'meetingHistory-' + MeetingSvc.getRoom().id + '-' + blacktiger.getInstanceId();
-            $scope.history = $cookieStore.get($scope.historyCookieName);
-            if (!$scope.history || angular.isArray($scope.history)) {
-                $scope.history = {};
-                $cookieStore.put($scope.historyCookieName, {});
-            }
-        }
-    };
-
-    $scope.noOfHistoryEntries = function () {
-        return Object.keys($scope.history).length;
-    };
-
-
-
-    $scope.$on('MeetingSvc.Join', function (event, participant) {
-        //Ignore the host. It will not be part of the history.
-        if (participant.host) {
-            return;
-        }
-
-        $log.debug('New participants - adding to history.');
-        var entry, call, history = $cookieStore.get($scope.historyCookieName),
-            key = participant.callerId;
-        if (history[key] === undefined) {
-            entry = {
-                type: participant.type,
-                callerId: participant.callerId,
-                phoneNumber: participant.phoneNumber,
-                name: participant.name,
-                firstCall: new Date().getTime(),
-                calls: []
-            };
-            history[key] = entry;
-        } else {
-            entry = history[key];
-        }
-
-        call = {
-            start: new Date().getTime(),
-            end: null
-        };
-        entry.calls.push(call);
-
-        $cookieStore.put($scope.historyCookieName, history);
-        $scope.updateHistory();
-
-    });
-
-    $scope.$on('MeetingSvc.Leave', function (event, participant) {
-        $log.debug('MeetingSvc.leave event received - updating history.');
-        var history = $cookieStore.get($scope.historyCookieName),
-            entry,
-            key = participant.callerId;
-        entry = history[key];
-        if (entry) {
-            angular.forEach(entry.calls, function (call) {
-                if (call.end === null) {
-                    call.end = new Date().getTime();
-                    $cookieStore.put($scope.historyCookieName, history);
-                    return false;
-                }
-            });
-        }
-        $scope.updateHistory();
-    });
-
-    $scope.$on('MeetingSvc.RoomChanged', $scope.initHistory);
-    $scope.initHistory();
 
 }
 
-function ModalEditNameCtrl($scope, $modalInstance, phoneNumber, currentName) {
-    $scope.data = {
-        name: currentName,
-        phoneNumber: phoneNumber
-    };
 
-    $scope.ok = function () {
-        $modalInstance.close($scope.data.name);
-    };
-
-    $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
-    };
-}
 
 function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger, $translate, $rootScope) {
     $scope.user = {};
