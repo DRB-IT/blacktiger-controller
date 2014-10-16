@@ -49,7 +49,7 @@
         "UNMUTE": "Unmute comment microphone",
         "MUTE": "Mute comment microphone",
         "KICK": "Hang up",
-        "EDIT": "Edit listener's name",
+        "EDIT": "Edit name",
         "PARTICIPANTS": "{{noOfParticipants}} listeners",
         "ABORT_TRANSMISSION": "Abort transmission",
         "COMPLETED_CALLS": "{{noOfCompletedCalls}} completed calls",
