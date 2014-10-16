@@ -43,7 +43,7 @@
             "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Then dial the same number from another phone and check the sound quality, and if nessesary adjust the volume"
         },
         "INFO": {
-            "NO_PARTICIPANTS": "There is  no listeners at the moment.",
+            "NO_PARTICIPANTS": "There are no listeners at the moment.",
             "UNMUTED": "The comment microphone is open!"
         },
         "UNMUTE": "Unmute comment microphone",
