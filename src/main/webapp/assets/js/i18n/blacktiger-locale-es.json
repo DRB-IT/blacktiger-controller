@@ -1,37 +1,37 @@
 {
     "LOGIN": {
-        "USERNAME": "User name",
-        "PASSWORD": "Password",
-        "REMEMBER_ME": "Save the password at this computer",
-        "LOG_IN": "Log in",
-        "ALERT": "<strong>This is a private system.</strong> Do not try to log in unless you have a permission to do so.",
-        "INVALID_CREDENTIALS": "The user name or password is wrong.",
-        "FORGOT_PASSWORD": "Forgot password"
+        "USERNAME": "Nombre de usuario",
+        "PASSWORD": "Contraseña",
+        "REMEMBER_ME": "Recordar contraseña en este equipo",
+        "LOG_IN": "Iniciar sesión",
+        "ALERT": "<strong>Este es un sistema privado.</strong> No trate de entrar a menos que tenga un permiso para hacerlo.",
+        "INVALID_CREDENTIALS": "El nombre de usuario o la contraseña es incorrecta.",
+        "FORGOT_PASSWORD": "Olvidó su contraseña"
     },
     "REQUEST_PASSWORD": {
-        "NAME": "Your full name:",
-        "PHONENUMBER": "Your mobile phone number:",
-        "EMAIL": "Your e-mail address:",
-        "CITY_OF_HALL": "The city where the hall is located:",
-        "PHONENUMBER_OF_HALL": "The Telesal phone number for the hall:",
-        "ERROR": "We did not find any match for this information. You may edit the information and try again.",
-        "SUCCESS": "There has been sent an e-mail to you. You may need to check your junk mail folder also.",
-        "EMAIL_TEXT_USER": "You have activated 'forgot password' for the hall using phone number {%1}. The password has been sent to {%5}, which is the e-mail address which was entered earlier for the technical responsible for this hall. His name is {%3} and his phone number is {%4}.\n\nThe user ID which must be used together with the password is {%2}.",
-        "EMAIL_TEXT_MANAGER": "{%1} has activated 'forgot password' for the hall using phone number {%4}, which you are technically responsible for. His phone number is {%2}, and his e-mail is {%3}. For security reasons, the password been sent to you only, not to him. You must contact him to check if he should have the password from you.\n\nThe password is: {%5}\n",
-        "EMAIL_SUBJECT": "Telesal in {%1}"
+        "NAME": "Nombre completo:",
+        "PHONENUMBER": "Número de teléfono móvil:",
+        "EMAIL": "Dirección de correo electrónico:",
+        "CITY_OF_HALL": "Ciudad donde se encuentra el Salón:",
+        "PHONENUMBER_OF_HALL": "Número de teléfono Telesal para el Salón:",
+        "ERROR": "No se encontró ninguna coincidencia para esta información. Puede editar la información y volver a intentarlo.",
+        "SUCCESS": "Se le ha enviado un e-mail. Puede que tenga que revisar su carpeta de correo no deseado también.",
+        "EMAIL_TEXT_USER": "ESPAÑOL: Ha activado 'recuperar contraseña' para el Salón utilizando el número de teléfono {%1}. La contraseña ha sido enviada a {%5}, que es la dirección de correo electrónico que introdujo el técnico responsable  para este Salón. Su nombre es {%3} y su número de teléfono es {%4}.\n\nEl ID de usuario que se debe utilizar junto con la contraseña es {%2}.\n\n\n\nENGLISH: You have activated 'forgot password' for the hall using phone number {%1}. The password has been sent to {%5}, which is the e-mail address which was entered earlier for the technical responsible for this hall. His name is {%3} and his phone number is {%4}.\n\nThe user ID which must be used together with the password is {%2}.\n",
+        "EMAIL_TEXT_MANAGER": "ESPAÑOL: {%1} ha activado 'recuperar contraseña' para la sala utilizando el número de teléfono {%4}, del que usted es responsable. Su número de teléfono es {%2}, y su correo electrónico es {%3}. Por razones de seguridad, la contraseña se ha enviado a usted. Póngase en contacto con él para comprobar que tiene los permisos necesarios.\n\nLa contraseña es: {%5}\n\n\n\nENGLISH: {%1} has activated 'forgot password' for the hall using phone number {%4}, which you are technically responsible for. His phone number is {%2}, and his e-mail is {%3}. For security reasons, the password been sent to you only, not to him. You must contact him to check if he should have the password from you.\n\nThe password is: {%5}\n",
+        "EMAIL_SUBJECT": "Telesal en {%1}"
     },
     "SYSTEM": {
         "NAME": "Telesal",
         "COPYRIGHTHOLDER": "telesal.org"
     },
     "NAVIGATION": {
-        "PARTICIPANTS": "Current listeners",
-        "SETTINGS": "Settings",
+        "PARTICIPANTS": "Oyentes actuales",
+        "SETTINGS": "Configuración",
         "REPORT": "Listener Report",
-        "HELP": "Help",
+        "HELP": "Ayuda",
         "ADMIN": {
-            "REALTIME": "Realtime",
-            "HISTORY": "History"
+            "REALTIME": "Tiempo real",
+            "HISTORY": "Historia"
         }
     },
     "PARTICIPANTS": {
