@@ -117,7 +117,7 @@
         "CONTACT": {
             "TITLE": "Teknisk kontakt",
             "SUBTITLE": "Rigssalens teknisk ansvarlige",
-            "DESCRIPTION": "<p><b>VIGTIGT!</b> Kontroller at oplysningerne i skemaet er korrekte!</p><p>Der er <b>kun én teknisk ansvarlig for hver rigssal</b>, uanset hvor mange menigheder der benytter den. Han skal være tilsluttet en af de menigheder der benytter rigssalen. Hvis der er flere menigheder der benytter den samme rigssal, skal de i fællesskab udnævne en teknisk ansvarlig.</p><p>Den teknisk ansvarlige har <b>ansvaret for at Telesal-systemet virker lokalt</b>, og det er ham man skal kontakte hvis der er lokale tekniske problemer.</p><p>Det er <b>vigtigt at oplysningerne er korrekte</b> herunder, så de der er ansvarlige for det centrale Telesal-system kan kontakte den teknisk ansvarlige i alle rigssale, hvis det er nødvendigt.</p>",
+            "DESCRIPTION": "<p><b>VIGTIGT!</b> Kontroller at oplysningerne i skemaet er korrekte!</p><p>Der er <b>kun én teknisk ansvarlig for hver rigssal</b>, uanset hvor mange menigheder der benytter den. Han skal være tilsluttet en af de menigheder der benytter rigssalen. Hvis der er flere menigheder der benytter den samme rigssal, skal de i fællesskab udnævne en teknisk ansvarlig.</p><p>Den teknisk ansvarlige har <b>ansvaret for at Telesal-systemet virker lokalt</b>, og det er ham man skal kontakte hvis der er lokale tekniske problemer.</p><p>Det er <b>vigtigt at oplysningerne er korrekte</b> herunder, så de der er ansvarlige for det centrale Telesal-system kan kontakte de teknisk ansvarlige i alle rigssal, hvis det er nødvendigt.</p>",
             "TITLE_NAME": "Navn",
             "PLACEHOLDER_NAME": "Fornavn Efternavn",
             "TITLE_PHONE": "Mobilnummer",
