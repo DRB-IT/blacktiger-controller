@@ -36,105 +36,105 @@
     },
     "PARTICIPANTS": {
         "WARNINGS": {
-            "NO_PARTICIPANTS_AND_TRANSMITTERS": "There is no transmission now, and no listeners are online.",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "No sound is being sent to the listeners!",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "Please check that X-Lite has been started",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "Dial {{phoneNumber | telephone}} from X-Lite",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Then dial the same number from another phone and check the sound quality, and if nessesary adjust the volume"
+            "NO_PARTICIPANTS_AND_TRANSMITTERS": "No hay transmisión ahora, y no hay oyentes en línea.",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "¡No se está enviando audio a los oyentes!",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "Por favor, compruebe que X-Lite se ha iniciado",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "Marque {{phoneNumber | telephone}} de X-Lite",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Después marcar el mismo número desde otro teléfono y comprobar la calidad de sonido. De ser necesario ajuste el volumen"
         },
         "INFO": {
-            "NO_PARTICIPANTS": "There are no listeners at the moment.",
-            "UNMUTED": "The comment microphone is open!"
+            "NO_PARTICIPANTS": "No hay oyentes en este momento.",
+            "UNMUTED": "¡El micrófono de comentarios está abierto!"
         },
-        "UNMUTE": "Unmute comment microphone",
-        "MUTE": "Mute comment microphone",
-        "KICK": "Hang up",
-        "EDIT": "Edit name",
-        "PARTICIPANTS": "{{noOfParticipants}} listeners",
-        "ABORT_TRANSMISSION": "Abort transmission",
-        "COMPLETED_CALLS": "{{noOfCompletedCalls}} completed calls",
-        "WANTS_TO_COMMENT": "I would like to comment!",
-        "ENTER_NAME": "Who is this? Call and ask, write name here!"
+        "UNMUTE": "Activar el micrófono de comentarios",
+        "MUTE": "Silenciar micrófono de comentario",
+        "KICK": "Colgar",
+        "EDIT": "Editar nombre",
+        "PARTICIPANTS": "{{noOfParticipants}} oyentes",
+        "ABORT_TRANSMISSION": "Canclear transmisión",
+        "COMPLETED_CALLS": "{{noOfCompletedCalls}} llamadas completadas",
+        "WANTS_TO_COMMENT": "¡Quisiera comentar!",
+        "ENTER_NAME": "¿Quién es? Llame y pregunte, escriba el nombre aquí"
     },
     "REPORT": {
-        "NUMBER": "Phone number",
-        "NAME": "Name",
-        "FIRST_CALL": "First call",
-        "CALLS": "Calls",
-        "MINUTES": "Minutes",
-        "DELETE": "Delete history",
-        "NO_ENTRIES": "There is no history. The list is deleted when the browser is closed."
+        "NUMBER": "Número de teléfono",
+        "NAME": "Nombre",
+        "FIRST_CALL": "Primera llamada",
+        "CALLS": "Llamadas",
+        "MINUTES": "Minutos",
+        "DELETE": "Eliminar el historial",
+        "NO_ENTRIES": "No hay historial; se elimina cuando se cierra el navegador."
     },
     "GENERAL": {
         "LANGUAGE": {
-            "DA": "Danish",
-            "EN": "English",
-            "FO": "Faroese",
-            "KL": "Greenlandic",
-            "NO": "Norwegian",
-            "SV": "Swedish",
-            "IS": "Icelandic"
+            "DA": "Danes",
+            "EN": "Inglés",
+            "FO": "Feroés",
+            "KL": "Groenlandés",
+            "NO": "Noruego",
+            "SV": "Sueco",
+            "IS": "Islandés"
         },
         "OK": "Ok",
-        "CANCEL": "Cancel",
-        "TECHNICALLY_RESPONSIBLE": "Technically responsible",
-        "HALL": "hall",
-        "LOGOUT": "Log out",
-        "YES": "Yes",
+        "CANCEL": "Cancelar",
+        "TECHNICALLY_RESPONSIBLE": "Técnicamente responsable",
+        "HALL": "salón",
+        "LOGOUT": "Salir",
+        "YES": "Si",
         "NO": "No",
-        "PHONENUMBER": "Phone number",
-        "EMAIL": "E-mail address" ,
-        "LOADING": "Loading...",
-        "LOST_CONNECTION": "Lost connection to the server. Please check the internet connection , then refresh the page (press F5)",
-        "COMMENT_REQUEST": "Somebody would like to comment"
+        "PHONENUMBER": "Número de teléfono",
+        "EMAIL": "Correo electrónico" ,
+        "LOADING": "Cargando...",
+        "LOST_CONNECTION": "Conexión con el servidor pérdida. Por favor, compruebe la conexión a Internet, a continuación, actualice la página (pulse F5)",
+        "COMMENT_REQUEST": "A alguien le gustaría comentar"
     },
     "SETTINGS": {
         "GENERAL" : {
-            "TITLE": "This hall",
-            "LOGGED_IN_AS": "You are logged in as the Kingdom Hall in <b>{{postalCode}} {{city}}</b>",
-            "TECHNICALLY_RESPONSIBLE": "The technically responsible for this Kingdom Hall is <b>{{name}}</b>",
-            "CONTACT_LINK": "More information",
-            "FIND_HELP": "Get help",
-            "FIND_HELP_DESC": "Click at <span class=\"glyphicon glyphicon-question-sign\"></span> near the top of this page if you need help, or contact the technical responsible."
+            "TITLE": "Este salón",
+            "LOGGED_IN_AS": "Usted está en el sistema como el Salón del Reino en <b>{{postalCode}} {{city}}</b>",
+            "TECHNICALLY_RESPONSIBLE": "El técnico responsable de este Salón del Reino es <b>{{name}}</b>",
+            "CONTACT_LINK": "Más información",
+            "FIND_HELP": "Obtenga ayuda",
+            "FIND_HELP_DESC": "Haga clic en <span class=\"glyphicon glyphicon-question-sign\"></span> en la parte superior de esta página si necesita ayuda, o póngase en contacto con el responsable técnico."
         },
         "CREATE_SIP_ACCOUNT": {
-            "TITLE": "Create computer listener",
-            "DESCRIPTION": "<p>You can listen to the meetings via the Internet from a computer, tablet or smartphone by installing an app. The <b>sound quality</b> is much better than through the phone network, and there is no phone charges. But it may cost data traffic if you pay for Internet according to consumption (about 75 MB/hour).</p><p>Using the form below, create a  <b>personal account</b> for each wanting to listen via the Internet. The account <b>must not</b> be shared, because it is linked to the listener's own phone number. The listener needs to call the same phone number with the app, as those listening over the phone network do.</p><p>If the listener has <b>lost his personal account</b> information, you must set up the account again below, and a new password will be generated. Accounts are not linked to a particular Kingdom Hall, and are automatically deleted if there has been no calls for a year.</p><p>Computer listeners are displayed with a computer icon in the status page: <span class=\"glyphicon glyphicon-hdd\"></span></p>",
-            "TITLE_NAME": "Name",
-            "PLACEHOLDER_NAME": "Name Surname",
-            "TITLE_PHONE": "Mobile or fixed-line number",
-            "DESCRIPTION_PHONE": "This number is displayed at the PC in the Kingdom Hall when the listener calls from his computer.",
-            "TITLE_EMAIL": "Send account information to",
-            "PLACEHOLDER_EMAIL": "E-mail address",
-            "DESCRIPTION_EMAIL": "Account information is sent here. Ask the reciever to check his junk mail folder.",
-            "SAVED": "Saved",
-            "ALERT_SUCCESS": "The account has now been created with this information:<br>Name: <b>{{name}}</b>, phone: <b>{{phoneNumber}}</b>.<br>A link to the account information has been e-mailed to <b>{{email}}</b>.<br>Ask the reciever to check his junk mail folder.<br>Did you type something wrong? Then just create the account once more below.",
-            "ALERT_ERROR": "<b>System error!</b> The account was not created. Please try again later.",
-            "DESCRIPTION_MAILTEXT": "Here you may enter a message, but do not enter the receivers phone number here.",
-            "TITLE_MAILTEXT": "Text which is sent to the reciever",
-            "DEFAULT_MAILTEXT": "Here are the information you need to listen to the meetings from your computer. If you need help, please contact the technically responsible. Please click the link below."
+            "TITLE": "Crear computadora de oyente",
+            "DESCRIPTION": "<p>Usted puede escuchar a las reuniones a través de Internet desde un ordenador, computadora, tableta o Smartphone mediante la instalación de una aplicación. La <b>calidad de sonido</b> es mucho mejor que a través de la red de telefonía, y no hay gastos de teléfono. Pero puede costar el tráfico de datos si usted paga por Internet en función del consumo (alrededor de 75 MB/hora).</p><p>A través del formulario a continuación, creé una <b>cuenta personal</b> para quien deseé escuchar a través de Internet. La cuenta <b>no debe</b> ser compartida, ya que está vinculada a propio número de teléfono del oyente. El oyente tiene que llamar al mismo número de teléfono con la aplicación, de la misma forma que quienes escuchan por la red telefónica.</p><p>Si el oyente ha <b>perdido a su cuenta personal</b>, debe configurar la cuenta de nuevo en el formulario siguiente. Una nueva contraseña se generará automáticamente. Las cuentas no están vinculados a un determinado Salón del Reino, y se eliminan automáticamente si no ha habido ninguna llamada durante un año. </p><p>Los oyentes que usen una computadora se muestran con un icono de computadora en la página de estado: <span class=\"glyphicon glyphicon-hdd\"></span></p>",
+            "TITLE_NAME": "Nombre",
+            "PLACEHOLDER_NAME": "Nombre Apellidos",
+            "TITLE_PHONE": "Número de teléfono móvil o de línea fija",
+            "DESCRIPTION_PHONE": "Este número aparece en el PC en el Salón del Reino cuando el oyente llama desde su ordenador/computadora.",
+            "TITLE_EMAIL": "Enviar información de la cuenta a",
+            "PLACEHOLDER_EMAIL": "E-mail",
+            "DESCRIPTION_EMAIL": "La información de cuenta se envía aquí. Pida al receptor que revise su carpeta de correo no deseado.",
+            "SAVED": "Gardado",
+            "ALERT_SUCCESS": "La cuenta ha sido creada con esta información:<br>Nombre: <b>{{name}}</b>, teléfono:. <b>{{phoneNumber}}</b>.<br>Un enlace a la información de la cuenta se ha enviado por correo electrónico a <b>{{email}}</b>.<br>Pida al receptor para comprobar su carpeta de correo no deseado.<br>¿Hay un error en la información? Crée la cuenta de nuevo abajo.",
+            "ALERT_ERROR": "<b>¡Error de sistema!</b> La cuenta no se ha creado. Por favor, inténtelo de nuevo más tarde.",
+            "DESCRIPTION_MAILTEXT": "Aquí puede introducir un mensaje, pero no introduzca el número de teléfono de los receptores.",
+            "TITLE_MAILTEXT": "El texto que se envía al receptor",
+            "DEFAULT_MAILTEXT": "He aquí la información que necesita para escuchar las reuniones desde su equipo. Si necesita ayuda, por favor póngase en contacto con el técnico responsable. Por favor, haga clic en el enlace de abajo."
         },
         "CONTACT": {
-            "TITLE": "Technically responsible",
-            "SUBTITLE": "The technically responsible for the Kingdom Hall",
-            "DESCRIPTION": "<p><b>IMPORTANT!</b> Please check that the information below is correct!</p><p>There is <b>only one technically responsible for every Kingdom Hall</b>, no matter how many congregations are using it. He must belong to one of the congreations attending meetings in this Kingdom Hall. If more congregations are using the same Kingdom Hall, they must agree who to assign as technically responsible.</p><p>The technically responsible <b>ensures that the Telesal system works reliably locally</b>, and it is him you should contact is case of technical issues locally.</p><p>It is <b>important that the information below is correct</b>, so those responsible for the central Telesal system can contact the technical responsible in each Kingdom Hall when nessesary.",
-            "TITLE_NAME": "Name",
-            "PLACEHOLDER_NAME": "Name Surname",
-            "TITLE_PHONE": "Mobile phone number",
-            "TITLE_EMAIL": "E-mail address",
-            "PLACEHOLDER_EMAIL": "example@mail.com",
-            "TITLE_COMMENT": "Comment",
-            "SAVED": "Saved",
-            "ALERT_ERROR": "<b>Error!</b> The changes were not saved. Please try again later."
+            "TITLE": "El técnico responsable",
+            "SUBTITLE": "El técnico responsable del Salón del Reino",
+            "DESCRIPTION": "<p><b>IMPORTANTE!</b> Por favor, compruebe que la siguiente información es correcta.</p><p>Hay<b> sólo un técnico responsable de cada Salón del Reino </b>, no importa cuántas congregaciones estén utilizando el sistema. Él debe pertenecer a una de las congregaciones que asisten a reuniones en este Salón del Reino. Si más congregaciones están utilizando el mismo Salón del Reino, deben estar de acuerdo en cuanto a quién asignarán como responsable técnico.</p><p>El responsable técnico <b>se asegurará que el sistema Telesal local funcione de forma fiable</b>, y es a él a quién deberá contactar en caso de problemas técnicos.</p><p>Es <b>importante que la siguiente información sea correcta</b>, para que los responsables del sistema central Telesal puedan contactar con el responsable técnico en cada Salón del Reino de ser necesario.</p>",
+            "TITLE_NAME": "Nombre",
+            "PLACEHOLDER_NAME": "Nombre Apellidos",
+            "TITLE_PHONE": "Número de teléfono móvil",
+            "TITLE_EMAIL": "Correo electrónico",
+            "PLACEHOLDER_EMAIL": "ejemple@mail.com",
+            "TITLE_COMMENT": "Comentario",
+            "SAVED": "Guardado",
+            "ALERT_ERROR": "<b>¡Error!</b> Los cambios no fueron guardados. Por favor, inténtelo de nuevo más tarde."
         }
     },
     "SIP_ACCOUNT_RETRIEVAL": {
-        "DESCRIPTION": "<p>Dear <b>{{name}}</b>, here you find your personal code. You need it to listen to the meetings via the Internet. Your code is tied to your own phone number <b>{{phoneNumber}}</b>, so you must <b>never give your code to somebody else</b>.</p><p><b>Do not make a note of the code</b>, but copy it directly from this page to the app you will use to listen to the meetings. On the other hand, it is ok to <b>save the link from the e-mail</b> which sent you to this page, this way you may always find your personal code again.</p><p>If you later change your phone number or you loose the link from the e-mail, then just ask to have a new account made for you.</p>",
-        "FOOTNOTE": "To know how to install and use the app, please <a href='{{url}}' target='_blank'>click here</a>.",
+        "DESCRIPTION": "<p>Estimado <b>{{name}}</b>, aquí encontrará su código personal. Lo necesita para escuchar a las reuniones a través de Internet. Su código está ligado a a su número de teléfono <b>{{phoneNumber}}</b>, por lo que <b>nunca debe compartir su código con nadie</b>.</p><p><b>No anote el código </b>, cópielo directamente desde esta página a la aplicación que va a utilizar para escuchar a las reuniones. Por otro lado, es buena idea <b>guardar el enlace en el correo</b> que te envió a esta página, de esta forma podrá encontrar fácilmente su código personal.</p><p>Si cambia más tarde su número de teléfono pierde el enlace en este e-mail, pida una nueva cuenta.</p>",
+        "FOOTNOTE": "Para saber cómo instalar y utilizar la aplicación,  <a href='http://help.telesal.org/en/homesetup' target='_blank'>de click aquí</a>.",
         "RETRIEVE_INFORMATION": "OK",
-        "TITLE": "Your Telesal account",
-        "ENTER_PHONE": "Type in your phone number here, then click OK",
-        "ERROR_MESSAGE": "The number was not recognized, maybe you entered a wrong number? If you own another number, please try it instead. Or contact the one who created this account for you, and ask to have the account created again with the correct number."
+        "TITLE": "Su cuenta Telesal",
+        "ENTER_PHONE": "Escriba su número de teléfono aquí, a continuación, haga clic en Aceptar (OK)",
+        "ERROR_MESSAGE": "El número no fue reconocido. Tal vez introdujo un número equivocado.  Si es dueño de otro número, por favor pruébelo en su lugar, o comuníquese con quien creó esta cuenta para usted para que le sea creada de nuevo con el número correcto."
     }
 
 }
