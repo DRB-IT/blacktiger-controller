@@ -129,7 +129,7 @@
         }
     },
     "SIP_ACCOUNT_RETRIEVAL": {
-        "DESCRIPTION": "<p>Dear <b>{{name}}</b>, here you find your personal code. You need it to listen to the meetings via the Internet. Your code is tied to your own phone number <b>{{phoneNumber}}</b>, so you must <b>never give your code to somebody else</b>.</p><p><b>Do not make a note of the code</b>, but copy it directly from this page to the app you will use to listen to the meetings. However, it is ok to <b>save a shortcut to</b>  this page; this way you may always find your personal code again.</p><p>If you later change your phone number or you loose the link from the e-mail, then just ask to have a new account made for you.</p>",
+        "DESCRIPTION": "<p>Dear <b>{{name}}</b>, here you find your personal code. You need it to listen to the meetings via the Internet. Your code is tied to your own phone number <b>{{phoneNumber}}</b>, so you must <b>never give your code to somebody else</b>.</p><p><b>Do not make a note of the code</b>, but copy it directly from this page to the app you will use to listen to the meetings. However, it is ok to <b>save a shortcut to</b> this page; this way you may always find your personal code again.</p><p>If you later change your phone number or you loose the link from the e-mail, then just ask to have a new account made for you.</p>",
         "FOOTNOTE": "To know how to install and use the app, please <a href='{{url}}' target='_blank'>click here</a>.",
         "RETRIEVE_INFORMATION": "OK",
         "TITLE": "Your Telesal account",
