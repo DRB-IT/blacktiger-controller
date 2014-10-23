@@ -1,6 +1,14 @@
 /*global angular, SockJS, Stomp*/
-angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageModule'])
-    .provider('blacktiger', function () {
+
+/****************************************************************
+ * PROVIDER                                                     *
+ ***************************************************************/
+
+/**
+ * Provider for blacktiger services.
+ * Gives access to serviceUrl, native language names and unique instance id
+ */
+function BlacktigerProvider() {
         'use strict';
         var serviceUrl = 'http://b.telesal.org',
             languageNames = {
@@ -10,7 +18,8 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                 'kl': 'Kalaallisut',
                 'sv': 'Svenska',
                 'no': 'Norsk',
-                'is': 'Íslenska'
+                'is': 'Íslenska',
+                'es': 'Español'
             };
 
         var instanceId = window.name;
@@ -47,41 +56,30 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
                 }
             };
         };
-    })
-/*.factory('RemoteSongSvc', function ($q, $http) {
-        'use strict';
-        var baseUrl = "assets/music/"; //"http://telesal.s3.amazonaws.com/music/";
-        var baseSongName = "iasn_E_000";
-        var replacePattern = /(iasn_E_)([0]{3})/;
-        var lpad = function (s, width, character) {
-            return (s.length >= width) ? s : (new Array(width).join(character) + s).slice(-width);
-        };
+    }
+    
+/****************************************************************
+ * SERVICES                                                     *
+ ***************************************************************/
 
-        return {
-            getNumberOfSongs: function () {
-                return 1; //135;
-            },
-            readBlob: function (number) {
-                var deferred = $q.defer(),
-                    numberf = lpad(number, 3, '0'),
-                    songName = baseSongName.replace(replacePattern, "\$1" + numberf.toString() + ".mp3"),
-                    url = baseUrl + songName;
-
-                $http({
-                    method: 'GET',
-                    url: url,
-                    responseType: 'blob'
-                }).success(function (data, status, headers, config) {
-                    deferred.resolve(data);
-                }).error(function (data, status, headers, config) {
-                    deferred.reject();
-                });
-                return deferred.promise;
-            }
-
-        };
-    })*/
-.factory('LoginSvc', function ($q, localStorageService, $http, $rootScope, blacktiger, $log) {
+/**
+ * Service for handling Login.
+ * 
+ * Exposes the methods 'authenticate', 'deauthenticate' and 'getCurrentUser'. 
+ * 
+ * When authentication is done its builds a token from the specified username or 
+ * password - or if they are not supplied it tries get it from LocalStorage.
+ * 
+ * If token is successfully built or retrieved authentication will progress - otherwise rejected.
+ * When authentication progresses it will start by sending a request to <serviceurl>/system/authenticate 
+ * with an 'Authorization' header carrying the token.
+ * 
+ * If responsestatus for this request is not '200', then the authentication is rejected. Otherwise it is 
+ * considered successfull and will progress by storing token in LocalStorage(only if 'remember' is true),
+ * applying authorization header as a default header for all subsequent requests, setting user at $rootScope.currentUser
+ * and finally broadcasting 'login' with the user as a parameter.
+ */
+function LoginSvc($q, localStorageService, $http, $rootScope, blacktiger, $log) {
     'use strict';
     var currentUser = null;
     return {
@@ -153,7 +151,17 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             
         }
     };
-}).factory('SystemSvc', function ($http, blacktiger) {
+}
+LoginSvc.$inject = ['$q', 'localStorageService', '$http', '$rootScope', 'blacktiger', '$log'];
+
+/**
+ * Service for retreiving information about the system.
+ * 
+ * This service exposes one method: 'getSystemInfo'.
+ * getSystemInfo returns a promise that, when it is susccessfull, will hold an object with information about the system.
+ * It will be retreived by requesting <serviceurl>/system/information.
+ */
+function SystemSvc($http, blacktiger) {
     'use strict';
     return {
         getSystemInfo: function () {
@@ -162,7 +170,51 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             });
         }
     };
-}).factory('RoomSvc', function (blacktiger, $resource) {
+}
+SystemSvc.$inject = ['$http', 'blacktiger'];
+
+/*
+function RemoteSongSvc($q, $http) {
+        'use strict';
+        var baseUrl = "assets/music/"; //"http://telesal.s3.amazonaws.com/music/";
+        var baseSongName = "iasn_E_000";
+        var replacePattern = /(iasn_E_)([0]{3})/;
+        var lpad = function (s, width, character) {
+            return (s.length >= width) ? s : (new Array(width).join(character) + s).slice(-width);
+        };
+
+        return {
+            getNumberOfSongs: function () {
+                return 1; //135;
+            },
+            readBlob: function (number) {
+                var deferred = $q.defer(),
+                    numberf = lpad(number, 3, '0'),
+                    songName = baseSongName.replace(replacePattern, "\$1" + numberf.toString() + ".mp3"),
+                    url = baseUrl + songName;
+
+                $http({
+                    method: 'GET',
+                    url: url,
+                    responseType: 'blob'
+                }).success(function (data, status, headers, config) {
+                    deferred.resolve(data);
+                }).error(function (data, status, headers, config) {
+                    deferred.reject();
+                });
+                return deferred.promise;
+            }
+
+        };
+    }
+RemoteSongSvc.$inject = ['$q', '$http'];
+ */
+    
+
+/**
+ * Service for retreiving the rooms the current user has access to.
+ */
+function RoomSvc(blacktiger, $resource) {
     'use strict';
     var resource = $resource(blacktiger.getServiceUrl() + 'rooms/:id', {}, {
         put: {
@@ -198,7 +250,13 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             return resource.all();
         }
     };
-}).factory('ParticipantSvc', function (blacktiger, $resource, $log, $http) {
+}
+RoomSvc.$inject = ['blacktiger', '$resource'];
+
+/**
+ * Service for retreiving participants currently in a room.
+ */
+function ParticipantSvc(blacktiger, $resource, $log, $http) {
     'use strict';
     var resource = $resource(blacktiger.getServiceUrl() + 'rooms/:roomid/participants/:id', {}, {
         mute: {
@@ -250,7 +308,14 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             //return resource.mute({roomid:roomId, id:id}, false);
         }
     };
-}).factory('StompSvc', function ($rootScope) {
+}
+ParticipantSvc.$inject = ['blacktiger', '$resource', '$log', '$http'];
+
+/**
+ * Service for communicating with the server over the Stomp protocol.
+ * See http://jmesnil.net/stomp-websocket/doc/ for more info.
+ */
+function StompSvc($rootScope) {
     var stompClient = {};
 
     function NGStomp(url) {
@@ -299,7 +364,15 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
     return function (url) {
         return new NGStomp(url);
     };
-}).factory('MeetingSvc', function (CONFIG, $rootScope, $timeout, ParticipantSvc, blacktiger, StompSvc, $log) {
+}
+StompSvc.$inject = ['$rootScope'];
+
+/**
+ * Service for handling information about an active meeting.
+ * NB: Currently this has some of the same logic as RealtimeSvc.
+ * See https://github.com/DRB-IT/blacktiger-web/issues/123
+ */
+function MeetingSvc(CONFIG, $rootScope, $timeout, ParticipantSvc, blacktiger, StompSvc, $log) {
     'use strict';
     var participants = [],
         currentRoom = null,
@@ -468,8 +541,15 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
         }
 
     };
+}
+MeetingSvc.$inject = ['CONFIG', '$rootScope', '$timeout', 'ParticipantSvc', 'blacktiger', 'StompSvc', '$log'];
 
-}).factory('RealtimeSvc', function ($rootScope, $timeout, RoomSvc, StompSvc, blacktiger, $log) {
+/**
+ * Service for handling information about all active meetings
+ * NB: Currently this has some of the same logic as MeetingSvc.
+ * See https://github.com/DRB-IT/blacktiger-web/issues/123
+ */
+function RealtimeSvc($rootScope, $timeout, RoomSvc, StompSvc, blacktiger, $log) {
     'use strict';
     var rooms = [],
         stompClient, commentCancelPromiseArray = [];
@@ -600,8 +680,13 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             return rooms;
         }
     };
+}
+RealtimeSvc.$inject = ['$rootScope', '$timeout', 'RoomSvc', 'StompSvc', 'blacktiger', '$log'];
 
-}).factory('PhoneBookSvc', function ($http, blacktiger, $rootScope) {
+/**
+ * Service for updating names related to a phone number.
+ */
+function PhoneBookSvc($http, blacktiger, $rootScope) {
     'use strict';
     return {
         updateEntry: function (phoneNumber, name) {
@@ -611,7 +696,14 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             });
         }
     };
-}).factory('ReportSvc', function ($http, $q, blacktiger, $timeout) {
+}
+PhoneBookSvc.$inject = ['$http', 'blacktiger', '$rootScope'];
+
+/**
+ * Service for retreiving report information.
+ * NB: Currently only a dummy implementation.
+ */
+function ReportSvc($http, $q, blacktiger, $timeout) {
     'use strict';
     return {
         getReport: function (dateFrom, dateTo, minDuration) {
@@ -655,7 +747,13 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             });
         }
     };
-}).factory('SipUserSvc', function ($http, blacktiger, $rootScope, $q) {
+}
+ReportSvc.$inject = ['$http', '$q', 'blacktiger', '$timeout'];
+
+/**
+ * Service for working with SIP user information.
+ */
+function SipUserSvc($http, blacktiger, $rootScope, $q) {
     'use strict';
     return {
         create: function (user) {
@@ -685,4 +783,22 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
             });
         }
     };
-});
+}
+SipUserSvc.$inject = ['$http', 'blacktiger', '$rootScope', '$q'];
+
+/**
+ * Registration of provider and services.
+ */
+angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageModule'])
+    .provider('blacktiger', BlacktigerProvider)
+    /*.factory('RemoteSongSvc', RemoteSongSvc)*/
+    .factory('LoginSvc', LoginSvc)
+    .factory('SystemSvc', SystemSvc)
+    .factory('RoomSvc', RoomSvc)
+    .factory('ParticipantSvc', ParticipantSvc)
+    .factory('StompSvc', StompSvc)
+    .factory('MeetingSvc', MeetingSvc)
+    .factory('RealtimeSvc', RealtimeSvc)
+    .factory('PhoneBookSvc', PhoneBookSvc)
+    .factory('ReportSvc', ReportSvc)
+    .factory('SipUserSvc', SipUserSvc);
