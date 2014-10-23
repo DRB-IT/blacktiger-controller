@@ -502,10 +502,6 @@ function LoginCtrl($scope, LoginSvc) {
         });
     };
 
-    $scope.requestPassword = function () {
-        window.location.hash = '/request_password';
-        //$location.path('/request_password');
-    };
 }
 
 function RequestPasswordCtrl($scope, $http, blacktiger, $filter, $log, $rootScope) {
