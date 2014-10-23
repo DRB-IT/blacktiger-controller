@@ -117,7 +117,7 @@
         "CONTACT": {
             "TITLE": "Teknisk kontakt",
             "SUBTITLE": "Rigssalens teknisk ansvarlige",
-            "DESCRIPTION": "<p><b>VIGTIGT!</b> Kontroller at oplysningerne i skemaet er korrekte!</p><p>Der er <b>kun én teknisk ansvarlig for hver rigssal</b>, uanset hvor mange menigheder der benytter den. Han skal være tilsluttet en af de menigheder der benytter rigssalen. Hvis der er flere menigheder der benytter den samme rigssal, skal de i fællesskab udnævne en teknisk ansvarlig.</p><p>Den teknisk ansvarlige har <b>ansvaret for at Telesal-systemet virker lokalt</b>, og det er ham man skal kontakte hvis der er lokale tekniske problemer.</p><p>Det er <b>vigtigt at oplysningerne er korrekte</b> herunder, så de der er ansvarlige for det centrale Telesal-system kan kontakte den teknisk ansvarlige i alle rigssale, hvis det er nødvendigt.</p>",
+            "DESCRIPTION": "<p><b>VIGTIGT!</b> Kontroller at oplysningerne i skemaet er korrekte!</p><p>Der er <b>kun én teknisk ansvarlig for hver rigssal</b>, uanset hvor mange menigheder der benytter den. Han skal være tilsluttet en af de menigheder der benytter rigssalen. Hvis der er flere menigheder der benytter den samme rigssal, skal de i fællesskab udnævne en teknisk ansvarlig.</p><p>Den teknisk ansvarlige har <b>ansvaret for at Telesal-systemet virker lokalt</b>, og det er ham man skal kontakte hvis der er lokale tekniske problemer.</p><p>Det er <b>vigtigt at oplysningerne er korrekte</b> herunder, så de der er ansvarlige for det centrale Telesal-system kan kontakte de teknisk ansvarlige i alle rigssal, hvis det er nødvendigt.</p>",
             "TITLE_NAME": "Navn",
             "PLACEHOLDER_NAME": "Fornavn Efternavn",
             "TITLE_PHONE": "Mobilnummer",
@@ -130,7 +130,7 @@
         }
     },
     "SIP_ACCOUNT_RETRIEVAL": {
-        "DESCRIPTION": "<p>Kære <b>{{name}}</b>, her er din personlige kode. Den skal du bruge for at kunne lytte til møderne via internettet. Koden er knyttet til dit eget telefonnummer <b>{{phoneNumber}}</b>, derfor må du <b>aldrig give koden til andre</b>.</p><p><b>Skriv ikke koden ned</b>, men kopier den direkte fra denne side til app'en som du skal bruge for at lytte til møderne. Du må derimod gerne <b>gemme linket fra e-mailen</b> der førte dig til denne side, så kan du altid finde din personlige kode igen.</p><p>Hvis du senere skifter telefonnummer eller mister linket fra e-mailen, så bed om at der bliver oprettet en ny konto til dig.</p>",
+        "DESCRIPTION": "<p>Kære <b>{{name}}</b>, her er din personlige kode. Den skal du bruge for at kunne lytte til møderne via internettet. Koden er knyttet til dit eget telefonnummer <b>{{phoneNumber}}</b>, derfor må du <b>aldrig give koden til andre</b>.</p><p><b>Skriv ikke koden ned</b>, men kopier den direkte fra denne side til app'en som du skal bruge for at lytte til møderne. Men du må gerne <b>gemme en genvej</b> til denne side, så kan du altid finde din personlige kode igen.</p><p>Hvis du senere skifter telefonnummer eller mister linket fra e-mailen, så bed om at der bliver oprettet en ny konto til dig.</p>",
         "FOOTNOTE": "For at læse hvordan du installerer og bruger app'en, <a href='{{url}}' target='_blank'>klik her</a>.",
         "RETRIEVE_INFORMATION": "OK",
         "TITLE": "Din Telesal-konto",
