@@ -860,7 +860,7 @@ function SipAccountRetrievalCtrl(CONFIG, $scope, SipUserSvc, token, $rootScope, 
 angular.element(document).ready(function () {
     var initInjector = angular.injector(['ng']);
     var $http = initInjector.get('$http');
-    $http.get('/config.json').then(
+    $http.get('config.json').then(
         function (response) {
             var config = response.data;
             blacktigerApp.constant('CONFIG', config);
