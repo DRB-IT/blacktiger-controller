@@ -50,7 +50,7 @@
         "MUTE": "Avstäng svarsmikrofon",
         "KICK": "Avbryt lyssnare",
         "EDIT": "Redigera",
-        "PARTICIPANTS": "Lyssnare",
+        "PARTICIPANTS": "{{noOfParticipants}} lyssnare",
         "ABORT_TRANSMISSION": "Avbryt transmissionen",
         "COMPLETED_CALLS": "{{noOfCompletedCalls}} completed call(s)",
         "WANTS_TO_COMMENT": "Wants to comment",
