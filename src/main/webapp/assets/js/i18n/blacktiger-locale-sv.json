@@ -95,7 +95,7 @@
             "TECHNICALLY_RESPONSIBLE": "Den tekniskt ansvarige för den här Rikets salen är <b>{{name}}</b>",
             "CONTACT_LINK": "Mer information",
             "FIND_HELP": "Hjälp",
-            "FIND_HELP_DESC": "Click <span class=\"glyphicon glyphicon-question-sign\"></span> at the top of the page if you need help."
+            "FIND_HELP_DESC": "Klicka på <span class=\"glyphicon glyphicon-question-sign\"></span> högst upp på sidan om du behöver hjälp, eller kontakta den som är tekniskt ansvarig."
         },
         "CREATE_SIP_ACCOUNT": {
             "TITLE": "Skapa en datauppkopplad lyssnare",
