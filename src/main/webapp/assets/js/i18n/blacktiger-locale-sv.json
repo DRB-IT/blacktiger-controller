@@ -84,58 +84,58 @@
         "NO": "Nej",
         "PHONENUMBER": "Telefonnummer",
         "EMAIL": "E-postadress",
-        "LOADING": "Indlæser",
-        "LOST_CONNECTION": "The application lost connection to the server. Check your Internet connection and reload the page.",
-        "COMMENT_REQUEST": "Somebody would like to comment"
+        "LOADING": "Laddar...",
+        "LOST_CONNECTION": "Kopplingen till servern avbröts. Kontrollera internetuppkopplingen och ladda sidan igen (tryck F5)",
+        "COMMENT_REQUEST": "Någon önskar svara"
     },
     "SETTINGS": {
         "GENERAL" : {
-            "TITLE": "Settings",
-            "LOGGED_IN_AS": "You are logged in as <b>{{postalCode}} {{city}}</b>",
-            "TECHNICALLY_RESPONSIBLE": "The technically responsible for this hall is <b>{{name}}</b>",
-            "CONTACT_LINK": "See contact information",
-            "FIND_HELP": "Find Help",
+            "TITLE": "Den här salen",
+            "LOGGED_IN_AS": "Du är inloggad som Rikets sal i <b>{{postalCode}} {{city}}</b>",
+            "TECHNICALLY_RESPONSIBLE": "Den tekniskt ansvarige för den här Rikets salen är <b>{{name}}</b>",
+            "CONTACT_LINK": "Mer information",
+            "FIND_HELP": "Hjälp",
             "FIND_HELP_DESC": "Click <span class=\"glyphicon glyphicon-question-sign\"></span> at the top of the page if you need help."
         },
         "CREATE_SIP_ACCOUNT": {
-            "TITLE": "Create Computer Listener",
-            "DESCRIPTION": "If one wants to listen to meetings via a computer, a computer account attached to the listener's mobile or telephone number is needed. Computer listeners are displayed with <span class=\"glyphicon glyphicon-hdd\"></span> on the status page. Computer accounts that have not made any calls for a year, will be automatically deleted. If the listener has lost the password for the computer account, the listener is created again by filling in the fields below.",
-            "TITLE_NAME": "Name",
-            "PLACEHOLDER_NAME": "Name Surname",
-            "TITLE_PHONE": "Cell Phone or Landline Number",
-            "DESCRIPTION_PHONE": "The number is displayed at the Kingdom Hall when the listener calling from his computer.",
-            "TITLE_EMAIL": "Send Account Information to",
-            "PLACEHOLDER_EMAIL": "E-mail Address",
-            "DESCRIPTION_EMAIL": "Necessary information is sent to this email address. E-mail address is not stored in TeleSal.",
-            "SAVED": "Saved",
-            "ALERT_SUCCESS": "<b>Success!</b> The account was created with the following information and an e-mail was sent to the specified e-mail address with details:<br>Name: {{name}}<br>Phonenumber: {{phoneNumber}}<br>Email: {{email}}",
-            "ALERT_ERROR": "<b>System Error!</b> The account was not created. Please try again shortly.",
-            "DESCRIPTION_MAILTEXT": "This message is sent in the mail. Do not write the recipient's phone number in this field.",
-            "TITLE_MAILTEXT": "Message for the user",
-            "DEFAULT_MAILTEXT": "Here is the information you need in order to listen to the meetings from your computer. Contact the technical manager if there is anything you are unsure about. Click on the link below."
+            "TITLE": "Skapa en datauppkopplad lyssnare",
+            "DESCRIPTION": "<p>Man kan lyssna på mötena via internet från en dator, surfplatta eller smartphone genom att installera en app. <b>Ljudkvaliteten</b> är mycket bättre än via telefonnätet, och det medför ingen samtalsavgift. Men eftersom datatrafik förbrukas (ca 75 mb/timme) kan det kosta om man betalar sitt internet grundat på hur mycket man förbrukar.</p><p>Med hjälp av nedanstående formulär skapas ett <b>personligt konto</b> till dem som önskar lyssna via internet. Kontot får <b>inte</b> delas av andra, eftersom det är knutet till lyssnarens eget telefonnummer. Lyssnaren ska genom appen ringa till samma telefonnummer som när man lyssnar via telefon.</p><p>Om lyssnaren har <b>tappat bort sin kontoinformation</b> ska man skapa kontot igen här nedan, och ett nytt lösenord skapas. Kontot är inte knutet till en viss Rikets sal och tas automatiskt bort om det inte har använts på ett år.</p><p>Lyssnare via dator visas med denna datorsymbol på statussidan: <span class=\"glyphicon glyphicon-hdd\"></span></p>",
+            "TITLE_NAME": "Namn",
+            "PLACEHOLDER_NAME": "Förnamn Efternamn",
+            "TITLE_PHONE": "Mobil- eller fasttelefonnummer",
+            "DESCRIPTION_PHONE": "Numret visas på PC:n på Rikets sal när lyssnaren ringer från sin dator.",
+            "TITLE_EMAIL": "Skicka kontoinformation till",
+            "PLACEHOLDER_EMAIL": "E-postadress",
+            "DESCRIPTION_EMAIL": "Kontoinformation skickas hit. Be mottagaren kontrollera sin skräppost-mapp också.",
+            "SAVED": "Sparat",
+            "ALERT_SUCCESS": "Kontot är nu skapat med följande information:<br>Namn: <b>{{name}}</b>, telefon: <b>{{phoneNumber}}</b>.<br>Ett e-postmeddelande har skickats till <b>{{email}}</b> med en länk till kontoinformationen.<br>Be mottagaren kontrollera sin skräppost-mapp också.<br>Är någon information felaktig? Skapa då bara kontot en gång till här nedan.",
+            "ALERT_ERROR": "<b>Systemfel!</b> Kontot skapades inte. Försök igen om en stund.",
+            "DESCRIPTION_MAILTEXT": "Här kan du skriva ett meddelande, men skriv inte mottagarens telefonnummer här.",
+            "TITLE_MAILTEXT": "Text som skickas till mottagaren",
+            "DEFAULT_MAILTEXT": "Här är information som du ska använda för att kunna lyssna till mötena via din dator. Om det är något du undrar över, kontakta då den tekniskt ansvarige. Klicka på länken här nedan."
 
         },
         "CONTACT": {
-            "TITLE": "Technical Contact",
-            "SUBTITLE": "The Halls Technical Manager",
-            "DESCRIPTION": "There is only one technical manager for each conference room, no matter how many congregations are using it. The technical contact person is appointed by the Kingdom Hall Committee.",
-            "TITLE_NAME": "Name",
-            "PLACEHOLDER_NAME": "Name Surname",
-            "TITLE_PHONE": "Cell Phone Number",
-            "TITLE_EMAIL": "E-mail Address",
-            "PLACEHOLDER_EMAIL": "exampel@mail.com",
-            "TITLE_COMMENT": "Comment",
-            "SAVED": "Saved",
-            "ALERT_ERROR": "<b>Fejl!</b> Changes were not saved. Please try again shortly."
+            "TITLE": "Tekniskt ansvarig",
+            "SUBTITLE": "Rikets salens tekniskt ansvarige",
+            "DESCRIPTION": "<p><b>VIKTIGT!</b> Kontrollera att informationen i formuläret är korrekt!</p><p>Det är <b>bara en tekniskt ansvarig per Rikets sal</b>, oavsett hur många församlingar som använder den. Han måste tillhöra en av församlingarna som använder Rikets salen. Om flera församlingar använder samma Rikets sal ska de gemensamt utse en tekniskt ansvarig.</p><p>Den tekniskt ansvarige <b>ansvarar för att Telesal fungerar lokalt</b>, och det är han man ska kontakta om det uppstår lokala tekniska problem.</p><p>Det är <b>viktigt att informationen är korrekt</b> här nedan, så att de som ansvarar för det centrala Telesal-systemet kan kontakta den tekniskt ansvarige i alla Rikets salar om det behövs.</p>",
+            "TITLE_NAME": "Namn",
+            "PLACEHOLDER_NAME": "Förnamn Efternamn",
+            "TITLE_PHONE": "Mobilnummer",
+            "TITLE_EMAIL": "E-postadress",
+            "PLACEHOLDER_EMAIL": "exempel@mail.se",
+            "TITLE_COMMENT": "Kommentar",
+            "SAVED": "Sparat",
+            "ALERT_ERROR": "<b>Fel!</b> Ändringarna sparades inte. Försök igen om en stund."
         }
     },
     "SIP_ACCOUNT_RETRIEVAL": {
-        "DESCRIPTION": "<b>Make sure that this is your name and phone number:</b><br>{{name}}, {{phoneNumber}}<br>If there is any mistake in these informations, please contact the technical manager of your Kingdom Hall.<br><br>You need the following informations in order to listen to the meetings from your computer. You can use the same information from several devices, fx. a PC and a tablet. <br>REMARK! You are NOT allowed to distribute these informations to others as they are bound to your name and phone number!",
-        "FOOTNOTE": "To know how to install and use the app, please <a href='{{url}}' target='_blank'>click here</a>.",
-        "RETRIEVE_INFORMATION": "Retrieve my information",
-        "TITLE": "Your Personal Information",
-        "ENTER_PHONE": "Enter Phone Number",
-        "ERROR_MESSAGE": "The number was not recognized, maybe you entered a wrong number? If you own another number, please try it instead. Or contact the one who created this account for you, and ask to have the account created again with the correct number."
+        "DESCRIPTION": "<p>Kära <b>{{name}}</b>! Här är din personliga kod. Den ska du använda för att lyssna till mötena via internet. Koden är knuten till ditt eget telefonnummer <b>{{phoneNumber}}</b>, så därför får du <b>aldrig lämna koden till andra</b>.</p><p><b>Skriv inte upp koden</b>, utan kopiera den direkt från den här sidan till appen som du ska använda för att lyssna till mötena. Men du får gärna <b>spara en genväg</b> till den här sidan så att du alltid kan hitta du personliga kod igen.</p><p>Om du byter telefonnummer längre fram och förlorar länken från e-postmeddelandet, be då bara att ett nytt konto skapas åt dig.</p>",
+        "FOOTNOTE": "För att läsa om hur du installerar appen, <a href='http://help.telesal.org/sv/homesetup' target='_blank'>klicka här</a>.",
+        "RETRIEVE_INFORMATION": "OK",
+        "TITLE": "Ditt Telesal-konto",
+        "ENTER_PHONE": "Skriv ditt telefonnummer här och klicka sedan på OK",
+        "ERROR_MESSAGE": "Numret kändes inte igen. Har du skrivit in fel nummer? Om du har ett annat nummer också, pröva då med det. Eller kontakta den som skapade det här kontot åt dig och be honom skapa det igen med korrekt nummer."
     }
 
 }
