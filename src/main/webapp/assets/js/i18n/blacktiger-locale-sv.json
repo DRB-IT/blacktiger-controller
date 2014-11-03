@@ -1,23 +1,23 @@
 {
     "LOGIN": {
-        "USERNAME": "Username",
-        "PASSWORD": "Password",
-        "REMEMBER_ME": "Save on this computer",
-        "LOG_IN": "Log in",
-        "ALERT": "<strong>Login is required</strong> in order to see the transmission.",
-        "INVALID_CREDENTIALS": "Username or password is invalid.",
-        "FORGOT_PASSWORD": "Forgot Password"
+        "USERNAME": "Användarnamn",
+        "PASSWORD": "Lösenord",
+        "REMEMBER_ME": "Spara lösenordet på den här datorn",
+        "LOG_IN": "Logga in",
+        "ALERT": "<strong>Det här är ett privat system.</strong> Försök inte logga in om du inte har tillåtelse till det.",
+        "INVALID_CREDENTIALS": "Användarnamnet eller lösenordet är fel.",
+        "FORGOT_PASSWORD": "Glömt lösenord"
     },
     "REQUEST_PASSWORD": {
-        "NAME": "Name",
-        "PHONENUMBER": "Phone Number",
-        "EMAIL": "Email Address",
-        "CITY_OF_HALL": "City of Kingdom Hall",
-        "PHONENUMBER_OF_HALL": "Phone Number for Kingdom Hall",
-        "ERROR": "Could not find a hall matching the input. Please try again.",
-        "SUCCESS": "The hall has been found in telesal and a mail has been to you with further information about username and password for the hall.",
-        "EMAIL_TEXT_USER": "You have activated 'forgot password' for the hall using phone number {%1}. The password has been sent to {%5}, which is the e-mail address which was entered earlier for the technical responsible for this hall. His name is {%3} and his phone number is {%4}.\n\nThe user ID which must be used together with the password is {%2}.",
-        "EMAIL_TEXT_MANAGER": "{%1} has activated 'forgot password' for the hall using phone number {%4}, which you are technically responsible for. He has mobile phone number is {%2} and his e-mail is {%3}. For security reasons, the password been sent to you only, not to him. You must contact him to check if he should have the password from you.\n\nThe password is: {%5}\n",
+        "NAME": "Ditt fullständiga namn:",
+        "PHONENUMBER": "Ditt mobilnummer:",
+        "EMAIL": "Din e-postadress:",
+        "CITY_OF_HALL": "Staden där salen ligger:",
+        "PHONENUMBER_OF_HALL": "Telesal-telefonnummer till salen:",
+        "ERROR": "Informationen gav ingen träff. Kontrollera informationen och försök igen.",
+        "SUCCESS": "Ett e-postmeddelande har skickats till dig. Kontrollera eventuellt din skräppost-mapp också.",
+        "EMAIL_TEXT_USER": "SVENSKA: Du har aktiverat 'glömt lösenord' för salen med telefonnummer {%1}. Lösenordet har skickats till {%5} som är den e-postadress som angavs tidigare för den tekniskt ansvarige för den här salen. Han heter {%3} och hans telefonnummer är {%4}.\n\nAnvändarnamnet som måste användas tillsammans med lösenordet är {%2}.\n\n\n\nENGLISH: You have activated 'forgot password' for the hall using phone number {%1}. The password has been sent to {%5}, which is the e-mail address which was entered earlier for the technical responsible for this hall. His name is {%3} and his phone number is {%4}.\n\nThe user ID which must be used together with the password is {%2}.\n",
+        "EMAIL_TEXT_MANAGER": "SVENSKA: {%1} har aktiverat 'glömt lösenord' för salen med telefonnummer {%4} som du är tekniskt ansvarig för. Hans telefonnummer är {%2} och hans e-postadress är {%3}. Av säkerhetsskäl har lösenordet enbart skickats till dig och inte till honom. Du måste kontakta honom och höra om du ska ge honom lösenordet.\n\nLösenordet är: {%5}.\n\n\n\nENGLISH: {%1} has activated 'forgot password' for the hall using phone number {%4}, which you are technically responsible for. His phone number is {%2}, and his e-mail is {%3}. For security reasons, the password been sent to you only, not to him. You must contact him to check if he should have the password from you.\n\nThe password is: {%5}\n",
         "EMAIL_SUBJECT": "Telesal in {%1}"
     },
     "SYSTEM": {
@@ -25,8 +25,8 @@
         "COPYRIGHTHOLDER": "telesal.org"
     },
     "NAVIGATION": {
-        "PARTICIPANTS": "Lyssnare nu",
-        "SETTINGS": "Settings",
+        "PARTICIPANTS": "Följande lyssnar nu",
+        "SETTINGS": "Inställningar",
         "REPORT": "Närvarorapport",
         "HELP": "Hjälp",
         "ADMIN": {
@@ -36,54 +36,54 @@
     },
     "PARTICIPANTS": {
         "WARNINGS": {
-            "NO_PARTICIPANTS_AND_TRANSMITTERS": "Det är för närvarande ingen sändning till, eller deltagere i, telefonmötet.",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "Där utsänds inget ljud till lyssnarna!",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "Check that X-Lite is started",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "In X-lite call {{phoneNumber | telephone}}",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Call the same number from another phone and check the volume and quality."
+            "NO_PARTICIPANTS_AND_TRANSMITTERS": "Ingen överföring pågår just nu, och inga lyssnare är online.",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "Inget ljud skickas ut till lyssnarna!",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "Kontrollera att X-Lite är startat",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "Ring upp {{phoneNumber | telephone}} från X-Lite",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Ring därefter upp samma nummer från en annan telefon och kontrollera kvaliteten och justera eventuellt volymen"
         },
         "INFO": {
-            "NO_PARTICIPANTS": "Der er för närvarande inga lyssnare.",
-            "UNMUTED": "Svarsmikrofonen är öppet"
+            "NO_PARTICIPANTS": "Ingen lyssnar med just nu.",
+            "UNMUTED": "Svarsmikrofonen är öppen!"
         },
-        "UNMUTE": "Öppnar svarsmikrofon",
-        "MUTE": "Avstäng svarsmikrofon",
-        "KICK": "Avbryt lyssnare",
-        "EDIT": "Redigera",
+        "UNMUTE": "Öppna svarsmikrofon",
+        "MUTE": "Stäng svarsmikrofon",
+        "KICK": "Lägg på",
+        "EDIT": "Redigera namn",
         "PARTICIPANTS": "{{noOfParticipants}} lyssnare",
-        "ABORT_TRANSMISSION": "Avbryt transmissionen",
-        "COMPLETED_CALLS": "{{noOfCompletedCalls}} completed call(s)",
-        "WANTS_TO_COMMENT": "Wants to comment",
-        "ENTER_NAME": "Enter Name"
+        "ABORT_TRANSMISSION": "Avbryt överföring",
+        "COMPLETED_CALLS": "{{noOfCompletedCalls}} avslutade uppringningar",
+        "WANTS_TO_COMMENT": "Jag vill gärna svara!",
+        "ENTER_NAME": "Vem är det? Ring och fråga, och skriv namnet här!"
     },
     "REPORT": {
-        "NUMBER": "Nummer",
+        "NUMBER": "Telefonnummer",
         "NAME": "Namn",
-        "FIRST_CALL": "Första oppkall",
-        "CALLS": "Uppkallningar",
+        "FIRST_CALL": "Första uppringningen",
+        "CALLS": "Uppringningar",
         "MINUTES": "Minuter",
-        "DELETE": "Delete History",
-        "NO_ENTRIES": "No history has been recorded for today."
+        "DELETE": "Rensa historik",
+        "NO_ENTRIES": "Det finns ingen historik. Listan raderas när webbläsaren stängs."
     },
     "GENERAL": {
         "LANGUAGE": {
-            "DA": "Danish",
-            "EN": "English",
-            "FO": "Faroese",
-            "KL": "Greenlandic",
-            "NO": "Norwegian",
-            "SV": "Swedish",
-            "IS": "Islándska"
+            "DA": "Danska",
+            "EN": "Engelska",
+            "FO": "Färöiska",
+            "KL": "Grönländska",
+            "NO": "Norska",
+            "SV": "Svenska",
+            "IS": "Isländska"
         },
         "OK": "Ok",
-        "CANCEL": "Cancel",
+        "CANCEL": "Avbryt",
         "TECHNICALLY_RESPONSIBLE": "Tekniskt ansvarig",
-        "HALL": "hall",
-        "LOGOUT": "Log out",
-        "YES": "Yes",
-        "NO": "No",
-        "PHONENUMBER": "Phone Number",
-        "EMAIL": "Email Address",
+        "HALL": "sal",
+        "LOGOUT": "Logga ut",
+        "YES": "Ja",
+        "NO": "Nej",
+        "PHONENUMBER": "Telefonnummer",
+        "EMAIL": "E-postadress",
         "LOADING": "Indlæser",
         "LOST_CONNECTION": "The application lost connection to the server. Check your Internet connection and reload the page.",
         "COMMENT_REQUEST": "Somebody would like to comment"
