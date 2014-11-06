@@ -18,12 +18,18 @@ module.exports = function(config) {
       'src/main/webapp/assets/js/**/angular-cookies.js',
       'src/main/webapp/assets/js/**/angular-resource.js',
       'src/main/webapp/assets/js/**/angular-local-storage.js',
+      'src/main/webapp/assets/js/**/angular-translate.js',
+      'src/main/webapp/assets/js/**/ui-bootstrap.js',
+      'src/main/webapp/assets/js/**/ui-bootstrap-tpls.js',
       'src/main/webapp/assets/js/**/angular-mocks.js',
       'src/main/webapp/assets/js/blacktiger-ui.js',
       'src/main/webapp/assets/js/blacktiger-service.js',
       'src/main/webapp/assets/js/**/sockjs.js',
       'src/main/webapp/assets/js/**/stomp.js',
-      'src/test/javascript/specs/*.js'
+      'src/main/webapp/assets/js/**/tel.js',
+      'src/main/webapp/assets/js/**/metadatalite.js',
+      'src/test/javascript/specs/*.js',
+      'src/main/webapp/assets/templates/*.html'
     ],
 
 
@@ -35,16 +41,34 @@ module.exports = function(config) {
 
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-    reporters: ['progress', 'coverage'],
+    reporters: ['progress'],
 
     preprocessors : {
-      'src/main/webapp/assets/**/blacktiger-*.js': 'coverage'
+      'src/main/webapp/assets/templates/*.html': ['ng-html2js']
+      
     },
 
     // optionally, configure the reporter
     coverageReporter: {
       type : 'html',
       dir : 'target/coverage/'
+    },
+    
+    ngHtml2JsPreprocessor: {
+      // strip this from the file path
+      stripPrefix: 'src/main/webapp/',
+      //stripSufix: '.ext',
+      // prepend this to the
+      //prependPrefix: 'assets/templates',
+
+      // or define a custom transform function
+      /*cacheIdFromPath: function(filepath) {
+        return cacheId;
+      },*/
+
+      // setting this option will create only a single module that contains templates
+      // from all the files, so you can load them all with module('foo')
+      moduleName: 'blacktiger-templates'
     },
 
     // web server port
@@ -57,7 +81,7 @@ module.exports = function(config) {
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_DEBUG,
 
 
     // enable / disable watching file and executing tests whenever any file changes
