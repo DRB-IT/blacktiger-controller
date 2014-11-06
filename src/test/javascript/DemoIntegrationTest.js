@@ -1,4 +1,4 @@
-describe('angularjs homepage', function() {
+describe('login homepage', function() {
   it('should greet the named user', function() {
     browser.get('http://drb-it.github.io/blacktiger-web');
 

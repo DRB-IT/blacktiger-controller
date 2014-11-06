@@ -92,9 +92,11 @@ describe('Unit testing ParticipantSvc', function() {
                 ];
 
 
-        $httpBackend.expectPOST(blacktiger.getServiceUrl() + 'rooms/DK-9000-2/participants/1/muted').respond(function(url, headers, data) {
-            var participant = participants[0].muted = data;
-            console.log('Mute request received as expected ' + participant);
+        $httpBackend.expect('PATCH', blacktiger.getServiceUrl() + 'rooms/DK-9000-2/participants/1').respond(function(method, url, data, headers) {
+            data = angular.fromJson(data);
+            participants[0].muted = (data.muted === true);
+            console.log('Mute request received as expected: ' + data);
+            console.log(participants[0]);
             return [200];
         });
 
@@ -124,9 +126,10 @@ describe('Unit testing ParticipantSvc', function() {
                 ];
 
 
-        $httpBackend.expectPOST(blacktiger.getServiceUrl() + 'rooms/DK-9000-2/participants/1/muted').respond(function(url, headers, data) {
-            var participant = participants[0].muted = data;
-            console.log('Mute request received as expected ' + participant);
+        $httpBackend.expect('PATCH', blacktiger.getServiceUrl() + 'rooms/DK-9000-2/participants/1').respond(function(method, url, data, headers) {
+            data = angular.fromJson(data);
+            participants[0].muted = (data.muted === true);
+            console.log('Mute request received as expected: ' + data);
             return [200];
         });
 
@@ -138,62 +141,6 @@ describe('Unit testing ParticipantSvc', function() {
         $httpBackend.flush();
 
         expect(participants[0].muted).toBe(false);
-
-
     });
 
-    /*it('accepts Join event.', function() {
-        var room = {
-                id: 'DK-9000-2',
-                name: 'DK-9000-1 Aalborg, sal 2',
-                contact: {
-                    name: 'John Doe',
-                    phoneNumber: '+4512345678',
-                    email: 'example@mail.dk'
-                },
-                participants: [
-
-                ]
-            };
-
-        var participant = {
-                        userId: 1,
-                        muted: false,
-                        host: true,
-                        phoneNumber: 'PC-xxxxxxxx',
-                        dateJoined: 1349333576093,
-                        name: 'Testsal',
-                        commentRequested: false
-                    };
-
-        var eventQueue = [];
-        var onEventRequest = function() {
-            var events = eventQueue;
-            eventQueue = [];
-            console.log('Events request [' + events.length + ']');
-
-            return [200, {timestamp:new Date().getTime(),events:events}];
-        };
-
-        $httpBackend.expectGET(/rooms\/DK-9000-2\/events.?/).respond(onEventRequest);
-
-        RoomSvc.setCurrent(room);
-        $httpBackend.flush();
-
-        eventQueue.push({type:'Join', participant:participant});
-
-        $httpBackend.expectGET(/rooms\/DK-9000-2\/events.?/).respond(onEventRequest);
-        $timeout.flush();
-        $httpBackend.flush();
-
-        waitsFor(function() {
-            return eventQueue.length === 0;
-        }, 'eventQueue should become empty', 200);
-
-        runs(function() {
-            expect(ParticipantSvc.getParticipants().length).toBe(1);
-        });
-
-
-    });*/
 });

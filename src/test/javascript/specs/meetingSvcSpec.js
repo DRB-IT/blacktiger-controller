@@ -1,139 +1,189 @@
 describe('Unit testing MeetingSvc', function() {
     var $rootScope;
-    var $httpBackend;
-    var MeetingSvc;
-    var RoomSvc;
-    var $timeout;
-
+    var meetingSvc;
+    
     beforeEach(module('blacktiger-service'));
-    beforeEach(module(function($logProvider, blacktigerProvider) {
-        blacktigerProvider.setForceLongPolling(true);
-        $logProvider.debugEnabled = true;
-    }));
     
-    beforeEach(inject(function(_$rootScope_, _$httpBackend_, _MeetingSvc_, _RoomSvc_, _$timeout_, blacktiger){
+    beforeEach(inject(function(_$rootScope_, _MeetingSvc_){
         $rootScope = _$rootScope_;
-        $httpBackend = _$httpBackend_;
-        MeetingSvc = _MeetingSvc_;
-        RoomSvc = _RoomSvc_;
-        $timeout = _$timeout_;
-        
+        meetingSvc = _MeetingSvc_;
     }));
 
+  
+    it('initializes with no data.', function () {
+        var entries = meetingSvc.findAllIds();
+        expect(entries).toEqual([]);
+    });
     
-    /*
-    it('accepts Join event.', function() {
+    it('returns the correct total via getTotalParticipants', function () {
         var room = {
-                id: 'DK-9000-2',
-                name: 'DK-9000-1 Aalborg, sal 2',
-                contact: {
-                    name: 'John Doe',
-                    phoneNumber: '+4512345678',
-                    email: 'example@mail.dk'
-                },
-                
-            };
-        
-        var participants = [];
-        
-        var participant = {
-                        userId: 1,
-                        muted: false,
-                        host: true,
-                        phoneNumber: 'PC-xxxxxxxx',
-                        dateJoined: 1349333576093,
-                        name: 'Testsal',
-                        commentRequested: false
-                    };
-        
-        var eventQueue = [];
-        var onEventRequest = function() {
-            var events = eventQueue;
-            eventQueue = [];
-            console.log('Events request [' + events.length + ']');
-            
-            return [200, {timestamp:new Date().getTime(),events:events}];
+            id: 'H45-0000'
         };
         
-        var event = null;
+        var host = {
+            type: 'Sip',
+            callerId: 'L00000000',
+            phoneNumber: '4522334451',
+            name: 'John Doe',
+            channel: 'SIP__1231',
+            host:true
+        };
+        var participant1 = {
+            type: 'Sip',
+            callerId: 'L00000001',
+            phoneNumber: '4522334452',
+            name: 'John Doe',
+            channel: 'SIP__1232',
+            host:false
+        };
+        var participant2 = {
+            type: 'Phone',
+            callerId: 'L00000002',
+            phoneNumber: '4522334453',
+            name: 'John Doe',
+            channel: 'SIP__1233',
+            host:false
+        };
         
-        $rootScope.$on('MeetingSvc.Join', function(e, participant){
-            event = e;
-        });
+        $rootScope.$broadcast('PushEvent.ConferenceStart', room);
+        expect(0).toEqual(meetingSvc.getTotalParticipants());
         
-        $httpBackend.expectGET("http://localhost:8080/rooms/DK-9000-2/participants").respond(participants);
-        $httpBackend.expectGET(/http:\/\/localhost:8080\/events\?room=DK-9000-.?/).respond(onEventRequest);
+        $rootScope.$broadcast('PushEvent.Join', room.id, participant1);
+        expect(1).toEqual(meetingSvc.getTotalParticipants());
+        expect(0).toEqual(meetingSvc.getTotalParticipantsByType('Phone'));
+        expect(1).toEqual(meetingSvc.getTotalParticipantsByType('Sip'));
         
-        console.log("Setting room on MeetingSvc");
-        MeetingSvc.setRoom(room);
-        $httpBackend.flush();
+        $rootScope.$broadcast('PushEvent.Join', room.id, host);
+        expect(1).toEqual(meetingSvc.getTotalParticipants());
+        expect(0).toEqual(meetingSvc.getTotalParticipantsByType('Phone'));
+        expect(1).toEqual(meetingSvc.getTotalParticipantsByType('Sip'));
         
-        console.log("Pushing Join event");
-        eventQueue.push({type:'Join', participant:participant});
-        
-        $httpBackend.expectGET(/http:\/\/localhost:8080\/events\?room=DK-9000-.?/).respond(onEventRequest);
-        $timeout.flush();
-        $httpBackend.flush();
-            
-        expect(MeetingSvc.getParticipantList().length).toBe(1);
-        expect(event).not.toBe(null);
+        $rootScope.$broadcast('PushEvent.Join', room.id, participant2);
+        expect(2).toEqual(meetingSvc.getTotalParticipants());
+        expect(1).toEqual(meetingSvc.getTotalParticipantsByType('Phone'));
+        expect(1).toEqual(meetingSvc.getTotalParticipantsByType('Sip'));
         
     });
     
-    it('accepts Leave event.', function() {
-        var room = {
-                id: 'DK-9000-2',
-                name: 'DK-9000-1 Aalborg, sal 2',
-                contact: {
-                    name: 'John Doe',
-                    phoneNumber: '+4512345678',
-                    email: 'example@mail.dk'
-                },
-                
-            };
-        
-        var participants = [{
-                        userId: 1,
-                        muted: false,
-                        host: true,
-                        phoneNumber: 'PC-xxxxxxxx',
-                        dateJoined: 1349333576093,
-                        name: 'Testsal',
-                        commentRequested: false
-                    }];
-        
-        var eventQueue = [];
-        var onEventRequest = function() {
-            var events = eventQueue;
-            eventQueue = [];
-            console.log('Events request [' + events.length + ']');
-            
-            return [200, {timestamp:new Date().getTime(),events:events}];
+    it('returns the correct total via getTotalRooms', function () {
+        var room1 = {
+            id: 'H45-0000'
         };
         
-        var event = null;
+        var room2= {
+            id: 'H45-0001'
+        };
         
-        $rootScope.$on('MeetingSvc.Leave', function(e, participant){
-            event = e;
-        });
+        var room3 = {
+            id: 'H45-0002'
+        };
         
-        $httpBackend.expectGET("http://localhost:8080/rooms/DK-9000-2/participants").respond(participants);
-        $httpBackend.expectGET(/http:\/\/localhost:8080\/events\?room=DK-9000-.?/).respond(onEventRequest);
         
-        console.log("Setting room on MeetingSvc");
-        MeetingSvc.setRoom(room);
-        $httpBackend.flush();
+        expect(0).toEqual(meetingSvc.getTotalRooms());
         
-        console.log("Pushing Leave event");
-        eventQueue.push({type:'Leave', participantId:participants[0].userId});
+        $rootScope.$broadcast('PushEvent.ConferenceStart', room1);
+        expect(1).toEqual(meetingSvc.getTotalRooms());
         
-        $httpBackend.expectGET(/http:\/\/localhost:8080\/events\?room=DK-9000-.?/).respond(onEventRequest);
-        $timeout.flush();
-        $httpBackend.flush();
-            
-        expect(MeetingSvc.getParticipantList().length).toBe(0);
-        expect(event).not.toBe(null);
+        $rootScope.$broadcast('PushEvent.ConferenceStart', room2);
+        expect(2).toEqual(meetingSvc.getTotalRooms());
         
-    });*/
+        $rootScope.$broadcast('PushEvent.ConferenceStart', room3);
+        expect(3).toEqual(meetingSvc.getTotalRooms());
+        
+        debugger
+        $rootScope.$broadcast('PushEvent.ConferenceEnd', room3.id);
+        expect(2).toEqual(meetingSvc.getTotalRooms());
+        
+        $rootScope.$broadcast('PushEvent.ConferenceEnd', room2.id);
+        expect(1).toEqual(meetingSvc.getTotalRooms());
+        
+        $rootScope.$broadcast('PushEvent.ConferenceEnd', room1.id);
+        expect(0).toEqual(meetingSvc.getTotalRooms());
+    });
+    
+    it('fires the correct events', function () {
+        var lastEvent = null;
+        var room = {
+            id: 'H45-0000'
+        };
+        
+        var participant = {
+            type: 'Sip',
+            callerId: 'L00000000',
+            phoneNumber: '4522334451',
+            name: 'John Doe',
+            channel: 'SIP__1231',
+            host:false,
+            muted: true
+        };
+        
+        function handleEvent(event) {
+            lastEvent = event;
+        }
+        
+        $rootScope.$on('Meeting.Start', handleEvent);
+        $rootScope.$on('Meeting.End', handleEvent);
+        $rootScope.$on('Meeting.Join', handleEvent);
+        $rootScope.$on('Meeting.Leave', handleEvent);
+        $rootScope.$on('Meeting.Change', handleEvent);
+        
+        //ConferenceStart
+        $rootScope.$broadcast('PushEvent.ConferenceStart', room);
+        expect(lastEvent.name).toEqual('Meeting.Start');
+        
+        lastEvent = null;
+        $rootScope.$broadcast('PushEvent.ConferenceStart', room);
+        expect(lastEvent).toBe(null);
+        
+        //Join
+        $rootScope.$broadcast('PushEvent.Join', room.id, participant);
+        expect(lastEvent.name).toEqual('Meeting.Join');
+        
+        lastEvent = null;
+        $rootScope.$broadcast('PushEvent.Join', room.id, participant);
+        expect(lastEvent).toBe(null);
+        
+        //CommentRequest
+        $rootScope.$broadcast('PushEvent.CommentRequest', room.id, participant.channel);
+        expect(lastEvent.name).toEqual('Meeting.Change');
+        
+        lastEvent = null;
+        $rootScope.$broadcast('PushEvent.CommentRequest', room.id, participant.channel);
+        expect(lastEvent).toBe(null);
+        
+        //CommentRequestCancel
+        $rootScope.$broadcast('PushEvent.CommentRequestCancel', room.id, participant.channel);
+        expect(lastEvent.name).toEqual('Meeting.Change');
+        
+        lastEvent = null;
+        $rootScope.$broadcast('PushEvent.CommentRequestCancel', room.id, participant.channel);
+        expect(lastEvent).toBe(null);
+        
+        //Unmuted
+        $rootScope.$broadcast('PushEvent.Unmute', room.id, participant.channel);
+        expect(lastEvent.name).toEqual('Meeting.Change');
+        
+        lastEvent = null;
+        $rootScope.$broadcast('PushEvent.Unmute', room.id, participant.channel);
+        expect(lastEvent).toBe(null);
+        
+        //Muted
+        $rootScope.$broadcast('PushEvent.Mute', room.id, participant.channel);
+        expect(lastEvent.name).toEqual('Meeting.Change');
+        
+        lastEvent = null;
+        $rootScope.$broadcast('PushEvent.Mute', room.id, participant.channel);
+        expect(lastEvent).toBe(null);
+                
+        //ConferenceEnd
+        $rootScope.$broadcast('PushEvent.ConferenceEnd', room.id);
+        expect(lastEvent.name).toEqual('Meeting.End');
+        
+        lastEvent = null;
+        $rootScope.$broadcast('PushEvent.ConferenceEnd', room.id);
+        expect(lastEvent).toBe(null);
+        
+    });
+   
 });
 
