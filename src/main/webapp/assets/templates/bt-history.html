@@ -19,7 +19,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-show="noOfHistoryEntries()===0">
+        <tr ng-if="history.length===0">
             <td colspan="6">{{'REPORT.NO_ENTRIES' | translate}}</td>
         </tr>
         <tr ng-repeat="entry in history | orderBy:predicate:reverse">
