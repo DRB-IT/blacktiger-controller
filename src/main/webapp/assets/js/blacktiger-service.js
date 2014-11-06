@@ -9,8 +9,8 @@
  * Gives access to serviceUrl, native language names and unique instance id
  */
 function BlacktigerProvider() {
-        'use strict';
-        var serviceUrl = 'http://b.telesal.org',
+    'use strict';
+    var serviceUrl = 'http://b.telesal.org/',
             languageNames = {
                 'da': 'Dansk',
                 'en': 'English',
@@ -22,42 +22,42 @@ function BlacktigerProvider() {
                 'es': 'Español'
             };
 
-        var instanceId = window.name;
-        if(!instanceId || "" === instanceId) {
-            window.name = new Date().getTime();
-            instanceId = window.name;
-        }
-            
-
-        var innerSetServiceUrl = function(url) {
-            if (url.charAt(url.length - 1) !== '/') {
-                url = url + '/';
-            }
-            
-            serviceUrl = url;
-        };
-        
-        this.setServiceUrl = innerSetServiceUrl;
-
-        this.$get = function () {
-            return {
-                getServiceUrl: function () {
-                    return serviceUrl;
-                },
-                setServiceUrl: innerSetServiceUrl,
-                getE164Pattern: function () {
-                    return /^\+[0-9]{5,15}$/;
-                },
-                getLanguageNames: function () {
-                    return languageNames;
-                },
-                getInstanceId: function () {
-                    return instanceId;
-                }
-            };
-        };
+    var instanceId = window.name;
+    if (!instanceId || "" === instanceId) {
+        window.name = new Date().getTime();
+        instanceId = window.name;
     }
-    
+
+
+    var innerSetServiceUrl = function (url) {
+        if (url.charAt(url.length - 1) !== '/') {
+            url = url + '/';
+        }
+
+        serviceUrl = url;
+    };
+
+    this.setServiceUrl = innerSetServiceUrl;
+
+    this.$get = function () {
+        return {
+            getServiceUrl: function () {
+                return serviceUrl;
+            },
+            setServiceUrl: innerSetServiceUrl,
+            getE164Pattern: function () {
+                return /^\+[0-9]{5,15}$/;
+            },
+            getLanguageNames: function () {
+                return languageNames;
+            },
+            getInstanceId: function () {
+                return instanceId;
+            }
+        };
+    };
+}
+
 /****************************************************************
  * SERVICES                                                     *
  ***************************************************************/
@@ -86,7 +86,7 @@ function LoginSvc($q, localStorageService, $http, $rootScope, blacktiger, $log) 
         authenticate: function (username, password, remember) {
 
             var user = null,
-                authHeader, token;
+                    authHeader, token;
 
             if (!username && !password) {
                 token = localStorageService.get('LoginToken');
@@ -148,7 +148,7 @@ function LoginSvc($q, localStorageService, $http, $rootScope, blacktiger, $log) 
             currentUser = null;
             $rootScope.currentUser = null;
             $rootScope.$broadcast("afterLogout", currentUser);
-            
+
         }
     };
 }
@@ -174,42 +174,42 @@ function SystemSvc($http, blacktiger) {
 SystemSvc.$inject = ['$http', 'blacktiger'];
 
 /*
-function RemoteSongSvc($q, $http) {
-        'use strict';
-        var baseUrl = "assets/music/"; //"http://telesal.s3.amazonaws.com/music/";
-        var baseSongName = "iasn_E_000";
-        var replacePattern = /(iasn_E_)([0]{3})/;
-        var lpad = function (s, width, character) {
-            return (s.length >= width) ? s : (new Array(width).join(character) + s).slice(-width);
-        };
-
-        return {
-            getNumberOfSongs: function () {
-                return 1; //135;
-            },
-            readBlob: function (number) {
-                var deferred = $q.defer(),
-                    numberf = lpad(number, 3, '0'),
-                    songName = baseSongName.replace(replacePattern, "\$1" + numberf.toString() + ".mp3"),
-                    url = baseUrl + songName;
-
-                $http({
-                    method: 'GET',
-                    url: url,
-                    responseType: 'blob'
-                }).success(function (data, status, headers, config) {
-                    deferred.resolve(data);
-                }).error(function (data, status, headers, config) {
-                    deferred.reject();
-                });
-                return deferred.promise;
-            }
-
-        };
-    }
-RemoteSongSvc.$inject = ['$q', '$http'];
+ function RemoteSongSvc($q, $http) {
+ 'use strict';
+ var baseUrl = "assets/music/"; //"http://telesal.s3.amazonaws.com/music/";
+ var baseSongName = "iasn_E_000";
+ var replacePattern = /(iasn_E_)([0]{3})/;
+ var lpad = function (s, width, character) {
+ return (s.length >= width) ? s : (new Array(width).join(character) + s).slice(-width);
+ };
+ 
+ return {
+ getNumberOfSongs: function () {
+ return 1; //135;
+ },
+ readBlob: function (number) {
+ var deferred = $q.defer(),
+ numberf = lpad(number, 3, '0'),
+ songName = baseSongName.replace(replacePattern, "\$1" + numberf.toString() + ".mp3"),
+ url = baseUrl + songName;
+ 
+ $http({
+ method: 'GET',
+ url: url,
+ responseType: 'blob'
+ }).success(function (data, status, headers, config) {
+ deferred.resolve(data);
+ }).error(function (data, status, headers, config) {
+ deferred.reject();
+ });
+ return deferred.promise;
+ }
+ 
+ };
+ }
+ RemoteSongSvc.$inject = ['$q', '$http'];
  */
-    
+
 
 /**
  * Service for retreiving the rooms the current user has access to.
@@ -219,11 +219,6 @@ function RoomSvc(blacktiger, $resource) {
     var resource = $resource(blacktiger.getServiceUrl() + 'rooms/:id', {}, {
         put: {
             method: 'PUT'
-        },
-        all: {
-            method: 'GET',
-            url: blacktiger.getServiceUrl() + 'participants',
-            isArray: true
         }
     });
     return {
@@ -258,15 +253,7 @@ RoomSvc.$inject = ['blacktiger', '$resource'];
  */
 function ParticipantSvc(blacktiger, $resource, $log, $http) {
     'use strict';
-    var resource = $resource(blacktiger.getServiceUrl() + 'rooms/:roomid/participants/:id', {}, {
-        mute: {
-            method: 'POST',
-            url: blacktiger.getServiceUrl() + 'rooms/:roomid/participants/:id/muted'
-        },
-        put: {
-            method: 'PUT'
-        }
-    });
+    var resource = $resource(blacktiger.getServiceUrl() + 'rooms/:roomid/participants/:id');
     return {
         query: function (roomid) {
             return resource.query({
@@ -285,27 +272,19 @@ function ParticipantSvc(blacktiger, $resource, $log, $http) {
                 id: id
             });
         },
-        save: function (roomId, participant) {
-            participant = angular.copy(participant);
-            delete participant.commentRequested;
-            return resource.put({
-                roomid: roomId,
-                id: participant.channel
-            }, participant);
-        },
         mute: function (roomId, id) {
+            var data = {muted:true};
             $log.info('Muting participant: [room=' + roomId + ';id=' + id + ']');
-            return $http.post(blacktiger.getServiceUrl() + 'rooms/' + roomId + '/participants/' + id + '/muted', true).then(function () {
+            return $http.patch(blacktiger.getServiceUrl() + 'rooms/' + roomId + '/participants/' + id, data).then(function () {
                 return;
             });
-            //return resource.mute({roomid:roomId, id:id}, true);
         },
         unmute: function (roomId, id) {
+            var data = {muted:false};
             $log.info('Unmuting participant: [room=' + roomId + ';id=' + id + ']');
-            return $http.post(blacktiger.getServiceUrl() + 'rooms/' + roomId + '/participants/' + id + '/muted', false).then(function () {
+            return $http.patch(blacktiger.getServiceUrl() + 'rooms/' + roomId + '/participants/' + id, data).then(function () {
                 return;
             });
-            //return resource.mute({roomid:roomId, id:id}, false);
         }
     };
 }
@@ -337,19 +316,19 @@ function StompSvc($rootScope) {
     };
 
     NGStomp.prototype.connect = function (user, password, on_connect, on_error, vhost) {
-        // The Spring Stomp implementation does not like user/password, event though it should just ignore it.
+        // The Spring Stomp implementation does not like user/password, even though it should just ignore it.
         // Sending empty headers instead of user/pass.
         this.stompClient.connect({},
-            function (frame) {
-                $rootScope.$apply(function () {
-                    on_connect.apply(stompClient, frame);
-                });
-            },
-            function (frame) {
-                $rootScope.$apply(function () {
-                    on_error.apply(frame);
-                });
-            } /*, vhost*/ );
+                function (frame) {
+                    $rootScope.$apply(function () {
+                        on_connect.apply(stompClient, frame);
+                    });
+                },
+                function (frame) {
+                    $rootScope.$apply(function () {
+                        on_error.apply(frame);
+                    });
+                } /*, vhost*/);
     };
 
     NGStomp.prototype.disconnect = function (callback) {
@@ -367,321 +346,213 @@ function StompSvc($rootScope) {
 }
 StompSvc.$inject = ['$rootScope'];
 
-/**
- * Service for handling information about an active meeting.
- * NB: Currently this has some of the same logic as RealtimeSvc.
- * See https://github.com/DRB-IT/blacktiger-web/issues/123
- */
-function MeetingSvc(CONFIG, $rootScope, $timeout, ParticipantSvc, blacktiger, StompSvc, $log) {
-    'use strict';
-    var participants = [],
-        currentRoom = null,
-        commentCancelPromiseArray = [],
-        stompClient,
-        commentRequestTimeout = CONFIG.commentRequestTimeout,
-        eventSubscription = null;
-
-    var indexByChannel = function (channel) {
-        var index = -1;
-        angular.forEach(participants, function (p, currentIndex) {
-            if (p.channel === channel) {
-                index = currentIndex;
-                return false;
-            }
-        });
-        return index;
-    };
-
-    var handleMute = function (channel, value) {
-        var index = indexByChannel(channel);
-        if (index >= 0) {
-            var p = participants[index];
-            p.commentRequested = false;
-            if (value !== p.muted) {
-                p = angular.copy(p);
-                p.muted = value;
-                ParticipantSvc.save(currentRoom.id, p);
-            }
-        }
-    };
-
-    var updateCancelPromise = function (id, newPromise) {
-        if (commentCancelPromiseArray[id]) {
-            $timeout.cancel(commentCancelPromiseArray[id]);
-        }
-        if (newPromise) {
-            commentCancelPromiseArray[id] = newPromise;
-        }
-    };
-
-    var setParticipantCommentRequested = function (userId, value) {
-        var index = indexByChannel(userId);
-        participants[index].commentRequested = !value;
-        $timeout(function () {
-            if (index >= 0) {
-                participants[index].commentRequested = value;
-            }
-        }, 10);
-    };
-
-    var handleEvent = function (event) {
-        var index, promise, channel;
-        channel = event.participant ? event.participant.channel : event.channel;
-        switch (event.type) {
-        case 'Join':
-            onJoin(event.participant);
-            break;
-        case 'Leave':
-            $log.info('Leave Event Recieved for participantId "' + angular.toJson(event) + '"');
-            index = indexByChannel(channel);
-            if (index >= 0) {
-                var p = participants[index];
-                participants.splice(index, 1);
-                $rootScope.$broadcast('MeetingSvc.Leave', p);
-            }
-
-            break;
-        case 'Change':
-            index = indexByChannel(channel);
-            participants[index] = event.participant;
-            $rootScope.$broadcast('MeetingSvc.Change', event.participant);
-            break;
-        case 'CommentRequest':
-            $log.debug('CommentRequest');
-            setParticipantCommentRequested(channel, true);
-            promise = $timeout(function () {
-                setParticipantCommentRequested(channel, false);
-            }, commentRequestTimeout);
-            updateCancelPromise(channel, promise);
-            break;
-        case 'CommentRequestCancel':
-            $log.debug('CommentRequestCancel');
-            setParticipantCommentRequested(channel, false);
-            updateCancelPromise(channel);
-            break;
-        case 'Mute':
-            $log.debug('Mute');
-            index = indexByChannel(channel);
-            participants[index].muted = true;
-            break;
-        case 'Unmute':
-            $log.debug('Unmute');
-            index = indexByChannel(channel);
-            participants[index].muted = false;
-            break;
-        }
-    };
-
-    var clear = function () {
-        if (eventSubscription) {
-            eventSubscription.unsubscribe();
-            eventSubscription = null;
-        }
-
-        participants.splice(0);
-    };
-
-    var subscribeToChanges = function () {
-        stompClient = StompSvc(blacktiger.getServiceUrl() + 'socket');
-        stompClient.connect($rootScope.credentials.username, $rootScope.credentials.password, function () {
-            //+ currentRoom
-            eventSubscription = stompClient.subscribe("/queue/events/" + currentRoom.id, function (message) {
-                var e = angular.fromJson(message.body);
-                handleEvent(e);
-            });
-        }, function () {
-            $rootScope.$broadcast('MeetingSvc.Lost_Connection');
-        }, '/');
-    };
-
-    var onJoin = function (p) {
-        participants.push(p);
-        $rootScope.$broadcast('MeetingSvc.Join', p);
-    };
-
-    return {
-        getParticipantList: function () {
-            return participants;
-        },
-        getRoom: function() {
-            return currentRoom;
-        },
-        setRoom: function (newRoom) {
-            clear();
-
-            if (!newRoom) {
-                return;
-            }
-
-            currentRoom = newRoom;
-            $rootScope.$broadcast('MeetingSvc.RoomChanged', currentRoom);
-            $log.info('Room changed.');
-
-            ParticipantSvc.query(currentRoom.id).$promise.then(function (data) {
-                angular.forEach(data, function (p) {
-                    onJoin(p);
-                });
-
-                subscribeToChanges();
-            });
-        },
-        kick: function (userId) {
-            ParticipantSvc.kick(currentRoom.id, userId);
-        },
-        mute: function (userId) {
-            handleMute(userId, true);
-        },
-        unmute: function (userId) {
-            handleMute(userId, false);
-        },
-        clear: function () {
-            clear();
-            currentRoom = null;
-            $rootScope.$broadcast('MeetingSvc.RoomChanged', null);
-        }
-
-    };
-}
-MeetingSvc.$inject = ['CONFIG', '$rootScope', '$timeout', 'ParticipantSvc', 'blacktiger', 'StompSvc', '$log'];
-
-/**
- * Service for handling information about all active meetings
- * NB: Currently this has some of the same logic as MeetingSvc.
- * See https://github.com/DRB-IT/blacktiger-web/issues/123
- */
-function RealtimeSvc($rootScope, $timeout, RoomSvc, StompSvc, blacktiger, $log) {
-    'use strict';
-    var rooms = [],
-        stompClient, commentCancelPromiseArray = [];
-
-    var indexByChannel = function (participants, channel) {
-        var index = -1;
-        angular.forEach(participants, function (p, currentIndex) {
-            if (p.channel === channel) {
-                index = currentIndex;
-                return false;
-            }
-        });
-        return index;
-    };
-
-    var updateCancelPromise = function (id, newPromise) {
-        if (commentCancelPromiseArray[id]) {
-            $timeout.cancel(commentCancelPromiseArray[id]);
-        }
-        if (newPromise) {
-            commentCancelPromiseArray[id] = newPromise;
-        }
-    };
-
-    var getRoomById = function (id) {
-        var room;
-        angular.forEach(rooms, function (current) {
-            if (id === current.id) {
-                room = current;
-                return false;
-            }
-        });
-        return room;
-    };
-
-    var removeRoomById = function (id) {
+function MeetingSvc($rootScope, PushEventSvc) {
+    var rooms = [];
+    
+    var getRoomById = function(id) {
         var i;
-        for (i = 0; i < rooms.length; i++) {
-            if (id === rooms[i].id) {
-                break;
+        for(i=0;i<rooms.length;i++) {
+            if(rooms[i].id === id) {
+                return rooms[i];
             }
         }
-
-        if (i < rooms.length) {
-            rooms.splice(i, 1);
-        }
+        return null;
     };
-
-    var handleEvent = function (event) {
-        var index, promise, room;
-        if (event.type === 'ConferenceStart') {
-            rooms.push(event.room);
-            return;
-        } else if (event.type === 'ConferenceEnd') {
-            removeRoomById(event.roomNo);
-            return;
-        }
-
-        room = getRoomById(event.roomNo);
-        if (!room.participants) {
-            room.participants = [];
-        }
-
-        if (event.type === 'Join') {
-            room.participants.push(event.participant);
-        } else {
-            var channel = event.participant ? event.participant.channel : event.channel;
-            index = indexByChannel(room.participants, channel);
-            if (index >= 0) {
-                switch (event.type) {
-                case 'Leave':
-                    room.participants.splice(index, 1);
-                    break;
-                case 'Change':
-                    room.participants[index] = event.participant;
-                    break;
-                case 'CommentRequest':
-                    $log.debug('CommentRequest');
-                    room.participants[index].commentRequested = true;
-                    promise = $timeout(function () {
-                        room.participants[index].commentRequested = false;
-                    }, 15000);
-                    updateCancelPromise(channel, promise);
-                    break;
-                case 'CommentRequestCancel':
-                    $log.debug('CommentRequestCancel');
-                    room.participants[index].commentRequested = false;
-                    updateCancelPromise(channel);
-                    break;
-                case 'Mute':
-                    $log.debug('Mute');
-                    room.participants[index].muted = true;
-                    break;
-                case 'Unmute':
-                    $log.debug('Unmute');
-                    room.participants[index].muted = false;
-                    break;
+    
+    var getParticipantFromRoomByChannel = function(room, channel) {
+        var i;
+        if(angular.isArray(room.participants)) {
+            for(i=0;i<room.participants.length;i++) {
+                if(room.participants[i].channel === channel) {
+                    return room.participants[i];
                 }
             }
         }
-
+        return null;
     };
-
-    var initializeSocket = function () {
-        stompClient = StompSvc(blacktiger.getServiceUrl() + 'socket');
-        // $rootScope.credentials.username, $rootScope.credentials.password
-        stompClient.connect(null, null, function () {
-            //+ currentRoom
-            RoomSvc.all().$promise.then(function (result) {
-                angular.forEach(result, function (room) {
-                    rooms.push(room);
-                });
-                stompClient.subscribe("/queue/events/*", function (message) {
-                    var e = angular.fromJson(message.body);
-                    handleEvent(e);
-                });
-            });
-
-        }, function () {
-            alert("Unable to connecto to socket");
-        }, '/');
+    
+    var handleConfStart = function(event, room) {
+        var existingRoom = getRoomById(room.id);
+        
+        if(existingRoom === null) {
+            if(!angular.isArray(room.participants)) {
+                room.participants = [];
+            }
+            rooms.push(room);
+            $rootScope.$broadcast("Meeting.Start", room);
+        }
     };
-
-    initializeSocket();
-
+    
+    var handleConfEnd = function(event, roomNo) {
+        var room = getRoomById(roomNo);
+        
+        if(room !== null) {
+            rooms.splice(rooms.indexOf(room), 1);
+            $rootScope.$broadcast("Meeting.End", room);
+        }
+    };
+    
+    var handleJoin = function(event, roomNo, participant) {
+        var room = getRoomById(roomNo);
+        var existingParticipant = getParticipantFromRoomByChannel(room, participant.channel);
+        
+        if(existingParticipant === null) {
+            room.participants.push(participant);
+            $rootScope.$broadcast("Meeting.Join", room, participant);
+        }
+    };
+    
+    var handleLeave = function(event, roomNo, channel) {
+        var room = getRoomById(roomNo), i;
+        var participant = getParticipantFromRoomByChannel(room, channel);
+        
+        if(participant !== null) {
+            i = room.participants.indexOf(participant);
+            room.participants.splice(i, 1);
+            $rootScope.$broadcast("Meeting.Leave", room, participant);
+        }
+    }
+    
+    var handleCommentRequest = function(event, roomNo, channel) {
+        var room = getRoomById(roomNo), i;
+        var participant = getParticipantFromRoomByChannel(room, channel);
+        
+        if(participant !== null && !participant.commentRequested) {
+            participant.commentRequested = true;
+            $rootScope.$broadcast("Meeting.Change", room, participant);
+        }
+    }
+    
+    var handleCommentRequestCancel = function(event, roomNo, channel) {
+        var room = getRoomById(roomNo), i;
+        var participant = getParticipantFromRoomByChannel(room, channel);
+        
+        if(participant !== null && participant.commentRequested) {
+            participant.commentRequested = false;
+            $rootScope.$broadcast("Meeting.Change", room, participant);
+        }
+    }
+    
+    var handleMute = function(event, roomNo, channel) {
+        var room = getRoomById(roomNo), i;
+        var participant = getParticipantFromRoomByChannel(room, channel);
+        
+        if(participant !== null && !participant.muted) {
+            participant.muted = true;
+            $rootScope.$broadcast("Meeting.Change", room, participant);
+        }
+    }
+    
+    var handleUnmute = function(event, roomNo, channel) {
+        var room = getRoomById(roomNo), i;
+        var participant = getParticipantFromRoomByChannel(room, channel);
+        
+        if(participant !== null && participant.muted) {
+            participant.muted = false;
+            $rootScope.$broadcast("Meeting.Change", room, participant);
+        }
+    }
+    
+    $rootScope.$on('PushEvent.ConferenceStart', handleConfStart);
+    $rootScope.$on('PushEvent.ConferenceEnd', handleConfEnd);
+    $rootScope.$on('PushEvent.Join', handleJoin);
+    $rootScope.$on('PushEvent.Leave', handleLeave);
+    $rootScope.$on('PushEvent.CommentRequest', handleCommentRequest);
+    $rootScope.$on('PushEvent.CommentRequestCancel', handleCommentRequestCancel);
+    $rootScope.$on('PushEvent.Mute', handleMute);
+    $rootScope.$on('PushEvent.Unmute', handleUnmute);
+    
+    
     return {
-        getRoomList: function () {
-            return rooms;
+        getTotalParticipants: function() {
+            var i, e, count = 0;
+            for(i=0;i<rooms.length;i++) {
+                for(e=0;e<rooms[i].participants.length;e++) {
+                    if(!(rooms[i].participants[e].host === true)) {
+                        count++;
+                    }
+                }
+            }
+            return count;
+        },
+        getTotalRooms: function() {
+            return rooms.length;
+        },
+        getTotalParticipantsByType: function(type) {
+            var i, e, count = 0, p;
+            for(i=0;i<rooms.length;i++) {
+                for(e=0;e<rooms[i].participants.length;e++) {
+                    p = rooms[i].participants[e];
+                    if(p.host !== true && p.type === type) {
+                        count++;
+                    }
+                }
+            }
+            return count;
+        },
+        findAllIds: function() {
+            var ids = [], i;
+            for(i=0;i<rooms.length;i++) {
+                ids.push(rooms[i].id);
+            }
+            return ids;
+        },
+        findRoom: function(id) {
+            return getRoomById(id);
         }
     };
 }
-RealtimeSvc.$inject = ['$rootScope', '$timeout', 'RoomSvc', 'StompSvc', 'blacktiger', '$log'];
+MeetingSvc.$inject = ['$rootScope', 'PushEventSvc'];
+
+/**
+ * Service for automatically broadcasting CommentRequestCancel events when needed.
+ * 
+ * When a 'PushEvent.CommentRequest' is triggered we want to make sure that a 'PushEvent.CommentRequestCancel' 
+ * is also given within a specific timeframe. If we don't the user will seem to continually wanting to give a comment 
+ * if the participant simply forgot to trigger a CommentRequestCancel.
+ * 
+ * This service will detect the timeframe from 'CONFIG.commentRequestTimeout'(or default to 15000ms). On
+ * each 'PushEvent.CommentRequest' it will register the participant and a timer in order to broadcast a 'PushEvent.CommentRequestCancel' 
+ * for the participant. The cancel requests will be broadcast if and only if, the participant hasn't triggered it himself.
+ */
+function AutoCommentRequestCancelSvc($rootScope, $timeout, CONFIG, $log) {
+    var commentCancelPromiseArray = [], 
+            timeout = CONFIG.commentRequestTimeout;
+    
+    if(!angular.isNumber(timeout)) {
+        timeout = 15000;
+    }
+    
+    var updateCancelPromise = function (channel, newPromise) {
+        $log.debug("Updating cancel promis. [channel=" + channel + ";newPromise=" + newPromise + "]");
+        if (commentCancelPromiseArray[channel]) {
+            $timeout.cancel(commentCancelPromiseArray[channel]);
+        }
+        if (newPromise) {
+            commentCancelPromiseArray[channel] = newPromise;
+        } else {
+            delete commentCancelPromiseArray[channel];
+        }
+    };
+    
+    $rootScope.$on('PushEvent.CommentRequest', function(roomNo, channel) {
+        $log.debug("CommentRequest intercepted. Creating new timeout.");
+        var promise = $timeout(function () {
+            $log.debug("Broadcasting CommentRequestCancel event. [room=" + roomNo + ";channel=" + channel + "]");
+            $rootScope.$broadcast('PushEvent.CommentRequestCancel', roomNo, channel);
+        }, timeout);
+        updateCancelPromise(channel, promise);
+    });
+    
+    $rootScope.$on('PushEvent.CommentRequestCancel', function(roomNo, channel) {
+        $log.debug("CommentRequestCancel intercepted. Cancelleing any related timeouts.");
+        updateCancelPromise(channel);
+    });
+    
+    return {};
+    
+}
+AutoCommentRequestCancelSvc.$inject = ['$rootScope', '$timeout', 'CONFIG', '$log'];
 
 /**
  * Service for updating names related to a phone number.
@@ -691,7 +562,7 @@ function PhoneBookSvc($http, blacktiger, $rootScope) {
     return {
         updateEntry: function (phoneNumber, name) {
             return $http.put(blacktiger.getServiceUrl() + 'phonebook/' + phoneNumber, name).then(function (response) {
-                $rootScope.$broadcast('PhoneBookSvc.update', phoneNumber, name);
+                $rootScope.$broadcast('PhoneBook.update', phoneNumber, name);
                 return;
             });
         }
@@ -716,7 +587,7 @@ function ReportSvc($http, $q, blacktiger, $timeout) {
                         totalDuration: 122,
                         firstCallTimestamp: 1336543882588,
                         type: 'Host'
-                        },
+                    },
                     {
                         phoneNumber: '+4521212121',
                         name: 'Jane Doe',
@@ -724,7 +595,7 @@ function ReportSvc($http, $q, blacktiger, $timeout) {
                         totalDuration: 122,
                         firstCallTimestamp: 1332453882588,
                         type: 'Phone'
-                        },
+                    },
                     {
                         phoneNumber: '+4523456768',
                         name: 'Johnny Doe',
@@ -732,8 +603,8 @@ function ReportSvc($http, $q, blacktiger, $timeout) {
                         totalDuration: 546,
                         firstCallTimestamp: 1332403882588,
                         type: 'Computer'
-                        }
-                    ];
+                    }
+                ];
             }, 10);
         },
         findByNumbers: function (room, numbers) {
@@ -751,6 +622,327 @@ function ReportSvc($http, $q, blacktiger, $timeout) {
 ReportSvc.$inject = ['$http', '$q', 'blacktiger', '$timeout'];
 
 /**
+ * Service that holds historic information about calls made. 
+ * 
+ * This service does on purpose not deliver a reliable data base, as registering and keeping these information may be illegal in some countries.
+ * Instead this service keeps information about the calls detected during the lifetime of the current browser instance only.
+ * 
+ * On every update this service will broadcast 'History.Updated' without any parameters.
+ */
+function HistorySvc($rootScope, $cookieStore, blacktiger, $log) {
+    'use strict';
+
+    $log.debug("Initializing HistorySvc");
+    var historyCookieName = 'meetingHistory-' + blacktiger.getInstanceId();
+    var history = $cookieStore.get(historyCookieName);
+
+    var fireUpdated = function() {
+        $rootScope.$broadcast('History.Updated');  
+    };
+    
+    var resetHistory = function() {
+        $log.debug("Resetting history data");
+        history = {};
+        $cookieStore.put(historyCookieName, {});
+        fireUpdated();
+    };
+    
+    if (!history || !angular.isObject(history)) {
+        resetHistory();
+    }
+    
+    
+    
+    var handleConferenceStartEvent = function(event, room, initializing) {
+        $log.debug("HistorySvc:handleConferenceStart");
+        var i;
+        if (history[room.id] === undefined) {
+            $log.debug('Conference has no entry. Creating new entry.');
+            history[room.id] = {};
+        } 
+        
+        if(angular.isArray(room.participants)) {
+            $log.debug('Conference had ' + room.participants.length + ' participants. Emitting them as events.');
+            for(i=0;i<room.participants.length;i++) {
+                handleJoinEvent(undefined, room.id, room.participants[i], initializing);
+            }
+        }
+    }
+    
+    var handleJoinEvent = function (event, roomNo, participant, resume) {
+        $log.debug("HistorySvc:handleJoinEvent");
+        var entries, entry, call, key, i;
+        
+        //Ignore the host. It will not be part of the history.
+        if (participant.host) {
+            return;
+        }
+        
+        if(!angular.isDefined(history[roomNo])) {
+            throw "No history for room [roomNo=" + roomNo + "]";
+        }
+        
+        if(!angular.isDefined(participant.callerId)) {
+            throw "Participant does not have a callerId specified.";
+        }
+
+        entries = history[roomNo];
+        key = participant.callerId;
+        $log.debug('New participant - adding to history [key=' + key + '].');
+        if (entries[key] === undefined) {
+            $log.debug('Participant has no entry. Creating new entry.');
+            entry = {
+                type: participant.type,
+                callerId: participant.callerId,
+                phoneNumber: participant.phoneNumber,
+                name: participant.name,
+                firstCall: new Date().getTime(),
+                calls: [],
+                channel: participant.channel
+            };
+            entries[key] = entry;
+        } else {
+            entry = entries[key];
+            entry.channel = participant.channel;
+        }
+
+        if(resume && entry.calls.length > 0) {
+            $log.debug('Resuming last call in call list for participant.');
+            entry.calls[entry.calls.length - 1].end = null;
+        } else {
+            $log.debug('Appending new call to call list for participant.');
+            call = {
+                start: new Date().getTime(),
+                end: null
+            };
+            entry.calls.push(call);
+        }
+
+        $log.debug('Persisting history.');
+        $cookieStore.put(historyCookieName, history);
+        fireUpdated();
+    };
+
+    var handleLeaveEvent = function (event, roomNo, channel) {
+        $log.debug("HistorySvc:handleLeaveEvent");
+        var entries, entry, i, key, call, changed = false;
+        
+        if(!angular.isDefined(history[roomNo])) {
+            throw "No history for room [roomNo=" + roomNo + "]";
+        }
+        
+        entries = history[roomNo];
+        for(key in entries) {
+            entry = entries[key];
+            if(entry.channel === channel) {
+                for(i=0;i<entry.calls.length;i++) {
+                    call = entry.calls[i];
+                    if (call.end === null) {
+                        call.end = new Date().getTime();
+                        changed = true;
+                        break;
+                    }
+                } 
+                break;
+            }
+        }
+        
+        if(changed) {
+            $cookieStore.put(historyCookieName, history);
+            fireUpdated();
+        }
+    };
+    
+    var handlePhoneBookUpdate = function(event, number, name) {
+        $log.debug("HistorySvc:handlePhoneBookUpdate");
+        angular.forEach(history, function(entries) {
+            angular.forEach(entries, function (entry) {
+                if (number === entry.phoneNumber) {
+                    entry.name = name;
+                }
+            });
+        });
+        $cookieStore.put(historyCookieName, history);
+        fireUpdated();
+    };
+    
+    var doFind = function(room, callerId, active) {
+        var array = [], key, entries, entry, _active, i, call, accepted, _room;
+        $log.debug("Finding entries [room=" + room + ";callerId=" + callerId + ";active=" + active + "]")
+        for(_room in history) {
+            if(!angular.isDefined(room) || room === _room) {
+                for(key in history[_room]) {
+                    accepted = true;
+                    entry = angular.copy(history[_room][key]);
+
+                    if(angular.isDefined(callerId)) {
+                        accepted = (entry.callerId === callerId);
+                    }
+
+                    if(angular.isDefined(active)) {
+                        _active = false;
+                        for(i=0;i<entry.calls.length;i++) {
+                            call = entry.calls[i];
+                            if(call.end === null) {
+                                _active = true;
+                                break;
+                            }
+                        }
+
+                        if(_active !== active) {
+                            accepted = false;
+                        }
+                    }
+
+                    if(accepted) {
+                        array.push(entry);
+                    }
+                }
+            }
+        }
+        $log.debug("Found " + array.length + " entries");
+        return array;
+    }
+
+    $rootScope.$on('PushEvent.ConferenceStart', handleConferenceStartEvent);
+    $rootScope.$on('PushEvent.Join', handleJoinEvent);
+    $rootScope.$on('PushEvent.Leave', handleLeaveEvent);
+    $rootScope.$on('PhoneBook.Update', handlePhoneBookUpdate);
+
+    return {
+        findOneByRoomAndCallerId: function (room, callerId) {
+            var entries = doFind(room, callerId);
+            if(entries.length === 0) {
+                return null;
+            } else {
+                return entries[0];
+            }
+        },
+        deleteAll: function () {
+            resetHistory();
+        },
+        findAll: function () {
+            return doFind();
+        },
+        findAllByRoom: function(room) {
+            return doFind(room);
+        },
+        findAllByActive: function (active) {
+            return doFind(undefined, undefined, active);
+        },
+        findAllByRoomAndActive: function(room, active) {
+            return doFind(room, undefined, active);
+        },
+        getCookieName: function() {
+            return historyCookieName;
+        }
+    };
+}
+HistorySvc.$inject = ['$rootScope', '$cookieStore', 'blacktiger', '$log'];
+
+/**
+ * Service that handles conversion of PushEvents from Server to Angular broadcasts.
+ * 
+ * This service connects via Stomp and takes any blacktiger events(ConferenceStart, 
+ * ConferenceEnd, Join, Leave, CommentRequest, CommentRequestCancel, Mute, Unmute)
+ * and broadcasts Angular events from them.
+ * 
+ * On every Push Event from server this service will broadcast an equivalent Angular event:
+ * - 'ConferenceStart' will be broadcast as 'PushEvent.ConferenceStart' with room as parameter.
+ * - 'ConferenceEnd' will be broadcast as 'PushEvent.ConferenceEnd' with roomNo as parameter.
+ * - 'Join' will be broadcast as 'PushEvent.Join' with roomNo and participant as parameters.
+ * - 'Leave' will be broadcast as 'PushEvent.Leave' with roomNo and channel as parameter.
+ * - 'CommentRequest' will be broadcast as 'PushEvent.CommentRequest' with roomNo and channel as parameter.
+ * - 'CommentRequestCanel' will be broadcast as 'PushEvent.CommentRequestCancel' with roomNo and channel as parameter.
+ * - 'Mute' will be broadcast as 'PushEvent.Mute' with roomNo and channel as parameter.
+ * - 'Unmute' will be broadcast as 'PushEvent.Unmute' with roomNo and channel as parameter.
+ * 
+ */
+function PushEventSvc($rootScope, StompSvc, RoomSvc, blacktiger, $log, $q) {
+    var stompClient;
+
+    var handleEvent = function (event) {
+        $log.debug('Push Event received [type=' + event.type + '].');
+        var channel = event.participant ? event.participant.channel : event.channel;
+        switch (event.type) {
+            case 'ConferenceStart':
+                $rootScope.$broadcast('PushEvent.ConferenceStart', event.room, false);
+                break;
+            case 'ConferenceEnd':
+                $rootScope.$broadcast('PushEvent.ConferenceEnd', event.roomNo);
+                break;
+            case 'Join':
+                $rootScope.$broadcast('PushEvent.Join', event.roomNo, event.participant);
+                break;
+            case 'Leave':
+            case 'CommentRequest':
+            case 'CommentRequestCancel':
+            case 'Mute':
+            case 'Unmute':
+                $rootScope.$broadcast('PushEvent.' + event.type, event.roomNo, channel);
+                break;
+            default:
+                $log.warn("Unknown push event was not broadcast [type=" + event.type + "]");
+                break;
+        }
+
+    };
+
+    var initializeSocket = function () {
+        var deferred = $q.defer();
+        stompClient = StompSvc(blacktiger.getServiceUrl() + 'socket');
+        stompClient.connect(null, null, function () {
+            //+ currentRoom
+            RoomSvc.query({mode:'full'}).$promise.then(function (result) {
+                var rooms = [];
+                angular.forEach(result, function (room) {
+                    rooms.push(room);
+                    $rootScope.$broadcast('PushEvent.ConferenceStart', room, true);
+                });
+
+                if (rooms.length === 1) {
+                    stompClient.subscribe("/queue/events/" + rooms[0].id, function (message) {
+                        var e = angular.fromJson(message.body);
+                        handleEvent(e);
+                    });
+                } else if (rooms.length > 1) {
+                    stompClient.subscribe("/queue/events/*", function (message) {
+                        var e = angular.fromJson(message.body);
+                        handleEvent(e);
+                    });
+                }
+
+                $rootScope.$broadcast('PushEventSvc.Initialized');
+                deferred.resolve();
+            });
+
+        }, function (error) {
+            $rootScope.$broadcast('PushEventSvc.Lost_Connection', error);
+            deferred.reject(error);
+        }, '/');
+        return deferred.promise;
+    };
+
+    return {
+        connect: function () {
+            return initializeSocket();
+        },
+        disconnect: function () {
+            var deferred = $q.defer();
+            if (!stompClient) {
+                deferred.resolve();
+            } else {
+                stompClient.disconnect(function () {
+                    deferred.resolve();
+                });
+            }
+            return deferred.promise;
+        }
+    };
+}
+PushEventSvc.$inject = ['$rootScope', 'StompSvc', 'RoomSvc', 'blacktiger', '$log', '$q'];
+
+/**
  * Service for working with SIP user information.
  */
 function SipUserSvc($http, blacktiger, $rootScope, $q) {
@@ -765,7 +957,6 @@ function SipUserSvc($http, blacktiger, $rootScope, $q) {
                 return;
             });
         },
-
         get: function (key, number) {
             var data = {
                 key: key
@@ -790,15 +981,18 @@ SipUserSvc.$inject = ['$http', 'blacktiger', '$rootScope', '$q'];
  * Registration of provider and services.
  */
 angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageModule'])
-    .provider('blacktiger', BlacktigerProvider)
-    /*.factory('RemoteSongSvc', RemoteSongSvc)*/
-    .factory('LoginSvc', LoginSvc)
-    .factory('SystemSvc', SystemSvc)
-    .factory('RoomSvc', RoomSvc)
-    .factory('ParticipantSvc', ParticipantSvc)
-    .factory('StompSvc', StompSvc)
-    .factory('MeetingSvc', MeetingSvc)
-    .factory('RealtimeSvc', RealtimeSvc)
-    .factory('PhoneBookSvc', PhoneBookSvc)
-    .factory('ReportSvc', ReportSvc)
-    .factory('SipUserSvc', SipUserSvc);
+        .provider('blacktiger', BlacktigerProvider)
+        /*.factory('RemoteSongSvc', RemoteSongSvc)*/
+        .factory('LoginSvc', LoginSvc)
+        .factory('SystemSvc', SystemSvc)
+        .factory('RoomSvc', RoomSvc)
+        .factory('ParticipantSvc', ParticipantSvc)
+        .factory('StompSvc', StompSvc)
+        .factory('PushEventSvc', PushEventSvc)
+        .factory('AutoCommentRequestCancelSvc', AutoCommentRequestCancelSvc)
+        .factory('MeetingSvc', MeetingSvc)
+        //.factory('RealtimeSvc', RealtimeSvc)
+        .factory('PhoneBookSvc', PhoneBookSvc)
+        .factory('ReportSvc', ReportSvc)
+        .factory('SipUserSvc', SipUserSvc)
+        .factory('HistorySvc', HistorySvc);
