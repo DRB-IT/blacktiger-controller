@@ -10,6 +10,6 @@
     "commit": "38f2faf5497c3b2da8cc862032db7ba560581581"
   },
   "_source": "git://github.com/jmesnil/stomp-websocket.git",
-  "_target": "~2.3.1",
+  "_target": "2.3.*",
   "_originalSource": "stomp-websocket"
 }
