@@ -23,7 +23,7 @@ if (window.navigator.userAgent.indexOf('MSIE ') >= 0 || window.navigator.userAge
 /*************************************** MODULE ********************************************/
 
 var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.translate', 'ui.bootstrap', 'blacktiger-service', 'blacktiger-ui', 'teljs'])
-    .config(function ($locationProvider, $routeProvider, $httpProvider, $translateProvider, blacktigerProvider) {
+    .config(function ($locationProvider, $routeProvider, $httpProvider, $translateProvider, blacktigerProvider, CONFIG) {
         var mode = "normal",
             token, params = [],
             search, list, url, elements, language, langData;
@@ -56,10 +56,13 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
             });
         }
 
-        if (angular.isDefined(params.server)) {
+        if (CONFIG.serviceUrl) {
+            blacktigerProvider.setServiceUrl(CONFIG.serviceUrl);
+        }
+        /*if (angular.isDefined(params.server)) {
             url = params.server;
             blacktigerProvider.setServiceUrl(url);
-        }
+        }*/
 
         if (angular.isDefined(params.token)) {
             mode = "token";
@@ -139,7 +142,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
     .directive('btCommentRequestHighlight', btCommentRequestHighlighter);
 
 /*************************************** BOOT ********************************************/
-function ApplicationBoot(CONFIG, blacktiger, $location, LoginSvc, $rootScope) {
+function ApplicationBoot(CONFIG, blacktiger, $location, LoginSvc, $rootScope, RealtimeSvc) {
     if (CONFIG.serviceUrl) {
         blacktiger.setServiceUrl(CONFIG.serviceUrl);
     }
@@ -149,7 +152,9 @@ function ApplicationBoot(CONFIG, blacktiger, $location, LoginSvc, $rootScope) {
         $location.path('login');
     });
 
-    $rootScope.$on("logout", function () {
+    $rootScope.$on("afterLogout", function () {
+        $rootScope.rooms = null;
+        $rootScope.updateCurrentRoom();
         $location.path('login');
     });
 
@@ -161,6 +166,18 @@ function ApplicationBoot(CONFIG, blacktiger, $location, LoginSvc, $rootScope) {
             $location.path('/admin/realtime');
         }
     });
+    
+    $rootScope.updateCurrentRoom = function () {
+        if ($rootScope.currentUser && $rootScope.currentUser.roles.indexOf('ROLE_HOST') >= 0) {
+            $rootScope.currentRoom = RealtimeSvc.getRoom();
+        } else {
+            $rootScope.currentRoom = null;
+        }
+    };
+
+    $rootScope.$on('MeetingSvc.Initialized', $rootScope.updateCurrentRoom);
+
+
 
     $rootScope.$watch('currentRoom', function (room) {
         if (room && (!room.contact.name || room.contact.name === '' ||
@@ -195,8 +212,8 @@ function filterByRoles() {
 function btCommentAlert() {
     return {
         restrict: 'E',
-        controller: function ($scope, MeetingSvc) {
-            $scope.participants = MeetingSvc.getParticipantList();
+        controller: function ($scope, RealtimeSvc /*MeetingSvc*/) {
+            //$scope.participants = RealtimeSvc.getRoom($) MeetingSvc.getParticipantList();
             $scope.forcedHidden = false;
 
             $scope.isCommentRequested = function () {
@@ -218,6 +235,14 @@ function btCommentAlert() {
                     $scope.forcedHidden = false;
                 }
             });
+            
+            $scope.$watch('currentRoom', function(room) {
+                if(room) {
+                    $scope.participants = room.participants;
+                } else {
+                    $scope.participants = [];
+                }
+            })
         },
         templateUrl: 'assets/templates/bt-commentalert.html'
     };
@@ -440,7 +465,7 @@ function MenuCtrl(CONFIG, $scope, LoginSvc, $rootScope, $translate, blacktiger, 
     $rootScope.$on('$translateChangeSuccess', function () {
         $scope.language = $translate.use();
         $scope.languages = [];
-        angular.forEach(['da', 'en', 'fo', 'kl', 'no', 'sv', 'is'], function (entry) {
+        angular.forEach(['da', 'en', 'fo', 'kl', 'no', 'sv', 'is', 'es'], function (entry) {
             $translate('GENERAL.LANGUAGE.' + entry.toUpperCase()).then(function (translation) {
                 $scope.languages.push({
                     locale: entry,
@@ -457,34 +482,13 @@ function MenuCtrl(CONFIG, $scope, LoginSvc, $rootScope, $translate, blacktiger, 
     });
 }
 
-function RoomDisplayCtrl($scope, RoomSvc, LoginSvc, $rootScope, MeetingSvc, $location) {
-    $scope.rooms = null;
-
+function RoomDisplayCtrl($scope, $location) {
+  
     $scope.goToTechContact = function () {
         // We have to use a method to direct to Contact because IE has some serious issues regarding History API when it comes to following some links.
         //This was apparantly one of them.
         $location.path("/settings/contact");
     };
-
-    $scope.updateCurrentRoom = function () {
-        if ($scope.currentUser && $scope.currentUser.roles.indexOf('ROLE_HOST') >= 0 &&
-            $scope.rooms !== null && $scope.rooms.length > 0) {
-            $rootScope.currentRoom = $scope.rooms[0];
-            MeetingSvc.setRoom($rootScope.currentRoom);
-        } else {
-            $rootScope.currentRoom = null;
-        }
-    };
-
-    $scope.$on("login", function () {
-        $scope.rooms = RoomSvc.query();
-        $scope.rooms.$promise.then($scope.updateCurrentRoom);
-    });
-
-    $scope.$on("afterLogout", function () {
-        $scope.rooms = null;
-        $scope.updateCurrentRoom();
-    });
 
 }
 
@@ -562,8 +566,8 @@ function RequestPasswordCtrl($scope, $http, blacktiger, $filter, $log, $rootScop
     $scope._resolveCountryCode();
 }
 
-function RoomCtrl($scope, $modal, MeetingSvc, PhoneBookSvc) {
-    $scope.participants = MeetingSvc.getParticipantList();
+function RoomCtrl($scope, $modal, /*MeetingSvc*/ RealtimeSvc, PhoneBookSvc) {
+    //$scope.participants = MeetingSvc.getParticipantList();
     
     $scope.isHostInConference = function () {
         var value = false;
@@ -577,14 +581,17 @@ function RoomCtrl($scope, $modal, MeetingSvc, PhoneBookSvc) {
     };
 
     $scope.kickParticipant = function (channel) {
-        MeetingSvc.kick(channel);
+        //MeetingSvc.kick(channel);
+        RealtimeSvc.kick($scope.currentRoom, channel);
     };
 
     $scope.muteParticipant = function (channel, muted) {
         if (muted) {
-            MeetingSvc.mute(channel);
+            //MeetingSvc.mute(channel);
+            RealtimeSvc.mute($scope.currentRoom, channel);
         } else {
-            MeetingSvc.unmute(channel);
+            //MeetingSvc.unmute(channel);
+            RealtimeSvc.mute($scope.currentRoom, channel);
         }
     };
 
@@ -606,6 +613,13 @@ function RoomCtrl($scope, $modal, MeetingSvc, PhoneBookSvc) {
             PhoneBookSvc.updateEntry(phoneNumber, newName);
         });
     };
+    $scope.$watch('currentRoom', function(room) {
+       if(room) {
+           $scope.participants = room.participants;
+       }  else {
+           $scope.participants = [];
+       }
+    });
 
     $scope.$on('PhoneBookSvc.update', function (event, phone, name) {
         // Make sure names in participantlist are update.
@@ -698,7 +712,7 @@ function ContactCtrl($scope, SipUserSvc, RoomSvc, blacktiger) {
 function SettingsCtrl($scope, SipUserSvc, RoomSvc, MeetingSvc, LoginSvc) {
 
     $scope.logout = function () {
-        MeetingSvc.clear();
+        //MeetingSvc.clear();
         LoginSvc.deauthenticate();
     };
 }
