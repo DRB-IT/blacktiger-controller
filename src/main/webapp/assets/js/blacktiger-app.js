@@ -651,7 +651,6 @@ function RoomCtrl($scope, $modal, MeetingSvc, PhoneBookSvc) {
 function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger, $translate, $rootScope) {
     $scope.user = {};
     $scope.mailText = '';
-    $scope.e164Pattern = blacktiger.getE164Pattern();
     $scope.innerMailTextPattern = /.*/;
     $scope.mailTextPattern = (function () {
         return {
@@ -712,8 +711,7 @@ function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger, $translate, $rootS
 function ContactCtrl($scope, SipUserSvc, RoomSvc, blacktiger) {
     $scope.contact = angular.copy($scope.currentRoom.contact);
     $scope.contact_status = null;
-    $scope.e164Pattern = blacktiger.getE164Pattern();
-
+    
     $scope.updateContact = function () {
         $scope.contact_status = "Saving";
         $scope.currentRoom.contact = angular.copy($scope.contact);

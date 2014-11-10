@@ -45,9 +45,6 @@ function BlacktigerProvider() {
                 return serviceUrl;
             },
             setServiceUrl: innerSetServiceUrl,
-            getE164Pattern: function () {
-                return /^\+[0-9]{5,15}$/;
-            },
             getLanguageNames: function () {
                 return languageNames;
             },
