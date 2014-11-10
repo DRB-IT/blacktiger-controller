@@ -123,6 +123,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
                 redirectTo: '/'
             });
         }
+        
 
         // REMARK: If BLACKTIGER_VERSION has been set, we will load from a yui-compressed file
         $translateProvider.useStaticFilesLoader({
@@ -139,10 +140,12 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
     .filter('filterByRoles', filterByRoles)
     .directive('btCommentAlert', btCommentAlert)
     .directive('btMusicplayer', btMusicPlayer)
-    .directive('btCommentRequestHighlight', btCommentRequestHighlighter);
+    .directive('btCommentRequestHighlight', btCommentRequestHighlighter)
+    .controller('MenuCtrl', MenuCtrl)
+    .controller('RoomDisplayCtrl', RoomDisplayCtrl)
 
 /*************************************** BOOT ********************************************/
-function ApplicationBoot(CONFIG, blacktiger, $location, LoginSvc, $rootScope, RealtimeSvc) {
+function ApplicationBoot(CONFIG, blacktiger, $location, LoginSvc, $rootScope, PushEventSvc) {
     if (CONFIG.serviceUrl) {
         blacktiger.setServiceUrl(CONFIG.serviceUrl);
     }
@@ -160,11 +163,12 @@ function ApplicationBoot(CONFIG, blacktiger, $location, LoginSvc, $rootScope, Re
 
     $rootScope.$on("login", function (event, user) {
         if (user.roles.indexOf('ROLE_HOST') >= 0) {
-
-            $location.path('');
+           $location.path('');
         } else if (user.roles.indexOf('ROLE_ADMIN') >= 0) {
             $location.path('/admin/realtime');
         }
+        
+        PushEventSvc.connect();
     });
     
     $rootScope.updateCurrentRoom = function () {
@@ -212,7 +216,7 @@ function filterByRoles() {
 function btCommentAlert() {
     return {
         restrict: 'E',
-        controller: function ($scope, RealtimeSvc /*MeetingSvc*/) {
+        controller: function ($scope, MeetingSvc) {
             //$scope.participants = RealtimeSvc.getRoom($) MeetingSvc.getParticipantList();
             $scope.forcedHidden = false;
 
@@ -566,9 +570,19 @@ function RequestPasswordCtrl($scope, $http, blacktiger, $filter, $log, $rootScop
     $scope._resolveCountryCode();
 }
 
-function RoomCtrl($scope, $modal, /*MeetingSvc*/ RealtimeSvc, PhoneBookSvc) {
-    //$scope.participants = MeetingSvc.getParticipantList();
+function RoomCtrl($scope, $modal, MeetingSvc, PhoneBookSvc) {
+    $scope.room = null;
     
+    $scope.selectRoom = function() {
+        var ids = MeetingSvc.findAllIds();
+        if(angular.isArray(ids) && ids.length>0) {
+            $scope.room = ids[0];
+        }
+    };
+    
+    $scope.$on('Meeting.Start', $scope.selectRoom);
+    
+    /*
     $scope.isHostInConference = function () {
         var value = false;
         angular.forEach($scope.participants, function (p) {
@@ -628,7 +642,7 @@ function RoomCtrl($scope, $modal, /*MeetingSvc*/ RealtimeSvc, PhoneBookSvc) {
                 p.name = name;
             }
         });
-    });
+    });*/
 
 }
 
@@ -717,10 +731,8 @@ function SettingsCtrl($scope, SipUserSvc, RoomSvc, MeetingSvc, LoginSvc) {
     };
 }
 
-function RealtimeCtrl($scope, SystemSvc, RealtimeSvc, $timeout) {
+function RealtimeCtrl($scope, SystemSvc, MeetingSvc, $timeout) {
     $scope.system = {};
-
-    $scope.rooms = RealtimeSvc.getRoomList();
 
     $scope.getNoOfParticipantsPerRoom = function () {
         var noParticipants = $scope.getNoOfParticipants();
@@ -732,26 +744,11 @@ function RealtimeCtrl($scope, SystemSvc, RealtimeSvc, $timeout) {
     };
 
     $scope.getNoOfParticipants = function () {
-        var count = 0;
-        angular.forEach($scope.rooms, function (room) {
-            angular.forEach(room.participants, function (p) {
-                if (!p.host) {
-                    count++;
-                }
-            });
-        });
-        return count;
+        return MeetingSvc.getTotalParticipants();
     };
 
     $scope.getSipPercentage = function () {
-        var count = 0;
-        angular.forEach($scope.rooms, function (room) {
-            angular.forEach(room.participants, function (p) {
-                if (!p.host && p.type === 'Sip') {
-                    count++;
-                }
-            });
-        });
+        var count = MeetingSvc.getTotalParticipantsByType('Sip');
         if (count === 0) {
             return 0.0;
         } else {
@@ -769,25 +766,25 @@ function RealtimeCtrl($scope, SystemSvc, RealtimeSvc, $timeout) {
 
     $scope.getNoOfCommentRequests = function () {
         var count = 0;
-        angular.forEach($scope.rooms, function (room) {
+        /*angular.forEach($scope.rooms, function (room) {
             angular.forEach(room.participants, function (p) {
                 if (p.commentRequested) {
                     count++;
                 }
             });
-        });
+        });*/
         return count;
     };
 
     $scope.getNoOfOpenMicrophones = function () {
         var count = 0;
-        angular.forEach($scope.rooms, function (room) {
+        /*angular.forEach($scope.rooms, function (room) {
             angular.forEach(room.participants, function (p) {
                 if (!p.host && !p.muted) {
                     count++;
                 }
             });
-        });
+        });*/
         return count;
     };
 

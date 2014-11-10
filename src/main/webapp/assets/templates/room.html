@@ -1,102 +1,10 @@
 <div ng-show="false" id="error-dialog" class="alert alert-danger"></div>
-
-<div ng-if="!currentRoom" class="alert alert-info">
+{{rooms}}
+<div ng-if="!room" class="alert alert-info">
     No room displayable for current user.
 </div>
 
-<div ng-if="currentRoom">
-    <bt-meeting-room></bt-meeting-room>
-    <!--div class="alert alert-info" ng-show="participants.length==0" translate="PARTICIPANTS.WARNINGS.NO_PARTICIPANTS_AND_TRANSMITTERS"></div>
-
-    <div class="alert alert-danger" ng-show="!isHostInConference() && (participants|filter:{host:false}).length>0">
-        <b translate="PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE"></b>
-        <ol>
-            <li translate="PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1"></li>
-            <li translate="PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2" translate-values="{phoneNumber:'{{currentRoom.phoneNumber}}'}"></li>
-            <li translate="PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3"></li>
-        </ol>
-    </div>
-    <h3><span translate="PARTICIPANTS.PARTICIPANTS" translate-values="{noOfParticipants:(participants|filter:{host:false}).length}"></span>
-        <small class="pull-right" ng-repeat="participant in participants | filter:{host:true}" ng-animate=" 'animate' ">{{participant.name ? participant.name : 'No name'}} &bull; <a href="#" class="text-danger" ng-click="kickParticipant(participant.channel)" title="{{'PARTICIPANTS.ABORT_TRANSMISSION' | translate}}">{{'PARTICIPANTS.ABORT_TRANSMISSION' | translate}} <span class="glyphicon glyphicon-off"></span></a></small>
-    </h3>
-    <table class="table table-striped table-hover table-condensed participantsTable">
-        <thead>
-            <tr>
-                <th width="160px"><span>{{'REPORT.NUMBER' | translate}}</span></th>
-                <th><span>{{'REPORT.NAME' | translate}}</span></th>
-                <th width="70px"><span>{{'REPORT.CALLS' | translate}}</span></th>
-                <th width="70px"><span>{{'REPORT.MINUTES' | translate}}</span></th>
-                <th width="100px"></th>
-            </tr>
-        </thead>
-        <tbody>
-        <tr ng-show="(participants|filter:{host:false}).length==0">
-            <td colspan="5">{{'PARTICIPANTS.INFO.NO_PARTICIPANTS' | translate}}</td>
-        </tr>
-        <tr ng-repeat="participant in participants | filter:{host:false}">
-            <td class="participantNumber" data-type="participant-number" data-id="{{participant.channel}}" data-number="{{participant.phoneNumber}}">
-                <bt-number-icon type="{{participant.type}}"></bt-number-icon> 
-                <span ng-if="participant.type!=='Unknown'">{{participant.phoneNumber | telephone}}</span>
-                <span ng-if="participant.type==='Unknown'">{{participant.phoneNumber}}</span>
-            </td>
-            <td class="participantName">
-                <a ng-if="!(participant.name.length>0)" ng-click="changeName(participant.phoneNumber, participant.name)">({{'PARTICIPANTS.ENTER_NAME' | translate}})</a>
-                {{participant.name}}
-                <a ng-hide="participant.muted" ng-click="muteParticipant(participant.channel, true)" class="label label-warning" translate="PARTICIPANTS.INFO.UNMUTED"></a>
-                <a ng-show="participant.commentRequested" ng-click="muteParticipant(participant.channel, false)" class="label label-primary" bt-comment-request-highlight participant='participant'>{{'PARTICIPANTS.WANTS_TO_COMMENT' | translate}}</a>
-            </td>
-            <td class="participantHistory">
-                {{noOfCallsForCallerId(participant.callerId)}}
-            </td>
-            <td class="participantHistory">
-                <bt-duration since="participant.dateJoined"></bt-duration>
-            </td>
-            <td class="participantOptions">
-                <button ng-click="changeName(participant.phoneNumber, participant.name)" title="{{'PARTICIPANTS.EDIT' | translate}}"><span class="glyphicon glyphicon-pencil"></span></button>
-                <button ng-click="muteParticipant(participant.channel, false)" ng-if="isHostInConference()" ng-show="participant.muted" title="{{'PARTICIPANTS.UNMUTE' | translate}}"><span class="glyphicon glyphicon-comment"></span></button>
-                <button ng-click="muteParticipant(participant.channel, true)" ng-if="isHostInConference()" ng-hide="participant.muted" class="active" title="{{'PARTICIPANTS.MUTE' | translate}}"><span class="glyphicon glyphicon-comment"></span></button>
-                <button ng-click="kickParticipant(participant.channel)" title="{{'PARTICIPANTS.KICK' | translate}}"><span class="glyphicon glyphicon-remove"></span></button>
-            </td>
-        </tr>
-        </tbody>
-    </table-->
-
-    <bt-history></bt-history>
-    <!--h3><span ng-if="history.length>0" translate="PARTICIPANTS.COMPLETED_CALLS" translate-values="{noOfCompletedCalls:history.length}"}></span>
-        <a ng-click="deleteHistory();" class="btn btn-link btn-sm pull-right">{{'REPORT.DELETE' | translate}} <span class="glyphicon glyphicon-trash"></span></a>
-    </h3>
-    <table class="table table-striped table-hover table-condensed participantsTable">
-        <thead>
-            <tr>
-                <th width="160px"><span class="sortable" ng-click="predicate = 'phoneNumber'; reverse=!reverse">{{'REPORT.NUMBER' | translate}}</span></th>
-                <th><span class="sortable" ng-click="predicate = 'name'; reverse=!reverse">{{'REPORT.NAME' | translate}}</span></th>
-                <th width="120px"><span class="sortable sorting" ng-click="predicate = 'firstCallTimestamp'; reverse=!reverse">{{'REPORT.FIRST_CALL' | translate}}</span></th>
-                <th width="70px"><span class="sortable" ng-click="predicate = 'numberOfCalls'; reverse=!reverse">{{'REPORT.CALLS' | translate}}</span></th>
-                <th width="70px"><span class="sortable" ng-click="predicate = 'totalDuration'; reverse=!reverse">{{'REPORT.MINUTES' | translate}}</span></th>
-                <th width="100px"></th>
-            </tr>
-        </thead>
-        <tbody>
-        <tr ng-show="noOfHistoryEntries()===0">
-            <td colspan="6">{{'REPORT.NO_ENTRIES' | translate}}</td>
-        </tr>
-        <tr ng-repeat="entry in history | orderBy:predicate:reverse">
-            <td class="participantNumber"><bt-number-icon type="{{entry.type}}"></bt-number-icon> 
-                <span ng-if="entry.type!=='Unknown'">{{entry.phoneNumber | telephone}}</span>
-                <span ng-if="entry.type==='Unknown'">{{entry.phoneNumber}}</span>
-            </td>
-            <td class="participantName">
-                <a ng-if="!(entry.name.length>0)" ng-click="changeName(entry.phoneNumber, entry.name)">({{'PARTICIPANTS.ENTER_NAME' | translate}})</a>
-                {{entry.name}}
-            </td>
-            <td class="participantHistory">{{entry.firstCall | date:'HH:mm'}}</td>
-            <td class="participantHistory">{{entry.calls.length}}</td>
-            <td class="participantHistory">{{calculateTotalDuration(entry) / 60000 | number : 0}}</td>
-            <td class="participantOptions">
-                <button ng-click="changeName(entry.phoneNumber, entry.name)" title="{{'PARTICIPANTS.EDIT' | translate}}"><span class="glyphicon glyphicon-pencil"></span></button>
-            </td>
-        </tr>
-        </tbody>
-    </table-->
-
+<div ng-if="room">
+    <bt-meeting-room room="{{room}}"></bt-meeting-room>
+    <bt-history room="{{room}}"></bt-history>
 </div>

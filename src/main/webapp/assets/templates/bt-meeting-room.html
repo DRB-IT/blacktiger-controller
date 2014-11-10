@@ -9,8 +9,8 @@
     </ol>
 </div>
 <h3>
-    <span translate="PARTICIPANTS.PARTICIPANTS" translate-values="{noOfParticipants:(participants|filter:{host:false}).length}"></span>
-    <small class="pull-right" ng-repeat="participant in participants | filter:{host:true}" ng-animate=" 'animate' ">{{participant.name ? participant.name : 'No name'}} &bull; 
+    <span translate="PARTICIPANTS.PARTICIPANTS" translate-values="{noOfParticipants:(room.participants|filter:{host:false}).length}"></span>
+    <small class="pull-right" ng-repeat="participant in room.participants | filter:{host:true}" ng-animate=" 'animate' ">{{participant.name ? participant.name : 'No name'}} &bull; 
         <a href="#" class="text-danger" ng-click="kickParticipant(participant.channel)" title="{{'PARTICIPANTS.ABORT_TRANSMISSION' | translate}}"> 
             {{'PARTICIPANTS.ABORT_TRANSMISSION' | translate}} <span class="glyphicon glyphicon-off"></span>
         </a>
@@ -27,11 +27,11 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-if="(participants|filter:{host:false}).length==0">
+        <tr ng-if="(room.participants|filter:{host:false}).length==0">
             <td colspan="5">{{'PARTICIPANTS.INFO.NO_PARTICIPANTS' | translate}}</td>
         </tr>
         
-        <tr ng-repeat="participant in participants | filter:{host:false}">
+        <tr ng-repeat="participant in room.participants | filter:{host:false}">
             <td class="participantNumber" data-type="participant-number" data-id="{{participant.channel}}" data-number="{{participant.phoneNumber}}">
                 <bt-number-icon type="{{participant.type}}"></bt-number-icon>
                 <span ng-if="participant.type!=='Unknown'">{{participant.phoneNumber | telephone}}</span>

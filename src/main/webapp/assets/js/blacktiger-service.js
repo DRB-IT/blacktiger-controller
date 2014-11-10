@@ -893,7 +893,7 @@ function PushEventSvc($rootScope, StompSvc, RoomSvc, blacktiger, $log, $q) {
         stompClient = StompSvc(blacktiger.getServiceUrl() + 'socket');
         stompClient.connect(null, null, function () {
             //+ currentRoom
-            RoomSvc.query({mode:'full'}).$promise.then(function (result) {
+            RoomSvc.query('full').$promise.then(function (result) {
                 var rooms = [];
                 angular.forEach(result, function (room) {
                     rooms.push(room);

@@ -19,7 +19,7 @@
         <script type="text/javascript" src="assets/js/angular-route/angular-route.min.js"></script>
         <script type="text/javascript" src="assets/js/angular-resource/angular-resource.min.js"></script>
         <script type="text/javascript" src="assets/js/angular-i18n/angular-locale_da-dk.js"></script>
-        <script type="text/javascript" src="assets/js/angular-local-storage/angular-local-storage.min.js"></script>
+        <script type="text/javascript" src="assets/js/angular-local-storage/dist/angular-local-storage.min.js"></script>
         <script type="text/javascript" src="assets/js/sockjs/sockjs.min.js"></script>
         <script type="text/javascript" src="assets/js/stomp-websocket/lib/stomp.min.js"></script>
         <script type="text/javascript" src="assets/js/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
@@ -41,8 +41,8 @@
         <!-- END VERSION -->
     </head>
     <body ng-cloak>
-        <div class="container-fluid-header" data-ng-controller="MenuCtrl">
-            <span class="brand"><img src="assets/img/tslogo50.png" alt="{{'SYSTEM.NAME' | translate }} logo" /><span>{{'SYSTEM.NAME' | translate }}</span></span>
+        <div class="container-fluid-header" ng-controller="MenuCtrl">
+            <span class="brand"><img src="assets/img/tslogo50.png" alt="{{'SYSTEM.NAME' | translate }} logo" /><span translate="SYSTEM.NAME"></span></span>
             <ul class="menu-bar">
                 <li data-ng-repeat="link in links | filterByRoles:currentUser.roles" data-ng-class="(isActiveLink(link) && 'active')">
                     <a href="{{ getUrl(link) }}" title="{{ link.name | translate }}" target="{{link.target ? link.target : '_self'}}"><span class="glyphicon glyphicon-{{link.icon}}"></span></a>
@@ -66,11 +66,12 @@
                 <div class="col-sm-10 col-sm-offset-1" id="ContentContainer" ng-view></div>
             </div>
             <div class="row" id="FooterContainer">
-                <div class="col-xs-9" data-ng-controller="RoomDisplayCtrl" >
+                <div class="col-xs-9" ng-controller="RoomDisplayCtrl" >
                     <small ng-if="currentRoom"><bt-room-info room="currentRoom" contact-link="#!/settings/contact"></bt-room-info></small>
                 </div>
-                <span title="logged in as {{currentUser.username}} with {{currentUser.roles}}"></span>
-                <div class="col-xs-3 text-right"><small class="text-muted">{{ 'SYSTEM.COPYRIGHTHOLDER' | translate }}</small></div>
+                <div class="col-xs-3 text-right" title="logged in as {{currentUser.username}} with {{currentUser.roles}}">
+                    <small class="text-muted" translate="SYSTEM.COPYRIGHTHOLDER"></small>
+                </div>
             </div>
         </div>
         <bt-comment-alert></bt-comment-alert>

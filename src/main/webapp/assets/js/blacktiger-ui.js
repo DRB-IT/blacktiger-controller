@@ -123,6 +123,7 @@ function MeetingRoomDirective(MeetingSvc, $modal, PhoneBookSvc, $log) {
     return {
         restrict: 'E',
         scope: {
+            roomNumber: '@room'
         },
         link: function (scope, elements, attrs) {
             scope.participants = [];
@@ -172,6 +173,15 @@ function MeetingRoomDirective(MeetingSvc, $modal, PhoneBookSvc, $log) {
                 });
             };
 
+            scope.refresh = function () {
+                if (angular.isString(scope.roomNumber)) {
+                    scope.room = MeetingSvc.findRoom(scope.roomNumber);
+                }
+            };
+
+            scope.$watch('roomNumber', scope.refresh);
+            scope.$on('Meeting.Join', scope.refresh);
+            scope.$on('Meeting.Leave', scope.refresh);
             
         },
         templateUrl: 'assets/templates/bt-meeting-room.html'

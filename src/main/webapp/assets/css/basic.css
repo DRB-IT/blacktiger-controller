@@ -28,7 +28,7 @@ body {background-color: #f3f3f3;}
 .label{font-size: 90%;}
 .list-group a { cursor: pointer; }
 .no-selection {-webkit-user-select:none;user-select:none;-moz-user-select:none;}
-h2, h3 {text-transform:capitalize;}
+/*h2, h3 {text-transform:capitalize;}*/
 
 /*TABLES*/
 .participantsTable{}
