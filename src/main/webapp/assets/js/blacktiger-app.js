@@ -145,7 +145,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
     .controller('RoomDisplayCtrl', RoomDisplayCtrl)
 
 /*************************************** BOOT ********************************************/
-function ApplicationBoot(CONFIG, blacktiger, $location, LoginSvc, $rootScope, PushEventSvc) {
+function ApplicationBoot(CONFIG, blacktiger, $location, LoginSvc, $rootScope, PushEventSvc, MeetingSvc) {
     if (CONFIG.serviceUrl) {
         blacktiger.setServiceUrl(CONFIG.serviceUrl);
     }
@@ -168,12 +168,13 @@ function ApplicationBoot(CONFIG, blacktiger, $location, LoginSvc, $rootScope, Pu
             $location.path('/admin/realtime');
         }
         
-        PushEventSvc.connect();
+        PushEventSvc.connect().then($rootScope.updateCurrentRoom);
     });
     
     $rootScope.updateCurrentRoom = function () {
-        if ($rootScope.currentUser && $rootScope.currentUser.roles.indexOf('ROLE_HOST') >= 0) {
-            $rootScope.currentRoom = RealtimeSvc.getRoom();
+        var ids = MeetingSvc.findAllIds();
+        if ($rootScope.currentUser && $rootScope.currentUser.roles.indexOf('ROLE_HOST') >= 0 && ids.length > 0) {
+            $rootScope.currentRoom = MeetingSvc.findRoom(ids[0]);
         } else {
             $rootScope.currentRoom = null;
         }
@@ -699,7 +700,7 @@ function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger, $translate, $rootS
                 pattern += "[\\s\\w\\W]{0,1}(" + number.charAt(i) + ")";
             }
             pattern += ").)*$";
-            $scope.innerMailTextPattern = new RegExp(pattern); //'^((?!' + number + ').)*$');
+            $scope.innerMailTextPattern = new RegExp(pattern);
         }
 
     };
@@ -708,7 +709,7 @@ function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger, $translate, $rootS
 
 }
 
-function ContactCtrl($scope, SipUserSvc, RoomSvc, blacktiger) {
+function ContactCtrl($scope, RoomSvc) {
     $scope.contact = angular.copy($scope.currentRoom.contact);
     $scope.contact_status = null;
     
@@ -721,10 +722,9 @@ function ContactCtrl($scope, SipUserSvc, RoomSvc, blacktiger) {
     };
 }
 
-function SettingsCtrl($scope, SipUserSvc, RoomSvc, MeetingSvc, LoginSvc) {
+function SettingsCtrl($scope, LoginSvc) {
 
     $scope.logout = function () {
-        //MeetingSvc.clear();
         LoginSvc.deauthenticate();
     };
 }
