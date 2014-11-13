@@ -343,13 +343,15 @@ function StompSvc($rootScope) {
 }
 StompSvc.$inject = ['$rootScope'];
 
-function MeetingSvc($rootScope, PushEventSvc, ParticipantSvc) {
+function MeetingSvc($rootScope, PushEventSvc, ParticipantSvc, $log) {
     var rooms = [];
     
     var getRoomById = function(id) {
+        $log.debug('Retrieving room by id [id='+id+']');
         var i;
         for(i=0;i<rooms.length;i++) {
             if(rooms[i].id === id) {
+                $log.debug('Room found');
                 return rooms[i];
             }
         }
@@ -370,7 +372,7 @@ function MeetingSvc($rootScope, PushEventSvc, ParticipantSvc) {
     
     var handleConfStart = function(event, room) {
         var existingRoom = getRoomById(room.id);
-        
+        $log.debug("ConfStartEvent [room="+room+"]");
         if(existingRoom === null) {
             if(!angular.isArray(room.participants)) {
                 room.participants = [];
@@ -508,7 +510,7 @@ function MeetingSvc($rootScope, PushEventSvc, ParticipantSvc) {
         }
     };
 }
-MeetingSvc.$inject = ['$rootScope', 'PushEventSvc', 'ParticipantSvc'];
+MeetingSvc.$inject = ['$rootScope', 'PushEventSvc', 'ParticipantSvc', '$log'];
 
 /**
  * Service for automatically broadcasting CommentRequestCancel events when needed.
@@ -531,7 +533,7 @@ function AutoCommentRequestCancelSvc($rootScope, $timeout, CONFIG, $log) {
     }
     
     var updateCancelPromise = function (channel, newPromise) {
-        $log.debug("Updating cancel promis. [channel=" + channel + ";newPromise=" + newPromise + "]");
+        $log.debug("Updating cancel promise. [channel=" + channel + ";newPromise=" + newPromise + "]");
         if (commentCancelPromiseArray[channel]) {
             $timeout.cancel(commentCancelPromiseArray[channel]);
         }

@@ -104,7 +104,11 @@ function DurationDirective() {
             }
 
             $scope.updateDuration = function () {
-                $scope.duration = Math.max((new Date().getTime() - $scope.since.getTime()) / 60000, 0);
+                if(angular.isDate($scope.since)) {
+                    $scope.duration = Math.max((new Date().getTime() - $scope.since.getTime()) / 60000, 0);
+                } else {
+                    $scope.duration = 0;
+                }
             };
 
             $scope.task = $interval($scope.updateDuration, 5000);
@@ -126,6 +130,7 @@ function MeetingRoomDirective(MeetingSvc, HistorySvc, $modal, PhoneBookSvc, $log
             roomNumber: '@room'
         },
         link: function (scope, elements, attrs) {
+            $log.debug("Initializing MeetingRoomDirective.");
             scope.participants = [];
             scope.isHostInConference = function () {
                 var value = false;
@@ -187,12 +192,19 @@ function MeetingRoomDirective(MeetingSvc, HistorySvc, $modal, PhoneBookSvc, $log
             };
 
             scope.refresh = function () {
+                $log.debug("Refreshing room [roomNo="+scope.roomNumber+"]");
                 if (angular.isString(scope.roomNumber)) {
                     scope.room = MeetingSvc.findRoom(scope.roomNumber);
+                    if(!scope.room) {
+                        $log.error("Specified room not found [roomNo="+scope.roomNumber+"]")
+                    } else {
+                        $log.debug("Room set [room="+scope.room+"]")
+                    }
                 }
             };
 
             scope.$watch('roomNumber', scope.refresh);
+            scope.$on('Meeting.Start', scope.refresh);
             scope.$on('Meeting.Join', scope.refresh);
             scope.$on('Meeting.Leave', scope.refresh);
             

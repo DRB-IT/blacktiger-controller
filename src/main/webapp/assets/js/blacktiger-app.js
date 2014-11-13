@@ -137,7 +137,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
     .controller('RoomDisplayCtrl', RoomDisplayCtrl)
 
 /*************************************** BOOT ********************************************/
-function ApplicationBoot(CONFIG, blacktiger, $location, LoginSvc, $rootScope, PushEventSvc, MeetingSvc, AutoCommentRequestCancelSvc) {
+function ApplicationBoot(CONFIG, blacktiger, $location, LoginSvc, $rootScope, PushEventSvc, MeetingSvc, AutoCommentRequestCancelSvc, $log) {
     // The context object is a holder of information for the current session
     $rootScope.context = {};
     
@@ -185,10 +185,10 @@ function ApplicationBoot(CONFIG, blacktiger, $location, LoginSvc, $rootScope, Pu
     });
 
     $rootScope.$on('$locationChangeStart', function () {
-        console.log('location change started', $location.url());
+        $log.debug('location change started', $location.url());
     });
     $rootScope.$on('$locationChangeSuccess', function () {
-        console.log('location change ended', $location.url());
+        $log.debug('location change ended', $location.url());
     });
     
     AutoCommentRequestCancelSvc.start();

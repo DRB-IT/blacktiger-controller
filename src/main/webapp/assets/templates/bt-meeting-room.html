@@ -1,6 +1,6 @@
 <div class="alert alert-info" ng-if="getNoOfParticipants()==0" translate="PARTICIPANTS.WARNINGS.NO_PARTICIPANTS_AND_TRANSMITTERS"></div>
 
-<div class="alert alert-danger" ng-if="!isHostInConference() && (participants|filter:{host:false}).length>0">
+<div class="alert alert-danger" ng-if="!isHostInConference() && !((room.participants|filter:{host:false}).length===0)">
     <b translate="PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE"></b>
     <ol>
         <li translate="PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1"></li>
@@ -8,9 +8,10 @@
         <li translate="PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3"></li>
     </ol>
 </div>
-<h3>
+<h3>room:{{room}}
     <span translate="PARTICIPANTS.PARTICIPANTS" translate-values="{noOfParticipants:(room.participants|filter:{host:false}).length}"></span>
     <small class="pull-right" ng-repeat="participant in room.participants | filter:{host:true}" ng-animate=" 'animate' ">{{participant.name ? participant.name : 'No name'}} &bull; 
+        <!-- HOST INFO -->
         <a href="#" class="text-danger" ng-click="kickParticipant(participant.channel)" title="{{'PARTICIPANTS.ABORT_TRANSMISSION' | translate}}"> 
             {{'PARTICIPANTS.ABORT_TRANSMISSION' | translate}} <span class="glyphicon glyphicon-off"></span>
         </a>
@@ -27,7 +28,8 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-if="(room.participants|filter:{host:false}).length==0">
+        
+        <tr ng-if="!((room.participants|filter:{host:false}).length>0)">
             <td colspan="5">{{'PARTICIPANTS.INFO.NO_PARTICIPANTS' | translate}}</td>
         </tr>
         
