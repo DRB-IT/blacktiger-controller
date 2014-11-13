@@ -370,6 +370,19 @@ function MeetingSvc($rootScope, PushEventSvc, ParticipantSvc, $log) {
         return null;
     };
     
+    var getParticipantsCountByFilter = function(filter) {
+        var i, e, count = 0, p;
+            for(i=0;i<rooms.length;i++) {
+                for(e=0;e<rooms[i].participants.length;e++) {
+                    p = rooms[i].participants[e];
+                    if(!angular.isDefined(filter) || filter(p) === true) {
+                        count++;
+                    }
+                }
+            }
+            return count;
+    }
+    
     var handleConfStart = function(event, room) {
         var existingRoom = getRoomById(room.id);
         $log.debug("ConfStartEvent [room="+room+"]");
@@ -476,31 +489,28 @@ function MeetingSvc($rootScope, PushEventSvc, ParticipantSvc, $log) {
     $rootScope.$on('PhoneBook.Update', handlePhoneBookUpdate);
     
     return {
+        getTotalParticipantsByCommentRequested: function(value) {
+            return getParticipantsCountByFilter(function(participant) {
+                return participant.host !== true && participant.commentRequested === value;
+            });
+        },
+        getTotalParticipantsByMuted: function(value) {
+            return getParticipantsCountByFilter(function(participant) {
+                return participant.host !== true && participant.muted === value;
+            });
+        },
         getTotalParticipants: function() {
-            var i, e, count = 0;
-            for(i=0;i<rooms.length;i++) {
-                for(e=0;e<rooms[i].participants.length;e++) {
-                    if(!(rooms[i].participants[e].host === true)) {
-                        count++;
-                    }
-                }
-            }
-            return count;
+            return getParticipantsCountByFilter(function(participant) {
+                return participant.host !== true;
+            });
         },
         getTotalRooms: function() {
             return rooms.length;
         },
         getTotalParticipantsByType: function(type) {
-            var i, e, count = 0, p;
-            for(i=0;i<rooms.length;i++) {
-                for(e=0;e<rooms[i].participants.length;e++) {
-                    p = rooms[i].participants[e];
-                    if(p.host !== true && p.type === type) {
-                        count++;
-                    }
-                }
-            }
-            return count;
+            return getParticipantsCountByFilter(function(participant) {
+                return participant.host !== true && participant.type === type;
+            });
         },
         findAllIds: function() {
             var ids = [], i;

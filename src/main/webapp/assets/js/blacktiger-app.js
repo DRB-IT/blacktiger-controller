@@ -295,7 +295,7 @@ function MenuCtrl(CONFIG, $scope, LoginSvc, $rootScope, $translate, blacktiger, 
 
     });
 
-    $rootScope.$on('MeetingSvc.Lost_Connection', function () {
+    $rootScope.$on('PushEventSvc.Lost_Connection', function () {
         alert($filter('translate')('GENERAL.LOST_CONNECTION'));
     });
 }
@@ -467,12 +467,17 @@ function SettingsCtrl($scope, LoginSvc) {
 function RealtimeCtrl($scope, SystemSvc, MeetingSvc, $timeout) {
     $scope.system = {};
 
+    $scope.getNoOfRooms = function() {
+        return MeetingSvc.getTotalRooms();
+    };
+    
     $scope.getNoOfParticipantsPerRoom = function () {
         var noParticipants = $scope.getNoOfParticipants();
-        if (noParticipants === 0 || $scope.rooms.length === 0) {
+        var noRooms = $scope.getNoOfRooms();
+        if (noParticipants === 0 || noRooms === 0) {
             return 0;
         } else {
-            return $scope.getNoOfParticipants() / $scope.rooms.length;
+            return $scope.getNoOfParticipants() / noRooms;
         }
     };
 
@@ -498,34 +503,17 @@ function RealtimeCtrl($scope, SystemSvc, MeetingSvc, $timeout) {
     };
 
     $scope.getNoOfCommentRequests = function () {
-        var count = 0;
-        /*angular.forEach($scope.rooms, function (room) {
-            angular.forEach(room.participants, function (p) {
-                if (p.commentRequested) {
-                    count++;
-                }
-            });
-        });*/
-        return count;
+        return MeetingSvc.getTotalParticipantsByCommentRequested(true);
     };
 
     $scope.getNoOfOpenMicrophones = function () {
-        var count = 0;
-        /*angular.forEach($scope.rooms, function (room) {
-            angular.forEach(room.participants, function (p) {
-                if (!p.host && !p.muted) {
-                    count++;
-                }
-            });
-        });*/
-        return count;
+        return MeetingSvc.getTotalParticipantsByMuted(false);
     };
 
     $scope.updateSystemInfo = function () {
         SystemSvc.getSystemInfo().then(function (data) {
             $scope.system = data;
         });
-        //$scope.systemInfoTimerPromise = $timeout($scope.updateSystemInfo, 1000);
     };
 
     $scope.$on('$destroy', function cleanup() {

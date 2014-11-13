@@ -10,7 +10,7 @@
             <tbody>
             <tr>
                 <td>Sale</td>
-                <td class="text-right">{{rooms.length | number}}</td>
+                <td class="text-right">{{getNoOfRooms() | number}}</td>
             </tr>
             <tr>
                 <td>Lyttere</td>
@@ -81,17 +81,8 @@
                 <td>1m</td>
                 <td class="text-right">{{system.averageCpuLoad.oneMinute | number:1}} %</td>
             </tr>
-            <!--tr>
-                <td>5m</td>
-                <td class="text-right">{{system.averageCpuLoad.fiveMinutes | number:1}} %</td>
-            </tr>
-            <tr>
-                <td>15m</td>
-                <td class="text-right">{{system.averageCpuLoad.tenMinutes | number:1}} %</td-->
-            </tr>
             </tbody>
         </table>
     </div>
 </div>
-<!--h4>Sale og lyttere <small>Klik på salens navn for at se lyttere</small></h4-->
-<!--bt-room-status ng-repeat="room in rooms" room="room"/-->
+
