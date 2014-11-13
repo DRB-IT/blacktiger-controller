@@ -1,10 +1,10 @@
 <div ng-show="false" id="error-dialog" class="alert alert-danger"></div>
 {{rooms}}
-<div ng-if="!room" class="alert alert-info">
+<div ng-if="!context.room" class="alert alert-info">
     No room displayable for current user.
 </div>
 
-<div ng-if="room">
-    <bt-meeting-room room="{{room}}"></bt-meeting-room>
-    <bt-history room="{{room}}"></bt-history>
+<div ng-if="context.room">
+    <bt-meeting-room room="{{context.room.id}}"></bt-meeting-room>
+    <bt-history room="{{context.room.id}}"></bt-history>
 </div>
