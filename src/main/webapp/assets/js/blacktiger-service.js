@@ -743,7 +743,7 @@ function HistorySvc($rootScope, $cookieStore, blacktiger, $log) {
             entry = entries[key];
             entry.channel = participant.channel;
         }
-
+        
         if(resume && entry.calls.length > 0) {
             $log.debug('Resuming last call in call list for participant.');
             entry.calls[entry.calls.length - 1].end = null;
@@ -778,7 +778,6 @@ function HistorySvc($rootScope, $cookieStore, blacktiger, $log) {
                     if (call.end === null) {
                         call.end = new Date().getTime();
                         changed = true;
-                        break;
                     }
                 } 
                 break;

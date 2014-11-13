@@ -276,4 +276,28 @@ describe('Unit testing HistorySvc', function () {
         entries = historySvc.findAll();
         expect(entries.length).toEqual(2);
     });
+    
+    it('handles only receiving sporadic events', function () {
+        var room = 'H45-0000';
+        var participant = {
+            type: 'Sip',
+            callerId: 'L00000000',
+            phoneNumber: '4522334455',
+            name: 'John Doe',
+            channel: 'SIP__1234'
+        };
+        $rootScope.$broadcast('PushEvent.Join', room, participant);
+        $rootScope.$broadcast('PushEvent.Join', room, participant);
+        $rootScope.$broadcast('PushEvent.Join', room, participant);
+        
+        expect(historySvc.findAll().length).toEqual(1);
+        expect(historySvc.findAllByActive(false).length).toEqual(0);
+        
+        $rootScope.$broadcast('PushEvent.Leave', room, participant.channel);
+        
+        expect(historySvc.findAll().length).toEqual(1);
+        expect(historySvc.findAllByActive(false).length).toEqual(1);
+        
+        
+    });
 });
