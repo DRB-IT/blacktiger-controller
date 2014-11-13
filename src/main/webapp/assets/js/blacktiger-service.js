@@ -343,7 +343,7 @@ function StompSvc($rootScope) {
 }
 StompSvc.$inject = ['$rootScope'];
 
-function MeetingSvc($rootScope, PushEventSvc) {
+function MeetingSvc($rootScope, PushEventSvc, ParticipantSvc) {
     var rooms = [];
     
     var getRoomById = function(id) {
@@ -358,7 +358,7 @@ function MeetingSvc($rootScope, PushEventSvc) {
     
     var getParticipantFromRoomByChannel = function(room, channel) {
         var i;
-        if(angular.isArray(room.participants)) {
+        if(room && angular.isArray(room.participants)) {
             for(i=0;i<room.participants.length;i++) {
                 if(room.participants[i].channel === channel) {
                     return room.participants[i];
@@ -496,10 +496,19 @@ function MeetingSvc($rootScope, PushEventSvc) {
         },
         findRoom: function(id) {
             return getRoomById(id);
+        },
+        kickByRoomAndChannel: function(room, channel) {
+            ParticipantSvc.kick(room, channel);
+        },
+        muteByRoomAndChannel: function(room, channel) {
+            ParticipantSvc.mute(room, channel);
+        },
+        unmuteByRoomAndChannel: function(room, channel) {
+            ParticipantSvc.unmute(room, channel);
         }
     };
 }
-MeetingSvc.$inject = ['$rootScope', 'PushEventSvc'];
+MeetingSvc.$inject = ['$rootScope', 'PushEventSvc', 'ParticipantSvc'];
 
 /**
  * Service for automatically broadcasting CommentRequestCancel events when needed.
@@ -514,7 +523,8 @@ MeetingSvc.$inject = ['$rootScope', 'PushEventSvc'];
  */
 function AutoCommentRequestCancelSvc($rootScope, $timeout, CONFIG, $log) {
     var commentCancelPromiseArray = [], 
-            timeout = CONFIG.commentRequestTimeout;
+            timeout = CONFIG.commentRequestTimeout,
+            started = false;
     
     if(!angular.isNumber(timeout)) {
         timeout = 15000;
@@ -532,21 +542,33 @@ function AutoCommentRequestCancelSvc($rootScope, $timeout, CONFIG, $log) {
         }
     };
     
-    $rootScope.$on('PushEvent.CommentRequest', function(roomNo, channel) {
-        $log.debug("CommentRequest intercepted. Creating new timeout.");
-        var promise = $timeout(function () {
-            $log.debug("Broadcasting CommentRequestCancel event. [room=" + roomNo + ";channel=" + channel + "]");
-            $rootScope.$broadcast('PushEvent.CommentRequestCancel', roomNo, channel);
-        }, timeout);
-        updateCancelPromise(channel, promise);
+    $rootScope.$on('PushEvent.CommentRequest', function(event, roomNo, channel) {
+        if(started) {
+            $log.debug("CommentRequest intercepted. Creating new timeout.");
+            var promise = $timeout(function () {
+                $log.debug("Broadcasting CommentRequestCancel event. [room=" + roomNo + ";channel=" + channel + "]");
+                $rootScope.$broadcast('PushEvent.CommentRequestCancel', roomNo, channel);
+            }, timeout);
+            updateCancelPromise(channel, promise);
+        }
     });
     
-    $rootScope.$on('PushEvent.CommentRequestCancel', function(roomNo, channel) {
-        $log.debug("CommentRequestCancel intercepted. Cancelleing any related timeouts.");
-        updateCancelPromise(channel);
+    $rootScope.$on('PushEvent.CommentRequestCancel', function(event, roomNo, channel) {
+        if(started) {
+            $log.debug("CommentRequestCancel intercepted. Cancelleing any related timeouts.");
+            updateCancelPromise(channel);
+        }
+        
     });
     
-    return {};
+    return {
+        start: function() {
+            started = true;
+        },
+        stop: function() {
+            started = false;
+        }
+    };
     
 }
 AutoCommentRequestCancelSvc.$inject = ['$rootScope', '$timeout', 'CONFIG', '$log'];
@@ -648,14 +670,16 @@ function HistorySvc($rootScope, $cookieStore, blacktiger, $log) {
         resetHistory();
     }
     
-    
+    var createRoomEntry = function(roomNo) {
+        $log.debug('Creating new entry.');
+        history[roomNo] = {};
+    };
     
     var handleConferenceStartEvent = function(event, room, initializing) {
         $log.debug("HistorySvc:handleConferenceStart");
         var i;
         if (history[room.id] === undefined) {
-            $log.debug('Conference has no entry. Creating new entry.');
-            history[room.id] = {};
+            createRoomEntry(room.id);
         } 
         
         if(angular.isArray(room.participants)) {
@@ -676,7 +700,7 @@ function HistorySvc($rootScope, $cookieStore, blacktiger, $log) {
         }
         
         if(!angular.isDefined(history[roomNo])) {
-            throw "No history for room [roomNo=" + roomNo + "]";
+            createRoomEntry(roomNo);
         }
         
         if(!angular.isDefined(participant.callerId)) {
@@ -725,7 +749,7 @@ function HistorySvc($rootScope, $cookieStore, blacktiger, $log) {
         var entries, entry, i, key, call, changed = false;
         
         if(!angular.isDefined(history[roomNo])) {
-            throw "No history for room [roomNo=" + roomNo + "]";
+            createRoomEntry(roomNo);
         }
         
         entries = history[roomNo];
@@ -988,7 +1012,6 @@ angular.module('blacktiger-service', ['ngCookies', 'ngResource', 'LocalStorageMo
         .factory('PushEventSvc', PushEventSvc)
         .factory('AutoCommentRequestCancelSvc', AutoCommentRequestCancelSvc)
         .factory('MeetingSvc', MeetingSvc)
-        //.factory('RealtimeSvc', RealtimeSvc)
         .factory('PhoneBookSvc', PhoneBookSvc)
         .factory('ReportSvc', ReportSvc)
         .factory('SipUserSvc', SipUserSvc)
