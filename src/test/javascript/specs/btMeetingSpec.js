@@ -20,7 +20,7 @@ describe('Unit testing btMeeting', function() {
         expect(index).toBeGreaterThan(0);
     });
     
-        it('has an information in the first line of the table about no participants when empty.', function() {
+    it('has an information in the first line of the table about no participants when empty.', function() {
         var element = $compile('<bt-meeting-room room="H45-0000"></bt-meeting-room>')($rootScope);
         $rootScope.$digest();
 
