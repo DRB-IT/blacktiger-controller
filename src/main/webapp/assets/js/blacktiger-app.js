@@ -59,11 +59,7 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
         if (CONFIG.serviceUrl) {
             blacktigerProvider.setServiceUrl(CONFIG.serviceUrl);
         }
-        /*if (angular.isDefined(params.server)) {
-            url = params.server;
-            blacktigerProvider.setServiceUrl(url);
-        }*/
-
+        
         if (angular.isDefined(params.token)) {
             mode = "token";
             token = params.token;
@@ -145,11 +141,13 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
     .controller('RoomDisplayCtrl', RoomDisplayCtrl)
 
 /*************************************** BOOT ********************************************/
-function ApplicationBoot(CONFIG, blacktiger, $location, LoginSvc, $rootScope, PushEventSvc, MeetingSvc) {
+function ApplicationBoot(CONFIG, blacktiger, $location, LoginSvc, $rootScope, PushEventSvc, MeetingSvc, AutoCommentRequestCancelSvc) {
+    // The context object is a holder of information for the current session
+    $rootScope.context = {};
+    
     if (CONFIG.serviceUrl) {
         blacktiger.setServiceUrl(CONFIG.serviceUrl);
     }
-
 
     LoginSvc.authenticate().then(angular.noop, function () {
         $location.path('login');
@@ -174,17 +172,15 @@ function ApplicationBoot(CONFIG, blacktiger, $location, LoginSvc, $rootScope, Pu
     $rootScope.updateCurrentRoom = function () {
         var ids = MeetingSvc.findAllIds();
         if ($rootScope.currentUser && $rootScope.currentUser.roles.indexOf('ROLE_HOST') >= 0 && ids.length > 0) {
-            $rootScope.currentRoom = MeetingSvc.findRoom(ids[0]);
+            $rootScope.context.room = MeetingSvc.findRoom(ids[0]);
         } else {
-            $rootScope.currentRoom = null;
+            $rootScope.context.room = null;
         }
     };
 
     $rootScope.$on('MeetingSvc.Initialized', $rootScope.updateCurrentRoom);
 
-
-
-    $rootScope.$watch('currentRoom', function (room) {
+    $rootScope.$watch('context.room', function (room) {
         if (room && (!room.contact.name || room.contact.name === '' ||
             !room.contact.email || room.contact.email === '' ||
             !room.contact.phoneNumber || room.contact.phoneNumber === '')) {
@@ -198,6 +194,8 @@ function ApplicationBoot(CONFIG, blacktiger, $location, LoginSvc, $rootScope, Pu
     $rootScope.$on('$locationChangeSuccess', function () {
         console.log('location change ended', $location.url());
     });
+    
+    AutoCommentRequestCancelSvc.start();
 }
 
 /*************************************** FILTERS ********************************************/
@@ -218,7 +216,6 @@ function btCommentAlert() {
     return {
         restrict: 'E',
         controller: function ($scope, MeetingSvc) {
-            //$scope.participants = RealtimeSvc.getRoom($) MeetingSvc.getParticipantList();
             $scope.forcedHidden = false;
 
             $scope.isCommentRequested = function () {
@@ -241,7 +238,7 @@ function btCommentAlert() {
                 }
             });
             
-            $scope.$watch('currentRoom', function(room) {
+            $scope.$watch('context.room', function(room) {
                 if(room) {
                     $scope.participants = room.participants;
                 } else {
@@ -572,16 +569,6 @@ function RequestPasswordCtrl($scope, $http, blacktiger, $filter, $log, $rootScop
 }
 
 function RoomCtrl($scope, $modal, MeetingSvc, PhoneBookSvc) {
-    $scope.room = null;
-    
-    $scope.selectRoom = function() {
-        var ids = MeetingSvc.findAllIds();
-        if(angular.isArray(ids) && ids.length>0) {
-            $scope.room = ids[0];
-        }
-    };
-    
-    $scope.$on('Meeting.Start', $scope.selectRoom);
     
     /*
     $scope.isHostInConference = function () {
@@ -710,13 +697,13 @@ function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger, $translate, $rootS
 }
 
 function ContactCtrl($scope, RoomSvc) {
-    $scope.contact = angular.copy($scope.currentRoom.contact);
+    $scope.contact = angular.copy($scope.context.room.contact);
     $scope.contact_status = null;
     
     $scope.updateContact = function () {
         $scope.contact_status = "Saving";
-        $scope.currentRoom.contact = angular.copy($scope.contact);
-        RoomSvc.save($scope.currentRoom).$promise.then(function () {
+        $scope.context.room.contact = angular.copy($scope.contact);
+        RoomSvc.save($scope.context.room).$promise.then(function () {
             $scope.contact_status = "Saved";
         });
     };
