@@ -235,4 +235,45 @@ describe('Unit testing HistorySvc', function () {
         expect(entry.calls[0].end).toBe(null);
 
     });
+    
+    
+    it('recovers well when history has been deleted during active calls', function () {
+        var room = 'H45-0000';
+        var participant = {
+            type: 'Sip',
+            callerId: 'L00000000',
+            phoneNumber: '4522334455',
+            name: 'John Doe',
+            channel: 'SIP__1234'
+        };
+        var participant2 = {
+            type: 'Sip',
+            callerId: 'L00000001',
+            phoneNumber: '4522334455',
+            name: 'Jane Doe',
+            channel: 'SIP__1235'
+        };
+        
+        $rootScope.$broadcast('PushEvent.Join', room, participant);
+        $rootScope.$broadcast('PushEvent.Join', room, participant2);
+        
+        var entries = historySvc.findAll();
+        expect(entries.length).toEqual(2);
+        
+        historySvc.deleteAll();
+        entries = historySvc.findAll();
+        expect(entries.length).toEqual(0);
+        
+        $rootScope.$broadcast('PushEvent.Leave', room, participant);
+        $rootScope.$broadcast('PushEvent.Leave', room, participant2);
+        entries = historySvc.findAll();
+        expect(entries.length).toEqual(0);
+        
+        $rootScope.$broadcast('PushEvent.Join', room, participant);
+        $rootScope.$broadcast('PushEvent.Join', room, participant2);
+        $rootScope.$broadcast('PushEvent.Leave', room, participant);
+        $rootScope.$broadcast('PushEvent.Leave', room, participant2);
+        entries = historySvc.findAll();
+        expect(entries.length).toEqual(2);
+    });
 });
