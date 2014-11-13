@@ -101,6 +101,17 @@ describe('Unit testing MeetingSvc', function() {
         expect(0).toEqual(meetingSvc.getTotalRooms());
     });
     
+    it('can return a room after conference started', function () {
+        var room = {
+            id: 'H45-0000'
+        };
+        
+        expect(meetingSvc.findRoom(room.id)).toBe(null);
+        
+        $rootScope.$broadcast('PushEvent.ConferenceStart', room);
+        expect(meetingSvc.findRoom(room.id)).toEqual(room);
+    });
+    
     it('fires the correct events', function () {
         var lastEvent = null;
         var room = {
@@ -183,6 +194,26 @@ describe('Unit testing MeetingSvc', function() {
         $rootScope.$broadcast('PushEvent.ConferenceEnd', room.id);
         expect(lastEvent).toBe(null);
         
+    });
+    
+    it('handles PhoneBook.Update events', function () {
+        var room = {
+            id:'H45-0000'
+        }
+        var participant = {
+            type: 'Sip',
+            callerId: 'L00000000',
+            phoneNumber: '4522334455',
+            name: 'John Doe',
+            channel: 'SIP__1234'
+        };
+        
+        $rootScope.$broadcast('PushEvent.ConferenceStart', room);
+        $rootScope.$broadcast('PushEvent.Join', room.id, participant);
+        expect(meetingSvc.findRoom(room.id).participants[0].name).toEqual('John Doe');
+
+        $rootScope.$broadcast('PhoneBook.Update', participant.phoneNumber, 'Jane Doe');
+        expect(meetingSvc.findRoom(room.id).participants[0].name).toEqual('Jane Doe');
     });
    
 });

@@ -16,7 +16,7 @@ describe('Unit testing PhoneBookSvc', function() {
     it('broadcasts change event on successfull change', function() {
         var number = '+4512345678', name = "John Doe", eventReceived = false;;
         $httpBackend.whenPUT(blacktiger.getServiceUrl() + 'phonebook/' + number, name).respond();
-        $rootScope.$on('PhoneBook.update', function(event, newNumber, newName) {
+        $rootScope.$on('PhoneBook.Update', function(event, newNumber, newName) {
            if(newNumber === number && newName === name) {
                eventReceived = true;
            } 

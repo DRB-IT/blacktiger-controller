@@ -92,7 +92,7 @@ describe('Unit testing ParticipantSvc', function() {
                 ];
 
 
-        $httpBackend.expect('PATCH', blacktiger.getServiceUrl() + 'rooms/DK-9000-2/participants/1').respond(function(method, url, data, headers) {
+        $httpBackend.expect('PUT', blacktiger.getServiceUrl() + 'rooms/DK-9000-2/participants/1').respond(function(method, url, data, headers) {
             data = angular.fromJson(data);
             participants[0].muted = (data.muted === true);
             console.log('Mute request received as expected: ' + data);
@@ -126,7 +126,7 @@ describe('Unit testing ParticipantSvc', function() {
                 ];
 
 
-        $httpBackend.expect('PATCH', blacktiger.getServiceUrl() + 'rooms/DK-9000-2/participants/1').respond(function(method, url, data, headers) {
+        $httpBackend.expect('PUT', blacktiger.getServiceUrl() + 'rooms/DK-9000-2/participants/1').respond(function(method, url, data, headers) {
             data = angular.fromJson(data);
             participants[0].muted = (data.muted === true);
             console.log('Mute request received as expected: ' + data);
