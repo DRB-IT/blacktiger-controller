@@ -272,14 +272,14 @@ function ParticipantSvc(blacktiger, $resource, $log, $http) {
         mute: function (roomId, id) {
             var data = {muted:true};
             $log.info('Muting participant: [room=' + roomId + ';id=' + id + ']');
-            return $http.patch(blacktiger.getServiceUrl() + 'rooms/' + roomId + '/participants/' + id, data).then(function () {
+            return $http.put(blacktiger.getServiceUrl() + 'rooms/' + roomId + '/participants/' + id, data).then(function () {
                 return;
             });
         },
         unmute: function (roomId, id) {
             var data = {muted:false};
             $log.info('Unmuting participant: [room=' + roomId + ';id=' + id + ']');
-            return $http.patch(blacktiger.getServiceUrl() + 'rooms/' + roomId + '/participants/' + id, data).then(function () {
+            return $http.put(blacktiger.getServiceUrl() + 'rooms/' + roomId + '/participants/' + id, data).then(function () {
                 return;
             });
         }
@@ -452,6 +452,19 @@ function MeetingSvc($rootScope, PushEventSvc, ParticipantSvc, $log) {
         }
     }
     
+    var handlePhoneBookUpdate = function(event, number, name) {
+        $log.debug("MeetingSvc:handlePhoneBookUpdate");
+        angular.forEach(rooms, function(room) {
+            angular.forEach(room.participants, function (participant) {
+                if (number === participant.phoneNumber) {
+                    participant.name = name;
+                    $rootScope.$broadcast("Meeting.Change", room, participant);
+                }
+            });
+        });
+        
+    };
+    
     $rootScope.$on('PushEvent.ConferenceStart', handleConfStart);
     $rootScope.$on('PushEvent.ConferenceEnd', handleConfEnd);
     $rootScope.$on('PushEvent.Join', handleJoin);
@@ -460,7 +473,7 @@ function MeetingSvc($rootScope, PushEventSvc, ParticipantSvc, $log) {
     $rootScope.$on('PushEvent.CommentRequestCancel', handleCommentRequestCancel);
     $rootScope.$on('PushEvent.Mute', handleMute);
     $rootScope.$on('PushEvent.Unmute', handleUnmute);
-    
+    $rootScope.$on('PhoneBook.Update', handlePhoneBookUpdate);
     
     return {
         getTotalParticipants: function() {
@@ -499,14 +512,16 @@ function MeetingSvc($rootScope, PushEventSvc, ParticipantSvc, $log) {
         findRoom: function(id) {
             return getRoomById(id);
         },
-        kickByRoomAndChannel: function(room, channel) {
-            ParticipantSvc.kick(room, channel);
+        kickByRoomAndChannel: function(room, participant) {
+            ParticipantSvc.kick(room, participant.channel);
         },
-        muteByRoomAndChannel: function(room, channel) {
-            ParticipantSvc.mute(room, channel);
+        muteByRoomAndChannel: function(room, participant) {
+            ParticipantSvc.mute(room, participant.channel);
+            participant.commentRequested = false;
         },
-        unmuteByRoomAndChannel: function(room, channel) {
-            ParticipantSvc.unmute(room, channel);
+        unmuteByRoomAndChannel: function(room, participant) {
+            ParticipantSvc.unmute(room, participant.channel);
+            participant.commentRequested = false;
         }
     };
 }
@@ -583,7 +598,7 @@ function PhoneBookSvc($http, blacktiger, $rootScope) {
     return {
         updateEntry: function (phoneNumber, name) {
             return $http.put(blacktiger.getServiceUrl() + 'phonebook/' + phoneNumber, name).then(function (response) {
-                $rootScope.$broadcast('PhoneBook.update', phoneNumber, name);
+                $rootScope.$broadcast('PhoneBook.Update', phoneNumber, name);
                 return;
             });
         }
