@@ -68,4 +68,32 @@ describe('Unit testing btHistory', function() {
         
     });
 
+    it('can handle 250 entries', function() {
+        var room = 'H45-0000';
+        var participant = {
+            type: 'Sip',
+            callerId: 'L00000000',
+            phoneNumber: '4522334455',
+            name: 'John Doe',
+            channel: 'SIP__1234'
+        };
+        
+        var element = $compile('<bt-history room="H45-0000"></bt-history>')($rootScope);
+        $rootScope.$digest();
+        
+        $rootScope.$broadcast('PushEvent.ConferenceStart', {id: room});
+        for(var i=0;i<250;i++) {
+            participant = angular.copy(participant);
+            participant.callerId = 'L000000' + i;
+            participant.channel = 'SIP__' + i;
+            $rootScope.$broadcast('PushEvent.Join', room, participant);
+            $rootScope.$broadcast('PushEvent.Leave', room, participant.channel);
+        }
+        $rootScope.$digest();
+        
+        var tbody = element.find('tbody');
+        expect(tbody.children().length).toBe(250);
+        
+        
+    });
 });

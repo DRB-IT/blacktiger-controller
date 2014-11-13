@@ -120,7 +120,6 @@ describe('Unit testing btMeeting', function() {
         $rootScope.$digest();
 
         var index = element.html().indexOf('<!-- HOST INFO -->')
-        console.log(element.html());
         expect(index).toBeGreaterThan(0);
     });
     
