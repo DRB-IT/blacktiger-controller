@@ -131,15 +131,15 @@ function MeetingRoomDirective(MeetingSvc, HistorySvc, $modal, PhoneBookSvc, $log
         },
         link: function (scope, elements, attrs) {
             $log.debug("Initializing MeetingRoomDirective.");
-            scope.participants = [];
             scope.isHostInConference = function () {
                 var value = false;
-                angular.forEach(scope.participants, function (p) {
-                    if (p.host === true) {
-                        value = true;
-                        return false;
-                    }
-                });
+                if(scope.room && angular.isArray(scope.room.participants)) {
+                    angular.forEach(scope.room.participants, function (p) {
+                        if (p.host === true) {
+                            value = true;
+                        }
+                    });
+                }
                 return value;
             };
             
@@ -152,16 +152,16 @@ function MeetingRoomDirective(MeetingSvc, HistorySvc, $modal, PhoneBookSvc, $log
                 }
             };
 
-            scope.kickParticipant = function (channel) {
-                MeetingSvc.kickByRoomAndChannel(scope.roomNumber, channel);
+            scope.kickParticipant = function (participant) {
+                MeetingSvc.kickByRoomAndChannel(scope.roomNumber, participant);
             };
 
-            scope.muteParticipant = function (channel) {
-                MeetingSvc.muteByRoomAndChannel(scope.roomNumber, channel);
+            scope.muteParticipant = function (participant) {
+                MeetingSvc.muteByRoomAndChannel(scope.roomNumber, participant);
             };
             
-            scope.unmuteParticipant = function (channel) {
-                MeetingSvc.unmuteByRoomAndChannel(scope.roomNumber, channel);
+            scope.unmuteParticipant = function (participant) {
+                MeetingSvc.unmuteByRoomAndChannel(scope.roomNumber, participant);
             };
 
             scope.getNoOfParticipants = function() {
@@ -207,6 +207,7 @@ function MeetingRoomDirective(MeetingSvc, HistorySvc, $modal, PhoneBookSvc, $log
             scope.$on('Meeting.Start', scope.refresh);
             scope.$on('Meeting.Join', scope.refresh);
             scope.$on('Meeting.Leave', scope.refresh);
+            scope.$on('Meeting.Change', scope.refresh);
             
         },
         templateUrl: 'assets/templates/bt-meeting-room.html'
