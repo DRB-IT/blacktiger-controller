@@ -53,10 +53,10 @@
                 <button ng-click="changeName(participant.phoneNumber, participant.name)" title="{{'PARTICIPANTS.EDIT' | translate}}">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </button>
-                <button ng-click="muteParticipant(participant.channel, false)" ng-if="isHostInConference()" ng-if="participant.muted" title="{{'PARTICIPANTS.UNMUTE' | translate}}">
+                <button ng-click="unmuteParticipant(participant.channel)" ng-if="isHostInConference()" ng-if="participant.muted" title="{{'PARTICIPANTS.UNMUTE' | translate}}">
                     <span class="glyphicon glyphicon-comment"></span>
                 </button>
-                <button ng-click="muteParticipant(participant.channel, true)" ng-if="isHostInConference()" ng-if="!participant.muted" class="active" title="{{'PARTICIPANTS.MUTE' | translate}}">
+                <button ng-click="muteParticipant(participant.channel)" ng-if="isHostInConference()" ng-if="!participant.muted" class="active" title="{{'PARTICIPANTS.MUTE' | translate}}">
                     <span class="glyphicon glyphicon-comment"></span>
                 </button>
                 <button ng-click="kickParticipant(participant.channel)" title="{{'PARTICIPANTS.KICK' | translate}}">
