@@ -119,7 +119,7 @@ function DurationDirective() {
     };
 }
 
-function MeetingRoomDirective(MeetingSvc, $modal, PhoneBookSvc, $log) {
+function MeetingRoomDirective(MeetingSvc, HistorySvc, $modal, PhoneBookSvc, $log) {
     return {
         restrict: 'E',
         scope: {
@@ -137,13 +137,26 @@ function MeetingRoomDirective(MeetingSvc, $modal, PhoneBookSvc, $log) {
                 });
                 return value;
             };
-
-            scope.kickParticipant = function (channel) {
-                
+            
+            scope.noOfCallsForCallerId = function(callerId) {
+                var entry = HistorySvc.findOneByRoomAndCallerId(scope.roomNumber, callerId);
+                if(entry) {
+                    return entry.calls.length;
+                } else {
+                    return 0;
+                }
             };
 
-            scope.muteParticipant = function (channel, muted) {
-                
+            scope.kickParticipant = function (channel) {
+                MeetingSvc.kickByRoomAndChannel(scope.roomNumber, channel);
+            };
+
+            scope.muteParticipant = function (channel) {
+                MeetingSvc.muteByRoomAndChannel(scope.roomNumber, channel);
+            };
+            
+            scope.unmuteParticipant = function (channel) {
+                MeetingSvc.unmuteByRoomAndChannel(scope.roomNumber, channel);
             };
 
             scope.getNoOfParticipants = function() {
@@ -187,7 +200,7 @@ function MeetingRoomDirective(MeetingSvc, $modal, PhoneBookSvc, $log) {
         templateUrl: 'assets/templates/bt-meeting-room.html'
     };
 }
-MeetingRoomDirective.$inject = ['MeetingSvc', '$modal', 'PhoneBookSvc', '$log'];
+MeetingRoomDirective.$inject = ['MeetingSvc', 'HistorySvc', '$modal', 'PhoneBookSvc', '$log'];
 
 function HistoryDirective(HistorySvc, PhoneBookSvc, $modal, $log) {
     return {
