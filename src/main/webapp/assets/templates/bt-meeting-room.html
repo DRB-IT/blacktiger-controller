@@ -8,7 +8,7 @@
         <li translate="PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3"></li>
     </ol>
 </div>
-<h3>room:{{room}}
+<h3>
     <span translate="PARTICIPANTS.PARTICIPANTS" translate-values="{noOfParticipants:(room.participants|filter:{host:false}).length}"></span>
     <small class="pull-right" ng-repeat="participant in room.participants | filter:{host:true}" ng-animate=" 'animate' ">{{participant.name ? participant.name : 'No name'}} &bull; 
         <!-- HOST INFO -->
@@ -34,7 +34,7 @@
         </tr>
         
         <tr ng-repeat="participant in room.participants | filter:{host:false}">
-            <td class="participantNumber" data-type="participant-number" data-id="{{participant.channel}}" data-number="{{participant.phoneNumber}}">
+            <td class="participantNumber">
                 <bt-number-icon type="{{participant.type}}"></bt-number-icon>
                 <span ng-if="participant.type!=='Unknown'">{{participant.phoneNumber | telephone}}</span>
                 <span ng-if="participant.type==='Unknown'">{{participant.phoneNumber}}</span>
@@ -42,7 +42,7 @@
             <td class="participantName">
                 <a ng-if="!(participant.name.length>0)" ng-click="changeName(participant.phoneNumber, participant.name)">({{'PARTICIPANTS.ENTER_NAME' | translate}})</a>
                 {{participant.name}}
-                <a ng-if="!participant.muted" ng-click="muteParticipant(participant.channel, true)" class="label label-warning" translate="PARTICIPANTS.INFO.UNMUTED"></a>
+                <a ng-if="!participant.muted" ng-click="muteParticipant(participant)" class="label label-warning" translate="PARTICIPANTS.INFO.UNMUTED"></a>
                 <a ng-if="participant.commentRequested" ng-click="muteParticipant(participant.channel, false)" class="label label-primary" bt-comment-request-highlight participant='participant'>{{'PARTICIPANTS.WANTS_TO_COMMENT' | translate}}</a>
             </td>
             <td class="participantHistory">
@@ -55,13 +55,13 @@
                 <button ng-click="changeName(participant.phoneNumber, participant.name)" title="{{'PARTICIPANTS.EDIT' | translate}}">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </button>
-                <button ng-click="unmuteParticipant(participant.channel)" ng-if="isHostInConference()" ng-if="participant.muted" title="{{'PARTICIPANTS.UNMUTE' | translate}}">
+                <button ng-click="unmuteParticipant(participant)" ng-if="isHostInConference() && participant.muted" title="{{'PARTICIPANTS.UNMUTE' | translate}}">
                     <span class="glyphicon glyphicon-comment"></span>
                 </button>
-                <button ng-click="muteParticipant(participant.channel)" ng-if="isHostInConference()" ng-if="!participant.muted" class="active" title="{{'PARTICIPANTS.MUTE' | translate}}">
+                <button ng-click="muteParticipant(participant)" ng-if="isHostInConference() && !participant.muted" class="active" title="{{'PARTICIPANTS.MUTE' | translate}}">
                     <span class="glyphicon glyphicon-comment"></span>
                 </button>
-                <button ng-click="kickParticipant(participant.channel)" title="{{'PARTICIPANTS.KICK' | translate}}">
+                <button ng-click="kickParticipant(participant)" title="{{'PARTICIPANTS.KICK' | translate}}">
                     <span class="glyphicon glyphicon-remove"></span>
                 </button>
             </td>
