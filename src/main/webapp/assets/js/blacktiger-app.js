@@ -430,7 +430,11 @@ function ContactCtrl($scope, RoomSvc) {
     $scope.updateContact = function () {
         $scope.contact_status = "Saving";
         $scope.context.room.contact = angular.copy($scope.contact);
-        RoomSvc.save($scope.context.room).$promise.then(function () {
+        
+        //We need to remove participants before we save the room because the server does not expect the participants.
+        var room = angular.copy($scope.context.room);
+        delete room.participants;
+        RoomSvc.save(room).$promise.then(function () {
             $scope.contact_status = "Saved";
         });
     };
