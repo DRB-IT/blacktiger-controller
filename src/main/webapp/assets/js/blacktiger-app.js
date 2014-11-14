@@ -1,25 +1,6 @@
 /*jslint browser: true*/
 /*global angular, BLACKTIGER_VERSION, $*/
 
-/*************************************** HACKS  ********************************************/
-// IE does not support History API very well. We need to force a location reload to make sure that the url change is accepted by AngularJS.
-// https://github.com/angular/angular.js/issues/8869
-if (window.navigator.userAgent.indexOf('MSIE ') >= 0 || window.navigator.userAgent.indexOf('Trident/') >= 0) {
-    if(window.location.hash !== '' && window.location.hash !== '#!/') {
-        alert(window.location.hash);
-        window.location.hash = '#!/';
-        window.location.reload();
-    } else {
-        $('[hacked-for-ie]').on('click', 'a', function () {
-            var href = $(this).attr('href');
-            var target = $(this).attr('target');
-            if(href && (!target || target === '_self')) {
-                window.location.href = href;
-            }
-        });
-    }
-}
-
 /*************************************** MODULE ********************************************/
 
 var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.translate', 'ui.bootstrap', 'blacktiger-service', 'blacktiger-ui', 'teljs'])
@@ -303,8 +284,6 @@ function MenuCtrl(CONFIG, $scope, LoginSvc, $rootScope, $translate, blacktiger, 
 function RoomDisplayCtrl($scope, $location) {
   
     $scope.goToTechContact = function () {
-        // We have to use a method to direct to Contact because IE has some serious issues regarding History API when it comes to following some links.
-        //This was apparantly one of them.
         $location.path("/settings/contact");
     };
 
