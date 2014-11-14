@@ -15,12 +15,12 @@
   ],
   "main": "src/tel.js",
   "homepage": "https://github.com/michaelkrog/tel.js",
-  "version": "1.0.10",
-  "_release": "1.0.10",
+  "version": "1.0.11",
+  "_release": "1.0.11",
   "_resolution": {
     "type": "version",
-    "tag": "1.0.10",
-    "commit": "4cf1239be01c7f3efaeb57e4acf0db7951f96957"
+    "tag": "1.0.11",
+    "commit": "54b8a577430862e450a5c5da23d5c8014961946b"
   },
   "_source": "git://github.com/michaelkrog/tel.js.git",
   "_target": "1.0.*",
