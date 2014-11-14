@@ -67,7 +67,7 @@
             </div>
             <div class="row" id="FooterContainer">
                 <div class="col-xs-9" ng-controller="RoomDisplayCtrl" >
-                    <small ng-if="currentRoom"><bt-room-info room="currentRoom" contact-link="#!/settings/contact"></bt-room-info></small>
+                    <small ng-if="context.room"><bt-room-info room="context.room" contact-link="#!/settings/contact"></bt-room-info></small>
                 </div>
                 <div class="col-xs-3 text-right" title="logged in as {{currentUser.username}} with {{currentUser.roles}}">
                     <small class="text-muted" translate="SYSTEM.COPYRIGHTHOLDER"></small>
