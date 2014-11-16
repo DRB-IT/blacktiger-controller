@@ -9,11 +9,11 @@
     </ol>
 </div>
 <h3>
-    <span translate="PARTICIPANTS.PARTICIPANTS" translate-values="{noOfParticipants:(room.participants|filter:{host:false}).length}"></span>
+    <span translate="PARTICIPANTS.PARTICIPANTS" translate-values="{noOfParticipants:(room.participants|filter:{host:false}).length}" translate-interpolation="messageformat"></span>
     <small class="pull-right" ng-repeat="participant in room.participants | filter:{host:true}" ng-animate=" 'animate' ">{{participant.name ? participant.name : 'No name'}} &bull; 
         <!-- HOST INFO -->
         <a href="#" class="text-danger" ng-click="kickParticipant(participant.channel)" title="{{'PARTICIPANTS.ABORT_TRANSMISSION' | translate}}"> 
-            {{'PARTICIPANTS.ABORT_TRANSMISSION' | translate}} <span class="glyphicon glyphicon-off"></span>
+            <span translate="PARTICIPANTS.ABORT_TRANSMISSION"></span> <span class="glyphicon glyphicon-off"></span>
         </a>
     </small>
 </h3>
@@ -43,7 +43,7 @@
                 <a ng-if="!(participant.name.length>0)" ng-click="changeName(participant.phoneNumber, participant.name)">(<span translate="PARTICIPANTS.ENTER_NAME"></span>)</a>
                 {{participant.name}}
                 <a ng-if="!participant.muted" ng-click="muteParticipant(participant)" class="label label-warning" translate="PARTICIPANTS.INFO.UNMUTED"></a>
-                <a ng-if="participant.commentRequested" ng-click="muteParticipant(participant.channel, false)" class="label label-primary" bt-comment-request-highlight participant='participant'>{{'PARTICIPANTS.WANTS_TO_COMMENT' | translate}}</a>
+                <a ng-if="participant.commentRequested" ng-click="muteParticipant(participant.channel, false)" class="label label-primary" bt-comment-request-highlight participant='participant'><span translate="PARTICIPANTS.WANTS_TO_COMMENT"></span></a>
             </td>
             <td class="participantHistory">
                 {{noOfCallsForCallerId(participant.callerId)}}

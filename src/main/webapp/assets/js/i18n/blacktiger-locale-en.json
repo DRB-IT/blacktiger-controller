@@ -50,9 +50,9 @@
         "MUTE": "Mute comment microphone",
         "KICK": "Hang up",
         "EDIT": "Edit name",
-        "PARTICIPANTS": "{{noOfParticipants}} listeners",
+        "PARTICIPANTS": "{noOfParticipants} {noOfParticipants, plural, one{listener} other{listeners}}",
         "ABORT_TRANSMISSION": "Abort transmission",
-        "COMPLETED_CALLS": "{{noOfCompletedCalls}} completed calls",
+        "COMPLETED_CALLS": "{noOfCompletedCalls} completed {noOfCompletedCalls, plural, one{call} other{call}}",
         "WANTS_TO_COMMENT": "I would like to comment!",
         "ENTER_NAME": "Who is this? Call and ask, write name here!"
     },

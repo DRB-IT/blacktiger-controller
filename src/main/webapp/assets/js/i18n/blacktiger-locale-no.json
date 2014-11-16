@@ -50,9 +50,9 @@
         "MUTE": "Lukk svar-mikrofonen",
         "KICK": "Legg på",
         "EDIT": "Rediger navn",
-        "PARTICIPANTS": "{{noOfParticipants}} lyttere",
+        "PARTICIPANTS": "{noOfParticipants} {noOfParticipants, plural, one{lytter} other{lyttere}}",
         "ABORT_TRANSMISSION": "Avbryt overføringen",
-        "COMPLETED_CALLS": "{{noOfCompletedCalls}} avsluttede oppringninger",
+        "COMPLETED_CALLS": "{noOfCompletedCalls} {noOfCompletedCalls, plural, one{avsluttet oppringning} other{avsluttede oppringninger}}",
         "WANTS_TO_COMMENT": "Jeg vil gjerne svare!",
         "ENTER_NAME": "Hvem er det? Ring og spør, skriv navnet her!"
     },

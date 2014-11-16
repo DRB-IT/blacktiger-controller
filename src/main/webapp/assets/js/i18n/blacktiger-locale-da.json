@@ -49,9 +49,9 @@
         "MUTE": "Luk svar-mikrofon",
         "KICK": "Afbryd lytter",
         "EDIT": "Rediger lytterens navn",
-        "PARTICIPANTS": "{{noOfParticipants}} lyttere",
+        "PARTICIPANTS": "{noOfParticipants} {noOfParticipants, plural, one{lytter} other{lyttere}}",
         "ABORT_TRANSMISSION": "Afbryd transmission",
-        "COMPLETED_CALLS": "{{noOfCompletedCalls}} afsluttede opkald",
+        "COMPLETED_CALLS": "{noOfCompletedCalls} {noOfCompletedCalls, plural, one{afsluttet} other{afsluttede}} opkald",
         "WANTS_TO_COMMENT": "Jeg vil gerne svare!",
         "ENTER_NAME": "Hvem er det? Ring og spørg, skriv navn her!"
     },

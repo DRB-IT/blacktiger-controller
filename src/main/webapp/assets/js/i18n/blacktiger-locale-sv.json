@@ -50,9 +50,9 @@
         "MUTE": "Stäng svarsmikrofon",
         "KICK": "Lägg på",
         "EDIT": "Redigera namn",
-        "PARTICIPANTS": "{{noOfParticipants}} lyssnare",
+        "PARTICIPANTS": "{noOfParticipants} {noOfParticipants, plural, one{lyssnar} other{lyssnare}}",
         "ABORT_TRANSMISSION": "Avbryt överföring",
-        "COMPLETED_CALLS": "{{noOfCompletedCalls}} avslutade uppringningar",
+        "COMPLETED_CALLS": "{noOfCompletedCalls} {noOfCompletedCalls, plural, one{avslutad uppringning} other{avslutade uppringningar}}",
         "WANTS_TO_COMMENT": "Jag vill gärna svara!",
         "ENTER_NAME": "Vem är det? Ring och fråga, och skriv namnet här!"
     },

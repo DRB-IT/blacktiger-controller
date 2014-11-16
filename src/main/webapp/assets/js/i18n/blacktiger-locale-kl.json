@@ -50,9 +50,9 @@
         "MUTE": "Akinermut mikrofoni matuguk",
         "KICK": "Tusarnaartoq unitsiguk",
         "EDIT": "Aaqqissoruk",
-        "PARTICIPANTS": "{{noOfParticipants}} tusarnaartut",
+        "PARTICIPANTS": "{noOfParticipants} tusarnaartut",
         "ABORT_TRANSMISSION": "Aallakaatitsineq unitsiguk",
-        "COMPLETED_CALLS": "{{noOfCompletedCalls}} afsluttede opkald",
+        "COMPLETED_CALLS": "{noOfCompletedCalls} afsluttede opkald",
         "WANTS_TO_COMMENT": "Ønsker at svare",
         "ENTER_NAME": "Angiv navn"
     },

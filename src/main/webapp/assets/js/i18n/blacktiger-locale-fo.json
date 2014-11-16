@@ -50,9 +50,9 @@
         "MUTE": "Luk svarmikrofon",
         "KICK": "Afbryd lytter",
         "EDIT": "Ritstjórna",
-        "PARTICIPANTS": "{{noOfParticipants}} lyttere",
+        "PARTICIPANTS": "{noOfParticipants} {noOfParticipants, plural, one{lytter} other{lyttere}}",
         "ABORT_TRANSMISSION": "Afbryd transmissionen",
-        "COMPLETED_CALLS": "{{noOfCompletedCalls}} afsluttede opkald",
+        "COMPLETED_CALLS": "{noOfCompletedCalls} {noOfCompletedCalls, plural, one{afsluttet} other{afsluttede}} opkald",
         "WANTS_TO_COMMENT": "Ønsker at svare",
         "ENTER_NAME": "Angiv navn"
     },

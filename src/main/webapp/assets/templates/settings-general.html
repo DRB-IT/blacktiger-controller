@@ -7,7 +7,7 @@
         </div>
     </div>
     <div class="col-sm-8">
-        <h3>{{'SETTINGS.GENERAL.TITLE' | translate}}&nbsp;</h3>
+        <h3 translate="SETTINGS.GENERAL.TITLE"></h3>
         <p>
             <span translate="SETTINGS.GENERAL.LOGGED_IN_AS" translate-values='{ postalCode:context.room.postalCode, city:context.room.city}'></span><span ng-if="context.room.hallNumber && context.room.hallNumber.length > 0"><b>, {{ 'GENERAL.HALL' | translate }} {{context.room.hallNumber}}</b></span>
             <button class="btn btn-warning btn-xs" ng-click="logout()" translate="GENERAL.LOGOUT"></button>
