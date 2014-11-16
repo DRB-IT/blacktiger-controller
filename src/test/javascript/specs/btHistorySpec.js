@@ -58,7 +58,6 @@ describe('Unit testing btHistory', function() {
         $rootScope.$broadcast('PushEvent.ConferenceStart', {id: room});
         $rootScope.$broadcast('PushEvent.Join', room, participant);
         $rootScope.$broadcast('PushEvent.Leave', 'H45-0000', participant.channel);
-        debugger
         var scope = element.isolateScope();
         scope.deleteHistory();
         $rootScope.$digest();

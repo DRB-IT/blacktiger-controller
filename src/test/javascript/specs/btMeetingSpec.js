@@ -2,16 +2,18 @@ describe('Unit testing btMeeting', function() {
     var $compile;
     var $rootScope;
     var meetingSvc;
+    var historySvc;
     
     beforeEach(module('blacktiger-templates'));
     beforeEach(module('blacktiger-ui', function($provide) {
         $provide.constant('CONFIG', {});
     }));
 
-    beforeEach(inject(function(_$compile_, _$rootScope_, _MeetingSvc_){
+    beforeEach(inject(function(_$compile_, _$rootScope_, _MeetingSvc_, _HistorySvc_){
       $compile = _$compile_;
       $rootScope = _$rootScope_;
       meetingSvc = _MeetingSvc_;
+      historySvc = _HistorySvc_;
     }));
 
     afterEach(inject(function ($log) {
@@ -95,9 +97,9 @@ describe('Unit testing btMeeting', function() {
         
         var element = $compile('<bt-meeting-room room="H45-0000"></bt-meeting-room>')($rootScope);
         $rootScope.$digest();
-
+        
         var index = element.html().indexOf('PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE')
-            expect(index).toBeGreaterThan(0);
+        expect(index).toBeGreaterThan(0);
     });
     
     it('shows host info when conference has one', function() {
@@ -118,7 +120,6 @@ describe('Unit testing btMeeting', function() {
         
         var element = $compile('<bt-meeting-room room="H45-0000"></bt-meeting-room>')($rootScope);
         $rootScope.$digest();
-
         var index = element.html().indexOf('<!-- HOST INFO -->')
         expect(index).toBeGreaterThan(0);
     });

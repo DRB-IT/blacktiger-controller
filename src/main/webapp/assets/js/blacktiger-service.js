@@ -857,6 +857,22 @@ function HistorySvc($rootScope, $cookieStore, blacktiger, $log) {
     $rootScope.$on('PhoneBook.Update', handlePhoneBookUpdate);
 
     return {
+        getTotalDurationByRoomAndCallerId: function(room, callerId) {
+            var duration = 0, now, entries = doFind(room, callerId);
+            if(entries && entries.length>0) {
+                now = new Date();
+                angular.forEach(entries[0].calls, function (call) {
+                    if (call.end !== null) {
+                        duration += call.end - call.start;
+                    } else {
+                        duration += now.getTime() - call.start;
+                    }
+                });
+            } else {
+                $log.debug("HistorySvc.getTotalDurationByRoomAndCallerId: No entry found [room="+room+";callerId="+callerId+"]");
+            }
+            return duration;
+        },
         findOneByRoomAndCallerId: function (room, callerId) {
             var entries = doFind(room, callerId);
             if(entries.length === 0) {

@@ -34,7 +34,7 @@
             </td>
             <td class="participantHistory">{{entry.firstCall | date:'HH:mm'}}</td>
             <td class="participantHistory">{{entry.calls.length}}</td>
-            <td class="participantHistory">{{calculateTotalDuration(entry) / 60000 | number : 0}}</td>
+            <td class="participantHistory">{{getTotalDuration(entry) / 60000 | number : 0}}</td>
             <td class="participantOptions">
                 <button ng-click="changeName(entry.phoneNumber, entry.name)" title="{{'PARTICIPANTS.EDIT' | translate}}"><span class="glyphicon glyphicon-pencil"></span>
                 </button>

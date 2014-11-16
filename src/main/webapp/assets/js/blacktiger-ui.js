@@ -243,14 +243,8 @@ function HistoryDirective(HistorySvc, PhoneBookSvc, $modal, $log) {
                 });
             };
 
-            scope.calculateTotalDuration = function (entry) {
-                var duration = 0;
-                angular.forEach(entry.calls, function (call) {
-                    if (call.end !== null) {
-                        duration += call.end - call.start;
-                    }
-                });
-                return duration;
+            scope.getTotalDuration = function (entry) {
+                return HistorySvc.getTotalDurationByRoomAndCallerId(scope.room, entry.callerId);
             };
 
             scope.noOfCallsForCallerId = function (callerId) {

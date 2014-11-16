@@ -202,41 +202,41 @@ describe('Unit testing HistorySvc', function () {
             name: 'Jane Doe',
             channel: 'SIP__1235'
         };
-        
+
         //Imitate joins and ensure their calls are correct
         $rootScope.$broadcast('PushEvent.Join', room, participant);
         $rootScope.$broadcast('PushEvent.Join', room, participant2);
         var entry = historySvc.findOneByRoomAndCallerId(room, participant.callerId);
         expect(entry.calls.length).toEqual(1);
         expect(entry.calls[0].end).toBe(null);
-        
+
         entry = historySvc.findOneByRoomAndCallerId(room, participant2.callerId);
         expect(entry.calls.length).toEqual(1);
         expect(entry.calls[0].end).toBe(null);
-        
+
         //Imitate one leave and ensure both participant's calls are correct
         $rootScope.$broadcast('PushEvent.Leave', room, participant.channel);
         entry = historySvc.findOneByRoomAndCallerId(room, participant.callerId);
         expect(entry.calls.length).toEqual(1);
         expect(entry.calls[0].end).not.toBe(null);
-        
+
         entry = historySvc.findOneByRoomAndCallerId(room, participant2.callerId);
         expect(entry.calls.length).toEqual(1);
         expect(entry.calls[0].end).toBe(null);
-        
+
         //Imitate a reinitializing ConferenceStart event and make sure existing calls were resumed instead of new calls created
-        $rootScope.$broadcast('PushEvent.ConferenceStart', {id:room, participants:[participant, participant2]}, true);
+        $rootScope.$broadcast('PushEvent.ConferenceStart', {id: room, participants: [participant, participant2]}, true);
         entry = historySvc.findOneByRoomAndCallerId(room, participant.callerId);
         expect(entry.calls.length).toEqual(1);
         expect(entry.calls[0].end).toBe(null);
-        
+
         entry = historySvc.findOneByRoomAndCallerId(room, participant2.callerId);
         expect(entry.calls.length).toEqual(1);
         expect(entry.calls[0].end).toBe(null);
 
     });
-    
-    
+
+
     it('recovers well when history has been deleted during active calls', function () {
         var room = 'H45-0000';
         var participant = {
@@ -253,22 +253,22 @@ describe('Unit testing HistorySvc', function () {
             name: 'Jane Doe',
             channel: 'SIP__1235'
         };
-        
+
         $rootScope.$broadcast('PushEvent.Join', room, participant);
         $rootScope.$broadcast('PushEvent.Join', room, participant2);
-        
+
         var entries = historySvc.findAll();
         expect(entries.length).toEqual(2);
-        
+
         historySvc.deleteAll();
         entries = historySvc.findAll();
         expect(entries.length).toEqual(0);
-        
+
         $rootScope.$broadcast('PushEvent.Leave', room, participant);
         $rootScope.$broadcast('PushEvent.Leave', room, participant2);
         entries = historySvc.findAll();
         expect(entries.length).toEqual(0);
-        
+
         $rootScope.$broadcast('PushEvent.Join', room, participant);
         $rootScope.$broadcast('PushEvent.Join', room, participant2);
         $rootScope.$broadcast('PushEvent.Leave', room, participant);
@@ -276,7 +276,7 @@ describe('Unit testing HistorySvc', function () {
         entries = historySvc.findAll();
         expect(entries.length).toEqual(2);
     });
-    
+
     it('handles only receiving sporadic events', function () {
         var room = 'H45-0000';
         var participant = {
@@ -289,15 +289,61 @@ describe('Unit testing HistorySvc', function () {
         $rootScope.$broadcast('PushEvent.Join', room, participant);
         $rootScope.$broadcast('PushEvent.Join', room, participant);
         $rootScope.$broadcast('PushEvent.Join', room, participant);
-        
+
         expect(historySvc.findAll().length).toEqual(1);
         expect(historySvc.findAllByActive(false).length).toEqual(0);
-        
+
         $rootScope.$broadcast('PushEvent.Leave', room, participant.channel);
-        
+
         expect(historySvc.findAll().length).toEqual(1);
         expect(historySvc.findAllByActive(false).length).toEqual(1);
-        
-        
+
+
+    });
+
+    it('can calculate total duration of all calls for a callerid', function () {
+        var room = 'H45-0000';
+        var participant = {
+            type: 'Sip',
+            callerId: 'L00000000',
+            phoneNumber: '4522334455',
+            name: 'John Doe',
+            channel: 'SIP__1234'
+        };
+
+        var left;
+        runs(function () {
+            left = false;
+            $rootScope.$broadcast('PushEvent.Join', room, participant);
+            setTimeout(function () {
+                $rootScope.$broadcast('PushEvent.Leave', room, participant.callerId);
+                left = true;
+            }, 500);
+        });
+
+        waitsFor(function () {
+            return left;
+        }, "The participant should have left", 750);
+
+        runs(function () {
+            left = false;
+            $rootScope.$broadcast('PushEvent.Join', room, participant);
+            setTimeout(function () {
+                $rootScope.$broadcast('PushEvent.Leave', room, participant.callerId);
+                left = true;
+            }, 500);
+        });
+
+        waitsFor(function () {
+            return left;
+        }, "The participant should have left", 750);
+
+        runs(function () {
+            var duration = historySvc.getTotalDurationByRoomAndCallerId(room, participant.callerId);
+            expect(duration).toBeGreaterThan(999);
+        });
+
+
+
     });
 });

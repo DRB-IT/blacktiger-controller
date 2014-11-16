@@ -90,7 +90,6 @@ describe('Unit testing MeetingSvc', function() {
         $rootScope.$broadcast('PushEvent.ConferenceStart', room3);
         expect(3).toEqual(meetingSvc.getTotalRooms());
         
-        debugger
         $rootScope.$broadcast('PushEvent.ConferenceEnd', room3.id);
         expect(2).toEqual(meetingSvc.getTotalRooms());
         
