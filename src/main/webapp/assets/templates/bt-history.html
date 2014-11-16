@@ -1,26 +1,31 @@
 <h3>
     <span translate="PARTICIPANTS.COMPLETED_CALLS" translate-values="{noOfCompletedCalls:history.length}"}></span>
-    <a ng-click="deleteHistory();" class="btn btn-link btn-sm pull-right">{{'REPORT.DELETE' | translate}} <span class="glyphicon glyphicon-trash"></span></a>
+    <a ng-click="deleteHistory();" class="btn btn-link btn-sm pull-right" translate=""><span translate="REPORT.DELETE"></span> <span class="glyphicon glyphicon-trash"></span></a>
 </h3>
 <table class="table table-striped table-hover table-condensed participantsTable">
     <thead>
         <tr>
-            <th width="160px"><span class="sortable" ng-click="predicate = 'phoneNumber'; reverse=!reverse">{{'REPORT.NUMBER' | translate}}</span>
+            <th width="160px">
+                <span class="sortable" ng-click="predicate = 'phoneNumber'; reverse=!reverse" translate="REPORT.NUMBER"></span>
             </th>
-            <th><span class="sortable" ng-click="predicate = 'name'; reverse=!reverse">{{'REPORT.NAME' | translate}}</span>
+            <th>
+                <span class="sortable" ng-click="predicate = 'name'; reverse=!reverse" translate="REPORT.NAME"></span>
             </th>
-            <th width="120px"><span class="sortable sorting" ng-click="predicate = 'firstCallTimestamp'; reverse=!reverse">{{'REPORT.FIRST_CALL' | translate}}</span>
+            <th width="120px">
+                <span class="sortable sorting" ng-click="predicate = 'firstCallTimestamp'; reverse=!reverse" translate="REPORT.FIRST_CALL"></span>
             </th>
-            <th width="70px"><span class="sortable" ng-click="predicate = 'numberOfCalls'; reverse=!reverse">{{'REPORT.CALLS' | translate}}</span>
+            <th width="70px">
+                <span class="sortable" ng-click="predicate = 'numberOfCalls'; reverse=!reverse" translate="REPORT.CALLS"></span>
             </th>
-            <th width="70px"><span class="sortable" ng-click="predicate = 'totalDuration'; reverse=!reverse">{{'REPORT.MINUTES' | translate}}</span>
+            <th width="70px">
+                <span class="sortable" ng-click="predicate = 'totalDuration'; reverse=!reverse" translate="REPORT.MINUTES"></span>
             </th>
             <th width="100px"></th>
         </tr>
     </thead>
     <tbody>
         <tr ng-if="history.length===0">
-            <td colspan="6">{{'REPORT.NO_ENTRIES' | translate}}</td>
+            <td colspan="6" translate="REPORT.NO_ENTRIES"></td>
         </tr>
         <tr ng-repeat="entry in history | orderBy:predicate:reverse">
             <td class="participantNumber">
@@ -29,7 +34,7 @@
                 <span ng-if="entry.type==='Unknown'">{{entry.phoneNumber}}</span>
             </td>
             <td class="participantName">
-                <a ng-if="!(entry.name.length>0)" ng-click="changeName(entry.phoneNumber, entry.name)">({{'PARTICIPANTS.ENTER_NAME' | translate}})</a>
+                <a ng-if="!(entry.name.length>0)" ng-click="changeName(entry.phoneNumber, entry.name)">(<span translate="PARTICIPANTS.ENTER_NAME"></span>)</a>
                 {{entry.name}}
             </td>
             <td class="participantHistory">{{entry.firstCall | date:'HH:mm'}}</td>

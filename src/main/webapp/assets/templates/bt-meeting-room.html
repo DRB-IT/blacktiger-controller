@@ -20,17 +20,17 @@
 <table class="table table-striped table-hover table-condensed participantsTable">
     <thead>
         <tr>
-            <th width="160px"><span>{{'REPORT.NUMBER' | translate}}</span></th>
-            <th><span>{{'REPORT.NAME' | translate}}</span></th>
-            <th width="70px"><span>{{'REPORT.CALLS' | translate}}</span></th>
-            <th width="70px"><span>{{'REPORT.MINUTES' | translate}}</span></th>
+            <th width="160px"><span translate="REPORT.NUMBER"></span></th>
+            <th><span translate="REPORT.NAME"></span></th>
+            <th width="70px"><span translate="REPORT.CALLS"></span></th>
+            <th width="70px"><span translate="REPORT.MINUTES"></span></th>
             <th width="100px"></th>
         </tr>
     </thead>
     <tbody>
         
         <tr ng-if="!((room.participants|filter:{host:false}).length>0)">
-            <td colspan="5">{{'PARTICIPANTS.INFO.NO_PARTICIPANTS' | translate}}</td>
+            <td colspan="5" translate="PARTICIPANTS.INFO.NO_PARTICIPANTS"></td>
         </tr>
         
         <tr ng-repeat="participant in room.participants | filter:{host:false}">
@@ -40,7 +40,7 @@
                 <span ng-if="participant.type==='Unknown'">{{participant.phoneNumber}}</span>
             </td>
             <td class="participantName">
-                <a ng-if="!(participant.name.length>0)" ng-click="changeName(participant.phoneNumber, participant.name)">({{'PARTICIPANTS.ENTER_NAME' | translate}})</a>
+                <a ng-if="!(participant.name.length>0)" ng-click="changeName(participant.phoneNumber, participant.name)">(<span translate="PARTICIPANTS.ENTER_NAME"></span>)</a>
                 {{participant.name}}
                 <a ng-if="!participant.muted" ng-click="muteParticipant(participant)" class="label label-warning" translate="PARTICIPANTS.INFO.UNMUTED"></a>
                 <a ng-if="participant.commentRequested" ng-click="muteParticipant(participant.channel, false)" class="label label-primary" bt-comment-request-highlight participant='participant'>{{'PARTICIPANTS.WANTS_TO_COMMENT' | translate}}</a>
