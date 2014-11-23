@@ -54,7 +54,55 @@ describe('Unit testing btMeeting', function() {
         expect(index).toBeGreaterThan(0);
     });
     
+    it('has info about participants when there are some in the room', function() {
+        var room = {
+            id:'H45-0000'
+        };
+        var participant = {
+            type: 'Sip',
+            callerId: 'L00000000',
+            phoneNumber: '4522334455',
+            name: 'John Doe',
+            channel: 'SIP__1234',
+            host:false
+        };
+        
+        $rootScope.$broadcast('PushEvent.ConferenceStart', room);
+        $rootScope.$broadcast('PushEvent.Join', room.id, participant);
+        
+        var element = $compile('<bt-meeting-room room="H45-0000"></bt-meeting-room>')($rootScope);
+        $rootScope.$digest();
+
+        var index = element.html().indexOf('PARTICIPANTS.INFO.NO_PARTICIPANTS')
+        expect(index).toBeLessThan(0);
+        
+        console.log(element.html());
+        var tbody = element.find('tbody');
+        var tds = tbody.find('td');
+        var number = tds[0].textContent.trim();
+        var name = tds[1].textContent.trim()
+        var calls = parseInt(tds[2].textContent.trim());
+        var minutes = parseInt(tds[3].textContent.trim());
+        
+        expect(number).toEqual("+45 22 33 44 55");
+        expect(name.indexOf("John Doe")).toBe(0);
+        expect(calls).toEqual(1);
+        expect(minutes).toEqual(0);
+    });
+    
     it('has room in scope when conference has started before directive is initialized', function() {
+        var room = {
+            id:'H45-0000'
+        };
+        $rootScope.$broadcast('PushEvent.ConferenceStart', room);
+        
+        var element = $compile('<bt-meeting-room room="H45-0000"></bt-meeting-room>')($rootScope);
+        $rootScope.$digest();
+        var scope = element.isolateScope();
+        expect(scope.room).toEqual(room);
+    });
+    
+    it('can get total number of minutes for a participant', function() {
         var room = {
             id:'H45-0000'
         };
@@ -70,12 +118,23 @@ describe('Unit testing btMeeting', function() {
         var room = {
             id:'H45-0000'
         };
+        var participant = {
+            type: 'Sip',
+            callerId: 'L00000000',
+            phoneNumber: '4522334455',
+            name: 'John Doe',
+            channel: 'SIP__1234',
+            host:false
+        };
+        
+        $rootScope.$broadcast('PushEvent.ConferenceStart', room);
+        $rootScope.$broadcast('PushEvent.Join', room.id, participant);
+        
         var element = $compile('<bt-meeting-room room="H45-0000"></bt-meeting-room>')($rootScope);
         $rootScope.$digest();
         var scope = element.isolateScope();
         
-        $rootScope.$broadcast('PushEvent.ConferenceStart', room);
-        expect(scope.room).toEqual(room);
+        expect(scope.getTotalDuration(participant)).toBeGreaterThan(0);
     });
     
     

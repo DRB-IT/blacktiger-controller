@@ -6,19 +6,19 @@
     <thead>
         <tr>
             <th width="160px">
-                <span class="sortable" ng-click="predicate = 'phoneNumber'; reverse=!reverse" translate="REPORT.NUMBER"></span>
+                <span class="sortable" ng-class="{'sorting':predicate==='phoneNumber'}" ng-click="sortBy('phoneNumber')" translate="REPORT.NUMBER"></span>
             </th>
             <th>
-                <span class="sortable" ng-click="predicate = 'name'; reverse=!reverse" translate="REPORT.NAME"></span>
+                <span class="sortable" ng-class="{'sorting':predicate==='name'}" ng-click="sortBy('name')" translate="REPORT.NAME"></span>
             </th>
             <th width="120px">
-                <span class="sortable sorting" ng-click="predicate = 'firstCallTimestamp'; reverse=!reverse" translate="REPORT.FIRST_CALL"></span>
+                <span class="sortable" ng-class="{'sorting':predicate==='firstCall'}" ng-click="sortBy('firstCall')" translate="REPORT.FIRST_CALL"></span>
             </th>
             <th width="70px">
-                <span class="sortable" ng-click="predicate = 'numberOfCalls'; reverse=!reverse" translate="REPORT.CALLS"></span>
+                <span class="sortable" ng-class="{'sorting':predicate==='calls.length'}" ng-click="sortBy('calls.length')" translate="REPORT.CALLS"></span>
             </th>
             <th width="70px">
-                <span class="sortable" ng-click="predicate = 'totalDuration'; reverse=!reverse" translate="REPORT.MINUTES"></span>
+                <span class="sortable" ng-class="{'sorting':predicate==='totalDuration'}" ng-click="sortBy('totalDuration')" translate="REPORT.MINUTES"></span>
             </th>
             <th width="100px"></th>
         </tr>

@@ -49,7 +49,7 @@
                 {{noOfCallsForCallerId(participant.callerId)}}
             </td>
             <td class="participantHistory">
-                <bt-duration since="participant.dateJoined"></bt-duration>
+                {{getTotalDuration(participant) / 60000 | number : 0}}
             </td>
             <td class="participantOptions">
                 <button ng-click="changeName(participant.phoneNumber, participant.name)" title="{{'PARTICIPANTS.EDIT' | translate}}">

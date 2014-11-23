@@ -682,6 +682,19 @@ function HistorySvc($rootScope, $cookieStore, blacktiger, $log) {
     var historyCookieName = 'meetingHistory-' + blacktiger.getInstanceId();
     var history = $cookieStore.get(historyCookieName);
 
+    var totalDurationForEntry = function(entry) {
+        var duration = 0;
+        var now = new Date();
+        angular.forEach(entry.calls, function (call) {
+            if (call.end !== null) {
+                duration += call.end - call.start;
+            } else {
+                duration += now.getTime() - call.start;
+            }
+        });
+        return duration;
+    };
+    
     var fireUpdated = function() {
         $rootScope.$broadcast('History.Updated');  
     };
@@ -746,7 +759,8 @@ function HistorySvc($rootScope, $cookieStore, blacktiger, $log) {
                 name: participant.name,
                 firstCall: new Date().getTime(),
                 calls: [],
-                channel: participant.channel
+                channel: participant.channel,
+                totalDuration: 0
             };
             entries[key] = entry;
         } else {
@@ -791,6 +805,8 @@ function HistorySvc($rootScope, $cookieStore, blacktiger, $log) {
                     }
                 } 
                 break;
+                
+                entry.totalDuration = totalDurationForEntry(entry);
             }
         }
         
@@ -814,6 +830,10 @@ function HistorySvc($rootScope, $cookieStore, blacktiger, $log) {
     };
     
     var doFind = function(room, callerId, active) {
+        if(room && !angular.isString(room)) {
+            throw 'Room must be specified as String.';
+        }
+        
         var array = [], key, entries, entry, _active, i, call, accepted, _room;
         $log.debug("Finding entries [room=" + room + ";callerId=" + callerId + ";active=" + active + "]")
         for(_room in history) {
@@ -858,23 +878,16 @@ function HistorySvc($rootScope, $cookieStore, blacktiger, $log) {
 
     return {
         getTotalDurationByRoomAndCallerId: function(room, callerId) {
-            var duration = 0, now, entries = doFind(room, callerId);
+            var duration = 0, now, entries = doFind(angular.isObject(room) ? room.id : room, callerId);
             if(entries && entries.length>0) {
-                now = new Date();
-                angular.forEach(entries[0].calls, function (call) {
-                    if (call.end !== null) {
-                        duration += call.end - call.start;
-                    } else {
-                        duration += now.getTime() - call.start;
-                    }
-                });
+                duration = totalDurationForEntry(entries[0]);
             } else {
                 $log.debug("HistorySvc.getTotalDurationByRoomAndCallerId: No entry found [room="+room+";callerId="+callerId+"]");
             }
             return duration;
         },
         findOneByRoomAndCallerId: function (room, callerId) {
-            var entries = doFind(room, callerId);
+            var entries = doFind(angular.isObject(room) ? room.id : room, callerId);
             if(entries.length === 0) {
                 return null;
             } else {
@@ -888,13 +901,13 @@ function HistorySvc($rootScope, $cookieStore, blacktiger, $log) {
             return doFind();
         },
         findAllByRoom: function(room) {
-            return doFind(room);
+            return doFind(angular.isObject(room) ? room.id : room);
         },
         findAllByActive: function (active) {
             return doFind(undefined, undefined, active);
         },
         findAllByRoomAndActive: function(room, active) {
-            return doFind(room, undefined, active);
+            return doFind(angular.isObject(room) ? room.id : room, undefined, active);
         },
         getCookieName: function() {
             return historyCookieName;

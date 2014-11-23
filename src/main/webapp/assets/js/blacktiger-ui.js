@@ -202,6 +202,14 @@ function MeetingRoomDirective(MeetingSvc, HistorySvc, $modal, PhoneBookSvc, $log
                     }
                 }
             };
+            
+            scope.getTotalDuration = function (participant) {
+                if(scope.room) {
+                    return HistorySvc.getTotalDurationByRoomAndCallerId(scope.room.id, participant.callerId);
+                } else {
+                    return 0;
+                }
+            };
 
             scope.$watch('roomNumber', scope.refresh);
             scope.$on('Meeting.Start', scope.refresh);
@@ -223,6 +231,8 @@ function HistoryDirective(HistorySvc, PhoneBookSvc, $modal, $log) {
         },
         link: function (scope, elements, attrs) {
             scope.history = [];
+            scope.reverse = false;
+            scope.predicate = 'totalDuration';
             
             scope.changeName = function (phoneNumber, currentName) {
                 var modalInstance = $modal.open({
@@ -244,7 +254,11 @@ function HistoryDirective(HistorySvc, PhoneBookSvc, $modal, $log) {
             };
 
             scope.getTotalDuration = function (entry) {
-                return HistorySvc.getTotalDurationByRoomAndCallerId(scope.room, entry.callerId);
+                if(scope.room) {
+                    return HistorySvc.getTotalDurationByRoomAndCallerId(scope.room.id, entry.callerId);
+                } else {
+                    return 0;
+                }
             };
 
             scope.noOfCallsForCallerId = function (callerId) {
@@ -266,6 +280,15 @@ function HistoryDirective(HistorySvc, PhoneBookSvc, $modal, $log) {
                     if(!angular.isArray(scope.history)) {
                         scope.history = [];
                     }
+                }
+            };
+            
+            scope.sortBy = function(predicate) {
+                if(scope.predicate === predicate) {
+                    scope.reverse = !scope.reverse;
+                } else {
+                    scope.predicate = predicate;
+                    scope.reverse = false;
                 }
             };
 
