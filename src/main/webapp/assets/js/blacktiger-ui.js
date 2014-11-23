@@ -231,7 +231,7 @@ function HistoryDirective(HistorySvc, PhoneBookSvc, $modal, $log) {
         },
         link: function (scope, elements, attrs) {
             scope.history = [];
-            scope.reverse = false;
+            scope.reverse = true;
             scope.predicate = 'totalDuration';
             
             scope.changeName = function (phoneNumber, currentName) {
@@ -252,7 +252,7 @@ function HistoryDirective(HistorySvc, PhoneBookSvc, $modal, $log) {
                     PhoneBookSvc.updateEntry(phoneNumber, newName);
                 });
             };
-
+            
             scope.getTotalDuration = function (entry) {
                 if(scope.room) {
                     return HistorySvc.getTotalDurationByRoomAndCallerId(scope.room.id, entry.callerId);
@@ -280,7 +280,14 @@ function HistoryDirective(HistorySvc, PhoneBookSvc, $modal, $log) {
                     if(!angular.isArray(scope.history)) {
                         scope.history = [];
                     }
+                    scope.decorate();
                 }
+            };
+            
+            scope.decorate = function() {
+                angular.forEach(scope.history, function(entry) {
+                    entry.totalDuration = HistorySvc.getTotalDurationByRoomAndCallerId(scope.room, entry.callerId);
+                });
             };
             
             scope.sortBy = function(predicate) {
