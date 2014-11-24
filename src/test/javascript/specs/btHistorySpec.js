@@ -10,6 +10,28 @@ describe('Unit testing btHistory', function() {
       $rootScope = _$rootScope_;
     }));
 
+    afterEach(inject(function ($log) {
+        // dump log output in case of test failure
+        if (this.results().failedCount) {
+            var out = [];
+            angular.forEach(["log", "info", "warn", "error", "debug"], function (logLevel) {
+                var logs = $log[logLevel].logs;
+                if (!logs.length)
+                    return;
+                out.push(["*** " + logLevel + " ***"]);
+                out.push.apply(out, logs);
+                out.push(["*** /" + logLevel + " ***"]);
+            });
+            if (out.length) {
+                console.log("*** logs for: " + this.description + " ***");
+                angular.forEach(out, function (items) {
+                    console.log.apply(console, items);
+                });
+            }
+        }
+        $log.reset();
+    }));
+    
     it('creates an empty table when no data', function() {
         var element = $compile('<bt-history></bt-history>')($rootScope);
         $rootScope.$digest();
@@ -67,7 +89,7 @@ describe('Unit testing btHistory', function() {
         
     });
 
-    it('can handle 250 entries', function() {
+    it('can handle many entries', function() {
         var room = 'H45-0000';
         var participant = {
             type: 'Sip',
@@ -76,12 +98,13 @@ describe('Unit testing btHistory', function() {
             name: 'John Doe',
             channel: 'SIP__1234'
         };
+        var count = 250;
         
         var element = $compile('<bt-history room="H45-0000"></bt-history>')($rootScope);
         $rootScope.$digest();
         
         $rootScope.$broadcast('PushEvent.ConferenceStart', {id: room});
-        for(var i=0;i<250;i++) {
+        for(var i=0;i<count;i++) {
             participant = angular.copy(participant);
             participant.callerId = 'L000000' + i;
             participant.channel = 'SIP__' + i;
@@ -91,7 +114,7 @@ describe('Unit testing btHistory', function() {
         $rootScope.$digest();
         
         var tbody = element.find('tbody');
-        expect(tbody.children().length).toBe(250);
+        expect(tbody.children().length).toBe(count);
         
         
     });

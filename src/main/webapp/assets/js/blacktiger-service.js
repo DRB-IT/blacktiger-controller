@@ -835,12 +835,12 @@ function HistorySvc($rootScope, $cookieStore, blacktiger, $log) {
         }
         
         var array = [], key, entries, entry, _active, i, call, accepted, _room;
-        $log.debug("Finding entries [room=" + room + ";callerId=" + callerId + ";active=" + active + "]")
+        $log.debug("Finding entries [room=" + room + ";callerId=" + callerId + ";active=" + active + "]");
         for(_room in history) {
             if(!angular.isDefined(room) || room === _room) {
                 for(key in history[_room]) {
                     accepted = true;
-                    entry = angular.copy(history[_room][key]);
+                    entry = history[_room][key];
 
                     if(angular.isDefined(callerId)) {
                         accepted = (entry.callerId === callerId);
@@ -862,7 +862,7 @@ function HistorySvc($rootScope, $cookieStore, blacktiger, $log) {
                     }
 
                     if(accepted) {
-                        array.push(entry);
+                        array.push(angular.copy(entry));
                     }
                 }
             }

@@ -76,7 +76,6 @@ describe('Unit testing btMeeting', function() {
         var index = element.html().indexOf('PARTICIPANTS.INFO.NO_PARTICIPANTS')
         expect(index).toBeLessThan(0);
         
-        console.log(element.html());
         var tbody = element.find('tbody');
         var tds = tbody.find('td');
         var number = tds[0].textContent.trim();
