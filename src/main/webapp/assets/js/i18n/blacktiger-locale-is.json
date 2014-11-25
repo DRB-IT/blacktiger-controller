@@ -52,7 +52,7 @@
         "EDIT": "Skrifið nafn notanda",
         "PARTICIPANTS": "{noOfParticipants} {noOfParticipants, plural, one{notandi} other{notendur}}",
         "ABORT_TRANSMISSION": "Hættið við útsendingu",
-        "COMPLETED_CALLS": "{noOfCompletedCalls} {noOfCompletedCalls, plural, one{innhringingum lokið} other{innhringingum lokið}}",
+        "COMPLETED_CALLS": "{noOfCompletedCalls} {noOfCompletedCalls, plural, one{innhringingu lokið} other{innhringingum lokið}}",
         "WANTS_TO_COMMENT": "Mig langar að svara!",
         "ENTER_NAME": "Hver er þetta? Hringið og spyrjið, skrifið nafnið hér!"
     },
