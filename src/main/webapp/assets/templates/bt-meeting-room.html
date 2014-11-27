@@ -22,8 +22,8 @@
         <tr>
             <th width="160px"><span translate="REPORT.NUMBER"></span></th>
             <th><span translate="REPORT.NAME"></span></th>
-            <th width="70px"><span translate="REPORT.CALLS"></span></th>
-            <th width="70px"><span translate="REPORT.MINUTES"></span></th>
+            <th width="70px" style="text-align:right"><span translate="REPORT.CALLS"></span></th>
+            <th width="70px" style="text-align:right"><span translate="REPORT.MINUTES"></span></th>
             <th width="100px"></th>
         </tr>
     </thead>
@@ -45,10 +45,10 @@
                 <a ng-if="!participant.muted" ng-click="muteParticipant(participant)" class="label label-warning" translate="PARTICIPANTS.INFO.UNMUTED"></a>
                 <a ng-if="participant.commentRequested" ng-click="unmuteParticipant(participant)" class="label label-primary" bt-comment-request-highlight participant='participant'><span translate="PARTICIPANTS.WANTS_TO_COMMENT"></span></a>
             </td>
-            <td class="participantHistory">
+            <td class="participantHistory" style="text-align:right">
                 {{noOfCallsForCallerId(participant.callerId)}}
             </td>
-            <td class="participantHistory">
+            <td class="participantHistory" style="text-align:right">
                 {{getTotalDuration(participant) / 60000 | number : 0}}
             </td>
             <td class="participantOptions">

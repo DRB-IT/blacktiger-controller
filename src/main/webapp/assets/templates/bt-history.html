@@ -11,13 +11,13 @@
             <th>
                 <span class="sortable" ng-class="{'sorting':predicate==='name'}" ng-click="sortBy('name')" translate="REPORT.NAME"></span>
             </th>
-            <th width="120px">
+            <th width="120px" style="text-align:right">
                 <span class="sortable" ng-class="{'sorting':predicate==='firstCall'}" ng-click="sortBy('firstCall')" translate="REPORT.FIRST_CALL"></span>
             </th>
-            <th width="70px">
+            <th width="70px" style="text-align:right">
                 <span class="sortable" ng-class="{'sorting':predicate==='calls.length'}" ng-click="sortBy('calls.length')" translate="REPORT.CALLS"></span>
             </th>
-            <th width="70px">
+            <th width="70px" style="text-align:right">
                 <span class="sortable" ng-class="{'sorting':predicate==='totalDuration'}" ng-click="sortBy('totalDuration')" translate="REPORT.MINUTES"></span>
             </th>
             <th width="100px"></th>
@@ -37,9 +37,9 @@
                 <a ng-if="!(entry.name.length>0)" ng-click="changeName(entry.phoneNumber, entry.name)">(<span translate="PARTICIPANTS.ENTER_NAME"></span>)</a>
                 {{entry.name}}
             </td>
-            <td class="participantHistory">{{entry.firstCall | date:'HH:mm'}}</td>
-            <td class="participantHistory">{{entry.calls.length}}</td>
-            <td class="participantHistory">{{getTotalDuration(entry) / 60000 | number : 0}}</td>
+            <td class="participantHistory" style="text-align:right">{{entry.firstCall | date:'HH:mm'}}</td>
+            <td class="participantHistory" style="text-align:right">{{entry.calls.length}}</td>
+            <td class="participantHistory" style="text-align:right">{{getTotalDuration(entry) / 60000 | number : 0}}</td>
             <td class="participantOptions">
                 <button ng-click="changeName(entry.phoneNumber, entry.name)" title="{{'PARTICIPANTS.EDIT' | translate}}"><span class="glyphicon glyphicon-pencil"></span>
                 </button>
