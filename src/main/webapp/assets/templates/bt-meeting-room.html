@@ -43,7 +43,7 @@
                 <a ng-if="!(participant.name.length>0)" ng-click="changeName(participant.phoneNumber, participant.name)">(<span translate="PARTICIPANTS.ENTER_NAME"></span>)</a>
                 {{participant.name}}
                 <a ng-if="!participant.muted" ng-click="muteParticipant(participant)" class="label label-warning" translate="PARTICIPANTS.INFO.UNMUTED"></a>
-                <a ng-if="participant.commentRequested" ng-click="muteParticipant(participant.channel, false)" class="label label-primary" bt-comment-request-highlight participant='participant'><span translate="PARTICIPANTS.WANTS_TO_COMMENT"></span></a>
+                <a ng-if="participant.commentRequested" ng-click="unmuteParticipant(participant)" class="label label-primary" bt-comment-request-highlight participant='participant'><span translate="PARTICIPANTS.WANTS_TO_COMMENT"></span></a>
             </td>
             <td class="participantHistory">
                 {{noOfCallsForCallerId(participant.callerId)}}
