@@ -182,5 +182,19 @@ describe('Unit testing btMeeting', function() {
         expect(index).toBeGreaterThan(0);
     });
     
+    it('shows decent information event when room does not exist', function() {
+        var room = {
+            id:'H45-0000'
+        };
+        
+        var element = $compile('<bt-meeting-room room="H45-0000"></bt-meeting-room>')($rootScope);
+        $rootScope.$digest();
+        var scope = element.isolateScope();
+        
+        expect(scope.room).not.toBe(null);
+        expect(scope.room).not.toBe(undefined);
+        expect(scope.room.participants.length).toBe(0);
+    });
+    
 
 });

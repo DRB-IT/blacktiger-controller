@@ -519,6 +519,9 @@ function MeetingSvc($rootScope, PushEventSvc, ParticipantSvc, $log) {
             }
             return ids;
         },
+        hasRoom: function(id) {
+            return getRoomById(id) !== null;
+        },
         findRoom: function(id) {
             return getRoomById(id);
         },

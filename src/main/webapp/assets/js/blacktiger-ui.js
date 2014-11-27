@@ -193,12 +193,16 @@ function MeetingRoomDirective(MeetingSvc, HistorySvc, $modal, PhoneBookSvc, $log
 
             scope.refresh = function () {
                 $log.debug("Refreshing room [roomNo="+scope.roomNumber+"]");
-                if (angular.isString(scope.roomNumber)) {
+                if (angular.isString(scope.roomNumber) && MeetingSvc.hasRoom(scope.roomNumber)) {
                     scope.room = MeetingSvc.findRoom(scope.roomNumber);
                     if(!scope.room) {
                         $log.error("Specified room not found [roomNo="+scope.roomNumber+"]")
                     } else {
                         $log.debug("Room set [room="+scope.room+"]")
+                    }
+                } else {
+                    scope.room = {
+                        participants: []
                     }
                 }
             };
@@ -216,7 +220,7 @@ function MeetingRoomDirective(MeetingSvc, HistorySvc, $modal, PhoneBookSvc, $log
             scope.$on('Meeting.Join', scope.refresh);
             scope.$on('Meeting.Leave', scope.refresh);
             scope.$on('Meeting.Change', scope.refresh);
-            
+            scope.refresh();
         },
         templateUrl: 'assets/templates/bt-meeting-room.html'
     };
