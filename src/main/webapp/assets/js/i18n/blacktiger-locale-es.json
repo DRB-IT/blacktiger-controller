@@ -50,7 +50,7 @@
         "MUTE": "Silenciar micrófono de comentario",
         "KICK": "Colgar",
         "EDIT": "Editar nombre",
-        "PARTICIPANTS": "{noOfParticipants} {noOfParticipants, plural, one{oyentes} other{oyentes}}",
+        "PARTICIPANTS": "{noOfParticipants} {noOfParticipants, plural, one{oyente} other{oyentes}}",
         "ABORT_TRANSMISSION": "Canclear transmisión",
         "COMPLETED_CALLS": "{noOfCompletedCalls} {noOfCompletedCalls, plural, one{llamada completada} other{llamadas completadas}}",
         "WANTS_TO_COMMENT": "¡Quisiera comentar!",

@@ -52,7 +52,7 @@
         "EDIT": "Edit name",
         "PARTICIPANTS": "{noOfParticipants} {noOfParticipants, plural, one{listener} other{listeners}}",
         "ABORT_TRANSMISSION": "Abort transmission",
-        "COMPLETED_CALLS": "{noOfCompletedCalls} completed {noOfCompletedCalls, plural, one{call} other{call}}",
+        "COMPLETED_CALLS": "{noOfCompletedCalls} completed {noOfCompletedCalls, plural, one{call} other{calls}}",
         "WANTS_TO_COMMENT": "I would like to comment!",
         "ENTER_NAME": "Who is this? Call and ask, write name here!"
     },
