@@ -97,7 +97,7 @@
             "CONTACT_LINK": "Mer information",
             "FIND_HELP": "Hjälp",
             "FIND_HELP_DESC": "Klicka på <span class=\"glyphicon glyphicon-question-sign\"></span> högst upp på sidan om du behöver hjälp, eller kontakta den som är tekniskt ansvarig.",
-            "CAN_DISCONNECT": "Calls can be disconnected from this computer"
+            "CAN_DISCONNECT": "Samtal kan avbrytas från den här datorn"
         },
         "CREATE_SIP_ACCOUNT": {
             "TITLE": "Skapa en datauppkopplad lyssnare",
