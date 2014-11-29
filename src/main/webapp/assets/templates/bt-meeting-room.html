@@ -10,11 +10,15 @@
 </div>
 <h3>
     <span translate="PARTICIPANTS.PARTICIPANTS" translate-values="{noOfParticipants:(room.participants|filter:{host:false}).length}" translate-interpolation="messageformat"></span>
-    <small class="pull-right" ng-repeat="participant in room.participants | filter:{host:true}" ng-animate=" 'animate' ">{{participant.name ? participant.name : 'No name'}} &bull; 
+    <small class="pull-right" ng-repeat="participant in room.participants | filter:{host:true}" ng-animate=" 'animate' ">{{participant.name ? participant.name : 'No name'}}  
         <!-- HOST INFO -->
-        <a href="#" class="text-danger" ng-click="kickParticipant(participant.channel)" title="{{'PARTICIPANTS.ABORT_TRANSMISSION' | translate}}"> 
-            <span translate="PARTICIPANTS.ABORT_TRANSMISSION"></span> <span class="glyphicon glyphicon-off"></span>
-        </a>
+        <span ng-if="canDisconnectCalls">
+            &bull;
+            <!-- DISCONNECT HOST LINK -->
+            <a class="text-danger" ng-click="kickParticipant(participant.channel)" title="{{'PARTICIPANTS.ABORT_TRANSMISSION' | translate}}"> 
+                <span translate="PARTICIPANTS.ABORT_TRANSMISSION"></span> <span class="glyphicon glyphicon-off"></span>
+            </a>
+        </span>
     </small>
 </h3>
 <table class="table table-striped table-hover table-condensed participantsTable">
@@ -61,7 +65,8 @@
                 <button ng-click="muteParticipant(participant)" ng-if="isHostInConference() && !participant.muted" class="active" title="{{'PARTICIPANTS.MUTE' | translate}}">
                     <span class="glyphicon glyphicon-comment"></span>
                 </button>
-                <button ng-click="kickParticipant(participant)" title="{{'PARTICIPANTS.KICK' | translate}}">
+                <button ng-if="canDisconnectCalls" ng-click="kickParticipant(participant)" title="{{'PARTICIPANTS.KICK' | translate}}">
+                    <!-- DISCONNECT PARTICIPANT LINK -->
                     <span class="glyphicon glyphicon-remove"></span>
                 </button>
             </td>

@@ -441,11 +441,17 @@ function ContactCtrl($scope, RoomSvc) {
     };
 }
 
-function SettingsCtrl($scope, LoginSvc) {
+function SettingsCtrl($scope, LoginSvc, localStorageService) {
 
+    $scope.canDisconnectCalls = localStorageService.get('CanDisconnectCalls');
     $scope.logout = function () {
         LoginSvc.deauthenticate();
     };
+    
+    $scope.$watch('canDisconnectCalls', function() {
+        localStorageService.add('CanDisconnectCalls', $scope.canDisconnectCalls);
+    });
+    
 }
 
 function RealtimeCtrl($scope, SystemSvc, MeetingSvc, $timeout) {

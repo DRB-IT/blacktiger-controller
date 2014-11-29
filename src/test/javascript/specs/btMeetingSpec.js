@@ -3,17 +3,19 @@ describe('Unit testing btMeeting', function() {
     var $rootScope;
     var meetingSvc;
     var historySvc;
+    var localStorageService;
     
     beforeEach(module('blacktiger-templates'));
     beforeEach(module('blacktiger-ui', function($provide) {
         $provide.constant('CONFIG', {});
     }));
 
-    beforeEach(inject(function(_$compile_, _$rootScope_, _MeetingSvc_, _HistorySvc_){
+    beforeEach(inject(function(_$compile_, _$rootScope_, _MeetingSvc_, _HistorySvc_, _localStorageService_){
       $compile = _$compile_;
       $rootScope = _$rootScope_;
       meetingSvc = _MeetingSvc_;
       historySvc = _HistorySvc_;
+      localStorageService = _localStorageService_;
     }));
 
     afterEach(inject(function ($log) {
@@ -180,6 +182,102 @@ describe('Unit testing btMeeting', function() {
         $rootScope.$digest();
         var index = element.html().indexOf('<!-- HOST INFO -->')
         expect(index).toBeGreaterThan(0);
+    });
+    
+    it('shows host disconnect link when devices is allowed to disconnect calls', function() {
+        var room = {
+            id:'H45-0000'
+        };
+        var participant = {
+            type: 'Sip',
+            callerId: 'L00000000',
+            phoneNumber: '4522334455',
+            name: 'John Doe',
+            channel: 'SIP__1234',
+            host:true
+        };
+        
+        localStorageService.add("CanDisconnectCalls", "True");
+        
+        $rootScope.$broadcast('PushEvent.ConferenceStart', room);
+        $rootScope.$broadcast('PushEvent.Join', room.id, participant);
+        
+        var element = $compile('<bt-meeting-room room="H45-0000"></bt-meeting-room>')($rootScope);
+        $rootScope.$digest();
+        var index = element.html().indexOf('<!-- DISCONNECT HOST LINK -->')
+        expect(index).toBeGreaterThan(0);
+    });
+    
+    it('does not show host disconnect link when devices is NOT allowed to disconnect calls', function() {
+        var room = {
+            id:'H45-0000'
+        };
+        var participant = {
+            type: 'Sip',
+            callerId: 'L00000000',
+            phoneNumber: '4522334455',
+            name: 'John Doe',
+            channel: 'SIP__1234',
+            host:true
+        };
+        
+        localStorageService.add("CanDisconnectCalls", "False");
+        
+        $rootScope.$broadcast('PushEvent.ConferenceStart', room);
+        $rootScope.$broadcast('PushEvent.Join', room.id, participant);
+        
+        var element = $compile('<bt-meeting-room room="H45-0000"></bt-meeting-room>')($rootScope);
+        $rootScope.$digest();
+        var index = element.html().indexOf('<!-- DISCONNECT HOST LINK -->')
+        expect(index).toBeLessThan(0);
+    });
+    
+    it('shows disconnect participant link when devices is allowed to disconnect calls', function() {
+        var room = {
+            id:'H45-0000'
+        };
+        var participant = {
+            type: 'Sip',
+            callerId: 'L00000000',
+            phoneNumber: '4522334455',
+            name: 'John Doe',
+            channel: 'SIP__1234',
+            host:false
+        };
+        
+        localStorageService.add("CanDisconnectCalls", "True");
+        
+        $rootScope.$broadcast('PushEvent.ConferenceStart', room);
+        $rootScope.$broadcast('PushEvent.Join', room.id, participant);
+        
+        var element = $compile('<bt-meeting-room room="H45-0000"></bt-meeting-room>')($rootScope);
+        $rootScope.$digest();
+        var index = element.html().indexOf('<!-- DISCONNECT PARTICIPANT LINK -->')
+        expect(index).toBeGreaterThan(0);
+    });
+    
+    it('does NOT show disconnect participant link when devices is NOT allowed to disconnect calls', function() {
+        var room = {
+            id:'H45-0000'
+        };
+        var participant = {
+            type: 'Sip',
+            callerId: 'L00000000',
+            phoneNumber: '4522334455',
+            name: 'John Doe',
+            channel: 'SIP__1234',
+            host:false
+        };
+        
+        localStorageService.add("CanDisconnectCalls", "False");
+        
+        $rootScope.$broadcast('PushEvent.ConferenceStart', room);
+        $rootScope.$broadcast('PushEvent.Join', room.id, participant);
+        
+        var element = $compile('<bt-meeting-room room="H45-0000"></bt-meeting-room>')($rootScope);
+        $rootScope.$digest();
+        var index = element.html().indexOf('<!-- DISCONNECT PARTICIPANT LINK -->')
+        expect(index).toBeLessThan(0);
     });
     
     it('shows decent information event when room does not exist', function() {

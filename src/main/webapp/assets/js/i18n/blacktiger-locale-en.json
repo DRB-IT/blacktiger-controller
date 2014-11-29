@@ -96,7 +96,8 @@
             "TECHNICALLY_RESPONSIBLE": "The technically responsible for this Kingdom Hall is <b>{{name}}</b>",
             "CONTACT_LINK": "More information",
             "FIND_HELP": "Get help",
-            "FIND_HELP_DESC": "Click at <span class=\"glyphicon glyphicon-question-sign\"></span> near the top of this page if you need help, or contact the technical responsible."
+            "FIND_HELP_DESC": "Click at <span class=\"glyphicon glyphicon-question-sign\"></span> near the top of this page if you need help, or contact the technical responsible.",
+            "CAN_DISCONNECT": "Calls can be disconnected from this computer"
         },
         "CREATE_SIP_ACCOUNT": {
             "TITLE": "Create computer listener",

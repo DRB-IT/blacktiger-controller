@@ -96,7 +96,8 @@
             "TECHNICALLY_RESPONSIBLE": "Den tekniskt ansvarige för den här Rikets salen är <b>{{name}}</b>",
             "CONTACT_LINK": "Mer information",
             "FIND_HELP": "Hjälp",
-            "FIND_HELP_DESC": "Klicka på <span class=\"glyphicon glyphicon-question-sign\"></span> högst upp på sidan om du behöver hjälp, eller kontakta den som är tekniskt ansvarig."
+            "FIND_HELP_DESC": "Klicka på <span class=\"glyphicon glyphicon-question-sign\"></span> högst upp på sidan om du behöver hjälp, eller kontakta den som är tekniskt ansvarig.",
+            "CAN_DISCONNECT": "Calls can be disconnected from this computer"
         },
         "CREATE_SIP_ACCOUNT": {
             "TITLE": "Skapa en datauppkopplad lyssnare",

@@ -96,7 +96,8 @@
             "TECHNICALLY_RESPONSIBLE": "Teknisk ansvarlig for denne Rikets salen er <b>{{name}}</b>",
             "CONTACT_LINK": "Mer informasjon",
             "FIND_HELP": "Få hjelp",
-            "FIND_HELP_DESC": "Klikk på <span class=\"glyphicon glyphicon-question-sign\"></span> på toppen av siden hvis du trenger hjelp, eller ta kontakt med teknisk ansvarlig."
+            "FIND_HELP_DESC": "Klikk på <span class=\"glyphicon glyphicon-question-sign\"></span> på toppen av siden hvis du trenger hjelp, eller ta kontakt med teknisk ansvarlig.",
+            "CAN_DISCONNECT": "Calls can be disconnected from this computer"
         },
         "CREATE_SIP_ACCOUNT": {
             "TITLE": "Opprett datatilkoblet lytter",

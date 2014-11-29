@@ -96,7 +96,8 @@
             "TECHNICALLY_RESPONSIBLE": "Den teknisk ansvarlige for denne sal er <b>{{name}}</b>",
             "CONTACT_LINK": "Se kontaktinformation",
             "FIND_HELP": "Find hjælp",
-            "FIND_HELP_DESC": "Klik på <span class=\"glyphicon glyphicon-question-sign\"></span> i toppen af siden hvis du har brug for hjælp."
+            "FIND_HELP_DESC": "Klik på <span class=\"glyphicon glyphicon-question-sign\"></span> i toppen af siden hvis du har brug for hjælp.",
+            "CAN_DISCONNECT": "Opkald kan afbrydes fra denne computer"
         },
         "CREATE_SIP_ACCOUNT": {
             "TITLE": "Opret computer-lytter",

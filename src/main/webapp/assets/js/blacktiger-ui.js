@@ -123,7 +123,7 @@ function DurationDirective() {
     };
 }
 
-function MeetingRoomDirective(MeetingSvc, HistorySvc, $modal, PhoneBookSvc, $log) {
+function MeetingRoomDirective(MeetingSvc, HistorySvc, $modal, PhoneBookSvc, $log, localStorageService) {
     return {
         restrict: 'E',
         scope: {
@@ -131,6 +131,8 @@ function MeetingRoomDirective(MeetingSvc, HistorySvc, $modal, PhoneBookSvc, $log
         },
         link: function (scope, elements, attrs) {
             $log.debug("Initializing MeetingRoomDirective.");
+            
+            scope.canDisconnectCalls = localStorageService.get("CanDisconnectCalls") === 'True';
             scope.isHostInConference = function () {
                 var value = false;
                 if(scope.room && angular.isArray(scope.room.participants)) {
@@ -225,7 +227,7 @@ function MeetingRoomDirective(MeetingSvc, HistorySvc, $modal, PhoneBookSvc, $log
         templateUrl: 'assets/templates/bt-meeting-room.html'
     };
 }
-MeetingRoomDirective.$inject = ['MeetingSvc', 'HistorySvc', '$modal', 'PhoneBookSvc', '$log'];
+MeetingRoomDirective.$inject = ['MeetingSvc', 'HistorySvc', '$modal', 'PhoneBookSvc', '$log', 'localStorageService'];
 
 function HistoryDirective(HistorySvc, PhoneBookSvc, $modal, $log) {
     return {
