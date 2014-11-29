@@ -367,7 +367,7 @@ function RequestPasswordCtrl($scope, $http, blacktiger, $filter, $log, $rootScop
 function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger, $translate, $rootScope) {
     $scope.user = {};
     $scope.mailText = '';
-    $scope.innerMailTextPattern = /.*/;
+    $scope.innerMailTextPattern = new RegExp("/.*/");
     $scope.mailTextPattern = (function () {
         return {
             test: function (value) {
@@ -407,7 +407,7 @@ function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger, $translate, $rootS
             pattern, i;
 
         if (noOfCharsToPull === 0) {
-            $scope.innerMailTextPattern = '/.*/';
+            $scope.innerMailTextPattern = new RegExp('/.*/');
         } else {
             number = number.substr(number.length - noOfCharsToPull, number.length);
             pattern = "^((?!(" + number.charAt(0) + ")";
