@@ -22,9 +22,9 @@ body {background-color: #f3f3f3;}
 .menu-bar li.active a{color: #fff; background-color: #191919;}
 #ContentContainer { padding: 30px 0px; }
 #FooterContainer { background-color: #eeeeee; padding-top: 5px; padding-bottom: 5px;}
-.megaalert{position: fixed; top: 0px; left: 0px; background-color: #428bca; height: 50px; width: 100%; color: #ffffff; box-shadow: 0px 0px 10px 0px #333333;-webkit-transition: all 0.3s ease-in;-moz-transition: all 0.3s ease-in; transition: all 0.3s ease-in;}
+.megaalert{opacity:0;position: fixed; top: -50px; left: 0px; background-color: #428bca; height: 50px; width: 100%; color: #ffffff; box-shadow: 0px 0px 10px 0px #333333;-webkit-transition: all 0.3s ease-in;-moz-transition: all 0.3s ease-in; transition: all 0.3s ease-in;}
 .megaalert-inner{padding: 6px 15px; font-size: 25px;}
-.megaalert-hidden { -webkit-transform: translateY(-50px); transform:translateY(-50px); opacity:0;}
+.megaalert-shown { -webkit-transform: translateY(50px); transform:translateY(50px); opacity:1;}
 .label{font-size: 90%;}
 .list-group a { cursor: pointer; }
 .no-selection {-webkit-user-select:none;user-select:none;-moz-user-select:none;}
