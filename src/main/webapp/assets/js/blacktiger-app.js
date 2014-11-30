@@ -122,6 +122,12 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
 function ApplicationBoot(CONFIG, blacktiger, $location, LoginSvc, $rootScope, PushEventSvc, MeetingSvc, AutoCommentRequestCancelSvc, $log) {
     // The context object is a holder of information for the current session
     $rootScope.context = {};
+    $rootScope.context.hasContactInformation = function() {
+        var room = $rootScope.context.room;
+        return !(!room.contact.name || room.contact.name === '' ||
+            !room.contact.email || room.contact.email === '' ||
+            !room.contact.phoneNumber || room.contact.phoneNumber === '');
+    }
     
     if (CONFIG.serviceUrl) {
         blacktiger.setServiceUrl(CONFIG.serviceUrl);
@@ -159,9 +165,7 @@ function ApplicationBoot(CONFIG, blacktiger, $location, LoginSvc, $rootScope, Pu
     $rootScope.$on('MeetingSvc.Initialized', $rootScope.updateCurrentRoom);
 
     $rootScope.$watch('context.room', function (room) {
-        if (room && (!room.contact.name || room.contact.name === '' ||
-            !room.contact.email || room.contact.email === '' ||
-            !room.contact.phoneNumber || room.contact.phoneNumber === '')) {
+        if (room && !$rootScope.context.hasContactInformation()) {
             $location.path('/settings/contact');
         }
     });

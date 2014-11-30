@@ -54,7 +54,7 @@
     <body ng-cloak>
         <div class="container-fluid-header" ng-controller="MenuCtrl">
             <span class="brand"><img src="assets/img/tslogo50.png" alt="{{'SYSTEM.NAME' | translate }} logo" /><span translate="SYSTEM.NAME"></span></span>
-            <ul class="menu-bar">
+            <ul class="menu-bar" ng-if="context.hasContactInformation()">
                 <li data-ng-repeat="link in links | filterByRoles:currentUser.roles" data-ng-class="(isActiveLink(link) && 'active')">
                     <a href="{{ getUrl(link) }}" title="{{ link.name | translate }}" target="{{link.target ? link.target : '_self'}}"><span class="glyphicon glyphicon-{{link.icon}}"></span></a>
                 </li>
@@ -78,13 +78,13 @@
             </div>
             <div class="row" id="FooterContainer">
                 <div class="col-xs-9" ng-controller="RoomDisplayCtrl" >
-                    <small ng-if="context.room"><bt-room-info room="context.room" contact-link="#!/settings/contact"></bt-room-info></small>
+                    <small ng-if="context.room && context.hasContactInformation()"><bt-room-info room="context.room" contact-link="#!/settings/contact"></bt-room-info></small>
                 </div>
                 <div class="col-xs-3 text-right" title="logged in as {{currentUser.username}} with {{currentUser.roles}}">
                     <small class="text-muted" translate="SYSTEM.COPYRIGHTHOLDER"></small>
                 </div>
             </div>
         </div>
-        <bt-comment-alert></bt-comment-alert>
+    <bt-comment-alert></bt-comment-alert>
     </body>
 </html>
