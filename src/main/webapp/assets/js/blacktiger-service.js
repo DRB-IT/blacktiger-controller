@@ -414,6 +414,21 @@ function MeetingSvc($rootScope, PushEventSvc, ParticipantSvc, $log) {
         }
     };
     
+    var handleChange = function(event, roomNo, participant) {
+        var room = getRoomById(roomNo);
+        var existingParticipant = getParticipantFromRoomByChannel(room, participant.channel);
+        
+        if(existingParticipant !== null) {
+            existingParticipant.callerId = participant.callerId;
+            existingParticipant.channel = participant.channel;
+            existingParticipant.muted = participant.muted;
+            existingParticipant.phoneNumber = participant.phoneNumber;
+            existingParticipant.name = participant.name;
+            existingParticipant.type = participant.type;
+            existingParticipant.host = participant.host;
+        }
+    };
+    
     var handleLeave = function(event, roomNo, channel) {
         var room = getRoomById(roomNo), i;
         var participant = getParticipantFromRoomByChannel(room, channel);
@@ -481,6 +496,7 @@ function MeetingSvc($rootScope, PushEventSvc, ParticipantSvc, $log) {
     $rootScope.$on('PushEvent.ConferenceStart', handleConfStart);
     $rootScope.$on('PushEvent.ConferenceEnd', handleConfEnd);
     $rootScope.$on('PushEvent.Join', handleJoin);
+    $rootScope.$on('PushEvent.Change', handleChange);
     $rootScope.$on('PushEvent.Leave', handleLeave);
     $rootScope.$on('PushEvent.CommentRequest', handleCommentRequest);
     $rootScope.$on('PushEvent.CommentRequestCancel', handleCommentRequestCancel);
@@ -951,7 +967,8 @@ function PushEventSvc($rootScope, StompSvc, RoomSvc, blacktiger, $log, $q) {
                 $rootScope.$broadcast('PushEvent.ConferenceEnd', event.roomNo);
                 break;
             case 'Join':
-                $rootScope.$broadcast('PushEvent.Join', event.roomNo, event.participant);
+            case 'Change':
+                $rootScope.$broadcast('PushEvent.' + event.type, event.roomNo, event.participant);
                 break;
             case 'Leave':
             case 'CommentRequest':
