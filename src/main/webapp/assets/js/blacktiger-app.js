@@ -131,7 +131,6 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
             }
             return language;
         });
-        //$translateProvider.fallbackLanguage('en');
 
     }).run(ApplicationBoot)
     .filter('filterByRoles', filterByRoles)
