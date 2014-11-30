@@ -107,11 +107,31 @@ var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.t
             suffix: BLACKTIGER_VERSION ? '-' + BLACKTIGER_VERSION + '.json' : '.json'
         });
 
-        language = window.navigator.userLanguage || window.navigator.language;
-        langData = language.split("-");
         $translateProvider.addInterpolation('$translateMessageFormatInterpolation');
-        $translateProvider.preferredLanguage(langData[0]);
-        $translateProvider.fallbackLanguage('en');
+        $translateProvider.registerAvailableLanguageKeys(['en', 'da', 'es', 'no', 'sv', 'is', 'fo', 'kl'], {
+            'no*': 'no',
+            'nb*': 'no',
+            'nn*': 'no',
+            'da*': 'dk',
+            'es*': 'es',
+            'sv*': 'sv',
+            'is*': 'is',
+            'fo*': 'fo',
+            'kl*': 'kl',
+            '*': 'en'
+        });
+        $translateProvider.determinePreferredLanguage(function() {
+            var language;
+            if(navigator && navigator.languages) {
+                language = navigator.languages[0];
+            } else {
+                language = window.navigator.userLanguage || window.navigator.language;
+                language = language.split("-");
+                language = language[0];
+            }
+            return language;
+        });
+        //$translateProvider.fallbackLanguage('en');
 
     }).run(ApplicationBoot)
     .filter('filterByRoles', filterByRoles)
@@ -124,7 +144,7 @@ function ApplicationBoot(CONFIG, blacktiger, $location, LoginSvc, $rootScope, Pu
     $rootScope.context = {};
     $rootScope.context.hasContactInformation = function() {
         var room = $rootScope.context.room;
-        return !(!room.contact.name || room.contact.name === '' ||
+        return room && !(!room.contact.name || room.contact.name === '' ||
             !room.contact.email || room.contact.email === '' ||
             !room.contact.phoneNumber || room.contact.phoneNumber === '');
     }
