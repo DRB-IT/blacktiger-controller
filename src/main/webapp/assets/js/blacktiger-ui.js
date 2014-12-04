@@ -14,6 +14,49 @@ function ModalEditNameCtrl($scope, $modalInstance, phoneNumber, currentName) {
     };
 }
 
+function CapitalizeDirective($parse) {
+
+    return {
+        require: 'ngModel',
+        link: function (scope, element, attrs, modelCtrl) {
+            var capitalize = function (inputValue) {
+                var i, words, word, capitalized = '';
+                if (inputValue === undefined) {
+                    inputValue = '';
+                }
+                
+                words = inputValue.split(' ');
+                for(i=0;i<words.length;i++) {
+                    word = words[i];
+                    if(word !== '') {
+                        if(i>0) {
+                            capitalized += ' ';
+                        }
+                        capitalized += word.charAt(0).toUpperCase() + word.substring(1);
+                    }
+                }
+                
+                if (capitalized !== inputValue) {
+                    modelCtrl.$setViewValue(capitalized);
+                    modelCtrl.$render();
+                }
+                return capitalized;
+            }
+            
+            modelCtrl.$parsers.push(capitalize);
+            
+            element.on('focus', function() {
+                var initialEdit = element.val() === '';
+                if(initialEdit) {
+                    modelCtrl.$parsers.push(capitalize);
+                } else {
+                    modelCtrl.$parsers = [];
+                }
+            });
+        }
+    };
+}
+
 function NumberIconDirective() {
     return {
         restrict: 'E',
@@ -104,7 +147,7 @@ function DurationDirective() {
             }
 
             $scope.updateDuration = function () {
-                if(angular.isDate($scope.since)) {
+                if (angular.isDate($scope.since)) {
                     $scope.duration = Math.max((new Date().getTime() - $scope.since.getTime()) / 60000, 0);
                 } else {
                     $scope.duration = 0;
@@ -131,11 +174,11 @@ function MeetingRoomDirective(MeetingSvc, HistorySvc, $modal, PhoneBookSvc, $log
         },
         link: function (scope, elements, attrs) {
             $log.debug("Initializing MeetingRoomDirective.");
-            
+
             scope.canDisconnectCalls = localStorageService.get("CanDisconnectCalls") === 'True';
             scope.isHostInConference = function () {
                 var value = false;
-                if(scope.room && angular.isArray(scope.room.participants)) {
+                if (scope.room && angular.isArray(scope.room.participants)) {
                     angular.forEach(scope.room.participants, function (p) {
                         if (p.host === true) {
                             value = true;
@@ -144,10 +187,10 @@ function MeetingRoomDirective(MeetingSvc, HistorySvc, $modal, PhoneBookSvc, $log
                 }
                 return value;
             };
-            
-            scope.noOfCallsForCallerId = function(callerId) {
+
+            scope.noOfCallsForCallerId = function (callerId) {
                 var entry = HistorySvc.findOneByRoomAndCallerId(scope.roomNumber, callerId);
-                if(entry) {
+                if (entry) {
                     return entry.calls.length;
                 } else {
                     return 0;
@@ -161,19 +204,19 @@ function MeetingRoomDirective(MeetingSvc, HistorySvc, $modal, PhoneBookSvc, $log
             scope.muteParticipant = function (participant) {
                 MeetingSvc.muteByRoomAndChannel(scope.roomNumber, participant);
             };
-            
+
             scope.unmuteParticipant = function (participant) {
                 MeetingSvc.unmuteByRoomAndChannel(scope.roomNumber, participant);
             };
 
-            scope.getNoOfParticipants = function() {
-                if(!angular.isObject(scope.room) || !angular.isArray(scope.room.participants)) {
+            scope.getNoOfParticipants = function () {
+                if (!angular.isObject(scope.room) || !angular.isArray(scope.room.participants)) {
                     return 0;
                 } else {
                     return scope.room.participants.length;
                 }
             };
-            
+
             scope.changeName = function (phoneNumber, currentName) {
                 var modalInstance = $modal.open({
                     templateUrl: 'assets/templates/modal-edit-name.html',
@@ -194,13 +237,13 @@ function MeetingRoomDirective(MeetingSvc, HistorySvc, $modal, PhoneBookSvc, $log
             };
 
             scope.refresh = function () {
-                $log.debug("Refreshing room [roomNo="+scope.roomNumber+"]");
+                $log.debug("Refreshing room [roomNo=" + scope.roomNumber + "]");
                 if (angular.isString(scope.roomNumber) && MeetingSvc.hasRoom(scope.roomNumber)) {
                     scope.room = MeetingSvc.findRoom(scope.roomNumber);
-                    if(!scope.room) {
-                        $log.error("Specified room not found [roomNo="+scope.roomNumber+"]")
+                    if (!scope.room) {
+                        $log.error("Specified room not found [roomNo=" + scope.roomNumber + "]")
                     } else {
-                        $log.debug("Room set [room="+scope.room+"]")
+                        $log.debug("Room set [room=" + scope.room + "]")
                     }
                 } else {
                     scope.room = {
@@ -208,9 +251,9 @@ function MeetingRoomDirective(MeetingSvc, HistorySvc, $modal, PhoneBookSvc, $log
                     }
                 }
             };
-            
+
             scope.getTotalDuration = function (participant) {
-                if(scope.room) {
+                if (scope.room) {
                     return HistorySvc.getTotalDurationByRoomAndCallerId(scope.room.id, participant.callerId);
                 } else {
                     return 0;
@@ -239,7 +282,7 @@ function HistoryDirective(HistorySvc, PhoneBookSvc, $modal, $log) {
             scope.history = [];
             scope.reverse = true;
             scope.predicate = 'totalDuration';
-            
+
             scope.changeName = function (phoneNumber, currentName) {
                 var modalInstance = $modal.open({
                     templateUrl: 'assets/templates/modal-edit-name.html',
@@ -258,9 +301,9 @@ function HistoryDirective(HistorySvc, PhoneBookSvc, $modal, $log) {
                     PhoneBookSvc.updateEntry(phoneNumber, newName);
                 });
             };
-            
+
             scope.getTotalDuration = function (entry) {
-                if(scope.room) {
+                if (scope.room) {
                     return HistorySvc.getTotalDurationByRoomAndCallerId(scope.room.id, entry.callerId);
                 } else {
                     return 0;
@@ -283,21 +326,21 @@ function HistoryDirective(HistorySvc, PhoneBookSvc, $modal, $log) {
             scope.refresh = function () {
                 if (angular.isString(scope.room)) {
                     scope.history = HistorySvc.findAllByRoomAndActive(scope.room, false);
-                    if(!angular.isArray(scope.history)) {
+                    if (!angular.isArray(scope.history)) {
                         scope.history = [];
                     }
                     scope.decorate();
                 }
             };
-            
-            scope.decorate = function() {
-                angular.forEach(scope.history, function(entry) {
+
+            scope.decorate = function () {
+                angular.forEach(scope.history, function (entry) {
                     entry.totalDuration = HistorySvc.getTotalDurationByRoomAndCallerId(scope.room, entry.callerId);
                 });
             };
-            
-            scope.sortBy = function(predicate) {
-                if(scope.predicate === predicate) {
+
+            scope.sortBy = function (predicate) {
+                if (scope.predicate === predicate) {
                     scope.reverse = !scope.reverse;
                 } else {
                     scope.predicate = predicate;
@@ -358,9 +401,9 @@ function btCommentAlert() {
                     $scope.forcedHidden = false;
                 }
             });
-            
-            $scope.$watch('context.room', function(room) {
-                if(room) {
+
+            $scope.$watch('context.room', function (room) {
+                if (room) {
                     $scope.participants = room.participants;
                 } else {
                     $scope.participants = [];
@@ -375,7 +418,6 @@ function btMusicPlayer() {
     return {
         restrict: 'E',
         scope: {
-
         },
         controller: function ($rootScope, $q, $scope, RemoteSongSvc, StorageSvc, AudioPlayerSvc) {
             $scope.currentSong = 0;
@@ -404,7 +446,7 @@ function btMusicPlayer() {
             $scope.startDownload = function () {
                 StorageSvc.init().then(function () {
                     var deferred = $q.defer(),
-                        promise = deferred.promise;
+                            promise = deferred.promise;
                     $scope.downloadState = "Downloading";
                     $scope.downloadFile(deferred, 1, RemoteSongSvc.getNumberOfSongs());
                     promise.then(function () {
@@ -420,7 +462,7 @@ function btMusicPlayer() {
 
             $scope.getSongNumbers = function () {
                 var numbers = [],
-                    i;
+                        i;
                 for (i = 1; i <= RemoteSongSvc.getNumberOfSongs(); i++) {
                     numbers[numbers.length] = i;
                 }
@@ -476,7 +518,7 @@ function btMusicPlayer() {
 
             StorageSvc.init().then(function () {
                 var nameArray = [],
-                    i;
+                        i;
                 for (i = 1; i <= RemoteSongSvc.getNumberOfSongs(); i++) {
                     nameArray[i - 1] = "song_" + i + ".mp3";
                 }
@@ -528,6 +570,7 @@ function TimespanFilter() {
 
 angular.module('blacktiger-ui', ['blacktiger-service', 'pascalprecht.translate', 'ui.bootstrap', 'teljs'])
         .controller('ModalEditNameCtrl', ModalEditNameCtrl)
+        .directive('btCapitalize', CapitalizeDirective)
         .directive('btNumberIcon', NumberIconDirective)
         .directive('btRoomStatus', RoomStatusDirective)
         .directive('btRoomInfo', RoomInfoDirective)
