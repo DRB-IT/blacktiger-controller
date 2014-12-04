@@ -387,13 +387,14 @@ function RequestPasswordCtrl($scope, $http, blacktiger, $filter, $log, $rootScop
     $scope._resolveCountryCode();
 }
 
-function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger, $translate, $rootScope) {
+function CreateSipAccountCtrl($scope, SipUserSvc, $timeout, translateFilter, $rootScope) {
     $scope.user = {};
     $scope.mailText = '';
-    $scope.innerMailTextPattern = new RegExp("/.*/");
+    $scope.innerMailTextPattern = new RegExp(".*");
     $scope.mailTextPattern = (function () {
         return {
             test: function (value) {
+                value = value.replace(/(?:\r\n|\r|\n)/g, '');
                 var result = $scope.innerMailTextPattern.test(value);
                 return result;
             }
@@ -404,7 +405,7 @@ function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger, $translate, $rootS
         $scope.user.name = '';
         $scope.user.phoneNumber = '';
         $scope.user.email = '';
-        $scope.mailText = $translate.instant('SETTINGS.CREATE_SIP_ACCOUNT.DEFAULT_MAILTEXT');
+        $scope.mailText = translateFilter('SETTINGS.CREATE_SIP_ACCOUNT.DEFAULT_MAILTEXT');
     };
 
     $rootScope.$on('$translateChangeSuccess', $scope.reset);
@@ -430,7 +431,7 @@ function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger, $translate, $rootS
             pattern, i;
 
         if (noOfCharsToPull === 0) {
-            $scope.innerMailTextPattern = new RegExp('/.*/');
+            $scope.innerMailTextPattern = new RegExp('.*');
         } else {
             number = number.substr(number.length - noOfCharsToPull, number.length);
             pattern = "^((?!(" + number.charAt(0) + ")";
@@ -441,6 +442,12 @@ function CreateSipAccountCtrl($scope, SipUserSvc, blacktiger, $translate, $rootS
             $scope.innerMailTextPattern = new RegExp(pattern);
         }
 
+        //Trigger revalidation
+        var text = $scope.mailText;
+        $scope.mailText = null;
+        $timeout(function() {
+            $scope.mailText = text;
+        },5);
     };
 
     $scope.reset();
