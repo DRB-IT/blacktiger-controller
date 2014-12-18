@@ -2,13 +2,15 @@
     <button type="button" class="close" ng-click="cancel()">×</button>
     <h4 class="modal-title" id="myModalLabel" translate="PARTICIPANTS.EDIT"></h4>
 </div>
-<form id="editParticipant">
+<form id="editParticipant" novalidate name="phoneBookForm">
     <div class="modal-body">
-        <p class="text-muted">{{data.phoneNumber}}</p>
-        <input type="text" id="participantEditName" class="form-control" ng-model="data.name">
+        <div class="form-group" ng-class="{'has-error':!phoneBookForm.name.$valid}">
+            <label>{{data.phoneNumber}}</label>
+            <input type="text" name="name" class="form-control" ng-model="data.name" ng-pattern="/^([^\s]{2,} ([^\s]{2,} )*[^\s]{2,})$/" ng-required="true" bt-capitalize>
+         </div>
     </div>
     <div class="modal-footer">
-        <button type="submit" class="btn btn-success" ng-click="ok()"><span class="glyphicon glyphicon-ok"></span></button>
+        <button type="submit" class="btn btn-success" ng-click="ok()" ng-disabled="!phoneBookForm.$valid"><span class="glyphicon glyphicon-ok"></span></button>
         <button type="button" class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span></button>
     </div>
 </form>
