@@ -785,6 +785,7 @@ function HistorySvc($rootScope, $cookieStore, blacktiger, $log) {
         } else {
             entry = entries[key];
             entry.channel = participant.channel;
+            entry.name = participant.name;
         }
         
         if(resume && entry.calls.length > 0) {
@@ -833,6 +834,10 @@ function HistorySvc($rootScope, $cookieStore, blacktiger, $log) {
             $cookieStore.put(historyCookieName, history);
             fireUpdated();
         }
+    };
+    
+    var handleChangeEvent = function(event, roomNo, participant) {
+        handlePhoneBookUpdate(event, participant.phoneNumber, participant.name);
     };
     
     var handlePhoneBookUpdate = function(event, number, name) {
@@ -893,6 +898,7 @@ function HistorySvc($rootScope, $cookieStore, blacktiger, $log) {
     $rootScope.$on('PushEvent.ConferenceStart', handleConferenceStartEvent);
     $rootScope.$on('PushEvent.Join', handleJoinEvent);
     $rootScope.$on('PushEvent.Leave', handleLeaveEvent);
+    $rootScope.$on('PushEvent.Change', handleChangeEvent);
     $rootScope.$on('PhoneBook.Update', handlePhoneBookUpdate);
 
     return {
