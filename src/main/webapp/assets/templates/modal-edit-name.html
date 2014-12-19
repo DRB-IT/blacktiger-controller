@@ -6,7 +6,7 @@
     <div class="modal-body">
         <div class="form-group" ng-class="{'has-error':!phoneBookForm.name.$valid}">
             <label>{{data.phoneNumber}}</label>
-            <input type="text" name="name" class="form-control" ng-model="data.name" ng-pattern="/^([^\s]{2,} ([^\s]{2,} )*[^\s]{2,})$/" ng-required="true" bt-capitalize>
+            <input type="text" name="name" class="form-control" ng-model="data.name" ng-pattern="/^([^\s\.\,\-\_\!\?\:\;]{2,} ([^\s\.\,\-\_\!\?\:\;]{2,}[^\s]* )*[^\s\.\,\-\_\!\?\:\;]{2,}[^\s]*)$/" ng-required="true" bt-capitalize>
          </div>
     </div>
     <div class="modal-footer">
