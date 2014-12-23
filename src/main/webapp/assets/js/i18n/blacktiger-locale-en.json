@@ -40,7 +40,7 @@
             "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "No sound is being sent to the listeners!",
             "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "Please check that X-Lite has been started",
             "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "Dial {{phoneNumber | telephone}} from X-Lite",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Then dial the same number from another phone and check the sound quality, and if nessesary adjust the volume"
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Then dial the same number from another phone and check the sound quality, and if necessary adjust the volume"
         },
         "INFO": {
             "NO_PARTICIPANTS": "There are no listeners at the moment.",
@@ -119,7 +119,7 @@
         "CONTACT": {
             "TITLE": "Technically responsible",
             "SUBTITLE": "The technically responsible for the Kingdom Hall",
-            "DESCRIPTION": "<p><b>IMPORTANT!</b> Please check that the information below is correct!</p><p>There is <b>only one technically responsible for every Kingdom Hall</b>, no matter how many congregations are using it. He must belong to one of the congreations attending meetings in this Kingdom Hall. If more congregations are using the same Kingdom Hall, they must agree who to assign as technically responsible.</p><p>The technically responsible <b>ensures that the Telesal system works reliably locally</b>, and it is him you should contact is case of technical issues locally.</p><p>It is <b>important that the information below is correct</b>, so those responsible for the central Telesal system can contact the technical responsible in each Kingdom Hall when nessesary.",
+            "DESCRIPTION": "<p><b>IMPORTANT!</b> Please check that the information below is correct!</p><p>There is <b>only one technically responsible for every Kingdom Hall</b>, no matter how many congregations are using it. He must belong to one of the congreations attending meetings in this Kingdom Hall. If more congregations are using the same Kingdom Hall, they must agree who to assign as technically responsible.</p><p>The technically responsible <b>ensures that the Telesal system works reliably locally</b>, and it is him you should contact is case of technical issues locally.</p><p>It is <b>important that the information below is correct</b>, so those responsible for the central Telesal system can contact the technical responsible in each Kingdom Hall when necessary.",
             "TITLE_NAME": "Name",
             "PLACEHOLDER_NAME": "Name Surname",
             "TITLE_PHONE": "Mobile phone number",
