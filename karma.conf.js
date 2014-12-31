@@ -29,7 +29,7 @@ module.exports = function(config) {
       'src/main/webapp/assets/js/**/angular-mocks.js',
       'src/main/webapp/assets/js/blacktiger-app.js',
       'src/main/webapp/assets/js/blacktiger-ui.js',
-      'src/main/webapp/assets/js/blacktiger-service.js',
+      'src/main/webapp/assets/js/blacktigerjs/dist/blacktiger.js',
       'src/main/webapp/assets/js/**/sockjs.js',
       'src/main/webapp/assets/js/**/stomp.js',
       'src/main/webapp/assets/js/**/tel.js',
