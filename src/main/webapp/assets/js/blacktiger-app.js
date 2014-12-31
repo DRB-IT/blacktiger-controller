@@ -3,7 +3,7 @@
 
 /*************************************** MODULE ********************************************/
 
-var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.translate', 'ui.bootstrap', 'blacktiger-service', 'blacktiger-ui', 'teljs'])
+var blacktigerApp = angular.module('blacktiger-app', ['ngRoute', 'pascalprecht.translate', 'ui.bootstrap', 'blacktiger', 'blacktiger-ui', 'teljs'])
     .config(function ($locationProvider, $routeProvider, $httpProvider, $translateProvider, blacktigerProvider, CONFIG) {
         var mode = "normal",
             token, params = [],
@@ -213,7 +213,7 @@ function filterByRoles() {
 }
 
 /*************************************** CONTROLLERS ********************************************/
-function MenuCtrl(CONFIG, $scope, LoginSvc, $rootScope, $translate, blacktiger, $filter, $location) {
+function MenuCtrl(CONFIG, $scope, languages, $rootScope, $translate, blacktiger, $filter, $location) {
     $scope.links = [
         {
             url: "#!/",
@@ -288,12 +288,12 @@ function MenuCtrl(CONFIG, $scope, LoginSvc, $rootScope, $translate, blacktiger, 
     $rootScope.$on('$translateChangeSuccess', function () {
         $scope.language = $translate.use();
         $scope.languages = [];
-        angular.forEach(['da', 'en', 'fo', 'kl', 'no', 'sv', 'is', 'es'], function (entry) {
-            $translate('GENERAL.LANGUAGE.' + entry.toUpperCase()).then(function (translation) {
+        angular.forEach(languages, function (value, key) {
+            $translate('GENERAL.LANGUAGE.' + key.toUpperCase()).then(function (translation) {
                 $scope.languages.push({
-                    locale: entry,
+                    locale: key,
                     localizedLanguage: translation,
-                    language: blacktiger.getLanguageNames()[entry]
+                    language: value
                 });
             });
         });
@@ -611,7 +611,18 @@ angular.element(document).ready(function () {
     $http.get('config.json').then(
         function (response) {
             var config = response.data;
+            var languageNames = {
+                'da': 'Dansk',
+                'en': 'English',
+                'fo': 'Føroyskt',
+                'kl': 'Kalaallisut',
+                'sv': 'Svenska',
+                'no': 'Norsk',
+                'is': 'Íslenska',
+                'es': 'Español'
+            };
             blacktigerApp.constant('CONFIG', config);
+            blacktigerApp.constant('languages', languageNames);
             angular.bootstrap(document, ['blacktiger-app']);
         }
     );

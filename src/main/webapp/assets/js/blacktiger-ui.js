@@ -568,7 +568,7 @@ function TimespanFilter() {
     };
 }
 
-angular.module('blacktiger-ui', ['blacktiger-service', 'pascalprecht.translate', 'ui.bootstrap', 'teljs'])
+angular.module('blacktiger-ui', ['blacktiger', 'pascalprecht.translate', 'ui.bootstrap', 'teljs'])
         .controller('ModalEditNameCtrl', ModalEditNameCtrl)
         .directive('btCapitalize', CapitalizeDirective)
         .directive('btNumberIcon', NumberIconDirective)
