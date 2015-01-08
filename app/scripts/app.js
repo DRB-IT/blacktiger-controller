@@ -229,9 +229,9 @@ angular.element(document).ready(function () {
         'es': 'Español'
     };
     var defaultConfig = {
-        serviceUrl: "http://192.168.87.104:8084/blacktiger",
-        RootHelp: "http://help.txxxxx.org/{%1}",
-        SIPHelp: "http://help.txxxxx.org/{%1}/homesetup",
+        serviceUrl: 'http://192.168.87.104:8084/blacktiger',
+        RootHelp: 'http://help.txxxxx.org/{%1}',
+        SIPHelp: 'http://help.txxxxx.org/{%1}/homesetup',
         commentRequestTimeout: 60000,
         hightlightTimeout: 15000
     };
@@ -240,13 +240,13 @@ angular.element(document).ready(function () {
         blacktigerApp.constant('CONFIG', config);
         blacktigerApp.constant('languages', languageNames);
         angular.bootstrap(document, ['blacktiger-app']);
-    }
+    };
     $http.get('config.json').then(
             function (response) {
                 initApp(response.data);
             },
             function(reason) {
-                console.info("Could not load config. Using default config.");
+                console.info('Could not load config. Using default config. ' + reason.data);
                 initApp(defaultConfig);
             }
     );

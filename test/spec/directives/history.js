@@ -17,7 +17,7 @@ describe('Directive: btHistory', function () {
         var element = $compile('<bt-history></bt-history>')($rootScope);
         $rootScope.$digest();
 
-        var index = element.html().indexOf('REPORT.NO_ENTRIES')
+        var index = element.html().indexOf('REPORT.NO_ENTRIES');
         expect(index).toBeGreaterThan(0);
     });
 
@@ -36,12 +36,12 @@ describe('Directive: btHistory', function () {
         $rootScope.$broadcast('PushEvent.ConferenceStart', {id: room});
         $rootScope.$broadcast('PushEvent.Join', room, participant);
         $rootScope.$digest();
-        var index = element.html().indexOf('REPORT.NO_ENTRIES')
+        var index = element.html().indexOf('REPORT.NO_ENTRIES');
         expect(index).toBeGreaterThan(0);
 
         $rootScope.$broadcast('PushEvent.Leave', 'H45-0000', participant.channel);
         $rootScope.$digest();
-        index = element.html().indexOf('REPORT.NO_ENTRIES')
+        index = element.html().indexOf('REPORT.NO_ENTRIES');
         expect(index).toBeLessThan(0);
 
     });
@@ -65,7 +65,7 @@ describe('Directive: btHistory', function () {
         scope.deleteHistory();
         $rootScope.$digest();
 
-        var index = element.html().indexOf('REPORT.NO_ENTRIES')
+        var index = element.html().indexOf('REPORT.NO_ENTRIES');
         expect(index).toBeGreaterThan(0);
 
     });

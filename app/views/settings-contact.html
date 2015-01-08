@@ -34,7 +34,7 @@
                 <label translate="SETTINGS.CONTACT.TITLE_COMMENT"></label>
                 <input type="text" class="form-control" ng-model="contact.comment">
             </div>
-            <button type="button" class="btn btn-success" ng-click="updateContact()" ng-disabled="!contactForm.$valid || contact_status !== null">
+            <button type="button" class="btn btn-success" ng-click="updateContact()" ng-disabled="!contactForm.$valid || contactStatus !== null">
                 <span class="glyphicon glyphicon-ok" ng-if="contact_status!=='Saved'"></span>
                 <span ng-if="contact_status==='Saved'" translate="SETTINGS.CONTACT.SAVED">Gemt</span>
             </button>

@@ -31,10 +31,10 @@ describe('Controller: SettingsCtrl', function () {
         $httpBackend.whenGET(function () {
             return true;
         }).respond({});
-        scope.canDisconnectCalls = "True";
+        scope.canDisconnectCalls = 'True';
         scope.$digest();
 
-        expect(localStorageService.get('CanDisconnectCalls')).toEqual("True");
+        expect(localStorageService.get('CanDisconnectCalls')).toEqual('True');
     });
 
 });

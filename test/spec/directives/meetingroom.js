@@ -24,7 +24,7 @@ describe('Directive: btMeetingRoom', function () {
         var element = $compile('<bt-meeting-room room="H45-0000"></bt-meeting-room>')($rootScope);
         $rootScope.$digest();
 
-        var index = element.html().indexOf('PARTICIPANTS.WARNINGS.NO_PARTICIPANTS_AND_TRANSMITTERS')
+        var index = element.html().indexOf('PARTICIPANTS.WARNINGS.NO_PARTICIPANTS_AND_TRANSMITTERS');
         expect(index).toBeGreaterThan(0);
     });
     
@@ -32,7 +32,7 @@ describe('Directive: btMeetingRoom', function () {
         var element = $compile('<bt-meeting-room room="H45-0000"></bt-meeting-room>')($rootScope);
         $rootScope.$digest();
 
-        var index = element.html().indexOf('PARTICIPANTS.INFO.NO_PARTICIPANTS')
+        var index = element.html().indexOf('PARTICIPANTS.INFO.NO_PARTICIPANTS');
         expect(index).toBeGreaterThan(0);
     });
     
@@ -55,18 +55,18 @@ describe('Directive: btMeetingRoom', function () {
         var element = $compile('<bt-meeting-room room="H45-0000"></bt-meeting-room>')($rootScope);
         $rootScope.$digest();
 
-        var index = element.html().indexOf('PARTICIPANTS.INFO.NO_PARTICIPANTS')
+        var index = element.html().indexOf('PARTICIPANTS.INFO.NO_PARTICIPANTS');
         expect(index).toBeLessThan(0);
         
         var tbody = element.find('tbody');
         var tds = tbody.find('td');
         var number = tds[0].textContent.trim();
-        var name = tds[1].textContent.trim()
+        var name = tds[1].textContent.trim();
         var calls = parseInt(tds[2].textContent.trim());
         var minutes = parseInt(tds[3].textContent.trim());
         
-        expect(number).toEqual("+45 22 33 44 55");
-        expect(name.indexOf("John Doe")).toBe(0);
+        expect(number).toEqual('+45 22 33 44 55');
+        expect(name.indexOf('John Doe')).toBe(0);
         expect(calls).toEqual(1);
         expect(minutes).toEqual(0);
     });
@@ -138,7 +138,7 @@ describe('Directive: btMeetingRoom', function () {
         var element = $compile('<bt-meeting-room room="H45-0000"></bt-meeting-room>')($rootScope);
         $rootScope.$digest();
         
-        var index = element.html().indexOf('PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE')
+        var index = element.html().indexOf('PARTICIPANTS.WARNINGS.PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE');
         expect(index).toBeGreaterThan(0);
     });
     
@@ -160,7 +160,7 @@ describe('Directive: btMeetingRoom', function () {
         
         var element = $compile('<bt-meeting-room room="H45-0000"></bt-meeting-room>')($rootScope);
         $rootScope.$digest();
-        var index = element.html().indexOf('<!-- HOST INFO -->')
+        var index = element.html().indexOf('<!-- HOST INFO -->');
         expect(index).toBeGreaterThan(0);
     });
     
@@ -177,14 +177,14 @@ describe('Directive: btMeetingRoom', function () {
             host:true
         };
         
-        localStorageService.add("CanDisconnectCalls", "True");
+        localStorageService.add('CanDisconnectCalls', 'True');
         
         $rootScope.$broadcast('PushEvent.ConferenceStart', room);
         $rootScope.$broadcast('PushEvent.Join', room.id, participant);
         
         var element = $compile('<bt-meeting-room room="H45-0000"></bt-meeting-room>')($rootScope);
         $rootScope.$digest();
-        var index = element.html().indexOf('<!-- DISCONNECT HOST LINK -->')
+        var index = element.html().indexOf('<!-- DISCONNECT HOST LINK -->');
         expect(index).toBeGreaterThan(0);
     });
     
@@ -201,14 +201,14 @@ describe('Directive: btMeetingRoom', function () {
             host:true
         };
         
-        localStorageService.add("CanDisconnectCalls", "False");
+        localStorageService.add('CanDisconnectCalls', 'False');
         
         $rootScope.$broadcast('PushEvent.ConferenceStart', room);
         $rootScope.$broadcast('PushEvent.Join', room.id, participant);
         
         var element = $compile('<bt-meeting-room room="H45-0000"></bt-meeting-room>')($rootScope);
         $rootScope.$digest();
-        var index = element.html().indexOf('<!-- DISCONNECT HOST LINK -->')
+        var index = element.html().indexOf('<!-- DISCONNECT HOST LINK -->');
         expect(index).toBeLessThan(0);
     });
     
@@ -225,14 +225,14 @@ describe('Directive: btMeetingRoom', function () {
             host:false
         };
         
-        localStorageService.add("CanDisconnectCalls", "True");
+        localStorageService.add('CanDisconnectCalls', 'True');
         
         $rootScope.$broadcast('PushEvent.ConferenceStart', room);
         $rootScope.$broadcast('PushEvent.Join', room.id, participant);
         
         var element = $compile('<bt-meeting-room room="H45-0000"></bt-meeting-room>')($rootScope);
         $rootScope.$digest();
-        var index = element.html().indexOf('<!-- DISCONNECT PARTICIPANT LINK -->')
+        var index = element.html().indexOf('<!-- DISCONNECT PARTICIPANT LINK -->');
         expect(index).toBeGreaterThan(0);
     });
     
@@ -249,22 +249,18 @@ describe('Directive: btMeetingRoom', function () {
             host:false
         };
         
-        localStorageService.add("CanDisconnectCalls", "False");
+        localStorageService.add('CanDisconnectCalls', 'False');
         
         $rootScope.$broadcast('PushEvent.ConferenceStart', room);
         $rootScope.$broadcast('PushEvent.Join', room.id, participant);
         
         var element = $compile('<bt-meeting-room room="H45-0000"></bt-meeting-room>')($rootScope);
         $rootScope.$digest();
-        var index = element.html().indexOf('<!-- DISCONNECT PARTICIPANT LINK -->')
+        var index = element.html().indexOf('<!-- DISCONNECT PARTICIPANT LINK -->');
         expect(index).toBeLessThan(0);
     });
     
     it('shows decent information event when room does not exist', function() {
-        var room = {
-            id:'H45-0000'
-        };
-        
         var element = $compile('<bt-meeting-room room="H45-0000"></bt-meeting-room>')($rootScope);
         $rootScope.$digest();
         var scope = element.isolateScope();
