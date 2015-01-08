@@ -153,7 +153,11 @@ blacktigerApp.config(function ($locationProvider, $routeProvider, $httpProvider,
     });
 });
 
-blacktigerApp.run(function (CONFIG, blacktiger, $location, LoginSvc, $rootScope, PushEventSvc, MeetingSvc, AutoCommentRequestCancelSvc, $log) {
+blacktigerApp.run(function (CONFIG, blacktiger, $location, LoginSvc, $rootScope, PushEventSvc, MeetingSvc, AutoCommentRequestCancelSvc, $log, $interval) {
+    
+    // Make sure we have a digest at least once a minute - it will make things like minute counters update
+    $interval(angular.noop, 60000);
+    
     // The context object is a holder of information for the current session
     $rootScope.context = {};
     $rootScope.context.hasContactInformation = function () {
