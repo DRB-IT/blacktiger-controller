@@ -8,7 +8,7 @@
  * # AboutCtrl
  * Controller of the blacktiger-app
  */
-angular.module('blacktiger-app')
+angular.module('blacktiger-controllers')
         .controller('RequestPasswordCtrl', function ($scope, $http, blacktiger, $filter, $log, $rootScope) {
             $scope.reset = function () {
                 $scope.request = {

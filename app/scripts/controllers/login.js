@@ -7,7 +7,7 @@
  * # AboutCtrl
  * Controller of the blacktiger-app
  */
-angular.module('blacktiger-app')
+angular.module('blacktiger-controllers')
         .controller('LoginCtrl', function ($scope, LoginSvc) {
             $scope.username = '';
             $scope.password = '';

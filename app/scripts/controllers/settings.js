@@ -7,7 +7,7 @@
  * # AboutCtrl
  * Controller of the blacktiger-app
  */
-angular.module('blacktiger-app')
+angular.module('blacktiger-controllers')
         .controller('SettingsCtrl', function ($scope, LoginSvc, localStorageService) {
 
             $scope.canDisconnectCalls = localStorageService.get('CanDisconnectCalls');

@@ -7,7 +7,7 @@
  * # AboutCtrl
  * Used by Admin
  */
-angular.module('blacktiger-app')
+angular.module('blacktiger-controllers')
         .controller('RealtimeCtrl', function ($scope, SystemSvc, MeetingSvc, $timeout) {
             $scope.system = {};
 

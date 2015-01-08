@@ -7,7 +7,7 @@
  * # AboutCtrl
  * Used by Admin
  */
-angular.module('blacktiger-app')
+angular.module('blacktiger-controllers')
         .controller('HistoryCtrl', function ($scope, ReportSvc) {
             $scope.searchHistory = function () {
                 ReportSvc.getReport().then(function (data) {

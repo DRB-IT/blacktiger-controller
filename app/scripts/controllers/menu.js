@@ -7,7 +7,7 @@
  * # MainCtrl
  * Controller of the blacktiger-app
  */
-angular.module('blacktiger-app')
+angular.module('blacktiger-controllers')
         .controller('MenuCtrl', function ($scope, languages, $rootScope, $translate, CONFIG, $filter, $location, $window) {
             $scope.links = [
                 {

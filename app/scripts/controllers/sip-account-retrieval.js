@@ -7,7 +7,7 @@
  * # AboutCtrl
  * Used for Sip Account Retrieval only
  */
-angular.module('blacktiger-app')
+angular.module('blacktiger-controllers')
         .controller('SipAccountRetrievalCtrl', function ($scope, CONFIG, SipUserSvc, token, $translate, $filter) {
 
             $scope.cleanNumber = function (number) {

@@ -7,7 +7,7 @@
  * # AboutCtrl
  * Controller of the blacktiger-app
  */
-angular.module('blacktiger-app')
+angular.module('blacktiger-controllers')
         .controller('ContactCtrl', function ($scope, RoomSvc) {
             $scope.contact = angular.copy($scope.context.room.contact);
             $scope.contactStatus = null;

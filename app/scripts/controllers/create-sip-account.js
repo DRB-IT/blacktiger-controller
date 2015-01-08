@@ -7,7 +7,7 @@
  * # AboutCtrl
  * Controller of the blacktiger-app
  */
-angular.module('blacktiger-app')
+angular.module('blacktiger-controllers')
         .controller('CreateSipAccountCtrl', function ($scope, SipUserSvc, $timeout, translateFilter, $rootScope) {
             $scope.user = {};
             $scope.mailText = '';

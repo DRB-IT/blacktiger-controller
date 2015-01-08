@@ -7,7 +7,7 @@
  * # AboutCtrl
  * Controller of the blacktiger-app
  */
-angular.module('blacktiger-app')
+angular.module('blacktiger-controllers')
         .controller('RoomDisplayCtrl', function ($scope, $location) {
 
             $scope.goToTechContact = function () {
