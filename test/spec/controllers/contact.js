@@ -14,10 +14,10 @@ describe('Controller: ContactCtrl', function () {
         scope.context = {
             room: {
                 contact: {
-                    name: "John Doe",
-                    phoneNumber: "+4512345678",
-                    email: "example@mail.dk",
-                    comment: "I'll fix it"
+                    name: 'John Doe',
+                    phoneNumber: '+4512345678',
+                    email: 'example@mail.dk',
+                    comment: 'I\'ll fix it'
                 }
             }
         };
@@ -27,11 +27,11 @@ describe('Controller: ContactCtrl', function () {
         });
         
         templateHtml = $templateCache.get('views/settings-contact.html');
-        formElem = angular.element("<div>" + templateHtml + "</div>");
+        formElem = angular.element('<div>' + templateHtml + '</div>');
         $compile(formElem)(scope);
         form = scope.contactForm;
 
-        scope.$apply()
+        scope.$apply();
     }));
 
     it('should have submit button disabled when missing data', function () {
