@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Directive: roomInfo', function () {
+describe('Directive: musicPlayer', function () {
 
   // load the directive's module
   beforeEach(module('blacktiger-app'));
@@ -13,8 +13,8 @@ describe('Directive: roomInfo', function () {
   }));
 
   it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<bt-room-info></bt-room-info>');
+    element = angular.element('<bt-music-player></bt-music-player>');
     element = $compile(element)(scope);
-    expect(element.text()).toBe('this is the roomInfo directive');
+    //expect(element.text()).toBe('this is the musicPlayer directive');
   }));
 });

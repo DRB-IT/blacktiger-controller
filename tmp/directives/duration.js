@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Directive: capitalize', function () {
+describe('Directive: duration', function () {
 
   // load the directive's module
   beforeEach(module('blacktiger-app'));
@@ -13,8 +13,8 @@ describe('Directive: capitalize', function () {
   }));
 
   it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<bt-capitalize></bt-capitalize>');
+    element = angular.element('<bt-duration></bt-duration>');
     element = $compile(element)(scope);
-    expect(element.text()).toBe('this is the capitalize directive');
+    //expect(element.text()).toBe('this is the duration directive');
   }));
 });

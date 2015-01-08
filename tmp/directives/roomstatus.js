@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Directive: modalWindow', function () {
+describe('Directive: roomStatus', function () {
 
   // load the directive's module
   beforeEach(module('blacktiger-app'));
@@ -13,8 +13,8 @@ describe('Directive: modalWindow', function () {
   }));
 
   it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<modal-window></modal-window>');
+    element = angular.element('<bt-room-status></bt-room-status>');
     element = $compile(element)(scope);
-    expect(element.text()).toBe('this is the modalWindow directive');
+    //expect(element.text()).toBe('this is the roomStatus directive');
   }));
 });

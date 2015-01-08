@@ -2,18 +2,24 @@
 
 describe('Filter: filterByRoles', function () {
 
-  // load the filter's module
-  beforeEach(module('blacktiger-app'));
+    // load the filter's module
+    beforeEach(module('blacktiger-filters'));
 
-  // initialize a new instance of the filter before each test
-  var filterByRoles;
-  beforeEach(inject(function ($filter) {
-    filterByRoles = $filter('filterByRoles');
-  }));
+    // initialize a new instance of the filter before each test
+    var filterByRoles;
+    beforeEach(inject(function ($filter) {
+        filterByRoles = $filter('filterByRoles');
+    }));
 
-  it('should return the input prefixed with "filterByRoles filter:"', function () {
-    var text = 'angularjs';
-    expect(filterByRoles(text)).toBe('filterByRoles filter: ' + text);
-  });
+    it('should return 2 entries from the array only"', function () {
+        var entries = [
+            {requiredRole: 'Admin'},
+            {requiredRole: 'Dufus'},
+            {requiredRole: 'Admin'},
+            {requiredRole: 'Dufus'}
+        ];
+        var roles = ['Admin', 'Nerd'];
+        expect(filterByRoles(entries, roles).length).toBe(2);
+    });
 
 });

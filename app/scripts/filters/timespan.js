@@ -6,9 +6,9 @@
  * @function
  * @description
  * # timespan
- * Filter in the blacktiger-app.
+ * Converts milliseconds to a timespan visualized as hours as minutes(HH:mm).
  */
-angular.module('blacktiger-app')
+angular.module('blacktiger-filters')
         .filter('timespan', function () {
             return function (input) {
                 var out = '';

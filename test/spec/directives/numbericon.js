@@ -1,20 +1,35 @@
 'use strict';
 
-describe('Directive: numberIcon', function () {
+describe('Directive: btNumberIcon', function () {
+    var $compile;
+    var $rootScope;
 
-  // load the directive's module
-  beforeEach(module('blacktiger-app'));
+    // Load the myApp module, which contains the directive
+    beforeEach(module('blacktiger-directives'));
 
-  var element,
-    scope;
+    // Store references to $rootScope and $compile
+    // so they are available to all tests in this describe block
+    beforeEach(inject(function (_$compile_, _$rootScope_) {
+        // The injector unwraps the underscores (_) from around the parameter names when matching
+        $compile = _$compile_;
+        $rootScope = _$rootScope_;
+    }));
 
-  beforeEach(inject(function ($rootScope) {
-    scope = $rootScope.$new();
-  }));
+    it('Adds a computer icon for computer numbers', function () {
+        // Compile a piece of HTML containing the directive
+        var element = $compile('<bt-number-icon type="Sip"></bt-iconifiednumber>')($rootScope);
+        $rootScope.$digest();
 
-  it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<bt-number-icon></bt-number-icon>');
-    element = $compile(element)(scope);
-    expect(element.text()).toBe('this is the numberIcon directive');
-  }));
+        // Check that the compiled element contains the templated content
+        expect(element.html()).toContain('<span class="glyphicon glyphicon-hdd"></span>');
+    });
+
+    it('Adds a phone icon for non-computer numbers', function () {
+        // Compile a piece of HTML containing the directive
+        var element = $compile('<bt-number-icon type="Phone"></bt-iconifiednumber>')($rootScope);
+        $rootScope.$digest();
+
+        // Check that the compiled element contains the templated content
+        expect(element.html()).toContain('<span class="glyphicon glyphicon-earphone"></span>');
+    });
 });

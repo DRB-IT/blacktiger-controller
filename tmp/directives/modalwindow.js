@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Directive: duration', function () {
+describe('Directive: modalWindow', function () {
 
   // load the directive's module
   beforeEach(module('blacktiger-app'));
@@ -13,8 +13,8 @@ describe('Directive: duration', function () {
   }));
 
   it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<bt-duration></bt-duration>');
+    element = angular.element('<modal-window></modal-window>');
     element = $compile(element)(scope);
-    expect(element.text()).toBe('this is the duration directive');
+    //expect(element.text()).toBe('this is the modalWindow directive');
   }));
 });

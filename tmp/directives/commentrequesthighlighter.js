@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Directive: musicPlayer', function () {
+describe('Directive: commentRequestHighlighter', function () {
 
   // load the directive's module
   beforeEach(module('blacktiger-app'));
@@ -13,8 +13,8 @@ describe('Directive: musicPlayer', function () {
   }));
 
   it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<bt-music-player></bt-music-player>');
+    element = angular.element('<bt-comment-request-highlighter></bt-comment-request-highlighter>');
     element = $compile(element)(scope);
-    expect(element.text()).toBe('this is the musicPlayer directive');
+    //expect(element.text()).toBe('this is the commentRequestHighlighter directive');
   }));
 });

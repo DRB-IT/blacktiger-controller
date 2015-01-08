@@ -6,7 +6,7 @@
  * @description
  * # meetingRoom
  */
-angular.module('blacktiger-app')
+angular.module('blacktiger-directives')
         .directive('btMeetingRoom', function ($log, localStorageService, HistorySvc, MeetingSvc, PhoneBookSvc, $modal) {
             return {
                 restrict: 'E',

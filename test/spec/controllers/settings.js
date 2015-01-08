@@ -1,22 +1,40 @@
 'use strict';
 
-describe('Controller: AboutCtrl', function () {
+describe('Controller: SettingsCtrl', function () {
+    var scope, controller, localStorageService, $httpBackend;
+    beforeEach(module(function ($provide) {
+        $provide.constant('CONFIG', {});
+    }));
 
-  // load the controller's module
-  beforeEach(module('blacktiger-app'));
+    beforeEach(module('blacktiger-app', function ($provide) {
+        $provide.constant('CONFIG', {});
+    }));
 
-  var AboutCtrl,
-    scope;
+    beforeEach(inject(function ($rootScope, $controller, _localStorageService_, _$httpBackend_) {
+        scope = $rootScope.$new();
+        localStorageService = _localStorageService_;
+        $httpBackend = _$httpBackend_;
+        controller = $controller('SettingsCtrl', {
+            '$scope': scope
+        });
+    }));
 
-  // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
-    scope = $rootScope.$new();
-    AboutCtrl = $controller('SettingsCtrl', {
-      $scope: scope
+    it('has logout function', function () {
+        expect(scope.logout).toBeDefined();
     });
-  }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
-    expect(scope.awesomeThings.length).toBe(3);
-  });
+    it('has information about whether device can disconnect calls', function () {
+        expect(scope.canDisconnectCalls).toBeDefined();
+    });
+
+    it('can save information about whether device can disconnect calls', function () {
+        $httpBackend.whenGET(function () {
+            return true;
+        }).respond({});
+        scope.canDisconnectCalls = "True";
+        scope.$digest();
+
+        expect(localStorageService.get('CanDisconnectCalls')).toEqual("True");
+    });
+
 });

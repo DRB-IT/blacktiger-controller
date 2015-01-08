@@ -6,7 +6,7 @@
  * @description
  * # capitalize
  */
-angular.module('blacktiger-app')
+angular.module('blacktiger-directives')
         .directive('btCapitalize', function () {
             return {
                 require: 'ngModel',

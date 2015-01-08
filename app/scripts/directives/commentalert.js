@@ -6,7 +6,7 @@
  * @description
  * # commentAlert
  */
-angular.module('blacktiger-app')
+angular.module('blacktiger-directives')
         .directive('btCommentAlert', function () {
             return {
                 restrict: 'E',

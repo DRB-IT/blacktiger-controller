@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Directive: commentAlert', function () {
+describe('Directive: capitalize', function () {
 
   // load the directive's module
   beforeEach(module('blacktiger-app'));
@@ -13,8 +13,8 @@ describe('Directive: commentAlert', function () {
   }));
 
   it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<bt-comment-alert></bt-comment-alert>');
+    element = angular.element('<bt-capitalize></bt-capitalize>');
     element = $compile(element)(scope);
-    expect(element.text()).toBe('this is the commentAlert directive');
+    //expect(element.text()).toBe('this is the capitalize directive');
   }));
 });

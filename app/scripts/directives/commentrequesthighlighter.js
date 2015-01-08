@@ -6,7 +6,7 @@
  * @description
  * # commentRequestHighlighter
  */
-angular.module('blacktiger-app')
+angular.module('blacktiger-directives')
         .directive('btCommentRequestHighlighter', function ($timeout, CONFIG) {
             return {
                 restrict: 'A',

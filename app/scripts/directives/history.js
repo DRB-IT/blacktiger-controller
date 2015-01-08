@@ -6,7 +6,7 @@
  * @description
  * # history
  */
-angular.module('blacktiger-app')
+angular.module('blacktiger-directives')
         .directive('btHistory', function ($modal, PhoneBookSvc, HistorySvc) {
             return {
                 restrict: 'E',

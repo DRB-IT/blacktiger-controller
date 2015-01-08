@@ -1,6 +1,6 @@
 {
-  "name": "blacktigercontroller",
-  "version": "0.0.0",
+  "name": "blacktiger-controller",
+  "version": "2.1.0",
   "dependencies": {},
   "devDependencies": {
     "grunt": "^0.4.1",
@@ -8,6 +8,7 @@
     "grunt-concurrent": "^0.5.0",
     "grunt-contrib-clean": "^0.5.0",
     "grunt-contrib-compass": "^1.0.1",
+    "grunt-contrib-compress": "^0.13.0",
     "grunt-contrib-concat": "^0.4.0",
     "grunt-contrib-connect": "^0.7.1",
     "grunt-contrib-copy": "^0.5.0",
@@ -28,6 +29,7 @@
     "jshint-stylish": "^0.2.0",
     "karma": "^0.12.30",
     "karma-jasmine": "^0.3.3",
+    "karma-ng-html2js-preprocessor": "^0.1.2",
     "karma-phantomjs-launcher": "^0.1.4",
     "load-grunt-tasks": "^0.4.0",
     "time-grunt": "^0.3.1"

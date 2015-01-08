@@ -6,7 +6,7 @@
  * @description
  * # numberIcon
  */
-angular.module('blacktiger-app')
+angular.module('blacktiger-directives')
         .directive('btNumberIcon', function () {
             return {
                 restrict: 'E',

@@ -6,7 +6,7 @@
  * @description
  * # duration
  */
-angular.module('blacktiger-app')
+angular.module('blacktiger-directives')
         .directive('btDuration', function () {
             return {
                 restrict: 'E',

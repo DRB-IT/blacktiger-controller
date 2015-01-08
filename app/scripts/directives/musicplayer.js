@@ -6,7 +6,7 @@
  * @description
  * # musicPlayer
  */
-angular.module('blacktiger-app')
+angular.module('blacktiger-directives')
         .directive('btMusicPlayer', function () {
             return {
                 restrict: 'E',

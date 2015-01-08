@@ -9,6 +9,9 @@
  * Main module of the application.
  */
 var blacktigerApp = angular.module('blacktiger-app', [
+    'blacktiger-controllers',
+    'blacktiger-directives',
+    'blacktiger-filters',
     'ngAnimate',
     'ngCookies',
     'ngResource',
@@ -215,25 +218,36 @@ blacktigerApp.run(function (CONFIG, blacktiger, $location, LoginSvc, $rootScope,
 angular.element(document).ready(function () {
     var initInjector = angular.injector(['ng']);
     var $http = initInjector.get('$http');
+    var languageNames = {
+        'da': 'Dansk',
+        'en': 'English',
+        'fo': 'Føroyskt',
+        'kl': 'Kalaallisut',
+        'sv': 'Svenska',
+        'no': 'Norsk',
+        'is': 'Íslenska',
+        'es': 'Español'
+    };
+    var defaultConfig = {
+        serviceUrl: "http://192.168.87.104:8084/blacktiger",
+        RootHelp: "http://help.txxxxx.org/{%1}",
+        SIPHelp: "http://help.txxxxx.org/{%1}/homesetup",
+        commentRequestTimeout: 60000,
+        hightlightTimeout: 15000
+    };
+                
+    var initApp = function(config) {
+        blacktigerApp.constant('CONFIG', config);
+        blacktigerApp.constant('languages', languageNames);
+        angular.bootstrap(document, ['blacktiger-app']);
+    }
     $http.get('config.json').then(
             function (response) {
-                var config = response.data;
-                var languageNames = {
-                    'da': 'Dansk',
-                    'en': 'English',
-                    'fo': 'Føroyskt',
-                    'kl': 'Kalaallisut',
-                    'sv': 'Svenska',
-                    'no': 'Norsk',
-                    'is': 'Íslenska',
-                    'es': 'Español'
-                };
-                blacktigerApp.constant('CONFIG', config);
-                blacktigerApp.constant('languages', languageNames);
-                angular.bootstrap(document, ['blacktiger-app']);
+                initApp(response.data);
             },
             function(reason) {
-                window.alert('Unable to load config. ' + reason.data);
+                console.info("Could not load config. Using default config.");
+                initApp(defaultConfig);
             }
     );
 

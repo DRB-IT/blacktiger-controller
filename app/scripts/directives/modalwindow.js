@@ -6,7 +6,7 @@
  * @description
  * # modalWindow
  */
-angular.module('blacktiger-app')
+angular.module('blacktiger-directives')
         .directive('modalWindow', function ($timeout) {
             return {
                 restrict: 'EA',

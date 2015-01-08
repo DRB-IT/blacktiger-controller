@@ -18,7 +18,8 @@ module.exports = function (grunt) {
   // Configurable paths for the application
   var appConfig = {
     app: require('./bower.json').appPath || 'app',
-    dist: 'dist'
+    dist: 'dist',
+    buildFolder: 'dist/blacktiger-controller'
   };
 
   // Define the configuration for all the tasks
@@ -105,7 +106,7 @@ module.exports = function (grunt) {
       dist: {
         options: {
           open: true,
-          base: '<%= yeoman.dist %>'
+          base: '<%= yeoman.buildFolder %>'
         }
       }
     },
@@ -191,7 +192,7 @@ module.exports = function (grunt) {
       },
       dist: {
         options: {
-          generatedImagesDir: '<%= yeoman.dist %>/images/generated'
+          generatedImagesDir: '<%= yeoman.buildFolder %>/images/generated'
         }
       },
       server: {
@@ -205,10 +206,10 @@ module.exports = function (grunt) {
     filerev: {
       dist: {
         src: [
-          '<%= yeoman.dist %>/scripts/{,*/}*.js',
-          '<%= yeoman.dist %>/styles/{,*/}*.css',
-          '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-          '<%= yeoman.dist %>/styles/fonts/*'
+          '<%= yeoman.buildFolder %>/scripts/{,*/}*.js',
+          '<%= yeoman.buildFolder %>/styles/{,*/}*.css',
+          '<%= yeoman.buildFolder %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+          '<%= yeoman.buildFolder %>/styles/fonts/*'
         ]
       }
     },
@@ -219,7 +220,7 @@ module.exports = function (grunt) {
     useminPrepare: {
       html: '<%= yeoman.app %>/index.html',
       options: {
-        dest: '<%= yeoman.dist %>',
+        dest: '<%= yeoman.buildFolder %>',
         flow: {
           html: {
             steps: {
@@ -234,10 +235,10 @@ module.exports = function (grunt) {
 
     // Performs rewrites based on filerev and the useminPrepare configuration
     usemin: {
-      html: ['<%= yeoman.dist %>/{,*/}*.html'],
-      css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
+      html: ['<%= yeoman.buildFolder %>/{,*/}*.html'],
+      css: ['<%= yeoman.buildFolder %>/styles/{,*/}*.css'],
       options: {
-        assetsDirs: ['<%= yeoman.dist %>','<%= yeoman.dist %>/images']
+        assetsDirs: ['<%= yeoman.buildFolder %>','<%= yeoman.buildFolder %>/images']
       }
     },
 
@@ -273,7 +274,7 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '<%= yeoman.app %>/images',
           src: '{,*/}*.{png,jpg,jpeg,gif}',
-          dest: '<%= yeoman.dist %>/images'
+          dest: '<%= yeoman.buildFolder %>/images'
         }]
       }
     },
@@ -284,7 +285,7 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '<%= yeoman.app %>/images',
           src: '{,*/}*.svg',
-          dest: '<%= yeoman.dist %>/images'
+          dest: '<%= yeoman.buildFolder %>/images'
         }]
       }
     },
@@ -300,9 +301,9 @@ module.exports = function (grunt) {
         },
         files: [{
           expand: true,
-          cwd: '<%= yeoman.dist %>',
+          cwd: '<%= yeoman.buildFolder %>',
           src: ['*.html', 'views/{,*/}*.html'],
-          dest: '<%= yeoman.dist %>'
+          dest: '<%= yeoman.buildFolder %>'
         }]
       }
     },
@@ -323,7 +324,7 @@ module.exports = function (grunt) {
     // Replace Google CDN references
     cdnify: {
       dist: {
-        html: ['<%= yeoman.dist %>/*.html']
+        html: ['<%= yeoman.buildFolder %>/*.html']
       }
     },
 
@@ -334,7 +335,7 @@ module.exports = function (grunt) {
           expand: true,
           dot: true,
           cwd: '<%= yeoman.app %>',
-          dest: '<%= yeoman.dist %>',
+          dest: '<%= yeoman.buildFolder %>',
           src: [
             '*.{ico,png,txt}',
             '.htaccess',
@@ -346,13 +347,13 @@ module.exports = function (grunt) {
         }, {
           expand: true,
           cwd: '.tmp/images',
-          dest: '<%= yeoman.dist %>/images',
+          dest: '<%= yeoman.buildFolder %>/images',
           src: ['generated/*']
         }, {
           expand: true,
           cwd: '.',
           src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
-          dest: '<%= yeoman.dist %>'
+          dest: '<%= yeoman.buildFolder %>'
         }]
       },
       styles: {
@@ -361,6 +362,22 @@ module.exports = function (grunt) {
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
       }
+    },
+    
+    compress: {
+        main: {
+            options: {
+                archive: '<%= yeoman.dist %>/blacktiger-controller.zip',
+                mode: 'zip'
+            },
+            files: [
+                { 
+                    expand:true,
+                    src: '**/*',
+                    cwd: '<%= yeoman.buildFolder %>'
+                }
+            ]
+        }
     },
 
     // Run some tasks in parallel to speed up the build process
@@ -430,7 +447,8 @@ module.exports = function (grunt) {
     'uglify',
     'filerev',
     'usemin',
-    'htmlmin'
+    'htmlmin',
+    'compress'
   ]);
 
   grunt.registerTask('default', [

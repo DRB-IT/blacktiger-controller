@@ -6,7 +6,7 @@
  * @description
  * # roomInfo
  */
-angular.module('blacktiger-app')
+angular.module('blacktiger-directives')
         .directive('btRoomInfo', function () {
             return {
                 restrict: 'E',
