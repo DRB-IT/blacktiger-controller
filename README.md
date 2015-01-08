@@ -1,1 +1,1 @@
-Controller GUI for blacktiger
+Controller GUI for blacktiger.
