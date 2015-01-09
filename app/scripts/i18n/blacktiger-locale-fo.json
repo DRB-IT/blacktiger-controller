@@ -87,6 +87,7 @@
         "EMAIL": "Email-adresse",
         "LOADING": "Indlæser",
         "LOST_CONNECTION": "Applikationen mistede forbindelsen til serveren. Tjek evt. din internet forbindelse og prøv at genindlæse siden.",
+        "UNABLE_TO_CONNECT": "Kan ikke oprette forbindelse til serveren. Det kan evt. skyldes at browseren ikke er supporteret af systemet.",
         "COMMENT_REQUEST": "Somebody would like to comment"
     },
     "SETTINGS": {

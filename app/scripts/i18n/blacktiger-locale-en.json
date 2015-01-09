@@ -87,6 +87,7 @@
         "EMAIL": "E-mail address" ,
         "LOADING": "Loading...",
         "LOST_CONNECTION": "Lost connection to the server. Please check the internet connection , then refresh the page (press F5)",
+        "UNABLE_TO_CONNECT": "Unable to connect to server. This may due to the browser not being supported by the system.",
         "COMMENT_REQUEST": "Somebody would like to comment"
     },
     "SETTINGS": {

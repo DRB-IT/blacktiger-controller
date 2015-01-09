@@ -87,6 +87,7 @@
         "EMAIL": "E-postadress",
         "LOADING": "Laddar...",
         "LOST_CONNECTION": "Kopplingen till servern avbröts. Kontrollera internetuppkopplingen och ladda sidan igen (tryck F5)",
+        "UNABLE_TO_CONNECT": "Unable to connect to server. This may due to the browser not being supported by the system.",
         "COMMENT_REQUEST": "Någon önskar svara"
     },
     "SETTINGS": {

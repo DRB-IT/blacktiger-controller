@@ -87,6 +87,7 @@
         "EMAIL": "Netfang",
         "LOADING": "Sæki upplýsingar...",
         "LOST_CONNECTION": "Tengingin við þjóninn hefur rofnað. Vinsamlegast athugið nettenginguna og hlaðið síðuna aftur (ýtið á F5)",
+        "UNABLE_TO_CONNECT": "Unable to connect to server. This may due to the browser not being supported by the system.",
         "COMMENT_REQUEST": "Einhver langi að svara"
     },
     "SETTINGS": {

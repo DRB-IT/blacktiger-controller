@@ -153,7 +153,7 @@ blacktigerApp.config(function ($locationProvider, $routeProvider, $httpProvider,
     });
 });
 
-blacktigerApp.run(function (CONFIG, blacktiger, $location, LoginSvc, $rootScope, PushEventSvc, MeetingSvc, AutoCommentRequestCancelSvc, $log, $interval) {
+blacktigerApp.run(function (CONFIG, blacktiger, $location, LoginSvc, $rootScope, PushEventSvc, MeetingSvc, AutoCommentRequestCancelSvc, $log, $interval, $window, translateFilter) {
     
     // Make sure we have a digest at least once a minute - it will make things like minute counters update
     $interval(angular.noop, 60000);
@@ -182,13 +182,17 @@ blacktigerApp.run(function (CONFIG, blacktiger, $location, LoginSvc, $rootScope,
     });
 
     $rootScope.$on('login', function (event, user) {
-        if (user.roles.indexOf('ROLE_HOST') >= 0) {
-            $location.path('');
-        } else if (user.roles.indexOf('ROLE_ADMIN') >= 0) {
-            $location.path('/admin/realtime');
+        var targetPath = '';
+        if (user.roles.indexOf('ROLE_ADMIN') >= 0) {
+            targetPath = '/admin/realtime';
         }
-
-        PushEventSvc.connect().then($rootScope.updateCurrentRoom);
+        
+        PushEventSvc.connect().then(function() {
+            $rootScope.updateCurrentRoom();
+            $location.path(targetPath);
+        }, function() {
+            $window.alert(translateFilter('GENERAL.UNABLE_TO_CONNECT'));
+        });
     });
 
     $rootScope.updateCurrentRoom = function () {
@@ -200,7 +204,9 @@ blacktigerApp.run(function (CONFIG, blacktiger, $location, LoginSvc, $rootScope,
         }
     };
 
-    $rootScope.$on('MeetingSvc.Initialized', $rootScope.updateCurrentRoom);
+    $rootScope.$on('PushEventSvc.Lost_Connection', function () {
+        $window.alert(translateFilter('GENERAL.LOST_CONNECTION'));
+    });
 
     $rootScope.$watch('context.room', function (room) {
         if (room && !$rootScope.context.hasContactInformation()) {

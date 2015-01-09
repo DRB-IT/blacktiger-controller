@@ -86,6 +86,7 @@
         "EMAIL": "E-mailadresse",
         "LOADING": "Henter oplysninger...",
         "LOST_CONNECTION": "Forbindelsen til serveren blev afbrudt. Tjek internetforbindelsen og genindlæs siden (tryk F5)",
+        "UNABLE_TO_CONNECT": "Kan ikke oprette forbindelse til serveren. Det kan evt. skyldes at browseren ikke er supporteret af systemet.",
         "COMMENT_REQUEST": "Nogen ønsker at svare"
     },
     "SETTINGS": {

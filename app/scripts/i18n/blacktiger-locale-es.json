@@ -87,6 +87,7 @@
         "EMAIL": "Correo electrónico" ,
         "LOADING": "Cargando...",
         "LOST_CONNECTION": "Conexión con el servidor pérdida. Por favor, compruebe la conexión a Internet, a continuación, actualice la página (pulse F5)",
+        "UNABLE_TO_CONNECT": "Unable to connect to server. This may due to the browser not being supported by the system.",
         "COMMENT_REQUEST": "A alguien le gustaría comentar"
     },
     "SETTINGS": {

@@ -95,7 +95,4 @@ angular.module('blacktiger-controllers')
 
             });
 
-            $rootScope.$on('PushEventSvc.Lost_Connection', function () {
-                $window.alert($filter('translate')('GENERAL.LOST_CONNECTION'));
-            });
         });
