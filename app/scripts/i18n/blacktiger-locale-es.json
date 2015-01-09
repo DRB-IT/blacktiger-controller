@@ -1,0 +1,144 @@
+{
+    "LOGIN": {
+        "USERNAME": "Nombre de usuario",
+        "PASSWORD": "Contraseña",
+        "REMEMBER_ME": "Recordar contraseña en este equipo",
+        "LOG_IN": "Iniciar sesión",
+        "ALERT": "<strong>Este es un sistema privado.</strong> No trate de entrar a menos que tenga un permiso para hacerlo.",
+        "INVALID_CREDENTIALS": "El nombre de usuario o la contraseña es incorrecta.",
+        "FORGOT_PASSWORD": "Olvidó su contraseña"
+    },
+    "REQUEST_PASSWORD": {
+        "NAME": "Nombre completo:",
+        "PHONENUMBER": "Número de teléfono móvil:",
+        "EMAIL": "Dirección de correo electrónico:",
+        "CITY_OF_HALL": "Ciudad donde se encuentra el Salón:",
+        "PHONENUMBER_OF_HALL": "Número de teléfono Telesal para el Salón:",
+        "ERROR": "No se encontró ninguna coincidencia para esta información. Puede editar la información y volver a intentarlo.",
+        "SUCCESS": "Se le ha enviado un e-mail. Puede que tenga que revisar su carpeta de correo no deseado también.",
+        "EMAIL_TEXT_USER": "ESPAÑOL: Ha activado 'recuperar contraseña' para el Salón utilizando el número de teléfono {%1}. La contraseña ha sido enviada a {%5}, que es la dirección de correo electrónico que introdujo el técnico responsable  para este Salón. Su nombre es {%3} y su número de teléfono es {%4}.\n\nEl ID de usuario que se debe utilizar junto con la contraseña es {%2}.\n\n\n\nENGLISH: You have activated 'forgot password' for the hall using phone number {%1}. The password has been sent to {%5}, which is the e-mail address which was entered earlier for the technical responsible for this hall. His name is {%3} and his phone number is {%4}.\n\nThe user ID which must be used together with the password is {%2}.\n",
+        "EMAIL_TEXT_MANAGER": "ESPAÑOL: {%1} ha activado 'recuperar contraseña' para la sala utilizando el número de teléfono {%4}, del que usted es responsable. Su número de teléfono es {%2}, y su correo electrónico es {%3}. Por razones de seguridad, la contraseña se ha enviado a usted. Póngase en contacto con él para comprobar que tiene los permisos necesarios.\n\nLa contraseña es: {%5}\n\n\n\nENGLISH: {%1} has activated 'forgot password' for the hall using phone number {%4}, which you are technically responsible for. His phone number is {%2}, and his e-mail is {%3}. For security reasons, the password been sent to you only, not to him. You must contact him to check if he should have the password from you.\n\nThe password is: {%5}\n",
+        "EMAIL_SUBJECT": "Telesal en {%1}"
+    },
+    "SYSTEM": {
+        "NAME": "Telesal",
+        "COPYRIGHTHOLDER": "telesal.org"
+    },
+    "NAVIGATION": {
+        "PARTICIPANTS": "Oyentes actuales",
+        "SETTINGS": "Configuración",
+        "REPORT": "Listener Report",
+        "HELP": "Ayuda",
+        "ADMIN": {
+            "REALTIME": "Tiempo real",
+            "HISTORY": "Historia"
+        }
+    },
+    "PARTICIPANTS": {
+        "WARNINGS": {
+            "NO_PARTICIPANTS_AND_TRANSMITTERS": "No hay transmisión ahora, y no hay oyentes en línea.",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "¡No se está enviando audio a los oyentes!",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "Por favor, compruebe que X-Lite se ha iniciado",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "Marque {{phoneNumber | telephone}} de X-Lite",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Después marcar el mismo número desde otro teléfono y comprobar la calidad de sonido. De ser necesario ajuste el volumen"
+        },
+        "INFO": {
+            "NO_PARTICIPANTS": "No hay oyentes en este momento.",
+            "UNMUTED": "¡El micrófono de comentarios está abierto!"
+        },
+        "UNMUTE": "Activar el micrófono de comentarios",
+        "MUTE": "Silenciar micrófono de comentario",
+        "KICK": "Colgar",
+        "EDIT": "Editar nombre",
+        "PARTICIPANTS": "{noOfParticipants} {noOfParticipants, plural, one{oyente} other{oyentes}}",
+        "ABORT_TRANSMISSION": "Canclear transmisión",
+        "COMPLETED_CALLS": "{noOfCompletedCalls} {noOfCompletedCalls, plural, one{llamada completada} other{llamadas completadas}}",
+        "WANTS_TO_COMMENT": "¡Quisiera comentar!",
+        "ENTER_NAME": "¿Quién es? Llame y pregunte, escriba el nombre aquí"
+    },
+    "REPORT": {
+        "NUMBER": "Número de teléfono",
+        "NAME": "Nombre",
+        "FIRST_CALL": "Primera llamada",
+        "CALLS": "Llamadas",
+        "MINUTES": "Minutos",
+        "DELETE": "Eliminar el historial",
+        "NO_ENTRIES": "No hay historial; se elimina cuando se cierra el navegador."
+    },
+    "GENERAL": {
+        "LANGUAGE": {
+            "DA": "Danes",
+            "EN": "Inglés",
+            "FO": "Feroés",
+            "KL": "Groenlandés",
+            "NO": "Noruego",
+            "SV": "Sueco",
+            "IS": "Islandés",
+            "ES": "Español"
+        },
+        "OK": "Ok",
+        "CANCEL": "Cancelar",
+        "TECHNICALLY_RESPONSIBLE": "Técnicamente responsable",
+        "HALL": "salón",
+        "LOGOUT": "Salir",
+        "YES": "Si",
+        "NO": "No",
+        "PHONENUMBER": "Número de teléfono",
+        "EMAIL": "Correo electrónico" ,
+        "LOADING": "Cargando...",
+        "LOST_CONNECTION": "Conexión con el servidor pérdida. Por favor, compruebe la conexión a Internet, a continuación, actualice la página (pulse F5)",
+        "UNABLE_TO_CONNECT": "Unable to connect to server. This may due to the browser not being supported by the system.",
+        "COMMENT_REQUEST": "A alguien le gustaría comentar"
+    },
+    "SETTINGS": {
+        "GENERAL" : {
+            "TITLE": "Este salón",
+            "LOGGED_IN_AS": "Usted está en el sistema como el Salón del Reino en <b>{{postalCode}} {{city}}</b>",
+            "TECHNICALLY_RESPONSIBLE": "El técnico responsable de este Salón del Reino es <b>{{name}}</b>",
+            "CONTACT_LINK": "Más información",
+            "FIND_HELP": "Obtenga ayuda",
+            "FIND_HELP_DESC": "Haga clic en <span class=\"glyphicon glyphicon-question-sign\"></span> en la parte superior de esta página si necesita ayuda, o póngase en contacto con el responsable técnico.",
+            "CAN_DISCONNECT": "Calls can be disconnected from this computer"
+        },
+        "CREATE_SIP_ACCOUNT": {
+            "TITLE": "Crear computadora de oyente",
+            "DESCRIPTION": "<p>Usted puede escuchar a las reuniones a través de Internet desde un ordenador, computadora, tableta o Smartphone mediante la instalación de una aplicación. La <b>calidad de sonido</b> es mucho mejor que a través de la red de telefonía, y no hay gastos de teléfono. Pero puede costar el tráfico de datos si usted paga por Internet en función del consumo (alrededor de 75 MB/hora).</p><p>A través del formulario a continuación, creé una <b>cuenta personal</b> para quien deseé escuchar a través de Internet. La cuenta <b>no debe</b> ser compartida, ya que está vinculada a propio número de teléfono del oyente. El oyente tiene que llamar al mismo número de teléfono con la aplicación, de la misma forma que quienes escuchan por la red telefónica.</p><p>Si el oyente ha <b>perdido a su cuenta personal</b>, debe configurar la cuenta de nuevo en el formulario siguiente. Una nueva contraseña se generará automáticamente. Las cuentas no están vinculados a un determinado Salón del Reino, y se eliminan automáticamente si no ha habido ninguna llamada durante un año. </p><p>Los oyentes que usen una computadora se muestran con un icono de computadora en la página de estado: <span class=\"glyphicon glyphicon-hdd\"></span></p>",
+            "TITLE_NAME": "Nombre",
+            "PLACEHOLDER_NAME": "Nombre Apellidos",
+            "TITLE_PHONE": "Número de teléfono móvil o de línea fija",
+            "DESCRIPTION_PHONE": "Este número aparece en el PC en el Salón del Reino cuando el oyente llama desde su ordenador/computadora.",
+            "TITLE_EMAIL": "Enviar información de la cuenta a",
+            "PLACEHOLDER_EMAIL": "E-mail",
+            "DESCRIPTION_EMAIL": "La información de cuenta se envía aquí. Pida al receptor que revise su carpeta de correo no deseado.",
+            "SAVED": "Gardado",
+            "ALERT_SUCCESS": "La cuenta ha sido creada con esta información:<br>Nombre: <b>{{name}}</b>, teléfono:. <b>{{phoneNumber}}</b>.<br>Un enlace a la información de la cuenta se ha enviado por correo electrónico a <b>{{email}}</b>.<br>Pida al receptor para comprobar su carpeta de correo no deseado.<br>¿Hay un error en la información? Crée la cuenta de nuevo abajo.",
+            "ALERT_ERROR": "<b>¡Error de sistema!</b> La cuenta no se ha creado. Por favor, inténtelo de nuevo más tarde.",
+            "DESCRIPTION_MAILTEXT": "Aquí puede introducir un mensaje, pero no introduzca el número de teléfono de los receptores.",
+            "TITLE_MAILTEXT": "El texto que se envía al receptor",
+            "DEFAULT_MAILTEXT": "He aquí la información que necesita para escuchar las reuniones desde su equipo. Si necesita ayuda, por favor póngase en contacto con el técnico responsable. Por favor, haga clic en el enlace de abajo."
+        },
+        "CONTACT": {
+            "TITLE": "El técnico responsable",
+            "SUBTITLE": "El técnico responsable del Salón del Reino",
+            "DESCRIPTION": "<p><b>IMPORTANTE!</b> Por favor, compruebe que la siguiente información es correcta.</p><p>Hay<b> sólo un técnico responsable de cada Salón del Reino </b>, no importa cuántas congregaciones estén utilizando el sistema. Él debe pertenecer a una de las congregaciones que asisten a reuniones en este Salón del Reino. Si más congregaciones están utilizando el mismo Salón del Reino, deben estar de acuerdo en cuanto a quién asignarán como responsable técnico.</p><p>El responsable técnico <b>se asegurará que el sistema Telesal local funcione de forma fiable</b>, y es a él a quién deberá contactar en caso de problemas técnicos.</p><p>Es <b>importante que la siguiente información sea correcta</b>, para que los responsables del sistema central Telesal puedan contactar con el responsable técnico en cada Salón del Reino de ser necesario.</p>",
+            "TITLE_NAME": "Nombre",
+            "PLACEHOLDER_NAME": "Nombre Apellidos",
+            "TITLE_PHONE": "Número de teléfono móvil",
+            "TITLE_EMAIL": "Correo electrónico",
+            "PLACEHOLDER_EMAIL": "ejemple@mail.com",
+            "TITLE_COMMENT": "Comentario",
+            "SAVED": "Guardado",
+            "ALERT_ERROR": "<b>¡Error!</b> Los cambios no fueron guardados. Por favor, inténtelo de nuevo más tarde."
+        }
+    },
+    "SIP_ACCOUNT_RETRIEVAL": {
+        "DESCRIPTION": "<p>Estimado <b>{{name}}</b>, aquí encontrará su código personal. Lo necesita para escuchar a las reuniones a través de Internet. Su código está ligado a a su número de teléfono <b>{{phoneNumber}}</b>, por lo que <b>nunca debe compartir su código con nadie</b>.</p><p><b>No anote el código </b>, cópielo directamente desde esta página a la aplicación que va a utilizar para escuchar a las reuniones. Por otro lado, es buena idea <b>guardar el enlace en el correo</b> que te envió a esta página, de esta forma podrá encontrar fácilmente su código personal.</p><p>Si cambia más tarde su número de teléfono pierde el enlace en este e-mail, pida una nueva cuenta.</p>",
+        "FOOTNOTE": "Para saber cómo instalar y utilizar la aplicación,  <a href='http://help.telesal.org/en/homesetup' target='_blank'>de click aquí</a>.",
+        "RETRIEVE_INFORMATION": "OK",
+        "TITLE": "Su cuenta Telesal",
+        "ENTER_PHONE": "Escriba su número de teléfono aquí, a continuación, haga clic en Aceptar (OK)",
+        "ERROR_MESSAGE": "El número no fue reconocido. Tal vez introdujo un número equivocado.  Si es dueño de otro número, por favor pruébelo en su lugar, o comuníquese con quien creó esta cuenta para usted para que le sea creada de nuevo con el número correcto."
+    }
+
+}
+
