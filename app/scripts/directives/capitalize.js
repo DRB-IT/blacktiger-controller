@@ -42,7 +42,10 @@ angular.module('blacktiger-directives')
                         if (initialEdit) {
                             modelCtrl.$parsers.push(capitalize);
                         } else {
-                            modelCtrl.$parsers = [];
+                            var parserIndex = modelCtrl.$parsers.indexOf(capitalize);
+                            if(parserIndex >= 0) {
+                                modelCtrl.$parsers.splice(parserIndex, 0);
+                            }
                         }
                     });
                 }
