@@ -121,10 +121,9 @@ blacktigerApp.config(function ($locationProvider, $routeProvider, $httpProvider,
     }
 
 
-    // REMARK: If BLACKTIGER_VERSION has been set, we will load from a yui-compressed file
     $translateProvider.useStaticFilesLoader({
         prefix: 'scripts/i18n/blacktiger-locale-',
-        suffix: /*BLACKTIGER_VERSION ? '-' + BLACKTIGER_VERSION + '.json' : */'.json'
+        suffix: '.json'
     });
 
     $translateProvider.addInterpolation('$translateMessageFormatInterpolation');
