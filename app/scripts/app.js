@@ -177,6 +177,7 @@ blacktigerApp.run(function (CONFIG, blacktiger, $location, LoginSvc, $rootScope,
     $rootScope.$on('afterLogout', function () {
         $rootScope.rooms = null;
         $rootScope.updateCurrentRoom();
+        PushEventSvc.disconnect();
         $location.path('login');
     });
 
