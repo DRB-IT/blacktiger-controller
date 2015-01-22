@@ -1,8 +1,4 @@
 
-<div class="alert alert-danger" ng-repeat="issue in getIssues()">
-    <a href="{{issue.html_url}}" target="_BLANK"><strong>{{issue.title}}</strong></a><br>
-    {{issue.body}}
-</div>
 <div class="alert alert-info" ng-class="{'hidden':status!=null}" translate="LOGIN.ALERT"></div>
 <div class="alert alert-danger" ng-class="{'hidden':status!='invalid'}" translate="LOGIN.INVALID_CREDENTIALS"></div>
 <div class="row">
