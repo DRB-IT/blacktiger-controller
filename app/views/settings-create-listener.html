@@ -12,23 +12,37 @@
         <h3 translate="SETTINGS.CREATE_SIP_ACCOUNT.TITLE"></h3>
         <p translate="SETTINGS.CREATE_SIP_ACCOUNT.DESCRIPTION"></p>
 
-        <div class="alert alert-success" ng-show="status==='success'" translate="SETTINGS.CREATE_SIP_ACCOUNT.ALERT_SUCCESS" translate-values="{name:created.account.name, phoneNumber:created.account.phoneNumber, email: created.account.email}"></div>
-        <div class="alert alert-danger" ng-show="status==='error'" translate="SETTINGS.CREATE_SIP_ACCOUNT.ALERT_ERROR"></div>
+        <div class="alert alert-success" ng-show="status === 'success'" translate="SETTINGS.CREATE_SIP_ACCOUNT.ALERT_SUCCESS" translate-values="{name:created.account.name, phoneNumber:created.account.phoneNumber, email: created.account.email}"></div>
+        <div class="alert alert-danger" ng-show="status === 'error'" translate="SETTINGS.CREATE_SIP_ACCOUNT.ALERT_ERROR"></div>
 
         <form role="form" novalidate name="createForm">
             <div class="form-group" ng-class="{'has-error':!createForm.name.$valid}">
                 <label translate="SETTINGS.CREATE_SIP_ACCOUNT.TITLE_NAME"></label>
-                <input type="name" class="form-control" ng-model="user.name" name="name" placeholder="{{'SETTINGS.CREATE_SIP_ACCOUNT.PLACEHOLDER_NAME' | translate}}" ng-required="true" bt-capitalize>
+                <input type="name" class="form-control" ng-model="user.name" name="name" placeholder="{{'SETTINGS.CREATE_SIP_ACCOUNT.PLACEHOLDER_NAME'| translate}}" ng-required="true" bt-capitalize>
+                <span ng-messages="createForm.name.$error" class="help-block">
+                    <span ng-message="name">{{'SETTINGS.CREATE_SIP_ACCOUNT.INVALID_NAME'| translate}}</span>
+                </span>
             </div>
             <div class="form-group" ng-class="{'has-error':!createForm.phoneNumber.$valid}">
                 <label translate="SETTINGS.CREATE_SIP_ACCOUNT.TITLE_PHONE"></label>
                 <input type="tel" default-area-code="{{context.room.countryCallingCode}}"class="form-control" ng-model="user.phoneNumber" name="phoneNumber" ng-required="true" ng-change="onPhoneNumberChanged()">
-                <span class="help-block" translate="SETTINGS.CREATE_SIP_ACCOUNT.DESCRIPTION_PHONE"></span>
+                <span ng-if="createForm.phoneNumber.$valid" class="help-block" translate="SETTINGS.CREATE_SIP_ACCOUNT.DESCRIPTION_PHONE"></span>
+
+                <span ng-messages="createForm.phoneNumber.$error" class="help-block">
+                    <span ng-message="required">{{'SETTINGS.CREATE_SIP_ACCOUNT.DESCRIPTION_PHONE'| translate}}</span>
+                    <span ng-message="phoneNumber">{{'SETTINGS.CREATE_SIP_ACCOUNT.INVALID_PHONE'| translate}}</span>
+                </span>
+
             </div>
             <div class="form-group" ng-class="{'has-error':!createForm.email.$valid}">
                 <label translate="SETTINGS.CREATE_SIP_ACCOUNT.TITLE_EMAIL"></label>
-                <input type="email" class="form-control" ng-model="user.email" name="email" placeholder="{{'SETTINGS.CREATE_SIP_ACCOUNT.PLACEHOLDER_EMAIL' | translate}}" ng-required="true" ng-pattern="/^[a-zA-Z0-9'._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}$/">
-                <span class="help-block" translate="SETTINGS.CREATE_SIP_ACCOUNT.DESCRIPTION_EMAIL"></span>
+                <input type="email" class="form-control" ng-model="user.email" name="email" placeholder="{{'SETTINGS.CREATE_SIP_ACCOUNT.PLACEHOLDER_EMAIL'| translate}}" ng-required="true" ng-pattern="/^[a-zA-Z0-9'._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}$/">
+                <span ng-if="createForm.email.$valid" class="help-block" translate="SETTINGS.CREATE_SIP_ACCOUNT.DESCRIPTION_EMAIL"></span>
+                
+                <span ng-messages="createForm.email.$error" class="help-block">
+                    <span ng-message="required">{{'SETTINGS.CREATE_SIP_ACCOUNT.DESCRIPTION_PHONE'| translate}}</span>
+                    <span ng-message="email">{{'SETTINGS.CREATE_SIP_ACCOUNT.INVALID_EMAIL'| translate}}</span>
+                </span>
             </div>
             <div class="form-group" ng-class="{'has-error':!createForm.mailtext.$valid}">
                 <label translate="SETTINGS.CREATE_SIP_ACCOUNT.TITLE_MAILTEXT"></label>

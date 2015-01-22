@@ -19,6 +19,7 @@ var blacktigerApp = angular.module('blacktiger-app', [
     'ngRoute',
     'ngSanitize',
     'ngTouch',
+    'ngMessages',
     'pascalprecht.translate',
     'ui.bootstrap',
     'blacktiger',

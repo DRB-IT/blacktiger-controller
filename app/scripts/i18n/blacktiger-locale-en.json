@@ -88,7 +88,10 @@
         "LOADING": "Loading...",
         "LOST_CONNECTION": "Lost connection to the server. Please check the internet connection , then refresh the page (press F5)",
         "UNABLE_TO_CONNECT": "Unable to connect to server. This may due to the browser not being supported by the system.",
-        "COMMENT_REQUEST": "Somebody would like to comment"
+        "COMMENT_REQUEST": "Somebody would like to comment",
+        "INVALID_NAME": "The name must be a full name, for example. 'Michael Jensen' and not 'Mr. Jensen' or 'M. Jensen'.",
+        "INVALID_PHONE": "The phone number is not valid.",
+        "INVALID_EMAIL": "The email address is not valid."
     },
     "SETTINGS": {
         "GENERAL" : {
@@ -115,7 +118,10 @@
             "ALERT_ERROR": "<b>System error!</b> The account was not created. Please try again later.",
             "DESCRIPTION_MAILTEXT": "Here you may enter a message, but do not enter the receivers phone number here.",
             "TITLE_MAILTEXT": "Text which is sent to the reciever",
-            "DEFAULT_MAILTEXT": "Here are the information you need to listen to the meetings from your computer. If you need help, please contact the technically responsible. Please click the link below."
+            "DEFAULT_MAILTEXT": "Here are the information you need to listen to the meetings from your computer. If you need help, please contact the technically responsible. Please click the link below.",
+            "INVALID_NAME": "@:GENERAL.INVALID_NAME",
+            "INVALID_PHONE": "@:GENERAL.INVALID_PHONE",
+            "INVALID_EMAIL": "@:GENERAL.INVALID_EMAIL"
         },
         "CONTACT": {
             "TITLE": "Technically responsible",
@@ -128,7 +134,10 @@
             "PLACEHOLDER_EMAIL": "example@mail.com",
             "TITLE_COMMENT": "Comment",
             "SAVED": "Saved",
-            "ALERT_ERROR": "<b>Error!</b> The changes were not saved. Please try again later."
+            "ALERT_ERROR": "<b>Error!</b> The changes were not saved. Please try again later.",
+            "INVALID_NAME": "@:GENERAL.INVALID_NAME",
+            "INVALID_PHONE": "@:GENERAL.INVALID_PHONE",
+            "INVALID_EMAIL": "@:GENERAL.INVALID_EMAIL"
         }
     },
     "SIP_ACCOUNT_RETRIEVAL": {

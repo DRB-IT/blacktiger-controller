@@ -7,6 +7,10 @@
         <div class="form-group" ng-class="{'has-error':!phoneBookForm.name.$valid}">
             <label>{{data.phoneNumber}}</label>
             <input type="name" name="name" class="form-control" ng-model="data.name" ng-required="true" bt-capitalize>
+            <span ng-messages="phoneBookForm.name.$error" class="help-block">
+                <span ng-message="required">{{'GENERAL.INVALID_NAME'| translate}}</span>
+                <span ng-message="name">{{'GENERAL.INVALID_NAME'| translate}}</span>
+            </span>
          </div>
     </div>
     <div class="modal-footer">

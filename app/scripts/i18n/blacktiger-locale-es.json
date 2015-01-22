@@ -88,7 +88,10 @@
         "LOADING": "Cargando...",
         "LOST_CONNECTION": "Conexión con el servidor pérdida. Por favor, compruebe la conexión a Internet, a continuación, actualice la página (pulse F5)",
         "UNABLE_TO_CONNECT": "Unable to connect to server. This may due to the browser not being supported by the system.",
-        "COMMENT_REQUEST": "A alguien le gustaría comentar"
+        "COMMENT_REQUEST": "A alguien le gustaría comentar",
+        "INVALID_NAME": "El nombre debe ser un nombre completo, por ejemplo. 'Michael Jensen' y no 'Mr. Jensen 'o' M. Jensen.",
+        "INVALID_PHONE": "El número de teléfono no es válido.",
+        "INVALID_EMAIL": "El correo electrónico no es válida."
     },
     "SETTINGS": {
         "GENERAL" : {
@@ -115,7 +118,10 @@
             "ALERT_ERROR": "<b>¡Error de sistema!</b> La cuenta no se ha creado. Por favor, inténtelo de nuevo más tarde.",
             "DESCRIPTION_MAILTEXT": "Aquí puede introducir un mensaje, pero no introduzca el número de teléfono de los receptores.",
             "TITLE_MAILTEXT": "El texto que se envía al receptor",
-            "DEFAULT_MAILTEXT": "He aquí la información que necesita para escuchar las reuniones desde su equipo. Si necesita ayuda, por favor póngase en contacto con el técnico responsable. Por favor, haga clic en el enlace de abajo."
+            "DEFAULT_MAILTEXT": "He aquí la información que necesita para escuchar las reuniones desde su equipo. Si necesita ayuda, por favor póngase en contacto con el técnico responsable. Por favor, haga clic en el enlace de abajo.",
+            "INVALID_NAME": "@:GENERAL.INVALID_NAME",
+            "INVALID_PHONE": "@:GENERAL.INVALID_PHONE",
+            "INVALID_EMAIL": "@:GENERAL.INVALID_EMAIL"
         },
         "CONTACT": {
             "TITLE": "El técnico responsable",
@@ -128,7 +134,10 @@
             "PLACEHOLDER_EMAIL": "ejemple@mail.com",
             "TITLE_COMMENT": "Comentario",
             "SAVED": "Guardado",
-            "ALERT_ERROR": "<b>¡Error!</b> Los cambios no fueron guardados. Por favor, inténtelo de nuevo más tarde."
+            "ALERT_ERROR": "<b>¡Error!</b> Los cambios no fueron guardados. Por favor, inténtelo de nuevo más tarde.",
+            "INVALID_NAME": "@:GENERAL.INVALID_NAME",
+            "INVALID_PHONE": "@:GENERAL.INVALID_PHONE",
+            "INVALID_EMAIL": "@:GENERAL.INVALID_EMAIL"
         }
     },
     "SIP_ACCOUNT_RETRIEVAL": {
