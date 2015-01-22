@@ -36,7 +36,7 @@ describe('Directive: input[name]', function () {
             expect($rootScope.myform.name.$valid).toEqual(true);
 
             element.val(currentName);
-            element.triggerHandler('change')
+            element.triggerHandler('change');
             $rootScope.$digest();
 
             expect($rootScope.myform.name.$valid).toEqual(true);
@@ -62,7 +62,7 @@ describe('Directive: input[name]', function () {
             expect($rootScope.myform.name.$valid).toEqual(false);
 
             element.val(currentName);
-            element.triggerHandler('change')
+            element.triggerHandler('change');
             $rootScope.$digest();
 
             expect($rootScope.myform.name.$valid).toEqual(false);
