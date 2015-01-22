@@ -35,13 +35,13 @@ blacktigerApp.config(function ($locationProvider, $routeProvider, $httpProvider,
     $locationProvider.hashPrefix('!');
 
     // SECURITY (forward to login if not authorized)
-    $httpProvider.interceptors.push(function ($location) {
+    $httpProvider.interceptors.push(function ($location, $q) {
         return {
             'responseError': function (rejection) {
-                if (rejection.status === 401) {
+                if (rejection.status === 401 && CONFIG.serviceUrl && rejection.config.url.substr(0, CONFIG.serviceUrl.length) === CONFIG.serviceUrl) {
                     $location.path('/login');
                 }
-                return rejection;
+                return $q.reject(rejection);
             }
         };
     });

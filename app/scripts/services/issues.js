@@ -42,8 +42,8 @@ angular.module('blacktiger-services')
                 });
             };
             
-            //$interval(updateIssues, 60000);
-            //updateIssues();
+            $interval(updateIssues, 60000);
+            updateIssues();
             
             return {
                 getIssues: function () {
