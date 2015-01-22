@@ -8,7 +8,7 @@
  * Controller of the blacktiger-app
  */
 angular.module('blacktiger-controllers')
-        .controller('MenuCtrl', function ($scope, languages, $rootScope, $translate, CONFIG, $filter, $location, $window) {
+        .controller('MenuCtrl', function ($scope, languages, $rootScope, $translate, CONFIG, $filter, $location) {
             $scope.links = [
                 {
                     url: '#!/',
@@ -54,7 +54,7 @@ angular.module('blacktiger-controllers')
                     return link.url;
                 }
             };
-
+            
             $scope.isActiveLink = function (link) {
                 var url = $scope.getUrl(link);
                 var linkPath = url.substring(2);

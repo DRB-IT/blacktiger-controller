@@ -21,7 +21,7 @@ angular.module('blacktiger-directives')
                         var result = namePattern.exec(value);
                         ngModel.$setValidity('name', result !== null);
                         return value;
-                    }
+                    };
                     
                     ngModel.$parsers.push(scope.validate);
                     ngModel.$formatters.push(scope.validate);

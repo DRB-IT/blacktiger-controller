@@ -1,4 +1,7 @@
-<div ng-show="false" id="error-dialog" class="alert alert-danger"></div>
+<div class="alert alert-danger" ng-repeat="issue in getIssues()">
+    <a href="{{issue.html_url}}" target="_BLANK"><strong>{{issue.title}}</strong></a><br>
+    {{issue.body}}
+</div>
 {{rooms}}
 <div ng-if="!context.room" class="alert alert-info">
     No room displayable for current user.

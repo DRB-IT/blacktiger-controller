@@ -3,5 +3,6 @@
     "RootHelp": "http://help.txxxxx.org/{%1}",
     "SIPHelp": "http://help.txxxxx.org/{%1}/homesetup",
     "commentRequestTimeout": 60000,
-    "hightlightTimeout": 15000
+    "hightlightTimeout": 15000,
+    "ghIssueRepository": "https://api.github.com/repos/DRB-IT/blacktiger-production"
 }

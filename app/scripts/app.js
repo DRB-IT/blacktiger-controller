@@ -12,6 +12,7 @@ var blacktigerApp = angular.module('blacktiger-app', [
     'blacktiger-controllers',
     'blacktiger-directives',
     'blacktiger-filters',
+    'blacktiger-services',
     'ngAnimate',
     'ngCookies',
     'ngResource',
@@ -69,6 +70,7 @@ blacktigerApp.config(function ($locationProvider, $routeProvider, $httpProvider,
     if (mode === 'normal') {
         $routeProvider.
                 when('/', {
+                    controller: 'RoomCtrl',
                     templateUrl: 'views/room.html'
                 }).
                 when('/login', {
@@ -220,7 +222,7 @@ blacktigerApp.run(function (CONFIG, blacktiger, $location, LoginSvc, $rootScope,
     $rootScope.$on('$locationChangeSuccess', function () {
         $log.debug('location change ended', $location.url());
     });
-
+    
     AutoCommentRequestCancelSvc.start();
 });
 

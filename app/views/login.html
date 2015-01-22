@@ -1,4 +1,8 @@
 
+<div class="alert alert-danger" ng-repeat="issue in getIssues()">
+    <a href="{{issue.html_url}}" target="_BLANK"><strong>{{issue.title}}</strong></a><br>
+    {{issue.body}}
+</div>
 <div class="alert alert-info" ng-class="{'hidden':status!=null}" translate="LOGIN.ALERT"></div>
 <div class="alert alert-danger" ng-class="{'hidden':status!='invalid'}" translate="LOGIN.INVALID_CREDENTIALS"></div>
 <div class="row">
@@ -6,11 +10,11 @@
         <form id="loginform">
             <div class="form-group">
                 <label for="login-username" translate="LOGIN.USERNAME"></label>
-                <input type="text" class="form-control" ng-model="username">
+                <input id="login_username" type="text" class="form-control" ng-model="username">
             </div>
             <div class="form-group">
                 <label for="login-password" translate="LOGIN.PASSWORD"></label>
-                <input type="password" class="form-control" ng-model="password">
+                <input id="login_password" type="password" class="form-control" ng-model="password">
             </div>
             <div class="checkbox">
                 <label>

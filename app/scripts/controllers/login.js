@@ -8,7 +8,7 @@
  * Controller of the blacktiger-app
  */
 angular.module('blacktiger-controllers')
-        .controller('LoginCtrl', function ($scope, LoginSvc) {
+        .controller('LoginCtrl', function ($scope, LoginSvc, IssuesSvc) {
             $scope.username = '';
             $scope.password = '';
             $scope.rememberMe = false;
@@ -20,5 +20,9 @@ angular.module('blacktiger-controllers')
                 }, function () {
                     $scope.status = 'invalid';
                 });
+            };
+            
+            $scope.getIssues = function() {
+                return IssuesSvc.getIssues();
             };
         });
