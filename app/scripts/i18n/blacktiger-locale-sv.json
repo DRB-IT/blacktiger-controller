@@ -91,7 +91,8 @@
         "COMMENT_REQUEST": "Någon önskar svara",
         "INVALID_NAME": "Namnet måste vara ett fullständigt namn, till exempel. 'Michael Jensen' och inte 'Mr. Jensen' eller 'M. Jensens'.",
         "INVALID_PHONE": "Telefonnumret är ogiltigt.",
-        "INVALID_EMAIL": "E-postadressen är inte giltig."
+        "INVALID_EMAIL": "E-postadressen är inte giltig.",
+        "NO_ROOM": "Ingen mötesrum tillgängliga för den aktuella användaren."
     },
     "SETTINGS": {
         "GENERAL" : {

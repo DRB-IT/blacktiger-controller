@@ -9,7 +9,7 @@
  * Controller of the blacktiger-app
  */
 angular.module('blacktiger-controllers')
-        .controller('RequestPasswordCtrl', function ($scope, $http, blacktiger, $filter, $log, $rootScope) {
+        .controller('RequestPasswordCtrl', function ($scope, $http, blacktiger, $filter, $log, $rootScope, $location) {
             $scope.reset = function () {
                 $scope.request = {
                     phoneNumber: '',
@@ -58,8 +58,7 @@ angular.module('blacktiger-controllers')
             };
 
             $scope.cancel = function () {
-                window.location.hash = '/login';
-                //$location.path('/login');
+                $location.path('/login');
             };
 
             $scope.reset();

@@ -91,7 +91,8 @@
         "COMMENT_REQUEST": "Einhver langi að svara",
         "INVALID_NAME": "Nafnið verður að vera fullt nafn, til dæmis. 'Michael Jensen' og ekki 'Mr. Jensen' eða 'M. Jensen.",
         "INVALID_PHONE": "Símanúmerið er ekki gild.",
-        "INVALID_EMAIL": "Netfangið er ekki gild."
+        "INVALID_EMAIL": "Netfangið er ekki gild.",
+        "NO_ROOM": "Engin fundur herbergi í boði fyrir the straumur notandi."
     },
     "SETTINGS": {
         "GENERAL" : {

@@ -91,7 +91,8 @@
         "COMMENT_REQUEST": "Somebody would like to comment",
         "INVALID_NAME": "The name must be a full name, for example. 'Michael Jensen' and not 'Mr. Jensen' or 'M. Jensen'.",
         "INVALID_PHONE": "The phone number is not valid.",
-        "INVALID_EMAIL": "The email address is not valid."
+        "INVALID_EMAIL": "The email address is not valid.",
+        "NO_ROOM": "No room displayable for current user."
     },
     "SETTINGS": {
         "GENERAL" : {
