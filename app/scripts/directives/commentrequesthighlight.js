@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc directive
- * @name blacktiger-app.directive:commentRequestHighlighter
+ * @name blacktiger-app.directive:commentRequestHighlight
  * @description
  * # commentRequestHighlighter
  */
 angular.module('blacktiger-directives')
-        .directive('btCommentRequestHighlighter', function ($timeout, CONFIG) {
+        .directive('btCommentRequestHighlight', function ($timeout, CONFIG) {
             return {
                 restrict: 'A',
                 scope: {
