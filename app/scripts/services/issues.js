@@ -10,19 +10,26 @@
 angular.module('blacktiger-services')
         .factory('IssuesSvc', function ($http, CONFIG, $location, $log, $interval) {
             var issues = [];
-            var country = 'DK';
+            var country = null;
             var host = $location.host();
             
             if(host) {
                 $log.info('IssuesSvc: Resolving country from host name [host=' + host + ']');
-                var elements = host.split('.');
-                if(elements[0].length === 2) {
-                    country = elements[0];
-                } else {
-                    $log.warn('IssuesSvc: Unable to resolve country from first elelent in host name [element=' + elements[0] + ']');
+                var elements = host.split('.'), i;
+                
+                for(i=0;i<elements.length;i++) {
+                    if(elements[i].length === 2) {
+                        country = elements[i];
+                        break;
+                    }
                 }
+            } 
+            
+            if (country === null) {
+                $log.warn('IssuesSvc: Unable to resolve country from host name [host=' + host + ']. Falling back to \'DK\'');
+                country = 'DK';
             } else {
-                $log.warn('IssuesSvc: Unable to resolve country from host name [host=' + host + ']');
+                $log.info('IssueSvc: Country resolved: ' + country);
             }
             
             var updateIssues = function () {
