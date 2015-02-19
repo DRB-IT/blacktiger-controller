@@ -12,6 +12,7 @@ angular.module('blacktiger-services')
             var issues = [];
             var country = null;
             var host = $location.host();
+            var interval = 300000;
             
             if(host) {
                 $log.info('IssuesSvc: Resolving country from host name [host=' + host + ']');
@@ -49,7 +50,7 @@ angular.module('blacktiger-services')
                 });
             };
             
-            $interval(updateIssues, 60000);
+            $interval(updateIssues, interval);
             updateIssues();
             
             return {
