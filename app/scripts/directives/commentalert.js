@@ -7,7 +7,7 @@
  * # commentAlert
  */
 angular.module('blacktiger-directives')
-        .directive('btCommentAlert', function () {
+        .directive('btCommentAlert', function (MeetingSvc) {
             return {
                 restrict: 'E',
                 controller: function ($scope) {
@@ -16,13 +16,15 @@ angular.module('blacktiger-directives')
                     $scope.isCommentRequested = function () {
 
                         var commentRequested = false;
-
-                        angular.forEach($scope.participants, function (p) {
-                            if (p.commentRequested) {
-                                commentRequested = true;
-                                return false;
-                            }
-                        });
+                        
+                        if($scope.roomNumber) {
+                            var room = MeetingSvc.findRoom($scope.roomNumber)
+                            angular.forEach(room.participants, function (p) {
+                                if (p.commentRequested) {
+                                    commentRequested = true;
+                                }
+                            });
+                        }
                         return commentRequested;
 
                     };
@@ -35,9 +37,9 @@ angular.module('blacktiger-directives')
 
                     $scope.$watch('context.room', function (room) {
                         if (room) {
-                            $scope.participants = room.participants;
+                            $scope.roomNumber = room.id;
                         } else {
-                            $scope.participants = [];
+                            $scope.roomNumber = null;
                         }
                     });
                 },
