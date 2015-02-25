@@ -34,7 +34,7 @@
                 </span>
 
             </div>
-            <div class="form-group" ng-class="{'has-error':!createForm.email.$valid}">
+            <div class="form-group" ng-class="{'has-error':!createForm.emailAddress.$valid}">
                 <label translate="SETTINGS.CREATE_SIP_ACCOUNT.TITLE_EMAIL"></label>
                 <input type="text" class="form-control" ng-model="user.email" name="emailAddress" placeholder="{{'SETTINGS.CREATE_SIP_ACCOUNT.PLACEHOLDER_EMAIL'| translate}}" ng-required="true" ng-pattern="/^[a-zA-Z0-9'._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}$/">
                 <span ng-if="createForm.email.$valid" class="help-block" translate="SETTINGS.CREATE_SIP_ACCOUNT.DESCRIPTION_EMAIL"></span>
