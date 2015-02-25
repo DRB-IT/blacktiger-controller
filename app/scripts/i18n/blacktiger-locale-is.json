@@ -6,7 +6,8 @@
         "LOG_IN": "Skrá inn",
         "ALERT": "<strong>Þetta er einkakerfi.</strong> Ekki reyna innskráningu án leyfis.",
         "INVALID_CREDENTIALS": "Rangt notendanafn eða lykilorð.",
-        "FORGOT_PASSWORD": "Gleymt lykilorð"
+        "FORGOT_PASSWORD": "Gleymt lykilorð",
+        "NO_CONTACT": "Það er ekki hægt að tengja til the framreiðslumaður. Reyndu aftur síðar."
     },
     "REQUEST_PASSWORD": {
         "NAME": "Fullt nafn:",

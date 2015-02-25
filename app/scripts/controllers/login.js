@@ -17,8 +17,12 @@ angular.module('blacktiger-controllers')
             $scope.login = function () {
                 LoginSvc.authenticate($scope.username, $scope.password, $scope.rememberMe).then(function () {
                     $scope.status = 'success';
-                }, function () {
-                    $scope.status = 'invalid';
+                }, function (rejection) {
+                    if(rejection.status === 0) {
+                        $scope.status = 'no-contact';
+                    } else {
+                        $scope.status = 'invalid';
+                    }
                 });
             };
         });

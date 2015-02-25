@@ -6,7 +6,8 @@
         "LOG_IN": "Iniciar sesión",
         "ALERT": "<strong>Este es un sistema privado.</strong> No trate de entrar a menos que tenga un permiso para hacerlo.",
         "INVALID_CREDENTIALS": "El nombre de usuario o la contraseña es incorrecta.",
-        "FORGOT_PASSWORD": "Olvidó su contraseña"
+        "FORGOT_PASSWORD": "Olvidó su contraseña",
+        "NO_CONTACT": "No se puede conectar al servidor. Inténtalo de nuevo más tarde."     
     },
     "REQUEST_PASSWORD": {
         "NAME": "Nombre completo:",

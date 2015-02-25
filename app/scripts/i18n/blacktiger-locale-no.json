@@ -6,7 +6,8 @@
         "LOG_IN": "Logg inn",
         "ALERT": "<strong>Dette er et privat system.</strong> Forsøk ikke å logge inn uten at du har tillatelse til det.",
         "INVALID_CREDENTIALS": "Feil brukernavn eller passord.",
-        "FORGOT_PASSWORD": "Glemt passord"
+        "FORGOT_PASSWORD": "Glemt passord",
+        "NO_CONTACT": "Det kan ikke kobles til serveren. Prøv igjen senere."
     },
     "REQUEST_PASSWORD": {
         "NAME": "Ditt fulle navn:",

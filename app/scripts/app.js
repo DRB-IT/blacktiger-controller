@@ -41,6 +41,7 @@ blacktigerApp.config(function ($locationProvider, $routeProvider, $httpProvider,
                 if (rejection.status === 401 && CONFIG.serviceUrl && rejection.config.url.substr(0, CONFIG.serviceUrl.length) === CONFIG.serviceUrl) {
                     $location.path('/login');
                 }
+                
                 return $q.reject(rejection);
             }
         };

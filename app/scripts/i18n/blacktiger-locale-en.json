@@ -6,7 +6,8 @@
         "LOG_IN": "Log in",
         "ALERT": "<strong>This is a private system.</strong> Do not try to log in unless you have a permission to do so.",
         "INVALID_CREDENTIALS": "The user name or password is wrong.",
-        "FORGOT_PASSWORD": "Forgot password"
+        "FORGOT_PASSWORD": "Forgot password",
+        "NO_CONTACT": "Unable to connect to server. Please try again later."
     },
     "REQUEST_PASSWORD": {
         "NAME": "Your full name:",

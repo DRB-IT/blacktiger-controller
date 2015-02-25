@@ -1,6 +1,7 @@
 
-<div class="alert alert-info" ng-class="{'hidden':status!=null}" translate="LOGIN.ALERT"></div>
-<div class="alert alert-danger" ng-class="{'hidden':status!='invalid'}" translate="LOGIN.INVALID_CREDENTIALS"></div>
+<div class="alert alert-info" ng-if="status===null" translate="LOGIN.ALERT"></div>
+<div class="alert alert-danger" ng-if="status==='invalid'" translate="LOGIN.INVALID_CREDENTIALS"></div>
+<div class="alert alert-warning" ng-if="status==='no-contact'" translate="LOGIN.NO_CONTACT"></div>
 <div class="row">
     <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
         <form id="loginform">
