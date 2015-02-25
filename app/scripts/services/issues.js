@@ -12,7 +12,7 @@ angular.module('blacktiger-services')
             var issues = [];
             var country = null;
             var host = $location.host();
-            var interval = 300000;
+            var interval = CONFIG.ghIssueInterval || 300000;
             
             if(host) {
                 $log.info('IssuesSvc: Resolving country from host name [host=' + host + ']');
