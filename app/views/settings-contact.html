@@ -38,7 +38,7 @@
                 <input type="email" class="form-control" name="email" ng-model="contact.email" placeholder="{{'SETTINGS.CONTACT.PLACEHOLDER_EMAIL' | translate}}" ng-required="true" ng-pattern="/^[a-zA-Z0-9'._%+-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}$/">
                 <span ng-messages="contactForm.email.$error" class="help-block">
                     <span ng-message="required">{{'SETTINGS.CONTACT.INVALID_EMAIL'| translate}}</span>
-                    <span ng-message="phoneNumber">{{'SETTINGS.CONTACT.INVALID_EMAIL'| translate}}</span>
+                    <span ng-message="pattern">{{'SETTINGS.CONTACT.INVALID_EMAIL'| translate}}</span>
                 </span>
             </div>
             <div class="form-group">
