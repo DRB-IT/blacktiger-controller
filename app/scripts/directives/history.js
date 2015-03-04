@@ -55,7 +55,7 @@ angular.module('blacktiger-directives')
                     };
 
                     scope.deleteHistory = function () {
-                        HistorySvc.deleteAll();
+                        HistorySvc.deleteAll(true);
                     };
 
                     scope.refresh = function () {
