@@ -19,11 +19,13 @@ angular.module('blacktiger-directives')
                         
                         if($scope.roomNumber) {
                             var room = MeetingSvc.findRoom($scope.roomNumber)
-                            angular.forEach(room.participants, function (p) {
-                                if (p.commentRequested) {
-                                    commentRequested = true;
-                                }
-                            });
+                            if(room) {
+                                angular.forEach(room.participants, function (p) {
+                                    if (p.commentRequested) {
+                                        commentRequested = true;
+                                    }
+                                });
+                            }
                         }
                         return commentRequested;
 
