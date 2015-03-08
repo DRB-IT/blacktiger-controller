@@ -88,11 +88,11 @@
         "EMAIL": "E-postadresse",
         "LOADING": "Laster inn...",
         "LOST_CONNECTION": "Forbindelsen til serveren ble brutt. Sjekk internettforbindelsen, og oppdater siden (trykk F5)",
-        "UNABLE_TO_CONNECT": "Unable to connect to server. This may due to the browser not being supported by the system.",
+        "UNABLE_TO_CONNECT": "Kan ikke opprette forbindelse til serveren. Dette kan skyldes at nettleseren ikke er kompatibel med systemet.",
         "COMMENT_REQUEST": "Noen vil gjerne svare",
-        "INVALID_NAME": "Navnet må være et fullt navn, for eksempel. 'Michael Jensen' og ikke 'Mr. Jensen' eller 'M. Jensen.'",
-        "INVALID_PHONE": "Telefonnummeret er ikke gyldig.",
-        "INVALID_EMAIL": "Epost-adressen er ikke gyldig.",
+        "INVALID_NAME": "Navnet må være fullstendig, f.eks 'Per Hansen' og ikke f.eks 'P. Hansen' eller annet.",
+        "INVALID_PHONE": "Telefonnummeret er ikke korrekt.",
+        "INVALID_EMAIL": "E-postadressen er ikke korrekt.",
         "NO_ROOM": "Ingen møterom tilgjengelig for den aktuelle brukeren."
     },
     "SETTINGS": {
