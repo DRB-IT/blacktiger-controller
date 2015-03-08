@@ -88,11 +88,11 @@
         "EMAIL": "E-postadress",
         "LOADING": "Laddar...",
         "LOST_CONNECTION": "Kopplingen till servern avbröts. Kontrollera internetuppkopplingen och ladda sidan igen (tryck F5)",
-        "UNABLE_TO_CONNECT": "Unable to connect to server. This may due to the browser not being supported by the system.",
+        "UNABLE_TO_CONNECT": "Ingen kontakt med severn. Det kan bero på att webläsaren inte stöds av systemet.",
         "COMMENT_REQUEST": "Någon önskar svara",
-        "INVALID_NAME": "Namnet måste vara ett fullständigt namn, till exempel. 'Michael Jensen' och inte 'Mr. Jensen' eller 'M. Jensens'.",
-        "INVALID_PHONE": "Telefonnumret är ogiltigt.",
-        "INVALID_EMAIL": "E-postadressen är inte giltig.",
+        "INVALID_NAME": "Ange för- och efternamn, t.ex. ’Sven Svensson’ – inte ’Hr. Svensson’ eller ’S. Svensson’.",
+        "INVALID_PHONE": "Ogiltigt telefonnummer.",
+        "INVALID_EMAIL": "Ogiltig emejladress.",
         "NO_ROOM": "Ingen mötesrum tillgängliga för den aktuella användaren."
     },
     "SETTINGS": {
