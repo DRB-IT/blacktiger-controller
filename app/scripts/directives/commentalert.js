@@ -18,7 +18,7 @@ angular.module('blacktiger-directives')
                         var commentRequested = false;
                         
                         if($scope.roomNumber) {
-                            var room = MeetingSvc.findRoom($scope.roomNumber)
+                            var room = MeetingSvc.findRoom($scope.roomNumber);
                             if(room) {
                                 angular.forEach(room.participants, function (p) {
                                     if (p.commentRequested) {
