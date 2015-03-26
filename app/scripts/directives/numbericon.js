@@ -14,7 +14,7 @@ angular.module('blacktiger-directives')
                     type: '@'
                 },
                 controller: function ($scope) {
-                    if ($scope.type === 'Sip') {
+                    if ($scope.type === 'Sip' || $scope.type === 'Hall') {
                         $scope.iconclass = 'hdd';
                     } else if ($scope.type === 'Phone') {
                         $scope.iconclass = 'earphone';
