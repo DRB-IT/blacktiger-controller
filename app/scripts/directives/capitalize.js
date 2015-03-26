@@ -11,8 +11,14 @@ angular.module('blacktiger-directives')
             return {
                 require: 'ngModel',
                 link: function (scope, element, attrs, modelCtrl) {
+                    var enabled = false, disablerKeys = [8 /* BACKSPACE */, 37 /* LEFT ARROW */]
                     var capitalize = function (inputValue) {
                         var i, words, word, capitalized = '';
+                        
+                        if(!enabled) {
+                            return inputValue;
+                        }
+                        
                         if (inputValue === undefined) {
                             inputValue = '';
                         }
@@ -37,15 +43,18 @@ angular.module('blacktiger-directives')
 
                     modelCtrl.$parsers.push(capitalize);
 
+                    element.on('keydown', function (event) {
+                        if(disablerKeys.indexOf(event.which) >= 0) {
+                            enabled = false;
+                        }
+                    });
+                    
                     element.on('focus', function () {
                         var initialEdit = element.val() === '';
                         if (initialEdit) {
-                            modelCtrl.$parsers.push(capitalize);
+                            enabled = true;
                         } else {
-                            var parserIndex = modelCtrl.$parsers.indexOf(capitalize);
-                            if(parserIndex >= 0) {
-                                modelCtrl.$parsers.splice(parserIndex, 0);
-                            }
+                            enabled = false;
                         }
                     });
                 }
