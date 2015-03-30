@@ -98,7 +98,7 @@
         "GENERAL" : {
             "TITLE": "Denne mødesal",
             "LOGGED_IN_AS": "Du er logget ind som rigssalen i <b>{{postalCode}} {{city}}</b>",
-            "TECHNICALLY_RESPONSIBLE": "Den teknisk ansvarlige for denne rigsssal er <b>{{name}}</b>",
+            "TECHNICALLY_RESPONSIBLE": "Den teknisk ansvarlige for denne rigssal er <b>{{name}}</b>",
             "CONTACT_LINK": "Mere information",
             "FIND_HELP": "Få hjælp",
             "FIND_HELP_DESC": "Klik på <span class=\"glyphicon glyphicon-question-sign\"></span> i toppen af siden hvis du har brug for hjælp, eller kontakt den teknisk ansvarlige.",
