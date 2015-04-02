@@ -3,8 +3,12 @@
     <span style="white-space: pre-wrap;">{{issue.body}}</span>
 </div>
 {{rooms}}
-<div ng-if="!context.room" class="alert alert-info" translate="">
+<div ng-if="!context.room && connected" class="alert alert-info" translate="">
     No room displayable for current user.
+</div>
+
+<div ng-repeat="entry in initLogs" ng-if="!context.room">
+    {{entry}}
 </div>
 
 <div ng-if="context.room">
