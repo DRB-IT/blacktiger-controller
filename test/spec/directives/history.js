@@ -22,7 +22,7 @@ describe('Directive: btHistory', function () {
     });
 
     it('contains data when callers hang up', function () {
-        var room = 'H45-0000';
+        var roomId = 'H45-0000';
         var participant = {
             type: 'Sip',
             callerId: 'L00000000',
@@ -32,14 +32,16 @@ describe('Directive: btHistory', function () {
         };
         var element = $compile('<bt-history room="H45-0000"></bt-history>')($rootScope);
         $rootScope.$digest();
+        var scope = element.isolateScope();
+        scope.deleteHistory();
 
-        $rootScope.$broadcast('PushEvent.ConferenceStart', {id: room});
-        $rootScope.$broadcast('PushEvent.Join', room, participant);
+        $rootScope.$broadcast('PushEvent.ConferenceStart', {id: roomId});
+        $rootScope.$broadcast('PushEvent.Join', roomId, participant);
         $rootScope.$digest();
         var index = element.html().indexOf('REPORT.NO_ENTRIES');
         expect(index).toBeGreaterThan(0);
 
-        $rootScope.$broadcast('PushEvent.Leave', 'H45-0000', participant.channel);
+        $rootScope.$broadcast('PushEvent.Leave', roomId, participant.channel);
         $rootScope.$digest();
         index = element.html().indexOf('REPORT.NO_ENTRIES');
         expect(index).toBeLessThan(0);
