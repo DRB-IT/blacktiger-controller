@@ -11,7 +11,7 @@ angular.module('blacktiger-directives')
             return {
                 require: 'ngModel',
                 link: function (scope, element, attrs, modelCtrl) {
-                    var enabled = false, disablerKeys = [8 /* BACKSPACE */, 37 /* LEFT ARROW */, 39 /* RIGHT ARROW */], 
+                    var enabled = false, disablerKeys = [8 /* BACKSPACE */, 37 /* LEFT ARROW */, 39 /* RIGHT ARROW */, 46 /* DELETE */], 
                             nonDisableKeyCount = 0, enableThreshold = 2;
                     var capitalize = function (inputValue) {
                         var i, words, word, capitalized = '';
