@@ -36,8 +36,11 @@ angular.module('blacktiger-directives')
                         }
 
                         if (capitalized !== inputValue) {
+                            var caretPos = element[0].selectionStart;
                             modelCtrl.$setViewValue(capitalized);
                             modelCtrl.$render();
+                            element[0].setSelectionRange(caretPos, caretPos);
+                            
                         }
                         return capitalized;
                     };
