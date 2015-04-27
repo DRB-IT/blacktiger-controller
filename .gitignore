@@ -6,3 +6,5 @@ bower_components
 nbproject/private/
 **/.*
 .DS_Store
+app/config_test.json
+app/config_prod.json

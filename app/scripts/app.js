@@ -191,7 +191,7 @@ blacktigerApp.run(function (CONFIG, blacktiger, $location, LoginSvc, $rootScope,
             targetPath = '/admin/realtime';
         }
         
-        PushEventSvc.connect().then(function() {
+        PushEventSvc.connect({enforcedHeartbeatInterval:30000}).then(function() {
             $rootScope.updateCurrentRoom();
             $location.path(targetPath);
         }, function() {
