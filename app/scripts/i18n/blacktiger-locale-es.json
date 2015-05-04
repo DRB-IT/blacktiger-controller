@@ -143,8 +143,8 @@
         }
     },
     "SIP_ACCOUNT_RETRIEVAL": {
-        "DESCRIPTION": "<p>Estimado <b>{{name}}</b>, aquí encontrará su código personal. Lo necesita para escuchar a las reuniones a través de Internet. Su código está ligado a a su número de teléfono <b>{{phoneNumber}}</b>, por lo que <b>nunca debe compartir su código con nadie</b>.</p><p><b>No anote el código </b>, cópielo directamente desde esta página a la aplicación que va a utilizar para escuchar a las reuniones. Por otro lado, es buena idea <b>guardar el enlace en el correo</b> que te envió a esta página, de esta forma podrá encontrar fácilmente su código personal.</p><p>Si cambia más tarde su número de teléfono pierde el enlace en este e-mail, pida una nueva cuenta.</p>",
-        "FOOTNOTE": "Para saber cómo instalar y utilizar la aplicación,  <a href='http://help.telesal.org/en/homesetup' target='_blank'>de click aquí</a>.",
+        "DESCRIPTION": "<p>Estimado <b>{{name}}</b>, aquí encontrará su código personal. Lo necesita para escuchar a las reuniones a través de Internet. Su código está ligado a a su número de teléfono <b>{{phoneNumber}}</b>, por lo que <b>nunca debe compartir su código con nadie</b>.</p><p><b>No anote el código </b>, cópielo directamente desde esta página a la aplicación que va a utilizar para escuchar a las reuniones. Por otro lado, es buena idea <b>guardar el enlace en el correo</b> que te envió a esta página, de esta forma podrá encontrar fácilmente su código personal.</p><p><b><a style='color: #ff0000;' href='http://help.telesal.org/en/homesetup' target='_blank'>CLICK AQUÍ</a> - para saber cómo instalar y utilizar la aplicación.</b></p>",
+        "FOOTNOTE": "",
         "RETRIEVE_INFORMATION": "OK",
         "TITLE": "Su cuenta Telesal",
         "ENTER_PHONE": "Escriba su número de teléfono aquí, a continuación, haga clic en Aceptar (OK)",
