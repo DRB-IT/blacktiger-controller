@@ -143,8 +143,8 @@
         }
     },
     "SIP_ACCOUNT_RETRIEVAL": {
-        "DESCRIPTION": "<p>Kæri/kæra <b>{{name}}</b>, hér finnurðu kóðann þinn. Þú þarft á honum að halda til að geta hlustað á samkomurnar um Netið. Kóðinn er tengdur símanúmeri þínu <b>{{phoneNumber}}</b> þannig að þú  <b>mátt aldrei láta hann af hendi til annarra</b>.</p><p><b>Skrifaðu hann ekki niður</b> heldur afritaðu hann beint af þessari síðu í innhringiappið sem þú notar til að hlusta á samkomurnar. Það er hins vegar í lagi <b>að vista tengilinn í  tölvupóstinum</b> sem vísaði þig á þessa síðu. Þannig geturðu alltaf haft upp á kóðanum aftur. </p><p>Ef þú skiptir um símanúmer eða glatar tenglinum í tölvupóstinum skaltu bara biðja um nýja skráningu.</p>",
-        "FOOTNOTE": "Til að kynna þér hvernig eigi að setja upp og nota innhringiappið <a href='http://help.telesal.org/is/homesetup' target='_blank'>smelltu hér</a>.",
+        "DESCRIPTION": "<p>Kæri/kæra <b>{{name}}</b>, hér finnurðu kóðann þinn. Þú þarft á honum að halda til að geta hlustað á samkomurnar um Netið. Kóðinn er tengdur símanúmeri þínu <b>{{phoneNumber}}</b> þannig að þú  <b>mátt aldrei láta hann af hendi til annarra</b>.</p><p><b>Skrifaðu hann ekki niður</b> heldur afritaðu hann beint af þessari síðu í innhringiappið sem þú notar til að hlusta á samkomurnar. Það er hins vegar í lagi <b>að vista tengilinn í  tölvupóstinum</b> sem vísaði þig á þessa síðu. Þannig geturðu alltaf haft upp á kóðanum aftur. </p><p><b><a style='color: #ff0000;' href='http://help.telesal.org/is/homesetup' target='_blank'>SMELLTU HÉR</a> - til að kynna þér hvernig eigi að setja upp og nota innhringiappið.</b></p>",
+        "FOOTNOTE": "",
         "RETRIEVE_INFORMATION": "OK",
         "TITLE": "Telesal skráningin þín",
         "ENTER_PHONE": "Sláðu inn símanúmerið þitt hér og ýttu á OK",
