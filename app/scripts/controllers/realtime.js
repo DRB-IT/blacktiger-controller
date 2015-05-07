@@ -8,7 +8,7 @@
  * Used by Admin
  */
 angular.module('blacktiger-controllers')
-        .controller('RealtimeCtrl', function ($scope, SystemSvc, MeetingSvc, $timeout) {
+        .controller('RealtimeCtrl', function ($scope, SystemSvc, MeetingSvc, $interval) {
             $scope.system = {};
 
             $scope.getNoOfRooms = function () {
@@ -60,9 +60,10 @@ angular.module('blacktiger-controllers')
                 });
             };
 
-            $scope.$on('$destroy', function cleanup() {
-                $timeout.cancel($scope.systemInfoTimerPromise);
+            $scope.$on('$destroy', function () {
+                $scope.stopLoad();
             });
 
+            $scope.stopLoad = $interval($scope.updateSystemInfo, 2000);
             $scope.updateSystemInfo();
         });
