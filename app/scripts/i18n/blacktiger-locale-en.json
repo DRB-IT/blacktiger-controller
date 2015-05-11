@@ -134,7 +134,7 @@
             "TITLE_PHONE": "Mobile phone number",
             "TITLE_EMAIL": "E-mail address",
             "PLACEHOLDER_EMAIL": "example@mail.com",
-            "TITLE_COMMENT": "Comment",
+            "TITLE_COMMENT": "Optional information",
             "SAVED": "Saved",
             "ALERT_ERROR": "<b>Error!</b> The changes were not saved. Please try again later.",
             "INVALID_NAME": "@:GENERAL.INVALID_NAME",
