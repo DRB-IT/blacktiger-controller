@@ -134,7 +134,7 @@
             "TITLE_PHONE": "Mobilnummer",
             "TITLE_EMAIL": "E-postadress",
             "PLACEHOLDER_EMAIL": "exempel@mail.se",
-            "TITLE_COMMENT": "Kommentar",
+            "TITLE_COMMENT": "Kommentar till lokalt bruk",
             "SAVED": "Sparat",
             "ALERT_ERROR": "<b>Fel!</b> Ändringarna sparades inte. Försök igen om en stund.",
             "INVALID_NAME": "@:GENERAL.INVALID_NAME",
