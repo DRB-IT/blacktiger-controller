@@ -133,7 +133,7 @@
             "TITLE_PHONE": "Mobilnummer",
             "TITLE_EMAIL": "E-mailadresse",
             "PLACEHOLDER_EMAIL": "eksempel@mail.dk",
-            "TITLE_COMMENT": "Kommentar til lokal brug",
+            "TITLE_COMMENT": "Kommentar (kun til lokalt brug - besked til Telesal Support skal via e-mail)",
             "SAVED": "Gemt",
             "ALERT_ERROR": "<b>Fejl!</b> Ændringerne blev ikke gemt. Prøv igen om lidt.",
             "INVALID_NAME": "@:GENERAL.INVALID_NAME",
