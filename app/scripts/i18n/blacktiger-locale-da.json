@@ -90,7 +90,7 @@
         "UNABLE_TO_CONNECT": "Kan ikke oprette forbindelse til serveren. Det kan evt. skyldes at browseren ikke er supporteret af systemet.",
         "COMMENT_REQUEST": "Nogen ønsker at svare",
         "INVALID_NAME": "Navnet skal fuldt navn, f.eks. 'Michael Jensen' og ikke 'Hr. Jensen' eller 'M. Jensen'.",
-        "INVALID_PHONE": "Telefonnummeret er ikke et validt telefonnummer",
+        "INVALID_PHONE": "Telefonnummeret er ikke et validt telefonnummer.",
         "INVALID_EMAIL": "Emailadressen er ikke valid.",
         "NO_ROOM": "Intet møderum tilgængeligt for den nuværende bruger."
     },
