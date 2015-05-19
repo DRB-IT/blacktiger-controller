@@ -51,10 +51,10 @@
         "KICK": "Leggið á",
         "EDIT": "Broyta navn hjá lurtarin",
         "PARTICIPANTS": "{noOfParticipants} {noOfParticipants, plural, one{lurtar} other{lurtarar}}",
-        "ABORT_TRANSMISSION": "Afbryd transmission",
-        "COMPLETED_CALLS": "{noOfCompletedCalls} {noOfCompletedCalls, plural, one{afsluttet} other{afsluttede}} opkald",
-        "WANTS_TO_COMMENT": "Jeg vil gerne svare!",
-        "ENTER_NAME": "Hvem er det? Ring og spørg, skriv navn her!"
+        "ABORT_TRANSMISSION": "Bróta av ljóð-sending",
+        "COMPLETED_CALLS": "{noOfCompletedCalls} {noOfCompletedCalls, plural, one{afsluttet opkald} other{uppringingar endaðar}}",
+        "WANTS_TO_COMMENT": "Eg vil gjarna svara!",
+        "ENTER_NAME": "Hvør er hetta? Ring og spyr, skriva navnið her!"
     },
     "REPORT": {
         "NUMBER": "Telefonnummer",
