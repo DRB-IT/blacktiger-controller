@@ -26,31 +26,31 @@
         "COPYRIGHTHOLDER": "telesal.org"
     },
     "NAVIGATION": {
-        "PARTICIPANTS": "Lyttere lige nu",
-        "SETTINGS": "Indstillinger",
-        "HELP": "Hjælp",
+        "PARTICIPANTS": "Lurtarar beint nú",
+        "SETTINGS": "Uppseting",
+        "HELP": "Hjálp",
         "ADMIN": {
-            "REALTIME": "Realtid",
-            "HISTORY": "Historik"
+            "REALTIME": "Beint nú",
+            "HISTORY": "Gerðalisti"
         }
     },
     "PARTICIPANTS": {
         "WARNINGS": {
-            "NO_PARTICIPANTS_AND_TRANSMITTERS": "Der er ingen transmission nu, og der er heller ingen der har ringet op nu for at lytte med.",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "Der sendes ingen lyd ud til lytterne!",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "Kontroller at X-Lite er startet",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "Ring op til <a href=\"tel:{{phoneNumber}}\">{{phoneNumber | telephone}}</a> fra X-Lite",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Ring derefter op til samme nummer fra en anden telefon og kontroller kvaliteten og juster eventuelt lydstyrken"
+            "NO_PARTICIPANTS_AND_TRANSMITTERS": "Einki verur sent beint nú, og heldur eingir lurtarar hava samband.",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "Eingi ljóð verur sent til lurtarar!",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "Kannið um X-Lite forrite er starta",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "Ringi til <a href=\"tel:{{phoneNumber}}\">{{phoneNumber | telephone}}</a> frá X-Lite",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Ring síðani til sama nummar frá einum ørðum telefoni og kanni um ljóðgóðskan er í lagi, og stilli ljóðstyrkin eftir tørvi"
         },
         "INFO": {
-            "NO_PARTICIPANTS": "Der er ingen der lytter med nu.",
-            "UNMUTED": "Svar-mikrofonen er åben!"
+            "NO_PARTICIPANTS": "Tað eru ongir lurtarar beint nú.",
+            "UNMUTED": "Svar-mikrofonin er opin!"
         },
-        "UNMUTE": "Åbn svar-mikrofon",
-        "MUTE": "Luk svar-mikrofon",
-        "KICK": "Afbryd lytter",
+        "UNMUTE": "Opna svar-mikrofon",
+        "MUTE": "Steingja fyri svar-mikrofon",
+        "KICK": "Leggið á",
         "EDIT": "Broyta navn hjá lurtarin",
-        "PARTICIPANTS": "{noOfParticipants} {noOfParticipants, plural, one{lytter} other{lyttere}}",
+        "PARTICIPANTS": "{noOfParticipants} {noOfParticipants, plural, one{lurtar} other{lurtarar}}",
         "ABORT_TRANSMISSION": "Afbryd transmission",
         "COMPLETED_CALLS": "{noOfCompletedCalls} {noOfCompletedCalls, plural, one{afsluttet} other{afsluttede}} opkald",
         "WANTS_TO_COMMENT": "Jeg vil gerne svare!",
