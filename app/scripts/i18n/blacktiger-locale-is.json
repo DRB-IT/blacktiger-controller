@@ -103,7 +103,7 @@
             "CONTACT_LINK": "Fleiri upplýsingar",
             "FIND_HELP": "Fáðu aðstoð",
             "FIND_HELP_DESC": "Smelltu <span class=\"glyphicon glyphicon-question-sign\"></span> efst á síðunni ef þú þarfnast aðstoðar eða hafðu samband við tækniábyrgðarmann.",
-            "CAN_DISCONNECT": "Calls can be disconnected from this computer"
+            "CAN_DISCONNECT": "Kalla má að aftengja úr þessari tölvu"
         },
         "CREATE_SIP_ACCOUNT": {
             "TITLE": "Búið til innhringinotanda",
