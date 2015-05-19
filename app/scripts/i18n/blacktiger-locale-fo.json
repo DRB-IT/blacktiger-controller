@@ -1,25 +1,25 @@
 {
     "LOGIN": {
-        "USERNAME": "Brugernavn",
-        "PASSWORD": "Kodeord",
-        "REMEMBER_ME": "Gem kodeordet på denne computer",
-        "LOG_IN": "Log ind",
-        "ALERT": "<strong>Dette er et privat system.</strong> Forsøg ikke at logge ind hvis du ikke har tilladelse til det.",
-        "INVALID_CREDENTIALS": "Brugernavn eller kodeord er forkert.",
-        "FORGOT_PASSWORD": "Glemt kodeord",
+        "USERNAME": "Brúkaranavn",
+        "PASSWORD": "Loyniorð",
+        "REMEMBER_ME": "Goymi loyniorð á hesari telduna",
+        "LOG_IN": "Rita inn",
+        "ALERT": "<strong>Hetta er ein privat skipan.</strong> Royni ikki at innrita um tú ikki hevur rættindi til tað.",
+        "INVALID_CREDENTIALS": "Brúkaranavni ella loyniorði er skeivt",
+        "FORGOT_PASSWORD": "Gloymt loyniorð",
         "NO_CONTACT": "Der kan ikke forbindes til serveren. Prøv igen lidt senere."
     },
     "REQUEST_PASSWORD": {
-        "NAME": "Dit fulde navn:",
-        "PHONENUMBER": "Dit mobilnummer:",
-        "EMAIL": "Din e-mailadresse:",
-        "CITY_OF_HALL": "Byen hvor mødesalen er:",
-        "PHONENUMBER_OF_HALL": "Telesal-telefonnummeret til salen:",
-        "ERROR": "Vi fandt intet der passer på disse oplysninger. Du kan rette oplysningerne og prøve igen.",
-        "SUCCESS": "Der er sendt en mail til dig. Tjek evt. også din mail-folder til uønsket post.",
-        "EMAIL_TEXT_USER": "DANSK: Du har aktiveret 'glemt kodeord' for salen med nummer {%1}. Koden er nu sendt til {%5}, som er den e-mailadresse der tidligere er oplyst for den teknisk ansvarlige for denne sal. Han hedder {%3} og har telefon {%4}.\n\nBrugernavnet der skal bruges sammen med koden er {%2}.\n\n\n\nENGLISH: You have activated 'forgot password' for the hall using phone number {%1}. The password has been sent to {%5}, which is the e-mail address which was entered earlier for the technical responsible for this hall. His name is {%3} and his phone number is {%4}.\n\nThe user ID which must be used together with the password is {%2}.\n",
-        "EMAIL_TEXT_MANAGER": "DANSK: {%1} har aktiveret 'glemt kodeord' for salen med nummer {%4}, som du er teknisk ansvarlig for. Hans mobilnummer er {%2} og hans e-mail er {%3}. Af sikkerhedshensyn er kodeordet kun sendt til dig, ikke til ham. Du skal kontakte ham for at finde ud af om han skal have udleveret kodeordet af dig.\n\nDet glemte kodeord er: {%5}\n\n\n\nENGLISH: {%1} has activated 'forgot password' for the hall using phone number {%4}, which you are technically responsible for. His phone number is {%2}, and his e-mail is {%3}. For security reasons, the password been sent to you only, not to him. You must contact him to check if he should have the password from you.\n\nThe password is: {%5}\n",
-        "EMAIL_SUBJECT": "Telesal i {%1}"
+        "NAME": "Fult navn:",
+        "PHONENUMBER": "Títt fartelefonnummar:",
+        "EMAIL": "Tín t-post adressa:",
+        "CITY_OF_HALL": "Býin har møtisalin er:",
+        "PHONENUMBER_OF_HALL": "Telesal-telefonnummar til salin:",
+        "ERROR": "Vit funnu einki við hasar upplýsingarnar. Tú kanst broyta upplýsingarnar og royna aftur.",
+        "SUCCESS": "Ein t-postur er sent til tín. Kanni møguliga eisini møguliga eisini mappan við óynskt post.",
+        "EMAIL_TEXT_USER": "FØROYSKT: Tú hevur valgt 'gloymt loyniorð' fyri ríkissalur nr {%1}. Loyniorði er nú sent til {%5}, sum er t-postadressan sum áður var upplýst honum sum hevur tøknuliga ábyrgdin fyri henda salin. Hann eitur {%3} og hevur telefon {%4}.\n\nBrúkaranavnið sum skal brúkast saman við loyniorði er {%2}.\n\n\n\nENGLISH: You have activated 'forgot password' for the hall using phone number {%1}. The password has been sent to {%5}, which is the e-mail address which was entered earlier for the technical responsible for this hall. His name is {%3} and his phone number is {%4}.\n\nThe user ID which must be used together with the password is {%2}.\n",
+        "EMAIL_TEXT_MANAGER": "FØROYSKT: {%1} hevur valgt 'gloymt loyniorð' fyri ríkissalur nr {%4}, sum tú hevur tøknuliga ábyrgdin fyri. Hansara telefonnummar er {%2} og t-post er {%3}. Av trygdarávum er loyniorði bert sent til tín, ikki tal hann. Tú mást kontakta honum fyri at vita um hann skal hava loyniorði frá tær.\n\nGloymda loyniorði er: {%5}\n\n\n\nENGLISH: {%1} has activated 'forgot password' for the hall using phone number {%4}, which you are technically responsible for. His phone number is {%2}, and his e-mail is {%3}. For security reasons, the password been sent to you only, not to him. You must contact him to check if he should have the password from you.\n\nThe password is: {%5}\n",
+        "EMAIL_SUBJECT": "Telesal í {%1}"
     },
     "SYSTEM": {
         "NAME": "Telesal",
@@ -49,7 +49,7 @@
         "UNMUTE": "Åbn svar-mikrofon",
         "MUTE": "Luk svar-mikrofon",
         "KICK": "Afbryd lytter",
-        "EDIT": "Rediger lytterens navn",
+        "EDIT": "Broyta navn hjá lurtarin",
         "PARTICIPANTS": "{noOfParticipants} {noOfParticipants, plural, one{lytter} other{lyttere}}",
         "ABORT_TRANSMISSION": "Afbryd transmission",
         "COMPLETED_CALLS": "{noOfCompletedCalls} {noOfCompletedCalls, plural, one{afsluttet} other{afsluttede}} opkald",
@@ -85,8 +85,8 @@
         "NO": "Nej",
         "PHONENUMBER": "Telefonnummer",
         "EMAIL": "E-mailadresse",
-        "LOADING": "Henter oplysninger...",
-        "LOST_CONNECTION": "Forbindelsen til serveren blev afbrudt. Tjek internetforbindelsen og genindlæs siden (tryk F5)",
+        "LOADING": "Heintar upplýsingar...",
+        "LOST_CONNECTION": "Sambandi til servaran breyt av. Kanna internetsambandið og innles síðan umaftur (tryst F5)",
         "UNABLE_TO_CONNECT": "Kan ikke oprette forbindelse til serveren. Det kan evt. skyldes at browseren ikke er supporteret af systemet.",
         "COMMENT_REQUEST": "Nogen ønsker at svare",
         "INVALID_NAME": "Navnet skal fuldt navn, f.eks. 'Michael Jensen' og ikke 'Hr. Jensen' eller 'M. Jensen'.",
@@ -147,7 +147,7 @@
         "RETRIEVE_INFORMATION": "OK",
         "TITLE": "Din Telesal-konto",
         "ENTER_PHONE": "Skriv dit telefonnummer herunder, tryk så på OK",
-        "ERROR_MESSAGE": "Nummeret blev ikke genkendt, måske tastede du forkert? Hvis du har du et andet telefonnummer, så prøv det. Eller kontakt den der oprettede kontoen til dig, og bed ham oprette den igen med dit korrekte telefonnummer."
+        "ERROR_MESSAGE": "Nummari var ikki funnið, kanska hevur tú skriva skeivt? Um tú hevur eitt annað nummar, royn so tað ístaðin. Ella set teg í samband við tann sum stovnaði kontoin hjá tær, og bið hann stovna brúkaran av nýggjum við rætta telefonummarið."
     }
 
 }
