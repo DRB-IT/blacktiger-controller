@@ -103,7 +103,7 @@
             "CONTACT_LINK": "Fleiri upplýsingar",
             "FIND_HELP": "Fáðu aðstoð",
             "FIND_HELP_DESC": "Smelltu <span class=\"glyphicon glyphicon-question-sign\"></span> efst á síðunni ef þú þarfnast aðstoðar eða hafðu samband við tækniábyrgðarmann.",
-            "CAN_DISCONNECT": "Kalla má að aftengja úr þessari tölvu"
+            "CAN_DISCONNECT": "Hægt er að slökkva á innhringingum úr þessari tölvu"
         },
         "CREATE_SIP_ACCOUNT": {
             "TITLE": "Búið til innhringinotanda",
@@ -134,7 +134,7 @@
             "TITLE_PHONE": "Farsími",
             "TITLE_EMAIL": "Netfang",
             "PLACEHOLDER_EMAIL": "nafn@mail.is",
-            "TITLE_COMMENT": "Athugasemdir",
+            "TITLE_COMMENT": "Athugasemdir (aðeins fyrir staðbundna notkun – skilaboð til Telesal sendast í tölvupósti)",
             "SAVED": "Vistað",
             "ALERT_ERROR": "<b>Villa!</b> Breytingar voru ekki vistaðar. Vinsamlegast reynið aftur síðar.",
             "INVALID_NAME": "@:GENERAL.INVALID_NAME",
