@@ -90,9 +90,9 @@
         "LOST_CONNECTION": "Lost connection to the server. Please check the internet connection , then refresh the page (press F5)",
         "UNABLE_TO_CONNECT": "Unable to connect to server. This may due to the browser not being supported by the system.",
         "COMMENT_REQUEST": "Somebody would like to comment",
-        "INVALID_NAME": "The name must be a full name, for example. 'Michael Jensen' and not 'Mr. Jensen' or 'M. Jensen'.",
+        "INVALID_NAME": "The name must be a full name, for example. 'David Smith' and not 'Mr. Smith' or 'D. Smith'.",
         "INVALID_PHONE": "The phone number is not valid.",
-        "INVALID_EMAIL": "The email address is not valid.",
+        "INVALID_EMAIL": "The e-mail address is not valid.",
         "NO_ROOM": "No room displayable for current user."
     },
     "SETTINGS": {
@@ -134,7 +134,7 @@
             "TITLE_PHONE": "Mobile phone number",
             "TITLE_EMAIL": "E-mail address",
             "PLACEHOLDER_EMAIL": "example@mail.com",
-            "TITLE_COMMENT": "Comment",
+            "TITLE_COMMENT": "Comments (for local use only - messages to Telesal Support must via e-mail)",
             "SAVED": "Saved",
             "ALERT_ERROR": "<b>Error!</b> The changes were not saved. Please try again later.",
             "INVALID_NAME": "@:GENERAL.INVALID_NAME",

@@ -88,7 +88,7 @@
         "EMAIL": "Correo electrónico" ,
         "LOADING": "Cargando...",
         "LOST_CONNECTION": "Conexión con el servidor pérdida. Por favor, compruebe la conexión a Internet, a continuación, actualice la página (pulse F5)",
-        "UNABLE_TO_CONNECT": "Unable to connect to server. This may due to the browser not being supported by the system.",
+        "UNABLE_TO_CONNECT": "No se puede conectar al servidor. Esto puede deberse a que el navegador no está soportado por el sistema.",
         "COMMENT_REQUEST": "A alguien le gustaría comentar",
         "INVALID_NAME": "El nombre debe ser un nombre completo, por ejemplo. 'Michael Jensen' y no 'Mr. Jensen 'o' M. Jensen.",
         "INVALID_PHONE": "El número de teléfono no es válido.",
@@ -103,7 +103,7 @@
             "CONTACT_LINK": "Más información",
             "FIND_HELP": "Obtenga ayuda",
             "FIND_HELP_DESC": "Haga clic en <span class=\"glyphicon glyphicon-question-sign\"></span> en la parte superior de esta página si necesita ayuda, o póngase en contacto con el responsable técnico.",
-            "CAN_DISCONNECT": "Calls can be disconnected from this computer"
+            "CAN_DISCONNECT": "Las llamadas pueden ser desconectados de este equipo"
         },
         "CREATE_SIP_ACCOUNT": {
             "TITLE": "Crear computadora de oyente",

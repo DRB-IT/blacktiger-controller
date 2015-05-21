@@ -134,7 +134,7 @@
             "TITLE_PHONE": "Mobilnummer",
             "TITLE_EMAIL": "E-mail Address",
             "PLACEHOLDER_EMAIL": "eksempel@mail.no",
-            "TITLE_COMMENT": "Kommentar",
+            "TITLE_COMMENT": "Kommentar (bare for lokal bruk - meldinger til Telesal Support må via e-post)",
             "SAVED": "Lagret",
             "ALERT_ERROR": "<b>Feil!</b> Endringene ble ikke lagret. Vennligst prøv igjen senere.",
             "INVALID_NAME": "@:GENERAL.INVALID_NAME",

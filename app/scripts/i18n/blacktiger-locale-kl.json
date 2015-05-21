@@ -89,9 +89,9 @@
         "LOST_CONNECTION": "Forbindelsen til serveren blev afbrudt. Tjek internetforbindelsen og genindlæs siden (tryk F5)",
         "UNABLE_TO_CONNECT": "Kan ikke oprette forbindelse til serveren. Det kan evt. skyldes at browseren ikke er supporteret af systemet.",
         "COMMENT_REQUEST": "Nogen ønsker at svare",
-        "INVALID_NAME": "Navnet skal fuldt navn, f.eks. 'Michael Jensen' og ikke 'Hr. Jensen' eller 'M. Jensen'.",
-        "INVALID_PHONE": "Telefonnummeret er ikke et validt telefonnummer",
-        "INVALID_EMAIL": "Emailadressen er ikke valid.",
+        "INVALID_NAME": "Navnet skal fuldt navn, fx 'Peter Jensen' og ikke 'Hr. Jensen' eller 'P. Jensen'.",
+        "INVALID_PHONE": "Telefonnummeret er ikke korrekt.",
+        "INVALID_EMAIL": "E-mailadressen er ikke korrekt.",
         "NO_ROOM": "Intet møderum tilgængeligt for den nuværende bruger."
     },
     "SETTINGS": {
@@ -125,15 +125,15 @@
             "INVALID_EMAIL": "@:GENERAL.INVALID_EMAIL"
         },
         "CONTACT": {
-            "TITLE": "Teknisk kontakt",
+            "TITLE": "Teknisk ansvarlig",
             "SUBTITLE": "Rigssalens teknisk ansvarlige",
-            "DESCRIPTION": "<p><b>VIGTIGT!</b> Kontroller at oplysningerne i skemaet er korrekte!</p><p>Der er <b>kun én teknisk ansvarlig for hver rigssal</b>, uanset hvor mange menigheder der benytter den. Han skal være tilsluttet en af de menigheder der benytter rigssalen. Hvis der er flere menigheder der benytter den samme rigssal, skal de i fællesskab udnævne en teknisk ansvarlig.</p><p>Den teknisk ansvarlige har <b>ansvaret for at Telesal-systemet virker lokalt</b>, og det er ham man skal kontakte hvis der er lokale tekniske problemer.</p><p>Det er <b>vigtigt at oplysningerne er korrekte</b> herunder, så de der er ansvarlige for det centrale Telesal-system kan kontakte de teknisk ansvarlige i alle rigssal, hvis det er nødvendigt.</p>",
+            "DESCRIPTION": "<p><b>VIGTIGT!</b> Kontroller at oplysningerne i skemaet er korrekte!</p><p>Der er <b>kun én teknisk ansvarlig for hver rigssal</b>, uanset hvor mange menigheder der benytter den. Han skal være tilsluttet en af de menigheder der benytter rigssalen. Hvis der er flere menigheder der benytter den samme rigssal, skal de i fællesskab udnævne en teknisk ansvarlig.</p><p>Den teknisk ansvarlige har <b>ansvaret for at Telesal-systemet virker lokalt</b>, og det er ham man skal kontakte hvis der er lokale tekniske problemer.</p><p>Det er <b>vigtigt at oplysningerne er korrekte</b> herunder, så de der er ansvarlige for det centrale Telesal-system kan kontakte de teknisk ansvarlige i alle rigssale, hvis det er nødvendigt.</p>",
             "TITLE_NAME": "Navn",
             "PLACEHOLDER_NAME": "Fornavn Efternavn",
             "TITLE_PHONE": "Mobilnummer",
             "TITLE_EMAIL": "E-mailadresse",
             "PLACEHOLDER_EMAIL": "eksempel@mail.dk",
-            "TITLE_COMMENT": "Kommentar",
+            "TITLE_COMMENT": "Kommentar (kun til lokalt brug - besked til Telesal Support skal via e-mail)",
             "SAVED": "Gemt",
             "ALERT_ERROR": "<b>Fejl!</b> Ændringerne blev ikke gemt. Prøv igen om lidt.",
             "INVALID_NAME": "@:GENERAL.INVALID_NAME",
