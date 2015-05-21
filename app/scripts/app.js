@@ -191,7 +191,7 @@ blacktigerApp.run(function (CONFIG, blacktiger, $location, LoginSvc, $rootScope,
             targetPath = '/admin/realtime';
         }
         
-        PushEventSvc.connect({enforcedHeartbeatInterval:30000}).then(function() {
+        PushEventSvc.connect({enforcedHeartbeatInterval:30000, keepAlive:true}).then(function() {
             $rootScope.updateCurrentRoom();
             $location.path(targetPath);
         }, function() {
@@ -209,7 +209,15 @@ blacktigerApp.run(function (CONFIG, blacktiger, $location, LoginSvc, $rootScope,
     };
 
     $rootScope.$on('PushEventSvc.Lost_Connection', function () {
-        $window.alert(translateFilter('GENERAL.LOST_CONNECTION'));
+        $log.info(translateFilter('GENERAL.LOST_CONNECTION'));
+    });
+    
+    $rootScope.$on('PushEventSvc.Reconnecting', function () {
+        $log.info('Reconnecting');
+    });
+    
+    $rootScope.$on('PushEventSvc.ReconnectingFailed', function () {
+        $log.info('Reconnecting failed.');
     });
 
     $rootScope.$watch('context.room', function (room) {
