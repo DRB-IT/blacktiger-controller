@@ -86,7 +86,7 @@
         "PHONENUMBER": "Telefonnummer",
         "EMAIL": "E-mailadresse",
         "LOADING": "Henter oplysninger...",
-        "LOST_CONNECTION": "Forbindelsen til serveren blev afbrudt. Applikationen forsøger at genoptage forbindelsen.",
+        "LOST_CONNECTION": "Websiden mistede forbindelsen til serveren, men prøver at oprette forbindelse igen nu...",
         "UNABLE_TO_CONNECT": "Kan ikke oprette forbindelse til serveren. Det kan evt. skyldes at browseren ikke er supporteret af systemet.",
         "COMMENT_REQUEST": "Nogen ønsker at svare",
         "INVALID_NAME": "Navnet skal fuldt navn, fx 'Peter Jensen' og ikke 'Hr. Jensen' eller 'P. Jensen'.",
