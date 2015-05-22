@@ -87,7 +87,7 @@
         "PHONENUMBER": "Telefonnummer",
         "EMAIL": "E-postadresse",
         "LOADING": "Laster inn...",
-        "LOST_CONNECTION": "Forbindelsen til serveren ble brutt. Sjekk internettforbindelsen, og oppdater siden (trykk F5)",
+        "LOST_CONNECTION": "Nettsiden mistet forbindelsen til serveren, men prøver å koble nå ...",
         "UNABLE_TO_CONNECT": "Kan ikke opprette forbindelse til serveren. Dette kan skyldes at nettleseren ikke er kompatibel med systemet.",
         "COMMENT_REQUEST": "Noen vil gjerne svare",
         "INVALID_NAME": "Navnet må være fullstendig, f.eks 'Per Hansen' og ikke f.eks 'P. Hansen' eller annet.",
