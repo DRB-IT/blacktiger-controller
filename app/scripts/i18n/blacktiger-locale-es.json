@@ -87,7 +87,7 @@
         "PHONENUMBER": "Número de teléfono",
         "EMAIL": "Correo electrónico" ,
         "LOADING": "Cargando...",
-        "LOST_CONNECTION": "Conexión con el servidor pérdida. Por favor, compruebe la conexión a Internet, a continuación, actualice la página (pulse F5)",
+        "LOST_CONNECTION": "La página web perdió la conexión con el servidor, pero están tratando de volver a conectar ahora ...",
         "UNABLE_TO_CONNECT": "No se puede conectar al servidor. Esto puede deberse a que el navegador no está soportado por el sistema.",
         "COMMENT_REQUEST": "A alguien le gustaría comentar",
         "INVALID_NAME": "El nombre debe ser un nombre completo, por ejemplo. 'Michael Jensen' y no 'Mr. Jensen 'o' M. Jensen.",
