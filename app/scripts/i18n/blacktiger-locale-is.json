@@ -87,7 +87,7 @@
         "PHONENUMBER": "Símanúmer",
         "EMAIL": "Netfang",
         "LOADING": "Sæki upplýsingar...",
-        "LOST_CONNECTION": "The web page lost connection to the server, but are trying to reconnect now…",
+        "LOST_CONNECTION": "Samband við vefþjón hefur rofnað en reynt er að tengjast á ný...",
         "UNABLE_TO_CONNECT": "Ekki tókst að tengjast þjóninum. Gæti stafað af því að kerfið styður ekki vafrarann.",
         "COMMENT_REQUEST": "Einhver langi að svara",
         "INVALID_NAME": "Rita þarf fullt eiginnafn t.d. Jón Jónsson en ekki hr. Jónsson eða J. Jónsson.",
