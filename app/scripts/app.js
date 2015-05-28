@@ -125,22 +125,26 @@ blacktigerApp.config(function ($locationProvider, $routeProvider, $httpProvider,
     }
 
     // Prepare data for translateProvider
-    var languageKeys = Object.keys(CONFIG.i18n.languages);
+    var languageKeys = [];
     var languageMapping = {};
-    angular.forEach(CONFIG.i18n.languages, function(value, key) {
-        if(value !== CONFIG.i18n.fallbackLanguage) {
-            if(angular.isArray(value.aliases)) {
-                angular.forEach(value.aliases, function(alias) {
-                   languageMapping[alias+'*', value] 
-                });
-            }
-
-            languageMapping[value+'*', value];
-        }
-    });
     
-    if(angular.isDefined(CONFIG.i18n.fallbackLanguage)) {
-        languageMapping['*', CONFIG.i18n.fallbackLanguage];
+    if(angular.isDefined(CONFIG) && angular.isDefined(CONFIG.i18n) && angular.isObject(CONFIG.i18n.languages)) {
+        languageKeys = Object.keys(CONFIG.i18n.languages);
+        angular.forEach(CONFIG.i18n.languages, function(value) {
+            if(value !== CONFIG.i18n.fallbackLanguage) {
+                if(angular.isArray(value.aliases)) {
+                    angular.forEach(value.aliases, function(alias) {
+                       languageMapping[alias+'*'] = value; 
+                    });
+                }
+
+                languageMapping[value+'*'] = value;
+            }
+        });
+
+        if(angular.isDefined(CONFIG.i18n.fallbackLanguage)) {
+            languageMapping['*'] = CONFIG.i18n.fallbackLanguage;
+        }
     }
 
     $translateProvider.useStaticFilesLoader({
@@ -150,18 +154,7 @@ blacktigerApp.config(function ($locationProvider, $routeProvider, $httpProvider,
 
     $translateProvider.addInterpolation('$translateMessageFormatInterpolation');
     $translateProvider.registerAvailableLanguageKeys(languageKeys, languageMapping);
-    /*$translateProvider.registerAvailableLanguageKeys(['en', 'da', 'es', 'no', 'sv', 'is', 'fo', 'kl'], {
-        'no*': 'no',
-        'nb*': 'no',
-        'nn*': 'no',
-        'da*': 'dk',
-        'es*': 'es',
-        'sv*': 'sv',
-        'is*': 'is',
-        'fo*': 'fo',
-        'kl*': 'kl',
-        '*': 'en'
-    });*/
+
     $translateProvider.determinePreferredLanguage(function () {
         var language;
         if (navigator && navigator.languages) {
