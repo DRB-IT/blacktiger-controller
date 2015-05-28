@@ -5,5 +5,108 @@
     "commentRequestTimeout": 60000,
     "hightlightTimeout": 15000,
     "ghIssueRepository": "https://api.github.com/repos/DRB-IT/blacktiger-production",
-    "ghIssueInterval": 300000
+    "ghIssueInterval": 300000,
+    "i18n": {
+        "fallbackLanguage": "en",
+        "languages": {
+            "da": {
+                "names": {
+                    "da": "Dansk",
+                    "en": "Danish",
+                    "es": "Danes",
+                    "fo": "Danskt",
+                    "is": "Danska",
+                    "kl": "Danskisut",
+                    "no": "Dansk",
+                    "sv": "Danska"
+                }
+            },
+            "en": {
+                "names": {
+                    "da": "Engelsk",
+                    "en": "English",
+                    "es": "Ingles",
+                    "fo": "Enskt",
+                    "is": "Enska",
+                    "kl": "Tuluit",
+                    "no": "Engelsk",
+                    "sv": "Engelska"
+                }
+            },
+            "es": {
+                "names": {
+                    "da": "Spansk",
+                    "en": "Spanish",
+                    "es": "Español",
+                    "fo": "Spanskt",
+                    "is": "Spænska",
+                    "kl": "Spansk",
+                    "no": "Spansk",
+                    "sv": "Spanska"
+                }
+            },
+            "fo": {
+                "names": {
+                    "da": "Færøsk",
+                    "en": "Faroese",
+                    "es": "Feroés",
+                    "fo": "Føroyskt",
+                    "is": "Færeyska",
+                    "kl": "Færøsk",
+                    "no": "Færøysk",
+                    "sv": "Färöiska"
+                }
+            },
+            "is": {
+                "names": {
+                    "da": "Islandsk",
+                    "en": "Icelandic",
+                    "es": "Islandés",
+                    "fo": "Íslendskt",
+                    "is": "Íslenska",
+                    "kl": "Islandsk",
+                    "no": "Islandsk",
+                    "sv": "Isländska"
+                }
+            },
+            "kl": {
+                "names": {
+                    "da": "Grønlandsk",
+                    "en": "Greelandic",
+                    "es": "Groenlandés",
+                    "fo": "Grønlendskt",
+                    "is": "Grænlenska",
+                    "kl": "Kalaallisut",
+                    "no": "Grønlandsk",
+                    "sv": "Grönländska"
+                }
+            },
+            "no": {
+                "aliases": ["nb", "nn"],
+                "names": {
+                    "da": "Norsk",
+                    "en": "Norwegian",
+                    "es": "Noruego",
+                    "fo": "Norskt",
+                    "is": "Norska",
+                    "kl": "Norsk",
+                    "no": "Norsk",
+                    "sv": "Norska"
+                }
+            },
+            "sv": {
+                "names": {
+                    "da": "Svensk",
+                    "en": "Swedish",
+                    "es": "Sueco",
+                    "fo": "Svenskt",
+                    "is": "Sænska",
+                    "kl": "Svensk",
+                    "no": "Svensk",
+                    "sv": "Svenska"
+                }
+            }
+            
+        }
+    }
 }

@@ -83,7 +83,15 @@ angular.module('blacktiger-controllers')
             $rootScope.$on('$translateChangeSuccess', function () {
                 $scope.language = $translate.use();
                 $scope.languages = [];
-                angular.forEach(languages, function (value, key) {
+                
+                angular.forEach(CONFIG.i18n.languages, function(languageData, key) {
+                    $scope.languages.push({
+                        locale: key,
+                        localizedLanguage: languageData.names[$scope.language],
+                        language: languageData.names[key]
+                    });
+                });
+                /*angular.forEach(languages, function (value, key) {
                     $translate('GENERAL.LANGUAGE.' + key.toUpperCase()).then(function (translation) {
                         $scope.languages.push({
                             locale: key,
@@ -91,7 +99,7 @@ angular.module('blacktiger-controllers')
                             language: value
                         });
                     });
-                });
+                });*/
 
             });
 

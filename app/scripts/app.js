@@ -124,6 +124,24 @@ blacktigerApp.config(function ($locationProvider, $routeProvider, $httpProvider,
                 });
     }
 
+    // Prepare data for translateProvider
+    var languageKeys = Object.keys(CONFIG.i18n.languages);
+    var languageMapping = {};
+    angular.forEach(CONFIG.i18n.languages, function(value, key) {
+        if(value !== CONFIG.i18n.fallbackLanguage) {
+            if(angular.isArray(value.aliases)) {
+                angular.forEach(value.aliases, function(alias) {
+                   languageMapping[alias+'*', value] 
+                });
+            }
+
+            languageMapping[value+'*', value];
+        }
+    });
+    
+    if(angular.isDefined(CONFIG.i18n.fallbackLanguage)) {
+        languageMapping['*', CONFIG.i18n.fallbackLanguage];
+    }
 
     $translateProvider.useStaticFilesLoader({
         prefix: 'scripts/i18n/blacktiger-locale-',
@@ -131,7 +149,8 @@ blacktigerApp.config(function ($locationProvider, $routeProvider, $httpProvider,
     });
 
     $translateProvider.addInterpolation('$translateMessageFormatInterpolation');
-    $translateProvider.registerAvailableLanguageKeys(['en', 'da', 'es', 'no', 'sv', 'is', 'fo', 'kl'], {
+    $translateProvider.registerAvailableLanguageKeys(languageKeys, languageMapping);
+    /*$translateProvider.registerAvailableLanguageKeys(['en', 'da', 'es', 'no', 'sv', 'is', 'fo', 'kl'], {
         'no*': 'no',
         'nb*': 'no',
         'nn*': 'no',
@@ -142,7 +161,7 @@ blacktigerApp.config(function ($locationProvider, $routeProvider, $httpProvider,
         'fo*': 'fo',
         'kl*': 'kl',
         '*': 'en'
-    });
+    });*/
     $translateProvider.determinePreferredLanguage(function () {
         var language;
         if (navigator && navigator.languages) {

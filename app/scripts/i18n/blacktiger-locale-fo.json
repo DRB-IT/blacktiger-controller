@@ -66,16 +66,6 @@
         "NO_ENTRIES": "Ongin geralisti er. Listan verur strika tá kagarin verur sløkt."
     },
     "GENERAL": {
-        "LANGUAGE": {
-            "DA": "Danskt",
-            "EN": "Enskt",
-            "FO": "Føroyskt",
-            "KL": "Grønlendskt",
-            "NO": "Norskt",
-            "SV": "Svenskt",
-            "IS": "Íslendskt",
-            "ES": "Spanskt"
-        },
         "OK": "Ok",
         "CANCEL": "Angra",
         "TECHNICALLY_RESPONSIBLE": "Tøknulig ábyrgd",

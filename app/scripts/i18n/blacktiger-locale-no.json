@@ -67,16 +67,6 @@
         "NO_ENTRIES": "Det er ingen historikk. Listen slettes når nettleseren lukkes."
     },
     "GENERAL": {
-        "LANGUAGE": {
-            "DA": "Dansk",
-            "EN": "Engelsk",
-            "FO": "Færøysk",
-            "KL": "Grønlandsk",
-            "NO": "Norsk",
-            "SV": "Svensk",
-            "IS": "Islandsk",
-            "ES": "Spansk"
-        },
         "OK": "Ok",
         "CANCEL": "Avbryt",
         "TECHNICALLY_RESPONSIBLE": "Teknisk ansvarlig",

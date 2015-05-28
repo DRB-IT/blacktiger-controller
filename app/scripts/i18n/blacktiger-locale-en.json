@@ -67,16 +67,6 @@
         "NO_ENTRIES": "There is no history. The list is deleted when the browser is closed."
     },
     "GENERAL": {
-        "LANGUAGE": {
-            "DA": "Danish",
-            "EN": "English",
-            "FO": "Faroese",
-            "KL": "Greenlandic",
-            "NO": "Norwegian",
-            "SV": "Swedish",
-            "IS": "Icelandic",
-            "ES": "Spanish"
-        },
         "OK": "Ok",
         "CANCEL": "Cancel",
         "TECHNICALLY_RESPONSIBLE": "Technically responsible",

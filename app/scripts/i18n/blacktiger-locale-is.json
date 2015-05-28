@@ -67,16 +67,6 @@
         "NO_ENTRIES": "Það er engin ferlisskrá. Listanum er eytt þegar slökkt er á vafraranum."
     },
     "GENERAL": {
-        "LANGUAGE": {
-            "DA": "Danska",
-            "EN": "Enska",
-            "FO": "Færeyska",
-            "KL": "Grænlenska",
-            "NO": "Norska",
-            "SV": "Sænska",
-            "IS": "Íslenska",
-            "ES": "Spænska"
-        },
         "OK": "Ok",
         "CANCEL": "Afboða",
         "TECHNICALLY_RESPONSIBLE": "Tækniábyrgðarmaður",

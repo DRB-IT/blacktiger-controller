@@ -67,16 +67,6 @@
         "NO_ENTRIES": "Det finns ingen historik. Listan raderas när webbläsaren stängs."
     },
     "GENERAL": {
-        "LANGUAGE": {
-            "DA": "Danska",
-            "EN": "Engelska",
-            "FO": "Färöiska",
-            "KL": "Grönländska",
-            "NO": "Norska",
-            "SV": "Svenska",
-            "IS": "Isländska",
-            "ES": "Spanska"
-        },
         "OK": "Ok",
         "CANCEL": "Avbryt",
         "TECHNICALLY_RESPONSIBLE": "Tekniskt ansvarig",

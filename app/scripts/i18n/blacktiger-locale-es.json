@@ -67,16 +67,6 @@
         "NO_ENTRIES": "No hay historial; se elimina cuando se cierra el navegador."
     },
     "GENERAL": {
-        "LANGUAGE": {
-            "DA": "Danes",
-            "EN": "Inglés",
-            "FO": "Feroés",
-            "KL": "Groenlandés",
-            "NO": "Noruego",
-            "SV": "Sueco",
-            "IS": "Islandés",
-            "ES": "Español"
-        },
         "OK": "Ok",
         "CANCEL": "Cancelar",
         "TECHNICALLY_RESPONSIBLE": "Técnicamente responsable",
