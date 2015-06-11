@@ -25,7 +25,7 @@
             <ul class="menu-bar pull-right">
                 <li>
                     <span>
-                        <select ng-model="language" ng-options="locale.locale as (locale.locale === language ? locale.localizedLanguage : locale.language+' ('+locale.localizedLanguage+')') for locale in languages | orderBy:'localizedLanguage'"></select>
+                        <select ng-model="language" ng-options="locale.locale as (locale.locale === language ? locale.localizedLanguage : locale.language+' ('+locale.localizedLanguage+')') for locale in languages | orderBy:'normalizedLanguage'"></select>
                     </span>
                 </li>
 

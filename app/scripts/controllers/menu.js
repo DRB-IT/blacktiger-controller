@@ -68,6 +68,20 @@ angular.module('blacktiger-controllers')
                     return false;
                 }
             };
+            
+            $scope.normalizeLanguageName = function(name) {
+                        var r=name.toLowerCase();
+                        r = r.replace(new RegExp("[àáâãäå]", 'g'),"a");
+                        r = r.replace(new RegExp("ç", 'g'),"c");
+                        r = r.replace(new RegExp("[èéêë]", 'g'),"e");
+                        r = r.replace(new RegExp("[ìíîï]", 'g'),"i");
+                        r = r.replace(new RegExp("ñ", 'g'),"n");                            
+                        r = r.replace(new RegExp("[òóôõö]", 'g'),"o");
+                        r = r.replace(new RegExp("œ", 'g'),"oe");
+                        r = r.replace(new RegExp("[ùúûü]", 'g'),"u");
+                        r = r.replace(new RegExp("[ýÿ]", 'g'),"y");
+                        return r;
+            };
 
             $scope.languages = [{
                     locale: 'da',
@@ -87,20 +101,11 @@ angular.module('blacktiger-controllers')
                 angular.forEach(CONFIG.i18n.languages, function(languageData, key) {
                     $scope.languages.push({
                         locale: key,
+                        normalizedLanguage: $scope.normalizeLanguageName(languageData.names[key]),
                         localizedLanguage: languageData.names[$scope.language],
                         language: languageData.names[key]
                     });
                 });
-                /*angular.forEach(languages, function (value, key) {
-                    $translate('GENERAL.LANGUAGE.' + key.toUpperCase()).then(function (translation) {
-                        $scope.languages.push({
-                            locale: key,
-                            localizedLanguage: translation,
-                            language: value
-                        });
-                    });
-                });*/
-
             });
 
         });
