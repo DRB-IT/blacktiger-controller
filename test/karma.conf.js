@@ -55,6 +55,7 @@ module.exports = function(config) {
     // - IE (only Windows)
     browsers: [
       'PhantomJS'
+      //'Chrome'
     ],
 
     // Which plugins to enable
@@ -63,12 +64,12 @@ module.exports = function(config) {
       'karma-jasmine',
       'karma-ng-html2js-preprocessor'
     ],
-    
+
     preprocessors : {
       'app/views/*.html': ['ng-html2js']
-      
+
     },
-    
+
     ngHtml2JsPreprocessor: {
       // strip this from the file path
       stripPrefix: 'app/',

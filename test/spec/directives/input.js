@@ -24,8 +24,9 @@ describe('Directive: input[name]', function () {
             'Jens bo',
             'Jørgen årup',
             'Günther von Larsen',
-            'JOSÉ Gonzáles'];
-        
+            'JOSÉ Gonzáles',
+            'Hans & Grethe Jensen'];
+
         angular.forEach(validNames, function(currentName) {
             $rootScope.name = currentName;
             var element = $compile('<form name="myform"><input name="name" type="name" ng-model="name"></form>')($rootScope);
@@ -42,16 +43,17 @@ describe('Directive: input[name]', function () {
             expect($rootScope.myform.name.$valid).toEqual(true);
             expect($rootScope.name).toEqual(currentName);
         });
-        
+
     });
-    
+
     it('It invalidates invalid names', function () {
         var invalidNames = [
             'Jens J.',
             'Jens J',
             'Jens',
-            'Mr. Milton Madsen'];
-        
+            'Mr. Milton Madsen',
+            'Hans && Grethe Jensen'];
+
         angular.forEach(invalidNames, function(currentName) {
             $rootScope.name = currentName;
             var element = $compile('<form name="myform"><input name="name" type="name" ng-model="name"></form>')($rootScope);
@@ -68,9 +70,9 @@ describe('Directive: input[name]', function () {
             expect($rootScope.myform.name.$valid).toEqual(false);
             expect($rootScope.name).toEqual(currentName);
         });
-        
+
     });
-    
-        
+
+
 
 });
