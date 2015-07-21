@@ -63,16 +63,16 @@ span.sorting:after { content: "↕"; margin-left: 3px; }
 /*ANIMATION*/
 @keyframes shake
 {
-    0% {margin-left: 0px;}
-    50% {margin-left: 15px;}
-    100% {margin-left: 0px;}
+    0% {margin-left: 0px;margin-right: 15px;}
+    50% {margin-left: 15px;margin-right:0px;}
+    100% {margin-left: 0px;margin-right: 15px;}
 }
 
 @-webkit-keyframes shake
 {
-    0% {margin-left: 0px;}
-    50% {margin-left: 15px;}
-    100% {margin-left: 0px;}
+    0% {margin-left: 0px;margin-right: 15px;}
+    50% {margin-left: 15px;margin-right:0px;}
+    100% {margin-left: 0px;margin-right: 15px;}
 }
 .shake {
     animation-name: shake;
@@ -82,6 +82,7 @@ span.sorting:after { content: "↕"; margin-left: 3px; }
     animation-iteration-count:infinite;
     -webkit-animation-iteration-count:infinite;
 }
+
 a.label {
     cursor:default !important;
 }
@@ -89,4 +90,3 @@ a.label:hover {
     color:white;
     text-decoration:none;
 }
-

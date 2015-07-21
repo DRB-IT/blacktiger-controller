@@ -43,13 +43,13 @@
                 <span ng-if="participant.type!=='Unknown'">{{participant.phoneNumber | telephone}}</span>
                 <span ng-if="participant.type==='Unknown'">{{participant.phoneNumber}}</span>
             </td>
-            <td class="participantName" style="max-width: 0;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
-                <span ng-if="!participant.muted"><a ng-click="muteParticipant(participant)" class="label label-warning"><span translate="PARTICIPANTS.INFO.UNMUTED"></span></a></span>
-
-                <span ng-if="participant.commentRequested"><a ng-click="unmuteParticipant(participant)" class="label label-primary" bt-comment-request-highlight participant='participant'><span translate="PARTICIPANTS.WANTS_TO_COMMENT"></span></a></span>
+            <td class="participantName" style="max-width: 0;overflow: hidden;text-overflow: hidden;white-space: nwrap;">
 
                     <a ng-if="!(participant.name.length>0)" ng-click="changeName(participant.phoneNumber, participant.name)">(<span translate="PARTICIPANTS.ENTER_NAME"></span>)</a>
                     {{participant.name}}
+                    <span ng-if="!participant.muted"><a ng-click="muteParticipant(participant)" class="label label-warning"><span translate="PARTICIPANTS.INFO.UNMUTED"></span></a></span>
+
+                    <span ng-if="participant.commentRequested"><a ng-click="unmuteParticipant(participant)" class="label label-primary" bt-comment-request-highlight participant='participant'><span translate="PARTICIPANTS.WANTS_TO_COMMENT"></span></a></span>
 
             </td>
             <td class="participantHistory" style="text-align:right">
