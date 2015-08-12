@@ -22,7 +22,7 @@
                     <a href="{{ getUrl(link) }}" title="{{ link.name | translate }}" target="{{link.target ? link.target : '_self'}}"><span class="glyphicon glyphicon-{{link.icon}}"></span></a>
                 </li>
             </ul>
-            <ul class="menu-bar pull-right">
+            <ul class="menu-bar pull-right hidden-xs">
                 <li>
                     <span>
                         <select ng-model="language" ng-options="locale.locale as (locale.locale === language ? locale.localizedLanguage : locale.language+' ('+locale.localizedLanguage+')') for locale in languages | orderBy:'normalizedLanguage'"></select>
@@ -32,7 +32,7 @@
             </ul>
         </div>
         <div class="container-fluid-content">
-                
+
             <div class="row">
                 <!--div xlss="col-sm-12" id="MusicContainer">
                     <bt-musicplayer></bt-musicplayer>
