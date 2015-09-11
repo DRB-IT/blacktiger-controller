@@ -2,23 +2,23 @@
     "LOGIN": {
         "USERNAME": "Brúkaranavn",
         "PASSWORD": "Loyniorð",
-        "REMEMBER_ME": "Goymi loyniorð á hesari telduna",
+        "REMEMBER_ME": "Goym loyniorð á hesi telduni",
         "LOG_IN": "Rita inn",
-        "ALERT": "<strong>Hetta er ein privat skipan.</strong> Royni ikki at innrita um tú ikki hevur rættindi til tað.",
-        "INVALID_CREDENTIALS": "Brúkaranavni ella loyniorði er skeivt",
+        "ALERT": "<strong>Hetta er ein privat skipan.</strong> Royn ikki at innrita, um tú ikki hevur rættindi til tað.",
+        "INVALID_CREDENTIALS": "Brúkaranavnið ella loyniorðið er skeivt",
         "FORGOT_PASSWORD": "Gloymt loyniorð",
-        "NO_CONTACT": "Der kan ikke forbindes til serveren. Prøv igen lidt senere."
+        "NO_CONTACT": "Samband fæst ikki við servaran. Royn aftur seinni."
     },
     "REQUEST_PASSWORD": {
-        "NAME": "Fult navn:",
+        "NAME": "Títt fulla navn:",
         "PHONENUMBER": "Títt fartelefonnummar:",
         "EMAIL": "Tín t-post adressa:",
-        "CITY_OF_HALL": "Býin har møtisalin er:",
+        "CITY_OF_HALL": "Býurin/bygdin, har møtisalurin er:",
         "PHONENUMBER_OF_HALL": "Telesal-telefonnummar til salin:",
-        "ERROR": "Vit funnu einki við hasar upplýsingarnar. Tú kanst broyta upplýsingarnar og royna aftur.",
-        "SUCCESS": "Ein t-postur er sent til tín. Kanni møguliga eisini møguliga eisini mappan við óynskt post.",
-        "EMAIL_TEXT_USER": "FØROYSKT: Tú hevur valgt 'gloymt loyniorð' fyri ríkissalur nr {%1}. Loyniorði er nú sent til {%5}, sum er t-postadressan sum áður var upplýst honum sum hevur tøknuliga ábyrgdin fyri henda salin. Hann eitur {%3} og hevur telefon {%4}.\n\nBrúkaranavnið sum skal brúkast saman við loyniorði er {%2}.\n\n\n\nENGLISH: You have activated 'forgot password' for the hall using phone number {%1}. The password has been sent to {%5}, which is the e-mail address which was entered earlier for the technical responsible for this hall. His name is {%3} and his phone number is {%4}.\n\nThe user ID which must be used together with the password is {%2}.\n",
-        "EMAIL_TEXT_MANAGER": "FØROYSKT: {%1} hevur valgt 'gloymt loyniorð' fyri ríkissalur nr {%4}, sum tú hevur tøknuliga ábyrgdin fyri. Hansara telefonnummar er {%2} og t-post er {%3}. Av trygdarávum er loyniorði bert sent til tín, ikki tal hann. Tú mást kontakta honum fyri at vita um hann skal hava loyniorði frá tær.\n\nGloymda loyniorði er: {%5}\n\n\n\nENGLISH: {%1} has activated 'forgot password' for the hall using phone number {%4}, which you are technically responsible for. His phone number is {%2}, and his e-mail is {%3}. For security reasons, the password been sent to you only, not to him. You must contact him to check if he should have the password from you.\n\nThe password is: {%5}\n",
+        "ERROR": "Vit funnu einki, sum samsvarar við hesum upplýsingum. Tú kanst broyta upplýsingarnar og royna aftur.",
+        "SUCCESS": "Ein t-postur er sendur til tín. Kanna møguliga eisini mappuna við óynsktum posti.",
+        "EMAIL_TEXT_USER": "FØROYSKT: Tú hevur valt 'gloymt loyniorð' fyri ríkissal nr {%1}. Loyniorðið er nú sent til {%5}, sum er t-post adressan sum áður var upplýst honum sum hevur tøknuligu ábyrgdina fyri henda salin. Hann eitur {%3} og hevur telefon {%4}.\n\nBrúkaranavnið sum skal nýtast saman við loyniorðinum er {%2}.\n\n\n\nENGLISH: You have activated 'forgot password' for the hall using phone number {%1}. The password has been sent to {%5}, which is the e-mail address which was entered earlier for the technical responsible for this hall. His name is {%3} and his phone number is {%4}.\n\nThe user ID which must be used together with the password is {%2}.\n",
+        "EMAIL_TEXT_MANAGER": "FØROYSKT: {%1} hevur valt 'gloymt loyniorð' fyri ríkissal nr {%4}, sum tú hevur tøknuligu ábyrgdina av. Hansara telefonnummar er {%2} og t-post er {%3}. Av trygdarávum er loyniorðið bert sent til tín, ikki til hansara. Tú mást seta teg í samband við hann fyri at vita, um hann skal hava loyniorðið frá tær.\n\nLoyniorðið er: {%5}\n\n\n\nENGLISH: {%1} has activated 'forgot password' for the hall using phone number {%4}, which you are technically responsible for. His phone number is {%2}, and his e-mail is {%3}. For security reasons, the password been sent to you only, not to him. You must contact him to check if he should have the password from you.\n\nThe password is: {%5}\n",
         "EMAIL_SUBJECT": "Telesal í {%1}"
     },
     "SYSTEM": {
@@ -36,23 +36,23 @@
     },
     "PARTICIPANTS": {
         "WARNINGS": {
-            "NO_PARTICIPANTS_AND_TRANSMITTERS": "Einki verur sent beint nú, og heldur eingir lurtarar hava samband.",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "Eingi ljóð verur sent til lurtarar!",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "Kannið um X-Lite forrite er starta",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "Ringi til <a href=\"tel:{{phoneNumber}}\">{{phoneNumber | telephone}}</a> frá X-Lite",
-            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Ring síðani til sama nummar frá einum ørðum telefoni og kanni um ljóðgóðskan er í lagi, og stilli ljóðstyrkin eftir tørvi"
+            "NO_PARTICIPANTS_AND_TRANSMITTERS": "Einki verður sent í løtuni, og heldur eingir lurtarar hava samband.",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TITLE": "Einki ljóð verður sent til lurtararnar!",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT1": "Kanna um X-Lite forritið er frá",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT2": "Ring til <a href=\"tel:{{phoneNumber}}\">{{phoneNumber | telephone}}</a> frá X-Lite",
+            "PARTICIPANTS_BUT_NO_TRANSMITTER_TEXT3": "Ring síðani til sama nummar frá einum øðrum telefoni og kanna, um ljóðgóðskan er í lagi, og stilla ljóðstyrkina eftir tørvi"
         },
         "INFO": {
-            "NO_PARTICIPANTS": "Tað eru ongir lurtarar beint nú.",
+            "NO_PARTICIPANTS": "Ongin lurtari er í løtuni.",
             "UNMUTED": "Svar-mikrofonin er opin!"
         },
         "UNMUTE": "Opna svar-mikrofon",
-        "MUTE": "Steingja fyri svar-mikrofon",
-        "KICK": "Leggið á",
-        "EDIT": "Broyta navn hjá lurtarin",
-        "PARTICIPANTS": "{noOfParticipants} {noOfParticipants, plural, one{lurtar} other{lurtarar}}",
-        "ABORT_TRANSMISSION": "Bróta av ljóð-sending",
-        "COMPLETED_CALLS": "{noOfCompletedCalls} {noOfCompletedCalls, plural, one{uppringingar endaðar} other{uppringingar endaðar}}",
+        "MUTE": "Lat svar-mikrofon aftur",
+        "KICK": "Legg á",
+        "EDIT": "Broyt navn",
+        "PARTICIPANTS": "{noOfParticipants} {noOfParticipants, plural, one{lurtari} other{lurtarar}}",
+        "ABORT_TRANSMISSION": "Brót sending av",
+        "COMPLETED_CALLS": "{noOfCompletedCalls} {noOfCompletedCalls, plural, one{uppringingar endað} other{uppringingar endaðar}}",
         "WANTS_TO_COMMENT": "Eg vil gjarna svara!",
         "ENTER_NAME": "Hvør er hetta? Ring og spyr, skriva navnið her!"
     },
@@ -62,8 +62,8 @@
         "FIRST_CALL": "Fyrsta uppringing",
         "CALLS": "Uppringingar",
         "MINUTES": "Minuttir",
-        "DELETE": "Strika gerðalisti",
-        "NO_ENTRIES": "Ongin geralisti er. Listan verur strika tá kagarin verur sløkt."
+        "DELETE": "Strika gerðalista",
+        "NO_ENTRIES": "Ongin gerðalisti er. Listin verður strikaður, tá ið kagin verður sløktur."
     },
     "GENERAL": {
         "OK": "Ok",
@@ -76,40 +76,40 @@
         "PHONENUMBER": "Telefonnummar",
         "EMAIL": "T-post adressa",
         "LOADING": "Heintar upplýsingar...",
-        "LOST_CONNECTION": "Síðan misti sambandið við servaran, men roynir nú at fáa samband aftur…",
-        "UNABLE_TO_CONNECT": "Kan ikke oprette forbindelse til serveren. Det kan evt. skyldes at browseren ikke er supporteret af systemet.",
+        "LOST_CONNECTION": "Sambandið til servaran breyt av. Kanna internetsambandið og innles síðuna umaftur (trýst F5)",
+        "UNABLE_TO_CONNECT": "Samband fæst ikki við servaran. Orsøkin kann vera, at kagin ikki riggar saman við skipanina.",
         "COMMENT_REQUEST": "Onkur ynskir at svara",
-        "INVALID_NAME": "Navnet skal fuldt navn, f.eks. 'Michael Jensen' og ikke 'Hr. Jensen' eller 'M. Jensen'.",
-        "INVALID_PHONE": "Telefonnummeret er ikke et validt telefonnummer",
-        "INVALID_EMAIL": "Emailadressen er ikke valid.",
-        "NO_ROOM": "Intet møderum tilgængeligt for den nuværende bruger."
+        "INVALID_NAME": "Tað skal vera fulla navnið, til dømis 'Petur Joensen', og ikki 'Hr. Joensen' ella 'P. Joensen'.",
+        "INVALID_PHONE": "Telefonnummarið er skeivt.",
+        "INVALID_EMAIL": "T-post adressan er skeiv.",
+        "NO_ROOM": "Einki fundarhøli er til núverandi brúkaran."
     },
     "SETTINGS": {
         "GENERAL" : {
             "TITLE": "Henda møtisalin",
-            "LOGGED_IN_AS": "Tú ert innrita sum samkoman í <b>{{postalCode}} {{city}}</b>",
-            "TECHNICALLY_RESPONSIBLE": "Tøknulig ábyrgd fyri henda ríkissalin er <b>{{name}}</b>",
+            "LOGGED_IN_AS": "Tú ert innritaður sum ríkissalurin í <b>{{postalCode}} {{city}}</b>",
+            "TECHNICALLY_RESPONSIBLE": "Tøknuliga ábyrgdina fyri henda ríkissalin hevur <b>{{name}}</b>",
             "CONTACT_LINK": "Fleiri upplýsingar",
-            "FIND_HELP": "Fáa hjálp",
-            "FIND_HELP_DESC": "Klik á <span class=\"glyphicon glyphicon-question-sign\"></span> ovast í bjálkanum um tær tørvar hjálp, ella set teg í samband við hann sum hevur tøknuliga ábyrgdin.",
-            "CAN_DISCONNECT": "Opkald kan afbrydes fra denne computer"
+            "FIND_HELP": "Fá hjálp",
+            "FIND_HELP_DESC": "Trýst á <span class=\"glyphicon glyphicon-question-sign\"></span> ovast í bjálkanum um tær tørvar hjálp, ella set teg í samband við hann, sum hevur tøknuligu ábyrgdina.",
+            "CAN_DISCONNECT": "Uppkall kunnu brótast av frá hesari telduni"
         },
         "CREATE_SIP_ACCOUNT": {
-            "TITLE": "Ger teldu-lurtari",
-            "DESCRIPTION": "<p>Tú kanst lurta eftir møtini umvegis internetið frá en telda, teldil ella snildfon um tú installerar en app. <b>Ljóð góskan</b> er nógv betri í mun til vanlig telefon, og tað kostar ikki minutgjald. Men tað kan kosta fyri data um tú gjeldur internet eftir nýtslu (ca. 75 MB/tíma).</p><p>Fyll út oyðublaðið niðanfyri, og stovna ein <b>konto</b> til hvørja brúkara sum ynskir lurta eftir møtini umvegis internettet. Kontoin má <b>ikki</b> deilast av fleiri brúkarum, tí hon er knýt at telefonnummari hjá lurtarin. Lurtarin skal við app'in ringja til samma telefonnummar sum tá lurta verur umvegis vanlig telefon.</p><p>Um lurtarin hevur <b>gloymt persónli kontooplysninger</b>, skal mann stovna kontoin av nýggjum, og eitt nýtt loyniorð verur gjørt. Kontin er ikki bundin at ein ávis ríkkissalur, og verur strika sjálvvirkandi um eingin hevur ringt í eitt ár.</p><p>Teldu-lurttarar vera vístir við hetta tekin á status-síðan: <span class=\"glyphicon glyphicon-hdd\"></span></p>",
+            "TITLE": "Stovna teldu-lurtara",
+            "DESCRIPTION": "<p>Tú kanst lurta eftir møtunum umvegis internetið við teldu, teldli ella snildfon, um tú installerar eina app. <b>Ljóðgóðskan</b> er nógv betri enn um vanliga telefon, og tað kostar ikki minuttgjald. Men tað kann kosta fyri data, um tú rindar internet eftir nýtslu (uml. 75 mb/tíma).</p><p>Fyll út oyðublaðið niðanfyri, og stovna eina <b>kontu</b> til hvønn brúkara, sum ynskir at lurta eftir møtunum umvegis internetið. Kontan má <b>ikki</b> býtast millum fleiri brúkarar, tí hon er knýtt at telefonnummarinum hjá lurtaranum. Lurtarin skal umvegis app'ina ringja til sama telefonnummar, sum tá ið lurtað verður umvegis vanliga telefon.</p><p>Um lurtarin hevur <b>mist sínar persónligu kontuupplýsningar</b>, skal mann stovna kontuna av nýggjum, og eitt nýtt loyniorð verður gjørt. Kontan er ikki bundin at einum ávisum ríkissali, og verður sjálvvirkandi strikað um eingin hevur ringt fra henni í eitt ár.</p><p>Teldu-lurtarar vera vístir við hesum tekninum á status-síðuni: <span class=\"glyphicon glyphicon-hdd\"></span></p>",
             "TITLE_NAME": "Navn",
             "PLACEHOLDER_NAME": "Fornavn Eftirnavn",
             "TITLE_PHONE": "Fartelefon ella heimatelefon",
-            "DESCRIPTION_PHONE": "Hetta nummari verur víst tá lurtarin ringjir frá sínari teldu.",
+            "DESCRIPTION_PHONE": "Hetta nummarið verður víst á telduni í ríkissalinum, tá ið lurtarin ringir frá sínari teldu.",
             "TITLE_EMAIL": "Send upplýsingar til",
-            "PLACEHOLDER_EMAIL": "T-postur",
-            "DESCRIPTION_EMAIL": "Kontoupplýsingar vera sendar hertil. Bið móttakaran kanna post mappan við óynskt post.",
+            "PLACEHOLDER_EMAIL": "T-post adressa",
+            "DESCRIPTION_EMAIL": "Kontuupplýsingar verða sendar hertil. Bið móttakaran kanna post mappuna við óynsktum posti.",
             "SAVED": "Goymt",
-            "ALERT_SUCCESS": "Kontoin er stovna við hesar upplýsingar:<br>Navn: <b>{{name}}</b>, telefon: <b>{{phoneNumber}}</b>.<br>Ein leinki til konto upplýsingarnar er sent við teldupost til <b>{{email}}</b>.<br>Bið móttakarin kanna mappan við óynskt post.<br>Hevur tú skriva skeivt? So skalt tú bara stovna kontoin av nýggjum.",
-            "ALERT_ERROR": "<b>Villa!</b> Kontoin bleiv ikki stovna. Vinarliga royn aftur.",
-            "DESCRIPTION_MAILTEXT": "Her kanst tú skriva eini boð, men skriva ikki telefonnummari hjá móttakaran her.",
-            "TITLE_MAILTEXT": "Tekst til móttakari",
-            "DEFAULT_MAILTEXT": "Her eru upplysingarnar sum tú skalt brúka tá tú skalt lurta eftir møtunum frá á tínari teldu. Ert tú í iva um nakað, so set teg í samband við hann sum hevur tøknuliga ábyrgdin.",
+            "ALERT_SUCCESS": "Kontan er stovnað við hesum upplýsingum:<br>Navn: <b>{{name}}</b>, telefon: <b>{{phoneNumber}}</b>.<br>Eitt leinki til kontuupplýsingarnar er sent við telduposti til <b>{{email}}</b>.<br>Bið móttakaran kanna mappuna við óynsktum posti.<br>Hevur tú skrivað skeivt? So skalt tú bara stovna kontuna av nýggjum.",
+            "ALERT_ERROR": "<b>Villa!</b> Kontan varð ikki stovnað. Vinaliga royn aftur.",
+            "DESCRIPTION_MAILTEXT": "Her kanst tú skriva eini boð, men skriva ikki telefonnummarið hjá móttakaranum her.",
+            "TITLE_MAILTEXT": "Tekstur, sum verður sendur til móttakaran",
+            "DEFAULT_MAILTEXT": "Her eru upplýsingarnar, sum tú skalt brúka, tá ið tú skalt lurta eftir møtunum frá tínari teldu. Ert tú í iva um nakað, so set teg í samband við hann, sum hevur tøknuligu ábyrgdina.",
             "INVALID_NAME": "@:GENERAL.INVALID_NAME",
             "INVALID_PHONE": "@:GENERAL.INVALID_PHONE",
             "INVALID_EMAIL": "@:GENERAL.INVALID_EMAIL"
@@ -117,27 +117,27 @@
         "CONTACT": {
             "TITLE": "Tøknulig ábyrgd",
             "SUBTITLE": "Tøknulig ábyrgd fyri ríkissalin",
-            "DESCRIPTION": "<p><b>GEV GÆTUR!</b> Kanni um upplýsingarnar niðanfyri eru rættir!</p><p>Tað er <b>bert ein sum hevur tøknuliga ábyrgdin í hvørja ríkkissal</b>, líka mikið hvussu nógvar samkomur nýta hann. Hann skal hoyra til ein av samkomunum sum nýta ríkissalurin. Um tað eru fleiri samkomur sum nýta salin, skullu tey í felag tilnevna ein sum hevur tøknuliga ábyrgdin.</p><p>Tann sum hevur tøknuliga ábyrgdnin hevur <b>ábyrgdin av at Telesal-skipanin virkar á staðnum</b>, og tað er hann sum mann skal kontakta um tað eru tøknuligar truppuleikar á staðnum.</p><p>Tað er av stórum tídningi <b>at upplýsingarnar eru rættir</b> niðanfyri, so at tey sum hava ábyrgdina fyri Telesal-skipanin kunnu fáa samband við tey sum hava tøknuliga ábyrgdina í allar ríkissalir, um tað verur neyugt.</p>",
+            "DESCRIPTION": "<p><b>GEV GÆTUR!</b> Kanna um upplýsingarnar niðanfyri eru rættar!</p><p>Tað er <b>bert ein í hvørjum ríkissali, sum hevur tøknuligu ábyrgdina</b>, líkamikið hvussu nógvar samkomur nýta hann. Hann skal hoyra til eina av samkomunum sum nýta ríkissalin. Um tað eru fleiri samkomur, sum nýta salin, skulu tær í felag tilnevna ein, sum skal hava tøkniligu ábyrgdina.</p><p>Hann, sum hevur tøkniligu ábyrgdina, hevur <b>ábyrgdina av at Telesal-skipanin virkar á staðnum</b>, og tað er hann, mann skal seta seg í samband við, um tað eru tøknuligir trupulleikar á staðnum.</p><p>Tað er av stórum týdningi <b>at upplýsingarnar niðanfyri eru rættar,</b> so tey, sum hava ábyrgdina fyri Telesal-skipanina, kunnu fáa samband við tey, sum hava tøknuligu ábyrgdina í øllum ríkissalum, um tað verður neyðugt.</p>",
             "TITLE_NAME": "Navn",
             "PLACEHOLDER_NAME": "Fornavn Eftirnavn",
             "TITLE_PHONE": "Fartelefonnummar",
             "TITLE_EMAIL": "T-post adressa",
-            "PLACEHOLDER_EMAIL": "navn@mail.fo",
-            "TITLE_COMMENT": "Viðmerkingar (kun til lokalt brug - besked til Telesal Support skal via e-mail)",
+            "PLACEHOLDER_EMAIL": "dømi@mail.fo",
+            "TITLE_COMMENT": "Viðmerkingar (Bert at brúka innanhýsis - boð til Telesal Support skulu sendast umvegis t-post)",
             "SAVED": "Goymt",
-            "ALERT_ERROR": "<b>Villa!</b> Broytingarnar vóru ikki goymdar. Royni aftur um eina løtu.",
+            "ALERT_ERROR": "<b>Villa!</b> Broytingarnar vórðu ikki goymdar. Royn aftur um eina løtu.",
             "INVALID_NAME": "@:GENERAL.INVALID_NAME",
             "INVALID_PHONE": "@:GENERAL.INVALID_PHONE",
             "INVALID_EMAIL": "@:GENERAL.INVALID_EMAIL"
         }
     },
     "SIP_ACCOUNT_RETRIEVAL": {
-        "DESCRIPTION": "<p>Góði/Góða <b>{{name}}</b>, her er títt persónliga loyniorð. Hetta skalt tú brúka um tú ynskir at lurta eftir møtini á alnótin. Loyniorði er knýt saman við tít telefonnummat <b>{{phoneNumber}}</b>, Tí mást tú <b>ongantíð geva loyniorði til onnur</b>.</p><p><b>Skriva ikki kodan niður</b>, men avrita hana beinleiðis frá hesara síðuni til app'in sum tú skalt brúka at lurta til møtini við. Men tú er vælkomin at <b>goyma ein snarvegur</b> til hesa síðuna, so finnur tú altíð tít loyniorð aftur.</p><p>Um tú seinni broytir telefonnummar ella missur snarvegint fra t-postin, skalt tú bara biða um at fáa eina eina nýggja konto til tín.</p><p>Fyri at lesa um hvussu tú installerar og brúkar  app'in, <a href='http://help.telesal.org/da/homesetup' target='_blank'>trýst her</a></p>.",
+        "DESCRIPTION": "<p>Góði/Góða <b>{{name}}</b>, her er títt persónliga loyniorð. Hetta skalt tú nýta, um tú ynskir at lurta eftir møtunum umvegis internetið. Loyniorðið er knýtt at tínum telefonnummari <b>{{phoneNumber}}</b>, tí mást tú <b>ongantíð geva øðrum loyniorðið.</b></p><p><b>Skriva ikki loyniorðið niður,</b> men avrita tað beinleiðis frá hesari síðuni til app'ina, sum tú skalt brúka fyri at lurta eftir møtunum. Men tú ert vælkomin at <b>goyma ein snarveg</b> til hesa síðuna, so finnur tú altíð títt loyniorð aftur.</p><p><b><a style='color: #ff0000;' href='http://help.telesal.org/fo/homesetup' target='_blank'>TRÝST HER</a> - fyri at lesa um, hvussu tú installerar og brúkar app'ina.</b></p>",
         "FOOTNOTE": "",
         "RETRIEVE_INFORMATION": "OK",
-        "TITLE": "Tín Telesal-konto",
-        "ENTER_PHONE": "Skriva títt telefonnummar her, og trýst síðan á OK",
-        "ERROR_MESSAGE": "Nummari var ikki funnið, kanska hevur tú skriva skeivt? Um tú hevur eitt annað nummar, royn so tað ístaðin. Ella set teg í samband við tann sum stovnaði kontoin hjá tær, og bið hann stovna brúkaran av nýggjum við rætta telefonummarið."
+        "TITLE": "Tín Telesal-konta",
+        "ENTER_PHONE": "Skriva títt telefonnummar her, og trýst síðani á OK",
+        "ERROR_MESSAGE": "Nummarið varð ikki funnið, kanska hevur tú skrivað skeivt? Um tú hevur eitt annað nummar, royn so tað ístaðin. Ella set teg í samband við tann, sum stovnaði kontuna hjá tær, og bið hann stovna brúkaran av nýggjum við rætta telefonummarið."
     }
 
 }
