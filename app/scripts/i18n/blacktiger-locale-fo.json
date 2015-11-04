@@ -77,7 +77,7 @@
         "EMAIL": "T-post adressa",
         "LOADING": "Heintar upplýsingar...",
         "LOST_CONNECTION": "Sambandið til servaran breyt av. Kanna internetsambandið og innles síðuna umaftur (trýst F5)",
-        "UNABLE_TO_CONNECT": "Samband fæst ikki við servaran. Orsøkin kann vera, at kagin ikki riggar saman við skipanina.",
+        "UNABLE_TO_CONNECT": "Unable to connect to server. This may be due to the browser or router not supporting WebSocket.",
         "COMMENT_REQUEST": "Onkur ynskir at svara",
         "INVALID_NAME": "Tað skal vera fulla navnið, til dømis 'Petur Joensen', og ikki 'Hr. Joensen' ella 'P. Joensen'.",
         "INVALID_PHONE": "Telefonnummarið er skeivt.",
