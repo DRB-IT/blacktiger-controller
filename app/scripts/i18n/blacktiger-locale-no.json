@@ -78,7 +78,7 @@
         "EMAIL": "E-postadresse",
         "LOADING": "Laster inn...",
         "LOST_CONNECTION": "Websiden har mistet kontakt med server, men forsøker å gjenopprette forbindelsen...",
-        "UNABLE_TO_CONNECT": "Kan ikke opprette forbindelse til serveren. Dette kan skyldes at nettleseren ikke er kompatibel med systemet.",
+        "UNABLE_TO_CONNECT": "Kan ikke opprette forbindelse til serveren. Dette kan skyldes at nettleseren eller ruteren ikke er kompatibel med WebSocket.",
         "COMMENT_REQUEST": "Noen vil gjerne svare",
         "INVALID_NAME": "Navnet må være fullstendig, f.eks 'Per Hansen' og ikke f.eks 'P. Hansen' eller annet.",
         "INVALID_PHONE": "Telefonnummeret er ikke korrekt.",
