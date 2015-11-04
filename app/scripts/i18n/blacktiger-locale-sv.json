@@ -78,7 +78,7 @@
         "EMAIL": "E-postadress",
         "LOADING": "Laddar...",
         "LOST_CONNECTION": "Webbsidan förlorade anslutningen till servern, men försöker att ansluta igen nu...",
-        "UNABLE_TO_CONNECT": "Ingen kontakt med servern. Det kan bero på att webläsaren inte stöds av systemet.",
+        "UNABLE_TO_CONNECT": "Ingen kontakt med servern. Det kan bero på att webläsaren eller routern inte stöder Websocket.",
         "COMMENT_REQUEST": "Någon önskar svara",
         "INVALID_NAME": "Ange för- och efternamn, t.ex. ’Sven Svensson’ – inte ’Hr. Svensson’ eller ’S. Svensson’.",
         "INVALID_PHONE": "Ogiltigt telefonnummer.",
