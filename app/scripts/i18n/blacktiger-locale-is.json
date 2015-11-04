@@ -78,7 +78,7 @@
         "EMAIL": "Netfang",
         "LOADING": "Sæki upplýsingar...",
         "LOST_CONNECTION": "Samband við vefþjón hefur rofnað en reynt er að tengjast á ný...",
-        "UNABLE_TO_CONNECT": "Ekki tókst að tengjast þjóninum. Gæti stafað af því að kerfið styður ekki vafrarann.",
+        "UNABLE_TO_CONNECT": "Unable to connect to server. This may be due to the browser or router not supporting WebSocket.",
         "COMMENT_REQUEST": "Einhver langi að svara",
         "INVALID_NAME": "Rita þarf fullt eiginnafn t.d. Jón Jónsson en ekki hr. Jónsson eða J. Jónsson.",
         "INVALID_PHONE": "Símanúmerið er ekki gilt.",
