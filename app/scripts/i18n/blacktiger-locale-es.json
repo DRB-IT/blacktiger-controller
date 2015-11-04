@@ -78,7 +78,7 @@
         "EMAIL": "Correo electrónico" ,
         "LOADING": "Cargando...",
         "LOST_CONNECTION": "La página web perdió la conexión con el servidor, pero están tratando de volver a conectar ahora ...",
-        "UNABLE_TO_CONNECT": "No se puede conectar al servidor. Esto puede deberse a que el navegador no está soportado por el sistema.",
+        "UNABLE_TO_CONNECT": "No se puede conectar al servidor. Esto puede deberse a que el navegador o router no soporta por WebSocket.",
         "COMMENT_REQUEST": "A alguien le gustaría comentar",
         "INVALID_NAME": "El nombre debe ser un nombre completo, por ejemplo. 'Michael Jensen' y no 'Mr. Jensen 'o' M. Jensen.",
         "INVALID_PHONE": "El número de teléfono no es válido.",
