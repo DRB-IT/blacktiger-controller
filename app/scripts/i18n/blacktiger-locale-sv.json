@@ -133,7 +133,7 @@
         }
     },
     "SIP_ACCOUNT_RETRIEVAL": {
-        "DESCRIPTION": "<p>Kära <b>{{name}}</b>! Här är din personliga kod. Den ska du använda för att lyssna till mötena via internet. Koden är knuten till ditt eget telefonnummer <b>{{phoneNumber}}</b>, så därför får du <b>aldrig lämna koden till andra</b>.</p><p><b>Skriv inte upp koden</b>, utan kopiera den direkt från den här sidan till appen som du ska använda för att lyssna till mötena. Men du får gärna <b>spara en genväg</b> till den här sidan så att du alltid kan hitta du personliga kod igen.</p><p><b><a style='color: #ff0000;' href='http://help.telesal.org/sv/homesetup' target='_blank'>KLICA HÄR</a> - för att läsa om hur du installerar appen.</b></p>",
+        "DESCRIPTION": "<p>Kära <b>{{name}}</b>! Här är din personliga kod. Den ska du använda för att lyssna till mötena via internet. Koden är knuten till ditt eget telefonnummer <b>{{phoneNumber}}</b>, så därför får du <b>aldrig lämna koden till andra</b>.</p><p><b>Skriv inte upp koden</b>, utan kopiera den direkt från den här sidan till appen som du ska använda för att lyssna till mötena. Men du får gärna <b>spara en genväg</b> till den här sidan så att du alltid kan hitta du personliga kod igen.</p><p><b><a style='color: #ff0000;' href='http://help.telesal.org/sv/homesetup' target='_blank'>KLICKA HÄR</a> - för att läsa om hur du installerar appen.</b></p>",
         "FOOTNOTE": "",
         "RETRIEVE_INFORMATION": "OK",
         "TITLE": "Ditt Telesal-konto",
