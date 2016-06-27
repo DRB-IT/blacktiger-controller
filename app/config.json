@@ -1,5 +1,5 @@
 {
-    "serviceUrl": "http://192.168.87.104:8084/blacktiger",
+    "serviceUrl": "http://localhost:8080/blacktiger",
     "RootHelp": "http://help.txxxxx.org/{%1}",
     "SIPHelp": "http://help.txxxxx.org/{%1}/homesetup",
     "commentRequestTimeout": 60000,
@@ -106,7 +106,7 @@
                     "sv": "Svenska"
                 }
             }
-            
+
         }
     }
 }

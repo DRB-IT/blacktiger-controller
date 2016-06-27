@@ -154,6 +154,7 @@ blacktigerApp.config(function ($locationProvider, $routeProvider, $httpProvider,
 
     $translateProvider.addInterpolation('$translateMessageFormatInterpolation');
     $translateProvider.registerAvailableLanguageKeys(languageKeys, languageMapping);
+    $translateProvider.useSanitizeValueStrategy('sanitize');
 
     $translateProvider.determinePreferredLanguage(function () {
         var language;

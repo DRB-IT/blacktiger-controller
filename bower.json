@@ -2,28 +2,36 @@
   "name": "blacktiger-controller",
   "version": "2.2.6",
   "dependencies": {
-    "angular": "^1.3.0",
+    "angular": "^1.4.0",
     "bootstrap-sass-official": "^3.2.0",
-    "angular-animate": "~1.3.0",
-    "angular-cookies": "~1.3.0",
-    "angular-messages": "~1.3.0",
-    "angular-resource": "~1.3.0",
-    "angular-route": "~1.3.0",
-    "angular-sanitize": "~1.3.0",
-    "angular-touch": "~1.3.0",
+    "angular-animate": "~1.4.0",
+    "angular-cookies": "~1.4.0",
+    "angular-messages": "~1.4.0",
+    "angular-resource": "~1.4.0",
+    "angular-route": "~1.4.0",
+    "angular-sanitize": "~1.4.0",
+    "angular-touch": "~1.4.0",
     "blacktigerjs": "~0.2.0",
-    "angular-translate": "~2.4.0",
-    "angular-translate-loader-static-files": "~2.4.0",
-    "angular-translate-interpolation-messageformat": "~2.4.0",
-    "angular-bootstrap": "~0.11.0",
-    "teljs": "~1.3.0"
+    "angular-translate": "~2.11.0",
+    "angular-translate-loader-static-files": "~2.11.0",
+    "angular-translate-interpolation-messageformat": "~2.11.0",
+    "angular-bootstrap": "~1.3.3",
+    "teljs": "~1.3.0",
+    "jquery": "2.2.4"
   },
   "devDependencies": {
-    "angular-mocks": "~1.3.0",
-    "angular-scenario": "~1.3.0"
+    "angular-mocks": "~1.4.0",
+    "angular-scenario": "~1.4.0"
   },
   "appPath": "app",
   "resolutions": {
-    "angular": "~1.5.3"
+    "angular": "~1.4.0"
+  },
+  "overrides": {
+    "teljs": {
+      "main": [
+        "dist/scripts/tel.js"
+      ]
+    }
   }
 }

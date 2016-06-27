@@ -7,7 +7,7 @@
  * # history
  */
 angular.module('blacktiger-directives')
-        .directive('btHistory', function ($modal, PhoneBookSvc, HistorySvc) {
+        .directive('btHistory', function ($uibModal, PhoneBookSvc, HistorySvc) {
             return {
                 restrict: 'E',
                 scope: {
@@ -19,7 +19,7 @@ angular.module('blacktiger-directives')
                     scope.predicate = 'totalDuration';
 
                     scope.changeName = function (phoneNumber, currentName) {
-                        var modalInstance = $modal.open({
+                        var modalInstance = $uibModal.open({
                             templateUrl: 'views/modal-edit-name.html',
                             controller: 'ModalEditNameCtrl',
                             resolve: {

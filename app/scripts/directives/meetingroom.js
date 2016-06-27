@@ -7,7 +7,7 @@
  * # meetingRoom
  */
 angular.module('blacktiger-directives')
-        .directive('btMeetingRoom', function ($log, localStorageService, HistorySvc, MeetingSvc, PhoneBookSvc, $modal) {
+        .directive('btMeetingRoom', function ($log, localStorageService, HistorySvc, MeetingSvc, PhoneBookSvc, $uibModal) {
             return {
                 restrict: 'E',
                 scope: {
@@ -59,7 +59,7 @@ angular.module('blacktiger-directives')
                     };
 
                     scope.changeName = function (phoneNumber, currentName) {
-                        var modalInstance = $modal.open({
+                        var modalInstance = $uibModal.open({
                             templateUrl: 'views/modal-edit-name.html',
                             controller: 'ModalEditNameCtrl',
                             resolve: {
