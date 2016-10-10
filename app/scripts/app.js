@@ -130,15 +130,15 @@ blacktigerApp.config(function ($locationProvider, $routeProvider, $httpProvider,
 
     if(angular.isDefined(CONFIG) && angular.isDefined(CONFIG.i18n) && angular.isObject(CONFIG.i18n.languages)) {
         languageKeys = Object.keys(CONFIG.i18n.languages);
-        angular.forEach(CONFIG.i18n.languages, function(value) {
-            if(value !== CONFIG.i18n.fallbackLanguage) {
+        angular.forEach(CONFIG.i18n.languages, function(value, key) {
+            if(key !== CONFIG.i18n.fallbackLanguage) {
                 if(angular.isArray(value.aliases)) {
                     angular.forEach(value.aliases, function(alias) {
-                       languageMapping[alias+'*'] = value;
+                       languageMapping[alias+'*'] = key;
                     });
                 }
 
-                languageMapping[value+'*'] = value;
+                languageMapping[key+'*'] = key;
             }
         });
 
@@ -158,14 +158,9 @@ blacktigerApp.config(function ($locationProvider, $routeProvider, $httpProvider,
     $translateProvider.useSanitizeValueStrategy(null);
 
     $translateProvider.determinePreferredLanguage(function () {
-        var language;
-        if (navigator && navigator.languages) {
-            language = navigator.languages[0];
-        } else {
-            language = window.navigator.userLanguage || window.navigator.language;
-            language = language.split('-');
-            language = language[0];
-        }
+        var language = window.navigator.language || navigator.language;
+        language = language.split('-');
+        language = language[0];
         return language;
     });
 });
