@@ -1,7 +1,9 @@
 {
   "name": "blacktiger-controller",
   "version": "2.1.0",
-  "dependencies": {},
+  "dependencies": {
+    "jasmine-core": "^2.5.2"
+  },
   "devDependencies": {
     "grunt": "^0.4.1",
     "grunt-autoprefixer": "^0.7.3",

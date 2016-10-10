@@ -41,7 +41,7 @@ blacktigerApp.config(function ($locationProvider, $routeProvider, $httpProvider,
                 if (rejection.status === 401 && CONFIG.serviceUrl && rejection.config.url.substr(0, CONFIG.serviceUrl.length) === CONFIG.serviceUrl) {
                     $location.path('/login');
                 }
-                
+
                 return $q.reject(rejection);
             }
         };
@@ -127,14 +127,14 @@ blacktigerApp.config(function ($locationProvider, $routeProvider, $httpProvider,
     // Prepare data for translateProvider
     var languageKeys = [];
     var languageMapping = {};
-    
+
     if(angular.isDefined(CONFIG) && angular.isDefined(CONFIG.i18n) && angular.isObject(CONFIG.i18n.languages)) {
         languageKeys = Object.keys(CONFIG.i18n.languages);
         angular.forEach(CONFIG.i18n.languages, function(value) {
             if(value !== CONFIG.i18n.fallbackLanguage) {
                 if(angular.isArray(value.aliases)) {
                     angular.forEach(value.aliases, function(alias) {
-                       languageMapping[alias+'*'] = value; 
+                       languageMapping[alias+'*'] = value;
                     });
                 }
 
@@ -154,7 +154,8 @@ blacktigerApp.config(function ($locationProvider, $routeProvider, $httpProvider,
 
     $translateProvider.addInterpolation('$translateMessageFormatInterpolation');
     $translateProvider.registerAvailableLanguageKeys(languageKeys, languageMapping);
-    $translateProvider.useSanitizeValueStrategy('sanitize');
+    //$translateProvider.useSanitizeValueStrategy('sanitize');
+    $translateProvider.useSanitizeValueStrategy(null);
 
     $translateProvider.determinePreferredLanguage(function () {
         var language;
@@ -170,10 +171,10 @@ blacktigerApp.config(function ($locationProvider, $routeProvider, $httpProvider,
 });
 
 blacktigerApp.run(function (CONFIG, blacktiger, $location, LoginSvc, $rootScope, PushEventSvc, MeetingSvc, AutoCommentRequestCancelSvc, $log, $interval, $window, translateFilter) {
-    
+
     // Make sure we have a digest at least once a minute - it will make things like minute counters update
     $interval(angular.noop, 60000);
-    
+
     // The context object is a holder of information for the current session
     $rootScope.context = {};
     $rootScope.context.hasContactInformation = function () {
@@ -203,7 +204,7 @@ blacktigerApp.run(function (CONFIG, blacktiger, $location, LoginSvc, $rootScope,
         if (user.roles.indexOf('ROLE_ADMIN') >= 0) {
             targetPath = '/admin/realtime';
         }
-        
+
         PushEventSvc.connect({enforcedHeartbeatInterval:30000, keepAlive:true}).then(function() {
             $rootScope.updateCurrentRoom();
             $location.path(targetPath);
@@ -224,11 +225,11 @@ blacktigerApp.run(function (CONFIG, blacktiger, $location, LoginSvc, $rootScope,
     $rootScope.$on('PushEventSvc.Lost_Connection', function () {
         $log.info(translateFilter('GENERAL.LOST_CONNECTION'));
     });
-    
+
     $rootScope.$on('PushEventSvc.Reconnecting', function () {
         $log.info('Reconnecting');
     });
-    
+
     $rootScope.$on('PushEventSvc.ReconnectingFailed', function () {
         $log.info('Reconnecting failed.');
     });
@@ -245,7 +246,7 @@ blacktigerApp.run(function (CONFIG, blacktiger, $location, LoginSvc, $rootScope,
     $rootScope.$on('$locationChangeSuccess', function () {
         $log.debug('location change ended', $location.url());
     });
-    
+
     AutoCommentRequestCancelSvc.start();
 });
 
@@ -270,7 +271,7 @@ angular.element(document).ready(function () {
         commentRequestTimeout: 60000,
         hightlightTimeout: 15000
     };
-                
+
     var initApp = function(config) {
         blacktigerApp.constant('CONFIG', config);
         blacktigerApp.constant('languages', languageNames);
